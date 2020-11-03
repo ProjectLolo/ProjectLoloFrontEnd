@@ -1,0 +1,27 @@
+const images = {
+  peekabooLogo: require("./images/peekabooLogo.png"),
+  peekabooLogo2: require("./images/peekabooLogo2.png"),
+  peekabooMonkey: require("./images/peekabooMonkeys.png"),
+  chat: require("./images/chat.png"),
+  facebook: require("./images/facebook.png"),
+  leftArrow: require("./images/leftArrow.png"),
+  like: require("./images/like.png"),
+  likes: require("./images/likes.png"),
+  monkey: require("./images/pmonkey.png"),
+  paperPlane: require("./images/paperPlane.png"),
+  photography: require("./images/photography.png"),
+  reply: require("./images/reply.png"),
+  settings: require("./images/settings.png"),
+  star: require("./images/star.png"),
+  swipe: require("./images/swipe.png"),
+  tap: require("./images/tap.png"),
+  twitter: require("./images/twitter.png"),
+  upload: require("./images/upload.png"),
+  videoCameraYellow: require("./images/videoCameraYellow.png"),
+  videoCameraPurple: require("./images/videoCameraPurple.png"),
+  instruction1: require("./images/instruction1.png"),
+  instruction2: require("./images/instruction2.png"),
+  instruction3: require("./images/instruction3.png"),
+};
+
+export default images;
