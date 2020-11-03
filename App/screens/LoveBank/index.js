@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 
-export default function Library({ navigation }) {
+export default function LoveBank({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text style={{ textAlign: "center" }}>LIBRARY</Text>
+      <Text style={{ textAlign: "center" }}>LoveBank</Text>
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
       >
@@ -12,9 +12,9 @@ export default function Library({ navigation }) {
           Press here to go to Recommended
         </Text>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("LoveBank")}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Library")}>
         <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to LoveBank
+          Press here to go to Library
         </Text>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
