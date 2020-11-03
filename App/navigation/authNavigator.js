@@ -3,9 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "../screens/Login";
-import SignUp from "../screens/SignUp";
+import SignUp from "../screens/Signup";
 
-export default function AuthNavigator() {
+export default function authNavigator() {
   const Stack = createStackNavigator();
 
   return (
