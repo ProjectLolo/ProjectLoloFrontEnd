@@ -19,9 +19,9 @@ const images = {
   upload: require("./images/upload.png"),
   videoCameraYellow: require("./images/videoCameraYellow.png"),
   videoCameraPurple: require("./images/videoCameraPurple.png"),
-  instruction1: require("./images/instruction1.png"),
-  instruction2: require("./images/instruction2.png"),
-  instruction3: require("./images/instruction3.png"),
+  instruction1: require("./images/instruction1.jpg"),
+  instruction2: require("./images/instruction2.jpg"),
+  instruction3: require("./images/instruction3.jpg"),
 };
 
 export default images;
