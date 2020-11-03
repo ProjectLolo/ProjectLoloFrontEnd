@@ -1,9 +1,18 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Image,
+  Dimensions,
+} from "react-native";
+import images from "@assets/images";
+import styles from "@styles";
 
 export default function Welcome({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View style={{ flex: 1 }}>
+      <Image style={styles.peekabooLogo} source={images.peekabooLogo} />
       <Text style={{ textAlign: "center" }}>Welcome</Text>
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Login")}>
         <Text style={{ textAlign: "center", marginTop: 50 }}>
