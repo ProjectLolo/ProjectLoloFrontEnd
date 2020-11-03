@@ -28,7 +28,7 @@ export default function Welcome({ navigation }) {
     setAnimation(true);
     setTimeout(() => {
       setAnimation(false);
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
