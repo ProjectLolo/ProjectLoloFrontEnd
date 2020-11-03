@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 
-export default function JoinKidCircles({ navigation }) {
+export default function Settings({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text style={{ textAlign: "center" }}>JoinKidCircles</Text>
+      <Text style={{ textAlign: "center" }}>Settings</Text>
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
       >
