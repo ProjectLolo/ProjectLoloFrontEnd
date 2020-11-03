@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
 
-export default function authNavigator() {
+export default function AuthNavigator() {
   const Stack = createStackNavigator();
 
   return (
