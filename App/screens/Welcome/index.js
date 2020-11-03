@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Image,
-  Dimensions,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
 import images from "@assets/images";
-import styles from "@styles";
+import styles from "@styles/styles";
 
 export default function Welcome({ navigation }) {
   return (
