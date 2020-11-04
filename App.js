@@ -1,5 +1,5 @@
 import * as React from "react";
-import AuthNavigator from "./App/navigation/authNavigator";
+import AuthNavigator from "./App/navigation/AuthNavigator";
 import StackNavigator from "./App/navigation/StackNavigator";
 
 export default function App() {
