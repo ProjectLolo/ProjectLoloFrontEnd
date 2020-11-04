@@ -1,12 +1,12 @@
 import React from "react";
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   Image,
-  Dimensions,
+  StyleSheet,
 } from "react-native";
 import images from "@assets/images";
+import { CText } from "@components/ctext";
 
 export default function Login({ navigation }) {
   //On Login, user should login, token should be made and received. When token is there, will switch to KidCircle screen. (instead of navigate to Signup)
@@ -18,17 +18,18 @@ export default function Login({ navigation }) {
         source={images.peekabooLogo}
       />
 
-      <Text style={{ textAlign: "center" }}>LOGIN SCREEN</Text>
+      <CText h1 bold purple center title={"LOGIN SCREEN"} />
       <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to continue
-        </Text>
+        <CText center title={"Press here to continue"} style={styles.top} />
       </TouchableWithoutFeedback>
+
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Welcome")}>
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          back to welcome
-        </Text>
+        <CText center title={"back to welcome"} style={styles.top} />
       </TouchableWithoutFeedback>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  top: { marginTop: 50 },
+});
