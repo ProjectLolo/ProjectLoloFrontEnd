@@ -12,8 +12,9 @@ center: {
 
 h2: {
   fontSize: 20,
-  fontWeight: "bold"
+  fontWeight: "bold",
 },
+
 
 mainFont: {
 fontFamily: ""
@@ -42,4 +43,12 @@ fontFamily: ""
   dkPink: {
     backgroundColor: "#FF6E5A",
   },
+
+// button
+button:{
+  fontSize:20,
+  textAlign:"center",
+  margin:10
+},
+
 });
