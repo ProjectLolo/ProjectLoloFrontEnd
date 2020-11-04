@@ -4,8 +4,8 @@ import {
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
-  keyboard,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import images from "@assets/images";
 import { CText } from "@components/ctext";
 
@@ -13,7 +13,7 @@ export default function Login({ navigation }) {
   //On Login, user should login, token should be made and received. When token is there, will switch to KidCircle screen. (instead of navigate to Signup)
 
   return (
-    <View style={{ flex: 1, justifyContent: "flex-start" }}>
+    <KeyboardAwareScrollView style={{ flex: 1 }}>
       <CText h4 bold purple center title={"Login"} style={styles.login} />
       <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
         <CText center title={"Press here to continue"} style={styles.top} />
@@ -22,7 +22,7 @@ export default function Login({ navigation }) {
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Welcome")}>
         <CText center title={"back to welcome"} style={styles.top} />
       </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
