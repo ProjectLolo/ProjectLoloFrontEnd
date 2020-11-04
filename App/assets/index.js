@@ -12,7 +12,7 @@ const images = {
   photography: require("./images/photography.png"),
   reply: require("./images/reply.png"),
   settings: require("./images/settings.png"),
-  star: require("./images/star (1).png"),
+  star: require("./images/star.png"),
   swipe: require("./images/swipe.png"),
   tap: require("./images/tap.png"),
   twitter: require("./images/twitter.png"),

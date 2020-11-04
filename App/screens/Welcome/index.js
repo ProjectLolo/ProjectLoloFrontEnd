@@ -10,6 +10,7 @@ import {
 import images from "@assets/images";
 import style from "@styles/styles";
 import ExplanationCarousel from "../../components/ExplanationCarousel";
+
 const screenWidth = Dimensions.get("window").width;
 export default function Welcome({ navigation }) {
   const [animation, setAnimation] = useState(false);
