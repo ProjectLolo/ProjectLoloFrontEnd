@@ -15,7 +15,7 @@ export default function ExplanationCarousel() {
       <View style={styles.imageContainer}>{item.renderImage()}</View>
       {renderPagination()}
       <View style={styles.descrContainer}>
-        <Text style={[style.purpleText, styles.descrText]}>
+        <Text style={[style.purpleText, styles.descrText, style.bold]}>
           {item.description}
         </Text>
       </View>
@@ -66,5 +66,5 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     alignSelf: "center",
   },
-  descrText: { fontSize: 20 },
+  descrText: { fontSize: 18 },
 });
