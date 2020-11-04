@@ -13,7 +13,7 @@ import { Camera } from "expo-camera";
 import Images from "../../../assets";
 import styles from "../../../styles";
 
-export default function ShareSometing({ navigation }) {
+export default function ShareSomething({ navigation }) {
   return (
     <View style={styling.container}>
       <Image style={styling.image} source={Images.videoCameraPurple} />
