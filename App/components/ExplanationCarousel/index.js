@@ -4,7 +4,6 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 
 import { carouselData, SCREEN_WIDTH, CAROUSEL_ITEM_WIDTH } from "./constants";
 import style from "@styles/styles";
-import fonts from "@assets/fonts";
 
 export default function ExplanationCarousel() {
   const [activeSlide, setActiveSlide] = useState(0); //current active slide
@@ -16,7 +15,7 @@ export default function ExplanationCarousel() {
       <View style={styles.imageContainer}>{item.renderImage()}</View>
       {renderPagination()}
       <View style={styles.descrContainer}>
-        <Text style={[style.purpleText, styles.descrText]}>
+        <Text style={[style.purpleText, styles.descrText, style.bold]}>
           {item.description}
         </Text>
       </View>
@@ -67,5 +66,5 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     alignSelf: "center",
   },
-  descrText: { fontSize: 18, fontFamily: fonts.bold },
+  descrText: { fontSize: 18 },
 });
