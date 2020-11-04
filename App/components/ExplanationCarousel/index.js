@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  SafeAreaView,
-  FlatList,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
 import { carouselData, SCREEN_WIDTH, CAROUSEL_ITEM_WIDTH } from "./constants";
-import styles from "@styles/styles";
+import style from "@styles/styles";
 
 export default function ExplanationCarousel() {
   const [activeSlide, setActiveSlide] = useState(0); //current active slide
@@ -18,20 +11,11 @@ export default function ExplanationCarousel() {
   const renderItem = (
     { item } // render every carousel content
   ) => (
-    <View style={styling.snapCarousel}>
-      <View
-        style={{
-          width: "50%",
-          height: "100%",
-        }}
-      >
-        {item.renderImage()}
-      </View>
-      <View style={{ paddingTop: 50, alignSelf: "center" }}>
-        {renderPagination()}
-      </View>
-      <View style={{ paddingTop: 50, alignSelf: "center" }}>
-        <Text style={{ color: "#6464E1", fontSize: 20 }}>
+    <View style={styles.snapCarousel}>
+      <View style={styles.imageContainer}>{item.renderImage()}</View>
+      {renderPagination()}
+      <View style={styles.descrContainer}>
+        <Text style={[style.purpleText, styles.descrText]}>
           {item.description}
         </Text>
       </View>
@@ -42,8 +26,8 @@ export default function ExplanationCarousel() {
     <Pagination
       dotsLength={carouselData.length}
       activeDotIndex={activeSlide}
-      dotStyle={styling.dotStyle}
-      containerStyle={styling.paginationContainer}
+      dotStyle={[style.purple, styles.dotStyle]}
+      containerStyle={styles.paginationContainer}
     />
   );
 
@@ -58,19 +42,29 @@ export default function ExplanationCarousel() {
   );
 }
 
-const styling = StyleSheet.create({
+const styles = StyleSheet.create({
   snapCarousel: {
     height: "50%",
     width: "80%",
     alignSelf: "center",
   },
+  imageContainer: {
+    width: "50%",
+    height: "100%",
+  },
   paginationContainer: {
     paddingVertical: 3,
+    paddingTop: 50,
+    alignSelf: "center",
   },
   dotStyle: {
-    backgroundColor: "#6464E1",
     width: 15,
     height: 15,
     borderRadius: 50,
   },
+  descrContainer: {
+    paddingTop: 50,
+    alignSelf: "center",
+  },
+  descrText: { fontSize: 20 },
 });

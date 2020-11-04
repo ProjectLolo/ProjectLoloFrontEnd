@@ -18,8 +18,11 @@ export default function authNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="KidCirlces" component={KidCircles} />
+      <Stack.Navigator
+        initialRouteName="KidCircles"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="KidCircles" component={KidCircles} />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen name="Recommended" component={Recommended} />
