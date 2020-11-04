@@ -1,6 +1,26 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+
+// alignment
+
+center: {
+  textAlign: "center"
+},
+
+// font
+
+h2: {
+  fontSize: 20,
+  fontWeight: "bold"
+},
+
+mainFont: {
+fontFamily: ""
+},
+
+//  color palette
+
   purple: {
     backgroundColor: "#6464E1",
   },

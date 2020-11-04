@@ -6,7 +6,7 @@ import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
 import Welcome from "../screens/Welcome";
 
-export default function AuthNavigator() {
+export default function authNavigator() {
   const Stack = createStackNavigator();
 
   return (
