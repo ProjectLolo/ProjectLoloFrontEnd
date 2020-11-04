@@ -6,12 +6,14 @@ import {
   useFonts,
   Montserrat_400Regular,
   Montserrat_700Bold,
+  Montserrat_600SemiBold,
 } from "@expo-google-fonts/montserrat";
 
 function index() {
   useFonts({
     Montserrat_400Regular,
     Montserrat_700Bold,
+    Montserrat_600SemiBold,
   });
 }
 
@@ -25,9 +27,12 @@ const CText = ({
   p,
   //font variants
   bold,
+  semiBold,
   regular,
   //font colours
   purple,
+  grey,
+  white,
   //position
   center,
   //other
@@ -47,9 +52,12 @@ const CText = ({
         p && { fontSize: adjust(12) },
         //font variants
         bold && { fontFamily: "Montserrat_700Bold" },
+        semiBold && { fontFamily: "Montserrat_600SemiBold" },
         regular && { fontFamily: "Montserrat_400Regular" },
         //colours
         purple && { color: "#6464E1" },
+        grey && { color: "black" },
+        white && { color: "white" },
         //position
         center && { textAlign: "center" },
         //other
