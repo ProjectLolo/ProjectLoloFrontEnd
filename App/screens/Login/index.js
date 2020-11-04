@@ -13,12 +13,7 @@ export default function Login({ navigation }) {
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
-      <Image
-        style={{ width: null, resizeMode: "contain" }}
-        source={images.peekabooLogo}
-      />
-
-      <CText h1 bold purple center title={"LOGIN SCREEN"} />
+      <CText h4 bold purple center title={"Login"} style={styles.login} />
       <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
         <CText center title={"Press here to continue"} style={styles.top} />
       </TouchableWithoutFeedback>
@@ -32,4 +27,5 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   top: { marginTop: 50 },
+  login: { marginTop: 100 },
 });
