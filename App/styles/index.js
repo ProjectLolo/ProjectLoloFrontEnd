@@ -42,4 +42,9 @@ fontFamily: ""
   dkPink: {
     backgroundColor: "#FF6E5A",
   },
+  peekabooLogo: {
+    resizeMode: "contain",
+    width: "50%",
+    alignSelf: "center",
+  },
 });
