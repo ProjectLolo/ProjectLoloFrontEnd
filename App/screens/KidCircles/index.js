@@ -17,22 +17,6 @@ export default function KidCircles({ navigation }) {
           </Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("JoinKidCircle")}
-      >
-         <View style={[style.pink,styles.spacing]}>
-          <Text style={[style.button]}>
-            JOIN FAMILY
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Recommended
-        </Text>
-      </TouchableWithoutFeedback>
     </View>
   );
 }
