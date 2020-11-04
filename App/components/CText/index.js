@@ -33,6 +33,7 @@ const CText = ({
   purple,
   grey,
   white,
+  black,
   //position
   center,
   //other
@@ -56,8 +57,9 @@ const CText = ({
         regular && { fontFamily: "Montserrat_400Regular" },
         //colours
         purple && { color: "#6464E1" },
-        grey && { color: "black" },
+        grey && { color: "grey" },
         white && { color: "white" },
+        black && { color: "black" },
         //position
         center && { textAlign: "center" },
         //other
