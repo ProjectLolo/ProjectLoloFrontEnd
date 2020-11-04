@@ -13,17 +13,21 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to allow users to send photos for processing orders. Your photos wont be shared without your permission",
+        "NSMicrophoneUsageDescription": "This app uses the microphone to allow users to send orders via voice message.",
+        "NSPhotoLibraryUsageDescription": "This app uses the camera to allow users to send photos for processing orders. Your photos wont be shared without your permission"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
