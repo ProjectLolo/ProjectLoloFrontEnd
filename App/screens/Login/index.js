@@ -4,6 +4,7 @@ import {
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
+  keyboard,
 } from "react-native";
 import images from "@assets/images";
 import { CText } from "@components/ctext";
