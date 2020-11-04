@@ -4,6 +4,9 @@ export default StyleSheet.create({
   purple: {
     backgroundColor: "#6464E1",
   },
+  purpleText: {
+    color: "#6464E1",
+  },
   ltPurple: {
     backgroundColor: "#AEADFF",
   },

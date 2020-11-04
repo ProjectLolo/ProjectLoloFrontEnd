@@ -8,21 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 import images from "@assets/images";
-import styles from "@styles/styles";
+import style from "@styles/styles";
 import ExplanationCarousel from "../../components/ExplanationCarousel";
-
+const screenWidth = Dimensions.get("window").width;
 export default function Welcome({ navigation }) {
   const [animation, setAnimation] = useState(false);
-  const buttonWidth = Dimensions.get("window").width * 0.3;
-  const styling = StyleSheet.create({
-    buttonContainer: {
-      borderRadius: 10,
-      paddingVertical: 15,
-      width: buttonWidth,
-      backgroundColor: "#6464E1",
-    },
-    buttonText: { alignSelf: "center", color: "white" },
-  });
 
   useEffect(() => {
     setAnimation(true);
@@ -33,40 +23,51 @@ export default function Welcome({ navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <Image style={styles.peekabooLogo} source={images.peekabooLogo} />
+      <Image style={style.peekabooLogo} source={images.peekabooLogo} />
       <ExplanationCarousel />
-      <View style={{ flexDirection: "row", flex: 1, marginTop: 70 }}>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <View style={styling.buttonContainer}>
-            <Text style={styling.buttonText}>Login</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <View style={[styling.buttonContainer, { marginLeft: 50 }]}>
-            <Text style={styling.buttonText}>Sign Up</Text>
+          <View style={[styles.buttonTextContainer, style.purple]}>
+            <Text style={styles.buttonText}>Continue</Text>
           </View>
         </TouchableOpacity>
       </View>
       {animation ? (
-        <View
-          style={{
-            position: "absolute",
-            backgroundColor: "rgba(255, 255, 255, 0.5)",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Image
-            style={{
-              width: 100,
-              height: 100,
-              top: "45%",
-              left: "38%",
-            }}
-            source={images.swipe}
-          />
+        <View style={styles.swipeContainer}>
+          <Image style={styles.swipe} source={images.swipe} />
+          <Text style={[styles.swipe, style.purpleText, styles.swipeText]}>
+            SWIPE
+          </Text>
         </View>
       ) : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1,
+    marginTop: 70,
+  },
+  buttonTextContainer: {
+    borderRadius: 10,
+    paddingVertical: 15,
+    width: screenWidth * 0.3,
+  },
+  buttonText: { alignSelf: "center", color: "white" },
+  swipeContainer: {
+    position: "absolute",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    width: "100%",
+    height: "100%",
+  },
+  swipe: {
+    width: screenWidth * 0.3,
+    height: screenWidth * 0.3,
+    top: screenWidth,
+    left: screenWidth * 0.35,
+  },
+  swipeText: {
+    fontSize: 40,
+  },
+});
