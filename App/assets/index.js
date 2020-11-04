@@ -17,11 +17,11 @@ const images = {
   tap: require("./images/tap.png"),
   twitter: require("./images/twitter.png"),
   upload: require("./images/upload.png"),
-  videoCameraYellow: require("./images/videocamera (1).png"),
-  videoCameraPurple: require("./images/videocamera.png"),
-  instruction1: require("./images/1. humphrey-muleba-Cc-CQTUkbH0-unsplash.jpg"),
-  instruction2: require("./images/2. Grandmother Lois.jpg"),
-  instruction3: require("./images/3. valeria-zoncoll-ZtLASJerPb0-unsplash.jpg"),
+  videoCameraYellow: require("./images/videoCameraYellow.png"),
+  videoCameraPurple: require("./images/videoCameraPurple.png"),
+  instruction1: require("./images/instruction1.jpg"),
+  instruction2: require("./images/instruction2.jpg"),
+  instruction3: require("./images/instruction3.jpg"),
 };
 
 export default images;

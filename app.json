@@ -4,16 +4,11 @@
     "slug": "ProjectLoloFrontEnd",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
-    "splash": {
-      "image": "",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -28,9 +23,6 @@
         "backgroundColor": "#FFFFFF"
       },
       "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }

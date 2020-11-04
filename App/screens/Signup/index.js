@@ -11,6 +11,11 @@ export default function SignUp({ navigation }) {
           Press here to continue
         </Text>
       </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Welcome")}>
+        <Text style={{ textAlign: "center", marginTop: 50 }}>
+          back to welcome
+        </Text>
+      </TouchableWithoutFeedback>
     </View>
   );
 }

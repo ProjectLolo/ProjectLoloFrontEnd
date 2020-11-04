@@ -24,6 +24,9 @@ fontFamily: ""
   purple: {
     backgroundColor: "#6464E1",
   },
+  purpleText: {
+    color: "#6464E1",
+  },
   ltPurple: {
     backgroundColor: "#AEADFF",
   },
@@ -41,5 +44,10 @@ fontFamily: ""
   },
   dkPink: {
     backgroundColor: "#FF6E5A",
+  },
+  peekabooLogo: {
+    resizeMode: "contain",
+    width: "50%",
+    alignSelf: "center",
   },
 });
