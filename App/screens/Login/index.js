@@ -22,30 +22,18 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <CText
-          h4
-          bold
-          purple
-          center
-          style={styles.loginTitle}
-          title={"Login"}
-        />
-        <CText p regular black style={styles.inputTitle} title={"Email"} />
+        <CText style={style.title} title={"Login"} />
+        <CText p regular black style={style.inputLabel} title={"Email"} />
         <TextInput
-          style={[styles.inputEmail, style.regular]}
+          style={style.inputBox}
           placeholder="Enter email..."
           placeholderTextColor="grey"
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-        <CText p regular black style={styles.inputTitle} title={"Password"} />
-
+        <CText p regular black style={style.inputLabel} title={"Password"} />
         <TextInput
-          style={[
-            styles.inputPassword,
-            style.regular,
-            { textAlign: "left", fontSize: 16 },
-          ]}
+          style={style.inputBox}
           placeholder="Enter password..."
           placeholderTextColor="grey"
           secureTextEntry={hidePassword}
@@ -58,7 +46,7 @@ export default function Login({ navigation }) {
               p
               semiBold
               grey
-              style={styles.showPassword}
+              style={style.showPassword}
               title={hidePassword ? "Show password" : "Hide password"}
             />
           </TouchableWithoutFeedback>
@@ -67,24 +55,17 @@ export default function Login({ navigation }) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("SignUp")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
-          <View style={[style.purple, styles.login, styles.top]}>
-            <CText p semiBold center white title={"LOGIN"} />
+          <View style={style.loginButton}>
+            <CText style={style.loginButtonText} title={"LOGIN"} />
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Welcome")}
         >
-          <CText
-            p
-            semiBold
-            grey
-            center
-            style={styles.top}
-            title={"FORGOT PASSWORD?"}
-          />
+          <CText style={style.bottomText} title={"FORGOT PASSWORD?"} />
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-          <CText p semiBold grey center style={styles.top} title={"SIGNUP"} />
+          <CText style={style.bottomText} title={"SIGNUP"} />
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
@@ -99,7 +80,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   top: { marginTop: "10%" },
-  loginTitle: { marginTop: "20%", marginBottom: "5%" },
   login: {
     width: "90%",
     padding: "4.5%",
@@ -113,7 +93,6 @@ const styles = StyleSheet.create({
   },
   inputEmail: {
     alignSelf: "center",
-    textAlign: "left",
     width: "90%",
     height: 60,
     fontSize: 16,
@@ -127,10 +106,8 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 60,
     paddingLeft: 15,
-    paddingTop: 18,
     borderWidth: 0.2,
     borderColor: "grey",
     borderRadius: 5,
-    flexDirection: "row",
   },
 });
