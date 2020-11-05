@@ -49,9 +49,12 @@ button:{
   width:300,
   fontSize:24,
   textAlign:"center",
-  alignItems:"center",
   margin:10,
   borderRadius:5
 },
+
+buttonPadding:{
+  alignItems:"center"
+}
 
 });

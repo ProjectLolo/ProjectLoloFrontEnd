@@ -1,30 +1,30 @@
 import React from "react";
-import { StyleSheet,
-View,
+import { View,
 Text,
 TouchableOpacity } 
 from "react-native";
 //Global Styles
-import style from "../../styles"
+import styles from "../../styles";
+import style from"./style";
 
 
 export default function UploadKidProfile ({ route }){
 return (
-<View style={[style.fontFamily]}>
+<View style={[styles.fontFamily]}>
     <View>
-        <Text style={[styles.text,styles.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
+        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
     </View>
     <View>
-        <Text style={[styles.label,styles.align]}>{`Please upload a profile picture of ${route.params.kidName} for your family`}</Text>
+        <Text style={[style.label,style.align]}>{`Please upload a profile picture of ${route.params.kidName} for your family`}</Text>
     </View>
 
     <View style={{ flexDirection: "row" }}>
-    <View style={[styles.button, style.teal]}>
+    <View style={[style.button, styles.teal]}>
         <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile")}>
-            <Text style={styles.button}>Skip this</Text>
+            <Text style={style.button}>Skip this</Text>
         </TouchableOpacity>
     </View>
-    <View style={[styles.button, style.purple]}>
+    <View style={[style.button, styles.dkPink]}>
         <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile")}>
             <Text style={style.button}>Continue</Text>
         </TouchableOpacity>
@@ -34,27 +34,3 @@ return (
 
 </View>
 )}
-
-const styles=StyleSheet.create({
-    align:{
-        alignContent:"center",
-        paddingTop:30,
-        paddingLeft:15,
-        paddingRight:15,
-    },
-    text:{
-        fontSize:50,
-        fontWeight:"bold", 
-      },
-    label:{
-        fontSize:16
-    },
-    button:{
-        width:150,
-  fontSize:24,
-  textAlign:"center",
-  alignItems:"center",
-  margin:10,
-  borderRadius:5
-    },
-})
