@@ -17,13 +17,7 @@ export default function ActivityCard(props) {
       >
         <LinearGradient
           colors={[colors[top1], colors[top2]]}
-          style={{
-            backgroundColor: "green",
-            width: 180,
-            height: 140,
-            justifyContent: "center",
-            borderRadius: "20%",
-          }}
+          style={styles.linTop}
         >
           <Image style={[styles.activityImage]} source={image} />
         </LinearGradient>
@@ -37,13 +31,10 @@ export default function ActivityCard(props) {
       >
         <LinearGradient
           colors={[colors[bottom1], colors[bottom2]]}
-          style={{
-            paddingVertical: 20,
-            borderRadius: "20%",
-          }}
+          style={styles.linBottom}
         >
-          <Text style={{ textAlign: "center", color: "white" }}>{title}</Text>
-          <Text style={{ textAlign: "center" }}>{text}</Text>
+          <Text style={styles.cardTitle}>{title}</Text>
+          <Text style={styles.cardText}>{text}</Text>
         </LinearGradient>
       </View>
     </View>

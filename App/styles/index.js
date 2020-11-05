@@ -108,6 +108,25 @@ export default StyleSheet.create({
     height: 120,
     alignSelf: "center",
   },
+  cardTitle: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: fonts.bold,
+    fontSize: adjust(16),
+  },
+  cardText: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: fonts.regular,
+    fontSize: adjust(12),
+  },
+  linTop: {
+    width: 180,
+    height: 140,
+    justifyContent: "center",
+    borderRadius: 20,
+  },
+  linBottom: { paddingVertical: 20, borderRadius: 20 },
 
   // alignment
 
