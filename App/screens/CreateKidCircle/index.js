@@ -13,7 +13,7 @@ export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState("");
   const [nickname, setNickname]=useState("")
   const[dateOfBirth,setDOB] =useState("")
-console.log("name:",name)
+
   return (
     <View style={[styles.fontFamily, style.container]}>
      
