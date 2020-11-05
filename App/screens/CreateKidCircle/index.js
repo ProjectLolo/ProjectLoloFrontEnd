@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import DatePicker from 'react-native-datepicker';
 import { 
   StyleSheet, 
   View, 
@@ -7,6 +8,7 @@ import {
   TouchableOpacity, 
   TouchableWithoutFeedback } from "react-native";
 import style from "../../styles" 
+import UploadProfile from "./UploadProfile";
 
 export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState("");
@@ -31,18 +33,30 @@ export default function CreateKidCircles({ navigation }) {
           maxLength={20}
           />
        
-       <Text style={[styles.label]}>Date of birth</Text>
-          <TextInput style={[styles.input]}
-          placeholder="Date of Birth"
-          maxLength={20}
-          />
+        <Text style={[styles.label]}>Date of birth</Text>
+        <DatePicker style={[styles.input]}
+          date={dateOfBirth} // Initial date from state
+          mode="date" // The enum of date, datetime and time
+          placeholder="DD-MM-YYYY"
+          format="DD-MM-YYYY"
+          minDate="01-01-2010"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateInput:{borderWidth: 0, alignItems: "flex-start"},  
+          }}
+          onDateChange={(date) => {
+            setDOB(date);
+          }}
+        />
        </View>
+       
         <Text style={[styles.privacyText, style.fontFamily]}>Peekabond respects your privacy and keep your and your child's data safe and secure. 
         By pressing continue and creating an account, you agree to Peekabond's Terms of use and Privacy Policy.
         </Text>
 
         <View style={[style.button, style.dkPink]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => <UploadProfile />}>
             <Text style={style.button}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -65,7 +79,7 @@ const styles=StyleSheet.create({
     textAlign:"center",
   },
   privacyText:{
-    fontSize:12,
+    fontSize:10,
     textAlign:"left",
     margin:15
   },
@@ -89,5 +103,8 @@ const styles=StyleSheet.create({
   },
   spacing:{
     margin:25
-  }
+  },
+  datePickerStyle: {
+    width: 300, 
+  },
 })
