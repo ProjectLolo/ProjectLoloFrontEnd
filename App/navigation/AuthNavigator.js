@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
 import Welcome from "../screens/Welcome";
+import Password from "../screens/Password";
 
 export default function AuthNavigator() {
   const Stack = createStackNavigator();
@@ -18,6 +19,7 @@ export default function AuthNavigator() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Password" component={Password} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Welcome")}
+          onPress={() => navigation.navigate("Password")}
         >
           <Text style={styles.bottomText}>FORGOT PASSWORD?</Text>
         </TouchableWithoutFeedback>
