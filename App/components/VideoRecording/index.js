@@ -7,17 +7,25 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
+import * as Permissions from 'expo-permissions';
 
 export default function VideoRecording() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [recording, setRecording] = useState(false);
+
+  // asks permission from used to use camera
   useEffect(() => {
+    // (async () => {
+    //   const { status } = await Camera.requestPermissionsAsync();
+    //   setHasPermission(status === "granted");
+    // })
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
       setHasPermission(status === "granted");
-    })();
+    })
+    ();
 
   }, []);
   
@@ -135,10 +143,10 @@ export default function VideoRecording() {
                   style={{
                     borderWidth: 2,
                     borderRadius: 25,
-                    borderColor: "red",
+                    borderColor: recording ? "blue":'red',
                     height: 40,
                     width: 40,
-                    backgroundColor: "red",
+                    backgroundColor: recording ? "blue":'red'
                   }}
                 ></View>
               </View>

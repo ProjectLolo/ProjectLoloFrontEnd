@@ -8,8 +8,6 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Camera } from "expo-camera";
 import Images from "../../../assets";
 import styles from "../../../styles";
 
