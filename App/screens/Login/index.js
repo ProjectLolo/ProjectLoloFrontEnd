@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../store/user/actions";
 import {
   View,
   TouchableWithoutFeedback,
@@ -11,7 +9,6 @@ import {
 import styles from "@styles/styles";
 
 export default function Login({ navigation }) {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -21,7 +18,6 @@ export default function Login({ navigation }) {
   }
 
   function loginUser() {
-    dispatch(login(email, password));
     setEmail("");
     setPassword("");
     console.log("email", email);
@@ -58,7 +54,7 @@ export default function Login({ navigation }) {
         )}
 
         <TouchableWithoutFeedback
-          onPress={() => loginUser()} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
+          onPress={() => navigation.navigate("Welcome")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
           <View style={styles.loginButton}>
             <Text style={styles.loginButtonText}>LOGIN</Text>
