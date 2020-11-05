@@ -5,7 +5,6 @@ import {
   Text, 
   TextInput,
   TouchableOpacity, 
-  ScrollView, 
   TouchableWithoutFeedback } from "react-native";
 import style from "../../styles" 
 
@@ -15,40 +14,39 @@ export default function CreateKidCircles({ navigation }) {
   const[dateOfBirth,setDOB] =useState("")
 
   return (
-    <View >
-      <ScrollView>
-        <Text style={[styles.text]}>Child's Info : </Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-          style={styles.textInput}
+    <View style={[style.fontFamily, styles.container]}>
+     
+        <Text style={[styles.text]}>Child's Info</Text>
+        
+        <View style={[styles.spacing]}>
+        <Text style={[styles.label]}>Name</Text>
+          <TextInput style={[styles.input]}
+          label='Name'
           placeholder="Kid's name"
-          maxLength={20}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-          style={styles.textInput}
+        
+        <Text style={[styles.label]}>Nickname</Text>
+          <TextInput style={[styles.input]}
           placeholder="Nickname"
           maxLength={20}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-          style={styles.textInput}
+       
+       <Text style={[styles.label]}>Date of birth</Text>
+          <TextInput style={[styles.input]}
           placeholder="Date of Birth"
           maxLength={20}
           />
-        </View>
-        
+       </View>
         <Text style={[styles.privacyText, style.fontFamily]}>Peekabond respects your privacy and keep your and your child's data safe and secure. 
         By pressing continue and creating an account, you agree to Peekabond's Terms of use and Privacy Policy.
         </Text>
-        <View style={[style.center, style.dkPink,styles.spacing]}>
+
+        <View style={[style.button, style.dkPink]}>
           <TouchableOpacity>
-            <Text style={style.button}>Continue</Text>
+            <Text style={style.button}>Next</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      
       
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
@@ -64,24 +62,32 @@ export default function CreateKidCircles({ navigation }) {
 const styles=StyleSheet.create({
   text:{
     fontSize:30,
-    textAlign:"center"
+    textAlign:"center",
   },
   privacyText:{
-    fontSize:15,
-    textAlign:"center"
+    fontSize:12,
+    textAlign:"left",
+    margin:15
   },
-  inputContainer: {
-    paddingTop: 15
+  container: {
+    flex: 1,
+    alignItems:"center",
+    justifyContent: 'center',
   },
-  textInput: {
-    borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: 30,
-    fontSize: 15,
-    textAlign:"center"
+ 
+  label:{
+    fontSize:18
+  },
+  input: {
+    width: 300,
+    height: 50,
+    padding:10,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius:5,
+    marginBottom: 15,
   },
   spacing:{
-    margin:10
+    margin:25
   }
 })

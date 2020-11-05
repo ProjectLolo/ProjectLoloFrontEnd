@@ -46,9 +46,11 @@ fontFamily: ""
 
 // button
 button:{
-  fontSize:20,
+  width:300,
+  fontSize:24,
   textAlign:"center",
-  margin:10
+  margin:10,
+  borderRadius:5
 },
 
 });
