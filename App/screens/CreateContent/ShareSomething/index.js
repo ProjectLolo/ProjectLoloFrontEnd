@@ -29,10 +29,12 @@ export default function ShareSomething({ navigation }) {
             <Text>Start recording</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("VideoUploading")}>
         <View style={styles.iconContainer}>
           <Image style={styles.icon} source={Images.upload} />
           <Text>Upload video</Text>
         </View>
+        </TouchableOpacity>
       </View>
       {/* navigation */}
       <TouchableWithoutFeedback
