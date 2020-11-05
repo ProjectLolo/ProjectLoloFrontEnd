@@ -11,7 +11,7 @@ import {
 import style from "@styles/styles";
 
 export default function Login({ navigation }) {
-  //On Login, user should login, token should be made and received. When token is there, will switch to KidCircle screen. (instead of navigate to Signup)
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -21,7 +21,7 @@ export default function Login({ navigation }) {
   }
 
   function login() {
-    //dispatch
+    //dispatch(login(email, password));
     setEmail("");
     setPassword("");
   }
