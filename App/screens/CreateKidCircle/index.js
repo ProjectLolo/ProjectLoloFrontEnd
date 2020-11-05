@@ -8,13 +8,12 @@ import {
   TouchableOpacity, 
   TouchableWithoutFeedback } from "react-native";
 import style from "../../styles" 
-import UploadProfile from "./UploadProfile";
 
 export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState("");
   const [nickname, setNickname]=useState("")
   const[dateOfBirth,setDOB] =useState("")
-
+console.log("name:",name)
   return (
     <View style={[style.fontFamily, styles.container]}>
      
@@ -25,12 +24,16 @@ export default function CreateKidCircles({ navigation }) {
           <TextInput style={[styles.input]}
           label='Name'
           placeholder="Kid's name"
+          value={name}
+          onChangeText={(text)=>setName(text)}
           />
         
         <Text style={[styles.label]}>Nickname</Text>
           <TextInput style={[styles.input]}
           placeholder="Nickname"
           maxLength={20}
+          value={nickname}
+          onChangeText={(text)=>setNickname(text)}
           />
        
         <Text style={[styles.label]}>Date of birth</Text>
@@ -50,17 +53,19 @@ export default function CreateKidCircles({ navigation }) {
           }}
         />
        </View>
-       
-        <Text style={[styles.privacyText, style.fontFamily]}>Peekabond respects your privacy and keep your and your child's data safe and secure. 
-        By pressing continue and creating an account, you agree to Peekabond's Terms of use and Privacy Policy.
+
+        <Text style={[styles.privacyText, style.fontFamily]}>
+          Peekabond respects your privacy and keep your and your child's data safe and secure. 
+          By pressing continue and creating an account, you agree to Peekabond's Terms of use and Privacy Policy.
         </Text>
 
         <View style={[style.button, style.dkPink]}>
-          <TouchableOpacity onPress={() => <UploadProfile />}>
+          <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile",{ kidName: name })}>
             <Text style={style.button}>Next</Text>
           </TouchableOpacity>
         </View>
       
+     
       
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}

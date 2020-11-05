@@ -11,9 +11,9 @@ export default function KidCircles({ navigation }) {
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("CreateKidCircle")}
       >
-        <View style={[style.purple,styles.spacing]}>
+        <View style={[style.button,style.purple,styles.spacing]}>
           <Text style={[style.button]}>
-            CREATE FAMILY
+            Create Family
           </Text>
         </View>
       </TouchableWithoutFeedback>
