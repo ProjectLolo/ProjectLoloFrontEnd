@@ -11,24 +11,40 @@ export default function Recommended({ navigation }) {
       title: "Share",
       text: "Something random",
       image: images.videoCameraPurple,
+      top1: "pink",
+      top2: "ltPink",
+      bottom1: "teal",
+      bottom2: "yellow",
     },
     {
       id: 2,
       title: "Read",
       text: "A bedtime story",
-      image: images.twitter,
+      image: images.chat,
+      top1: "purple",
+      top2: "ltPink",
+      bottom1: "yellow",
+      bottom2: "dkPink",
     },
     {
       id: 3,
       title: "Teach",
       text: "How to count till 10",
-      image: images.twitter,
+      image: images.monkey,
+      top1: "teal",
+      top2: "orange",
+      bottom1: "ltPurple",
+      bottom2: "purple",
     },
     {
       id: 4,
       title: "Sing",
       text: "This is the way we",
-      image: images.videoCameraPurple,
+      image: images.twitter,
+      top1: "yellow",
+      top2: "teal",
+      bottom1: "ltPink",
+      bottom2: "orange",
     },
   ];
 
@@ -40,7 +56,6 @@ export default function Recommended({ navigation }) {
         style={{
           flexDirection: "row",
           flexWrap: "wrap",
-          backgroundColor: "red",
           justifyContent: "space-between",
           justifyContent: "space-around",
         }}
@@ -52,6 +67,10 @@ export default function Recommended({ navigation }) {
               title={item.title}
               text={item.text}
               image={item.image}
+              top1={item.top1}
+              top2={item.top2}
+              bottom1={item.bottom1}
+              bottom2={item.bottom2}
             />
           );
         })}
