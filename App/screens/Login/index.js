@@ -27,10 +27,10 @@ export default function Login({ navigation }) {
           bold
           purple
           center
-          title={"Login"}
           style={styles.loginTitle}
+          title={"Login"}
         />
-        <CText p regular black title={"Email"} style={styles.inputTitle} />
+        <CText p regular black style={styles.inputTitle} title={"Email"} />
         <TextInput
           style={[styles.inputEmail, style.regular]}
           placeholder="Enter email..."
@@ -38,7 +38,7 @@ export default function Login({ navigation }) {
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-        <CText p regular black title={"Password"} style={styles.inputTitle} />
+        <CText p regular black style={styles.inputTitle} title={"Password"} />
 
         <TextInput
           style={[
@@ -58,8 +58,8 @@ export default function Login({ navigation }) {
               p
               semiBold
               grey
-              title={hidePassword ? "Show password" : "Hide password"}
               style={styles.showPassword}
+              title={hidePassword ? "Show password" : "Hide password"}
             />
           </TouchableWithoutFeedback>
         )}
@@ -79,12 +79,12 @@ export default function Login({ navigation }) {
             semiBold
             grey
             center
-            title={"FORGOT PASSWORD?"}
             style={styles.top}
+            title={"FORGOT PASSWORD?"}
           />
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-          <CText p semiBold grey center title={"SIGNUP"} style={styles.top} />
+          <CText p semiBold grey center style={styles.top} title={"SIGNUP"} />
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
