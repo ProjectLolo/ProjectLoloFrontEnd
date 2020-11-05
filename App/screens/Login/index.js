@@ -8,7 +8,7 @@ import {
   Keyboard,
   Text,
 } from "react-native";
-import style from "@styles/styles";
+import styles from "@styles/styles";
 
 export default function Login({ navigation }) {
   const dispatch = useDispatch();
@@ -31,18 +31,18 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <Text style={style.title}>Login</Text>
-        <Text style={style.inputLabel}>Email</Text>
+        <Text style={styles.title}>Login</Text>
+        <Text style={styles.inputLabel}>Email</Text>
         <TextInput
-          style={style.inputBox}
+          style={styles.inputBox}
           placeholder="Enter email..."
           placeholderTextColor="grey"
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-        <Text style={style.inputLabel}>Password</Text>
+        <Text style={styles.inputLabel}>Password</Text>
         <TextInput
-          style={style.inputBox}
+          style={styles.inputBox}
           placeholder="Enter password..."
           placeholderTextColor="grey"
           secureTextEntry={hidePassword}
@@ -51,7 +51,7 @@ export default function Login({ navigation }) {
         />
         {password === "" ? null : (
           <TouchableWithoutFeedback onPress={togglePassword}>
-            <Text style={style.showPassword}>
+            <Text style={styles.showPassword}>
               {hidePassword ? "Show password" : "Hide password"}
             </Text>
           </TouchableWithoutFeedback>
@@ -60,17 +60,17 @@ export default function Login({ navigation }) {
         <TouchableWithoutFeedback
           onPress={() => loginUser()} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
-          <View style={style.loginButton}>
-            <Text style={style.loginButtonText}>LOGIN</Text>
+          <View style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>LOGIN</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Welcome")}
         >
-          <Text style={style.bottomText}>FORGOT PASSWORD?</Text>
+          <Text style={styles.bottomText}>FORGOT PASSWORD?</Text>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-          <Text style={style.bottomText}>SIGNUP</Text>
+          <Text style={styles.bottomText}>SIGNUP</Text>
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
