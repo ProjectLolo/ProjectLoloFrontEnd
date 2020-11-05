@@ -2,6 +2,9 @@ import * as React from "react";
 import CombineNavigators from "./App/navigation/CombineNavigators";
 import { Provider } from "react-redux";
 import store from "./App/store";
+import { AppRegistry } from "react-native";
+import { ApolloProvider } from "@apollo/client";
+import client from "@config/config";
 import {
   useFonts,
   Montserrat_400Regular,
@@ -21,9 +24,13 @@ export default function App() {
     return <AppLoading />;
   } else {
     return (
-      <Provider store={store}>
-        <CombineNavigators />
-      </Provider>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <CombineNavigators />
+        </Provider>
+      </ApolloProvider>
     );
   }
 }
+
+AppRegistry.registerComponent("MyApplication", () => App);

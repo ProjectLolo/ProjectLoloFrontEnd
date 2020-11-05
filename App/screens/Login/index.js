@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/user/actions";
 import {
   View,
   TouchableWithoutFeedback,
   TextInput,
-  StyleSheet,
   Keyboard,
   Text,
 } from "react-native";
@@ -20,10 +20,12 @@ export default function Login({ navigation }) {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
   }
 
-  function login() {
-    //dispatch(login(email, password));
+  function loginUser() {
+    dispatch(login(email, password));
     setEmail("");
     setPassword("");
+    console.log("email", email);
+    console.log("password", password);
   }
 
   return (
@@ -56,7 +58,7 @@ export default function Login({ navigation }) {
         )}
 
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("SignUp")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
+          onPress={() => loginUser()} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
           <View style={style.loginButton}>
             <Text style={style.loginButtonText}>LOGIN</Text>
