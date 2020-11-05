@@ -27,7 +27,12 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>PASSWORD RESET</Text>
+        <Text style={styles.titlePassword}>Password Reset</Text>
+        <Text style={styles.text}>
+          Enter your email address and we'll send you instructions on how to
+          reset your password.
+        </Text>
+
         <Text style={styles.inputLabel}>Email</Text>
         <TextInput
           style={styles.inputBox}
@@ -36,37 +41,16 @@ export default function Login({ navigation }) {
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter password..."
-          placeholderTextColor="grey"
-          secureTextEntry={hidePassword}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-        {password === "" ? null : (
-          <TouchableWithoutFeedback onPress={togglePassword}>
-            <Text style={styles.showPassword}>
-              {hidePassword ? "Show password" : "Hide password"}
-            </Text>
-          </TouchableWithoutFeedback>
-        )}
 
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Welcome")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
-          <View style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>LOGIN</Text>
+          <View style={styles.passwordButton}>
+            <Text style={styles.passwordButtonText}>SUBMIT</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Welcome")}
-        >
-          <Text style={styles.bottomText}>FORGOT PASSWORD?</Text>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.bottomText}>SIGNUP</Text>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.bottomText}>CANCEL</Text>
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>

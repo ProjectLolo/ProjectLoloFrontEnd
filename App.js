@@ -10,6 +10,7 @@ import {
   Montserrat_400Regular,
   Montserrat_700Bold,
   Montserrat_600SemiBold,
+  Montserrat_500Medium,
 } from "@expo-google-fonts/montserrat";
 import { AppLoading } from "expo";
 
@@ -18,6 +19,7 @@ export default function App() {
     Montserrat_400Regular,
     Montserrat_700Bold,
     Montserrat_600SemiBold,
+    Montserrat_500Medium,
   });
 
   if (!fontLoaded) {

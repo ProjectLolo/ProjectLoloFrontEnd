@@ -4,7 +4,7 @@ import adjust from "./adjust";
 import colors from "@assets/colors";
 
 export default StyleSheet.create({
-  //login/signup
+  //login/signup/password -screens
   title: {
     fontSize: adjust(18),
     fontFamily: fonts.bold,
@@ -12,6 +12,23 @@ export default StyleSheet.create({
     textAlign: "center",
     marginTop: "20%",
     marginBottom: "5%",
+  },
+  titlePassword: {
+    fontSize: adjust(22),
+    fontFamily: fonts.semiBold,
+    color: colors.black,
+    textAlign: "left",
+    marginTop: "30%",
+    marginLeft: "5%",
+  },
+  text: {
+    fontSize: adjust(12),
+    fontFamily: fonts.regular,
+    color: colors.grey,
+    textAlign: "left",
+    marginTop: "3%",
+    marginBottom: "5%",
+    marginLeft: "5%",
   },
   inputBox: {
     fontFamily: fonts.regular,
@@ -30,6 +47,20 @@ export default StyleSheet.create({
     paddingBottom: 5,
     paddingTop: "5%",
     fontFamily: fonts.regular,
+  },
+  passwordButton: {
+    backgroundColor: colors.teal,
+    marginTop: "10%",
+    width: "90%",
+    padding: "4.5%",
+    alignSelf: "center",
+    borderRadius: 5,
+  },
+  passwordButtonText: {
+    fontSize: adjust(12),
+    color: colors.black,
+    fontFamily: fonts.semiBold,
+    textAlign: "center",
   },
   loginButton: {
     backgroundColor: colors.purple,
