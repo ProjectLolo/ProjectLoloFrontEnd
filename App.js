@@ -1,5 +1,7 @@
 import * as React from "react";
 import CombineNavigators from "./App/navigation/CombineNavigators";
+import { Provider } from "react-redux";
+import store from "./App/store";
 import {
   useFonts,
   Montserrat_400Regular,
@@ -18,6 +20,10 @@ export default function App() {
   if (!fontLoaded) {
     return <AppLoading />;
   } else {
-    return <CombineNavigators />;
+    return (
+      <Provider store={store}>
+        <CombineNavigators />
+      </Provider>
+    );
   }
 }
