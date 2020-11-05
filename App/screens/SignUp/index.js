@@ -57,7 +57,7 @@ export default function SignUp({ navigation }) {
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
-        {password === "" ? null : (
+        {password && (
           <TouchableWithoutFeedback onPress={togglePassword}>
             <Text style={styles.showPassword}>
               {hidePassword ? "Show password" : "Hide password"}
