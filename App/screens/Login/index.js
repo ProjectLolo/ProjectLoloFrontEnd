@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   TouchableWithoutFeedback,
@@ -17,6 +18,12 @@ export default function Login({ navigation }) {
 
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
+  }
+
+  function login() {
+    //dispatch
+    setEmail("");
+    setPassword("");
   }
 
   return (
