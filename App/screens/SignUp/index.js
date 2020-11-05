@@ -36,7 +36,6 @@ export default function SignUp({ navigation }) {
           style={styles.inputBox}
           placeholder="Enter full name..."
           placeholderTextColor="grey"
-          secureTextEntry={hidePassword}
           onChangeText={(text) => setName(text)}
           value={name}
         />
