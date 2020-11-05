@@ -138,7 +138,7 @@ export default StyleSheet.create({
   dkPink: {
     backgroundColor: "#FF6E5A",
   },
-  peekabooLogo: {
+  peekabondLogo: {
     resizeMode: "contain",
     width: "50%",
     alignSelf: "center",
