@@ -9,17 +9,32 @@ import {
   StyleSheet,
 } from "react-native";
 import Images from "../../../assets";
-import styles from "../../../styles";
+import style from "../../../styles";
 
 export default function ShareSomething({ navigation }) {
   return (
-    <View style={styling.container}>
-      <Image style={styling.image} source={Images.videoCameraPurple} />
-      <Text style={[styles.h2, styles.center]}>Share Something</Text>
-      <Text style={styles.center}>
+    <View style={styles.container}>
+      <View style={styles.mainContainer}>
+      <Image style={styles.image} source={Images.videoCameraPurple} />
+      <Text style={[style.h2, style.center]}>Share Something</Text>
+      <Text style={style.center}>
         Share a video from your media files to upload in the love bank
       </Text>
-      <Text style={{ textAlign: "center" }}>Share Something</Text>
+      </View>
+      {/* Icons for record and upload */}
+      <View style={styles.rowContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("VideoRecording")}>
+          <View style={styles.iconContainer}>
+            <Image style={styles.icon} source={Images.videoCameraPurple} />
+            <Text>Start recording</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <Image style={styles.icon} source={Images.upload} />
+          <Text>Upload video</Text>
+        </View>
+      </View>
+      {/* navigation */}
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
       >
@@ -27,23 +42,17 @@ export default function ShareSomething({ navigation }) {
           Press here to go to Recommended
         </Text>
       </TouchableWithoutFeedback>
-      {/* Icons for record and upload */}
-      <TouchableOpacity
-        onPress={() => navigation.navigate("VideoRecording")}
-      >
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image style={styling.icon} source={Images.videoCameraPurple} />
-          <Text>Start recording</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Image style={styling.icon} source={Images.upload} />
-        <Text>Upload video</Text>
-      </View>
     </View>
   );
 }
-const styling = StyleSheet.create({
+const styles = StyleSheet.create({
+  
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
   icon: {
     width: 60,
     height: 60,
@@ -54,6 +63,17 @@ const styling = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  mainContainer: {
+    width: 300,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
