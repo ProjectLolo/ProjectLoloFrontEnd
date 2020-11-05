@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
-import * as Permissions from 'expo-permissions';
+import { Video } from "expo-av";
+import * as Permissions from "expo-permissions";
 
 export default function VideoRecording() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [recording, setRecording] = useState(false);
+  const [video, setVideo] = useState(false);
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -22,13 +20,13 @@ export default function VideoRecording() {
     //   setHasPermission(status === "granted");
     // })
     (async () => {
-      const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+      const { status } = await Permissions.askAsync(
+        Permissions.AUDIO_RECORDING
+      );
       setHasPermission(status === "granted");
-    })
-    ();
-
+    })();
   }, []);
-  
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -81,7 +79,7 @@ export default function VideoRecording() {
                 color="white"
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{ alignSelf: "center" }}
               onPress={async () => {
                 if (cameraRef) {
@@ -113,7 +111,7 @@ export default function VideoRecording() {
                   }}
                 ></View>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={{ alignSelf: "center" }}
               onPress={async () => {
@@ -121,9 +119,11 @@ export default function VideoRecording() {
                   setRecording(true);
                   let video = await cameraRef.recordAsync();
                   console.log("video", video);
+                  setVideo(video.uri)
                 } else {
                   setRecording(false);
                   cameraRef.stopRecording();
+                  
                 }
               }}
             >
@@ -131,7 +131,7 @@ export default function VideoRecording() {
                 style={{
                   borderWidth: 2,
                   borderRadius: 25,
-                  borderColor: "red",
+                  borderColor: "white",
                   height: 50,
                   width: 50,
                   display: "flex",
@@ -143,12 +143,19 @@ export default function VideoRecording() {
                   style={{
                     borderWidth: 2,
                     borderRadius: 25,
-                    borderColor: recording ? "blue":'red',
+                    borderColor: recording ? "red" : "white",
                     height: 40,
                     width: 40,
-                    backgroundColor: recording ? "blue":'red'
+                    backgroundColor: recording ? "red" : "white",
                   }}
                 ></View>
+              {video ?
+                  <Video
+                    source={{ uri: video }}
+                    shouldPlay
+                    style={{ width: 600, height: 800 }}
+                  ></Video>
+                : null}
               </View>
             </TouchableOpacity>
           </View>

@@ -23,7 +23,7 @@ export default function ShareSomething({ navigation }) {
       </View>
       {/* Icons for record and upload */}
       <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("VideoRecording")}>
+        <TouchableOpacity onPress={() => navigation.navigate("VideoRecording")}> 
           <View style={styles.iconContainer}>
             <Image style={styles.icon} source={Images.videoCameraPurple} />
             <Text>Start recording</Text>
