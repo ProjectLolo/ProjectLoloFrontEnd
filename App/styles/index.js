@@ -92,6 +92,17 @@ export default StyleSheet.create({
     color: colors.ltPurple,
   },
 
+  // Recommended
+  titleText: {
+    fontSize: adjust(18),
+    fontFamily: fonts.bold,
+    color: colors.dkGrey,
+    textAlign: "center",
+    marginBottom: "5%",
+    marginLeft: "5%",
+    width: "90%",
+  },
+
   // alignment
 
   center: {

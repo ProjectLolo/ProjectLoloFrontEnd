@@ -8,6 +8,7 @@ const colors = {
   dkPink: "#FF6E5A",
   black: "black",
   grey: "grey",
+  dkGrey: "#404040",
   white: "white",
 };
 
