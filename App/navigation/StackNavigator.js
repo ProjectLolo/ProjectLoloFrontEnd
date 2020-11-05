@@ -12,6 +12,8 @@ import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
 
 import ShareSomething from "../screens/CreateContent/ShareSomething";
+import VideoRecording from "../components/VideoRecording";
+import VideoUploading from "../components/VideoUploading";
 
 export default function authNavigator() {
   const Stack = createStackNavigator();
@@ -34,6 +36,8 @@ export default function authNavigator() {
           component={MediaContentDetails}
         />
         <Stack.Screen name="ShareSomething" component={ShareSomething} />
+        <Stack.Screen name="VideoRecording" component={VideoRecording} />
+        <Stack.Screen name="VideoUploading" component={VideoUploading} />
       </Stack.Navigator>
     </NavigationContainer>
   );

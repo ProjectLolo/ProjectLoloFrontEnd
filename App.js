@@ -14,6 +14,7 @@ import {
 import { AppLoading } from "expo";
 
 export default function App() {
+
   let [fontLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_700Bold,
