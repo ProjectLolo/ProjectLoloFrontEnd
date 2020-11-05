@@ -102,6 +102,12 @@ export default StyleSheet.create({
     marginLeft: "5%",
     width: "90%",
   },
+  activityImage: {
+    resizeMode: "contain",
+    width: 120,
+    height: 120,
+    alignSelf: "center",
+  },
 
   // alignment
 
