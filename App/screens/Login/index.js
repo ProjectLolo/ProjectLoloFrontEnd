@@ -5,8 +5,8 @@ import {
   TextInput,
   StyleSheet,
   Keyboard,
+  Text,
 } from "react-native";
-import { CText } from "@components/ctext";
 import style from "@styles/styles";
 
 export default function Login({ navigation }) {
@@ -22,8 +22,8 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <CText style={style.title} title={"Login"} />
-        <CText p regular black style={style.inputLabel} title={"Email"} />
+        <Text style={style.title}>Login</Text>
+        <Text style={style.inputLabel}>Email</Text>
         <TextInput
           style={style.inputBox}
           placeholder="Enter email..."
@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-        <CText p regular black style={style.inputLabel} title={"Password"} />
+        <Text style={style.inputLabel}>Password</Text>
         <TextInput
           style={style.inputBox}
           placeholder="Enter password..."
@@ -42,13 +42,9 @@ export default function Login({ navigation }) {
         />
         {password === "" ? null : (
           <TouchableWithoutFeedback onPress={togglePassword}>
-            <CText
-              p
-              semiBold
-              grey
-              style={style.showPassword}
-              title={hidePassword ? "Show password" : "Hide password"}
-            />
+            <Text style={style.showPassword}>
+              {hidePassword ? "Show password" : "Hide password"}
+            </Text>
           </TouchableWithoutFeedback>
         )}
 
@@ -56,58 +52,18 @@ export default function Login({ navigation }) {
           onPress={() => navigation.navigate("SignUp")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
           <View style={style.loginButton}>
-            <CText style={style.loginButtonText} title={"LOGIN"} />
+            <Text style={style.loginButtonText}>LOGIN</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Welcome")}
         >
-          <CText style={style.bottomText} title={"FORGOT PASSWORD?"} />
+          <Text style={style.bottomText}>FORGOT PASSWORD?</Text>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUp")}>
-          <CText style={style.bottomText} title={"SIGNUP"} />
+          <Text style={style.bottomText}>SIGNUP</Text>
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  showPassword: {
-    textAlign: "right",
-    fontSize: 16,
-    right: "10%",
-    marginTop: 5,
-  },
-  top: { marginTop: "10%" },
-  login: {
-    width: "90%",
-    padding: "4.5%",
-    alignSelf: "center",
-    borderRadius: 5,
-  },
-  inputTitle: {
-    marginLeft: "5%",
-    paddingBottom: 5,
-    paddingTop: "5%",
-  },
-  inputEmail: {
-    alignSelf: "center",
-    width: "90%",
-    height: 60,
-    fontSize: 16,
-    paddingLeft: 15,
-    borderWidth: 0.2,
-    borderColor: "grey",
-    borderRadius: 5,
-  },
-  inputPassword: {
-    alignSelf: "center",
-    width: "90%",
-    height: 60,
-    paddingLeft: 15,
-    borderWidth: 0.2,
-    borderColor: "grey",
-    borderRadius: 5,
-  },
-});

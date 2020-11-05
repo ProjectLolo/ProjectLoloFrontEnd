@@ -56,7 +56,7 @@ export default StyleSheet.create({
     textAlign: "right",
     fontSize: adjust(12),
     fontFamily: fonts.bold,
-    right: "10%",
+    right: "5%",
     marginTop: 5,
     color: colors.ltPurple,
   },
