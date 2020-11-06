@@ -100,6 +100,7 @@ export default StyleSheet.create({
 
   // font
 
+
   h2: {
     fontSize: 20,
     fontWeight: "bold",
@@ -138,6 +139,21 @@ export default StyleSheet.create({
   dkPink: {
     backgroundColor: "#FF6E5A",
   },
+
+
+// button
+button:{
+  width:300,
+  fontSize:24,
+  textAlign:"center",
+  margin:10,
+  borderRadius:5
+},
+
+buttonPadding:{
+  alignItems:"center"
+},
+  
   peekabooLogo: {
     resizeMode: "contain",
     width: "50%",
