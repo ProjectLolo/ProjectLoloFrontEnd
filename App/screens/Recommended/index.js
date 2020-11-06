@@ -3,6 +3,7 @@ import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
+import NavButtons from "../../components/NavButtons";
 
 export default function Recommended({ navigation }) {
   const cardContent = [
@@ -78,42 +79,7 @@ export default function Recommended({ navigation }) {
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Library")}>
         <Text style={styles.bottomText}>SEE MORE SUGGESTIONS</Text>
       </TouchableWithoutFeedback>
-      {/* nav buttons on the bottom. */}
-      <View style={{ flexDirection: "row" }}>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Library")}
-        >
-          <View>
-            <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
-              source={images.videoCameraYellow}
-            />
-            <Text style={styles.bottomText}>TODAY</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Library")}
-        >
-          <View>
-            <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
-              source={images.videoCameraYellow}
-            />
-            <Text style={styles.bottomText}>Love Bank</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Library")}
-        >
-          <View>
-            <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
-              source={images.videoCameraYellow}
-            />
-            <Text style={styles.bottomText}>Create</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+      <NavButtons />
     </View>
   );
 }
