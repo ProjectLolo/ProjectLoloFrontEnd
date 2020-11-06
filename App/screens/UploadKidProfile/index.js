@@ -42,7 +42,7 @@ export default function UploadKidProfile ({ route,navigation }){
     
     if (!result.cancelled) { 
         console.log("result.uri", result)
-        //uploadImage (result.uri, "profile")
+        uploadImage (result.uri, "profile")
         setPicture(result.uri); 
     } 
 };
