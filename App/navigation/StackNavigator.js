@@ -10,8 +10,8 @@ import Library from "../screens/Library";
 import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
-
 import ShareSomething from "../screens/CreateContent/ShareSomething";
+import MessageSent from "../screens/CreateContent/MessageSent"
 import VideoRecording from "../components/VideoRecording";
 import VideoUploading from "../components/VideoUploading";
 
@@ -38,6 +38,7 @@ export default function authNavigator() {
         <Stack.Screen name="ShareSomething" component={ShareSomething} />
         <Stack.Screen name="VideoRecording" component={VideoRecording} />
         <Stack.Screen name="VideoUploading" component={VideoUploading} />
+        <Stack.Screen name="MessageSent" component={MessageSent} />
       </Stack.Navigator>
     </NavigationContainer>
   );

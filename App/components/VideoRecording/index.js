@@ -5,8 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
 import * as Permissions from "expo-permissions";
+import { MaterialIcons } from "@expo/vector-icons";
 
-export default function VideoRecording() {
+export default function VideoRecording({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -119,11 +120,10 @@ export default function VideoRecording() {
                   setRecording(true);
                   let video = await cameraRef.recordAsync();
                   console.log("video", video);
-                  setVideo(video.uri)
+                  setVideo(video.uri);
                 } else {
                   setRecording(false);
                   cameraRef.stopRecording();
-                  
                 }
               }}
             >
@@ -149,15 +149,23 @@ export default function VideoRecording() {
                     backgroundColor: recording ? "red" : "white",
                   }}
                 ></View>
-              {video ?
-                  <Video
-                    source={{ uri: video }}
-                    shouldPlay
-                    style={{ width: 600, height: 800 }}
-                  ></Video>
-                : null}
               </View>
             </TouchableOpacity>
+            {video ? (
+                  <View>
+                    <MaterialIcons
+                      name="send"
+                      size={40}
+                      color="white"
+                      onPress={() => navigation.navigate("MessageSent")}
+                    />
+                  </View>
+                ) : // <Video
+                //   source={{ uri: video }}
+                //   shouldPlay
+                //   style={{ width: 600, height: 800 }}
+                // ></Video>
+                null}
           </View>
         </View>
       </Camera>
