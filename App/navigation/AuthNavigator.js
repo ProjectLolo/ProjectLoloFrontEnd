@@ -3,16 +3,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "../screens/Login";
-import SignUp from "../screens/Signup";
+import SignUp from "../screens/SignUp";
+import Welcome from "../screens/Welcome";
+import Password from "../screens/Password";
 
-export default function authNavigator() {
+export default function AuthNavigator() {
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName="SignUp"
+        screenOptions={{ headerShown: false }}
+      >
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Password" component={Password} />
       </Stack.Navigator>
     </NavigationContainer>
   );
