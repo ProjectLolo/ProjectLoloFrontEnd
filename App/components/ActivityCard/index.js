@@ -11,8 +11,8 @@ export default function ActivityCard(props) {
       <View
         style={{
           backgroundColor: colors[top2],
-          borderTopLeftRadius: "25%",
-          borderTopRightRadius: "25%",
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
         }}
       >
         <LinearGradient
@@ -25,8 +25,8 @@ export default function ActivityCard(props) {
       <View
         style={{
           backgroundColor: colors[bottom1],
-          borderBottomLeftRadius: "25%",
-          borderBottomRightRadius: "25%",
+          borderBottomLeftRadius: 25,
+          borderBottomRightRadius: 25,
         }}
       >
         <LinearGradient
