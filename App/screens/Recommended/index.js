@@ -194,38 +194,6 @@ export default function Recommended({ navigation }) {
           }}
         />
       )}
-      {/* {!showMore
-          ? cardContent.map((item) => {
-              return (
-                <ActivityCard
-                  key={item.id}
-                  title={item.title}
-                  text={item.text}
-                  image={item.image}
-                  top1={item.top1}
-                  top2={item.top2}
-                  bottom1={item.bottom1}
-                  bottom2={item.bottom2}
-                />
-              );
-            })
-          : cardContent2.map((item) => {
-              return (
-                <View styles={{ backgroundColor: "red" }}>
-                  <ActivityCard
-                    key={item.id}
-                    title={item.title}
-                    text={item.text}
-                    image={item.image}
-                    top2={item.top1}
-                    top1={item.top2}
-                    bottom2={item.bottom1}
-                    bottom1={item.bottom2}
-                  />
-                </View>
-              );
-            })} */}
-
       {!showMore && (
         <TouchableWithoutFeedback
           onPress={() => (!showMore ? setShowMore(true) : setShowMore(false))}
