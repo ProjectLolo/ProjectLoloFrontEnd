@@ -78,6 +78,7 @@ export default StyleSheet.create({
   },
   bottomText: {
     marginTop: "10%",
+    marginBottom: "10%",
     fontSize: adjust(12),
     fontFamily: fonts.semiBold,
     color: colors.grey,

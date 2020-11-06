@@ -50,7 +50,12 @@ export default function Recommended({ navigation }) {
   ];
 
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-evenly",
+      }}
+    >
       <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
       <Text style={styles.titleText}>What do you want to share today?</Text>
       <View
@@ -79,7 +84,7 @@ export default function Recommended({ navigation }) {
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Library")}>
         <Text style={styles.bottomText}>SEE MORE SUGGESTIONS</Text>
       </TouchableWithoutFeedback>
-      <NavButtons />
+      <NavButtons page="Recommended" />
     </View>
   );
 }
