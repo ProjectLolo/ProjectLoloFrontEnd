@@ -20,6 +20,11 @@ const style={
   margin:10,
   borderRadius:5
     },
+    image:{
+        borderRadius:100,
+        width:200,
+        height:200,
+    },
 }
 
 export default style;
