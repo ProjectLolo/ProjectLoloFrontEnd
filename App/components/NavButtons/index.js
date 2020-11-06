@@ -13,13 +13,9 @@ export default function NavButtons(props) {
     if (page === "Recommended") {
       return (
         <TouchableWithoutFeedback>
-          <View style={{ borderWidth: 1, borderRadius: 10, padding: 5 }}>
+          <View style={styles.navActiveBtContainer}>
             <Image
-              style={{
-                width: 50,
-                height: 50,
-                alignSelf: "center",
-              }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Today</Text>
@@ -31,9 +27,9 @@ export default function NavButtons(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Recommended")}
         >
-          <View style={{ padding: 5 }}>
+          <View style={styles.navBtContainer}>
             <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Today</Text>
@@ -47,9 +43,9 @@ export default function NavButtons(props) {
     if (page === "LoveBank") {
       return (
         <TouchableWithoutFeedback>
-          <View style={{ borderWidth: 1, borderRadius: 10, padding: 5 }}>
+          <View style={styles.navActiveBtContainer}>
             <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Love Bank</Text>
@@ -61,9 +57,9 @@ export default function NavButtons(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("LoveBank")}
         >
-          <View style={{ padding: 5 }}>
+          <View style={styles.navBtContainer}>
             <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Love Bank</Text>
@@ -77,9 +73,9 @@ export default function NavButtons(props) {
     if (page === "Library") {
       return (
         <TouchableWithoutFeedback>
-          <View style={{ borderWidth: 1, borderRadius: 10, padding: 5 }}>
+          <View style={styles.navActiveBtContainer}>
             <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Create</Text>
@@ -91,9 +87,9 @@ export default function NavButtons(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Library")}
         >
-          <View style={{ padding: 5 }}>
+          <View style={styles.navBtContainer}>
             <Image
-              style={{ width: 50, height: 50, alignSelf: "center" }}
+              style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
             <Text style={styles.bottomText}>Create</Text>
@@ -104,13 +100,7 @@ export default function NavButtons(props) {
   }
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        marginBottom: "10%",
-      }}
-    >
+    <View style={styles.navBtsContainer}>
       {today()}
       {loveBank()}
       {create()}

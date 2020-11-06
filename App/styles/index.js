@@ -129,6 +129,20 @@ export default StyleSheet.create({
   },
   linBottom: { paddingVertical: 20, borderRadius: 20 },
 
+  //NavButtons
+  navBtsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginBottom: "10%",
+  },
+  navActiveBtContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 5,
+  },
+  navBtContainer: { padding: 5 },
+  navBtImage: { width: 50, height: 50, alignSelf: "center" },
+
   // alignment
 
   center: {
