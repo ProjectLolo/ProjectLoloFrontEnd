@@ -24,7 +24,7 @@ export default function Welcome({ navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <Image style={style.peekabooLogo} source={images.peekabooLogo} />
+      <Image style={style.peekabondLogo} source={images.peekabondLogo} />
       <ExplanationCarousel />
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>

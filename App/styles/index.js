@@ -78,6 +78,7 @@ export default StyleSheet.create({
   },
   bottomText: {
     marginTop: "10%",
+    marginBottom: "10%",
     fontSize: adjust(12),
     fontFamily: fonts.semiBold,
     color: colors.grey,
@@ -91,6 +92,56 @@ export default StyleSheet.create({
     marginTop: 5,
     color: colors.ltPurple,
   },
+
+  // Recommended
+  titleText: {
+    fontSize: adjust(18),
+    fontFamily: fonts.bold,
+    color: colors.dkGrey,
+    textAlign: "center",
+    marginBottom: "5%",
+    marginLeft: "5%",
+    width: "90%",
+  },
+  activityImage: {
+    resizeMode: "contain",
+    width: 120,
+    height: 120,
+    alignSelf: "center",
+  },
+  cardTitle: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: fonts.bold,
+    fontSize: adjust(16),
+  },
+  cardText: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: fonts.regular,
+    fontSize: adjust(12),
+  },
+  linTop: {
+    width: 180,
+    height: 140,
+    justifyContent: "center",
+    borderRadius: 20,
+  },
+  linBottom: { paddingVertical: 20, borderRadius: 20 },
+
+  //NavButtons
+  navBtsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginBottom: "10%",
+  },
+  navActiveBtContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 5,
+  },
+  navBtContainer: { padding: 5 },
+  navBtImage: { width: 50, height: 50, alignSelf: "center" },
 
   // alignment
 
@@ -141,6 +192,7 @@ export default StyleSheet.create({
   },
 
 
+
 // button
 button:{
   width:300,
@@ -154,7 +206,8 @@ buttonPadding:{
   alignItems:"center"
 },
   
-  peekabooLogo: {
+  peekabondLogo: {
+
     resizeMode: "contain",
     width: "50%",
     alignSelf: "center",
