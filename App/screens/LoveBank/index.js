@@ -12,11 +12,7 @@ export default function LoveBank({ navigation }) {
           Press here to go to Recommended
         </Text>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("Library")}>
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Library
-        </Text>
-      </TouchableWithoutFeedback>
+
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
         <Text style={{ textAlign: "center", marginTop: 50 }}>
           Press here to go to Settings

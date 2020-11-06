@@ -13,6 +13,31 @@ import {
   Montserrat_500Medium,
 } from "@expo-google-fonts/montserrat";
 import { AppLoading } from "expo";
+//firebase configuration
+import * as firebase from "firebase";
+import {
+  apiKey,
+  authDomain,
+  databaseUrl,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+} from "@env";
+
+const firebaseConfig = {
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseUrl: databaseUrl,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+
 
 export default function App() {
   let [fontLoaded] = useFonts({
