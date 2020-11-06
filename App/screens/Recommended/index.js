@@ -4,6 +4,7 @@ import styles from "@styles/styles";
 import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
+import NavHome from "../../components/NavHome";
 
 export default function Recommended({ navigation }) {
   const cardContent = [
@@ -56,7 +57,7 @@ export default function Recommended({ navigation }) {
         justifyContent: "space-evenly",
       }}
     >
-      <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
+      <NavHome />
       <Text style={styles.titleText}>What do you want to share today?</Text>
       <View
         style={{
