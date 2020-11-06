@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
 import * as Permissions from "expo-permissions";
 import { MaterialIcons } from "@expo/vector-icons";
+
+const screenWidth = Dimensions.get("window").width;
 
 export default function VideoRecording({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
