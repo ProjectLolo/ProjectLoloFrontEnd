@@ -18,7 +18,7 @@ export default function NavButtons(props) {
               style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
-            <Text style={styles.bottomText}>Today</Text>
+            <Text style={styles.bottomText}>Create</Text>
           </View>
         </TouchableWithoutFeedback>
       );
@@ -32,7 +32,7 @@ export default function NavButtons(props) {
               style={styles.navBtImage}
               source={images.videoCameraYellow}
             />
-            <Text style={styles.bottomText}>Today</Text>
+            <Text style={styles.bottomText}>Create</Text>
           </View>
         </TouchableWithoutFeedback>
       );
@@ -44,10 +44,7 @@ export default function NavButtons(props) {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
-            <Image
-              style={styles.navBtImage}
-              source={images.videoCameraYellow}
-            />
+            <Image style={styles.navBtImage} source={images.photography} />
             <Text style={styles.bottomText}>Love Bank</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -58,10 +55,7 @@ export default function NavButtons(props) {
           onPress={() => navigation.navigate("LoveBank")}
         >
           <View style={styles.navBtContainer}>
-            <Image
-              style={styles.navBtImage}
-              source={images.videoCameraYellow}
-            />
+            <Image style={styles.navBtImage} source={images.photography} />
             <Text style={styles.bottomText}>Love Bank</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -70,29 +64,23 @@ export default function NavButtons(props) {
   }
 
   function create() {
-    if (page === "Library") {
+    if (page === "Settings") {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
-            <Image
-              style={styles.navBtImage}
-              source={images.videoCameraYellow}
-            />
-            <Text style={styles.bottomText}>Create</Text>
+            <Image style={styles.navBtImage} source={images.monkey} />
+            <Text style={styles.bottomText}>Account</Text>
           </View>
         </TouchableWithoutFeedback>
       );
     } else {
       return (
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Library")}
+          onPress={() => navigation.navigate("Settings")}
         >
           <View style={styles.navBtContainer}>
-            <Image
-              style={styles.navBtImage}
-              source={images.videoCameraYellow}
-            />
-            <Text style={styles.bottomText}>Create</Text>
+            <Image style={styles.navBtImage} source={images.monkey} />
+            <Text style={styles.bottomText}>Account</Text>
           </View>
         </TouchableWithoutFeedback>
       );
