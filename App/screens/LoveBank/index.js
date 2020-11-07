@@ -2,20 +2,15 @@ import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
+import MediaContentCard from "../../components/MediaContentCard";
+import styles from "@styles/styles";
 
 export default function LoveBank({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
-      <Text style={{ textAlign: "center" }}>LoveBank</Text>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Recommended
-        </Text>
-      </TouchableWithoutFeedback>
-
+      <Text style={styles.titleText}>Welcome to [kid]'s love bank!</Text>
+      <MediaContentCard />
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
         <Text style={{ textAlign: "center", marginTop: 50 }}>
           Press here to go to Settings
