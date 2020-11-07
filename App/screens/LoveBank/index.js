@@ -28,7 +28,7 @@ export default function LoveBank({ navigation }) {
           Press here to go to MediaContentDetails
         </Text>
       </TouchableWithoutFeedback>
-      <NavButtons page="LoveBank" />
+      <NavButtons screen="LoveBank" />
     </View>
   );
 }
