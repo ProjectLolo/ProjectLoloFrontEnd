@@ -12,7 +12,7 @@ export default function LoveBank({ navigation }) {
       title: "Kid goes to bed story",
       person: "dad",
       topColor: "pink",
-      bottomColor: "teal",
+      bottomColor: "dkPink",
     },
     {
       id: 2,
@@ -26,14 +26,98 @@ export default function LoveBank({ navigation }) {
       title: "Animal kingdom",
       person: "cousin Jan",
       topColor: "teal",
-      bottomColor: "ltPurple",
+      bottomColor: "purple",
     },
     {
       id: 4,
       title: "Life lesson",
       person: "grammy Lis",
-      topColor: "yellow",
-      bottomColor: "ltPink",
+      topColor: "dkPink",
+      bottomColor: "teal",
+    },
+    {
+      id: 5,
+      title: "Kid goes to bed story",
+      person: "dad",
+      topColor: "pink",
+      bottomColor: "dkPink",
+    },
+    {
+      id: 6,
+      title: "Song",
+      person: "auntie Annie",
+      topColor: "purple",
+      bottomColor: "yellow",
+    },
+    {
+      id: 7,
+      title: "Animal kingdom",
+      person: "cousin Jan",
+      topColor: "teal",
+      bottomColor: "purple",
+    },
+    {
+      id: 8,
+      title: "Life lesson",
+      person: "grammy Lis",
+      topColor: "dkPink",
+      bottomColor: "teal",
+    },
+    {
+      id: 9,
+      title: "Kid goes to bed story",
+      person: "dad",
+      topColor: "pink",
+      bottomColor: "dkPink",
+    },
+    {
+      id: 10,
+      title: "Song",
+      person: "auntie Annie",
+      topColor: "purple",
+      bottomColor: "yellow",
+    },
+    {
+      id: 11,
+      title: "Animal kingdom",
+      person: "cousin Jan",
+      topColor: "teal",
+      bottomColor: "purple",
+    },
+    {
+      id: 12,
+      title: "Life lesson",
+      person: "grammy Lis",
+      topColor: "dkPink",
+      bottomColor: "teal",
+    },
+    {
+      id: 13,
+      title: "Kid goes to bed story",
+      person: "dad",
+      topColor: "pink",
+      bottomColor: "dkPink",
+    },
+    {
+      id: 14,
+      title: "Song",
+      person: "auntie Annie",
+      topColor: "purple",
+      bottomColor: "yellow",
+    },
+    {
+      id: 15,
+      title: "Animal kingdom",
+      person: "cousin Jan",
+      topColor: "teal",
+      bottomColor: "purple",
+    },
+    {
+      id: 16,
+      title: "Life lesson",
+      person: "grammy Lis",
+      topColor: "dkPink",
+      bottomColor: "teal",
     },
   ];
 
@@ -42,6 +126,7 @@ export default function LoveBank({ navigation }) {
       <NavHome />
       <Text style={styles.titleText}>Welcome to [kid]'s love bank!</Text>
       <FlatList
+        style={{ marginBottom: 10 }}
         contentContainerStyle={{
           alignSelf: "center",
         }}
@@ -50,7 +135,9 @@ export default function LoveBank({ navigation }) {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("MediaContentDetails")}
+            >
               <MediaContentCard
                 title={item.title}
                 person={item.person}
@@ -61,18 +148,6 @@ export default function LoveBank({ navigation }) {
           );
         }}
       />
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Settings
-        </Text>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("MediaContentDetails")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to MediaContentDetails
-        </Text>
-      </TouchableWithoutFeedback>
       <NavButtons screen="LoveBank" />
     </View>
   );
