@@ -13,7 +13,7 @@ import style from"./style"; //local styles
 export default function UploadKidProfile ({ route,navigation }){
 
     const [hasPermission, setHasPermission] = useState(null); 
-    const [picture,setPicture]=useState(null);
+    const [picture,setPicture]=useState("https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png");
 
  // asks permission from used to use camera 
  useEffect(() => {
@@ -68,18 +68,23 @@ return (
         <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
     </View>
     <View>
-        <Text style={[style.label,style.align]}>{`Please upload a profile picture of ${route.params.kidName} for your family`}</Text>
+        <Text style={[style.label,style.align,style.spacing]}>{`This is the default picture. Please upload a profile picture of ${route.params.kidName} for your family.`}</Text>
     </View>
 
-   <View style={[{alignItems:"center"}]}>
+   <View style={[{flexDirection:"row"}]}>
+       <View>
        {picture && <Image source={{ uri:picture }} 
         alt="no-picture"
         style={[style.image]}
     />}
     </View>
+    <View style={[style.spacing]}>
     <Button title="Pick a photo" onPress={pickPhoto} />
-
-     <View style={{ flexDirection: "row", bottom:0}}>
+    <Button title="Take Picture" onPress={pickPhoto} />
+    </View>
+    </View>
+   
+     <View style={[{ flexDirection: "row"},style.spacing]}>
     <View style={[style.button, styles.teal]}>
         <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile")}>
             <Text style={style.button}>Skip this</Text>

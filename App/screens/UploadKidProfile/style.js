@@ -14,16 +14,21 @@ const style={
     },
     button:{
         width:150,
-  fontSize:24,
-  textAlign:"center",
-  alignItems:"center",
-  margin:10,
-  borderRadius:5
+        fontSize:24,
+        textAlign:"center",
+        alignItems:"center",
+        margin:10,
+        borderRadius:5,
     },
     image:{
         borderRadius:100,
         width:200,
         height:200,
+    },
+    spacing:{
+        marginTop:15,
+        marginBottom:15,
+        padding:20,
     },
 }
 
