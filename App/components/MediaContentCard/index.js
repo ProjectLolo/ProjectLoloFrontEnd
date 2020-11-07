@@ -8,7 +8,7 @@ export default function MediaContentCard() {
     <View style={styles.cardContainer}>
       <Text>I'm a card!</Text>
       <View style={{ backgroundColor: "red" }}>
-        <Image style={styles.activityImage} source={images.videoCameraPurple} />
+        <Image style={styles.cardImage} source={images.videoCameraPurple} />
       </View>
     </View>
   );
