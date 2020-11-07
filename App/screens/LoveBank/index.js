@@ -1,9 +1,12 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
+import NavHome from "../../components/NavHome";
+import NavButtons from "../../components/NavButtons";
 
 export default function LoveBank({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
+      <NavHome />
       <Text style={{ textAlign: "center" }}>LoveBank</Text>
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
@@ -25,6 +28,7 @@ export default function LoveBank({ navigation }) {
           Press here to go to MediaContentDetails
         </Text>
       </TouchableWithoutFeedback>
+      <NavButtons page="LoveBank" />
     </View>
   );
 }
