@@ -4,21 +4,22 @@ const style ={
         textAlign:"center",
       },
       privacyText:{
-        fontSize:10,
+        fontSize:12,
         textAlign:"left",
-        margin:15
+        margin:20
       },
       container: {
         flex: 1,
         alignItems:"center",
         justifyContent: 'center',
-        paddingLeft:15,
+        paddingLeft:10,
         paddingRight:10,
         paddingBottom:30,
-        paddingTop:30
+        paddingTop:30,
+        marginTop:40,
       },
       label:{
-        fontSize:18
+        fontSize:18,
       },
       input: {
         width: 300,
@@ -30,10 +31,7 @@ const style ={
         marginBottom: 15,
       },
       spacing:{
-        margin:25
-      },
-      datePickerStyle: {
-        width: 300, 
+        margin:40
       },
 }
 
