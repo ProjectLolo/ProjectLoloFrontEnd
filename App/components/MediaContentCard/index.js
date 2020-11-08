@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function MediaContentCard(props) {
   const navigation = useNavigation();
   const { title, person, topColor, bottomColor, video } = props;
+
   return (
     <TouchableWithoutFeedback
       onPress={() =>

@@ -25,7 +25,8 @@ export default function MediaContentDetails({ route, navigation }) {
     {
       id: 2,
       person: "auntie Annie",
-      text: "Very well read!",
+      text:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       video: null,
     },
     {
@@ -71,10 +72,8 @@ export default function MediaContentDetails({ route, navigation }) {
       </View>
 
       <FlatList
-        style={{ marginBottom: 10 }}
-        contentContainerStyle={{
-          alignSelf: "center",
-        }}
+        style={{ backgroundColor: "yellow" }}
+        contentContainerStyle={{ marginHorizontal: 10 }}
         data={cardContent}
         numColumns={1}
         keyExtractor={(item) => item.id}
@@ -92,14 +91,6 @@ export default function MediaContentDetails({ route, navigation }) {
           );
         }}
       />
-
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Recommended
-        </Text>
-      </TouchableWithoutFeedback>
     </View>
   );
 }
