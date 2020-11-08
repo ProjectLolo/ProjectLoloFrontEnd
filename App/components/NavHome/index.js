@@ -1,24 +1,19 @@
 import React from "react";
-import {
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  TouchableHighlight,
-} from "react-native";
+import { View, TouchableWithoutFeedback, Image } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
 import { useNavigation } from "@react-navigation/native";
 import colors from "@assets/colors";
 
-export default function NavHome(props) {
+export default function NavHome() {
   const navigation = useNavigation();
-  const { nav } = props;
+  const { goBack } = navigation;
 
   return (
     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-      <TouchableHighlight
+      <TouchableWithoutFeedback
         style={{ alignSelf: "center" }}
-        onPress={() => navigation.navigate(nav)}
+        onPress={() => goBack()}
       >
         <View
           style={{
@@ -28,11 +23,11 @@ export default function NavHome(props) {
             borderColor: colors.purple,
             width: 20,
             height: 20,
-            marginTop: 30,
+            marginTop: 57,
             marginRight: 60,
           }}
         ></View>
-      </TouchableHighlight>
+      </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
       >
