@@ -21,7 +21,10 @@ const style={
         borderRadius:5,
     },
     image:{
+        
         borderRadius:100,
+        borderWidth:5,
+        borderColor:"grey",
         width:180,
         height:180,
         marginLeft:10,
