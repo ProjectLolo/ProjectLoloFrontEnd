@@ -47,7 +47,10 @@ export default function MediaContentDetails({ route, navigation }) {
         <>
           <NavHome />
           <View
-            style={[styles.cardContainer, { marginTop: 0, marginBottom: 10 }]}
+            style={[
+              styles.cardContainer,
+              { marginTop: 0, marginBottom: 10, marginHorizontal: 0 },
+            ]}
           >
             <View
               style={{

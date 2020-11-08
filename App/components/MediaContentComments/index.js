@@ -52,22 +52,13 @@ export default function MediaContentComments(props) {
       ) : (
         <View
           style={{
+            justifyContent: "center",
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
+            padding: 50,
           }}
         >
-          <Image
-            style={{
-              width: "100%",
-              height: 250,
-
-              borderBottomRightRadius: 25,
-              borderBottomLeftRadius: 25,
-              resizeMode: "contain",
-              alignSelf: "center",
-            }}
-            source={images.videoCameraPurple}
-          />
+          <Image style={styles.cardImage} source={images.videoCameraPurple} />
         </View>
       )}
     </View>

@@ -18,8 +18,6 @@ export default function CommentBox() {
     <View
       style={{
         backgroundColor: colors.ltPurple,
-        marginHorizontal: 10,
-        width: "95%",
         borderRadius: 25,
         marginBottom: 10,
       }}
@@ -50,7 +48,6 @@ export default function CommentBox() {
           <View
             style={{
               flexDirection: "row",
-              width: "100%",
               justifyContent: "center",
             }}
           >
@@ -89,7 +86,6 @@ export default function CommentBox() {
         <View
           style={{
             flexDirection: "row",
-            width: "100%",
             justifyContent: "space-between",
           }}
         >
@@ -98,7 +94,7 @@ export default function CommentBox() {
               color: colors.purple,
               margin: 10,
               marginHorizontal: 20,
-              width: "60%",
+              width: "50%",
             }}
             placeholder='"Write comment here..."'
             placeholderTextColor={colors.purple}
