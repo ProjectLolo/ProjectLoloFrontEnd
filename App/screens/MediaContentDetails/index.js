@@ -40,7 +40,7 @@ export default function MediaContentDetails({ route, navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
       <NavHome />
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, { marginTop: 0, marginBottom: 10 }]}>
         <View
           style={{
             backgroundColor: colors[topColor],
@@ -72,7 +72,6 @@ export default function MediaContentDetails({ route, navigation }) {
       </View>
 
       <FlatList
-        style={{ backgroundColor: "yellow" }}
         contentContainerStyle={{ marginHorizontal: 10 }}
         data={cardContent}
         numColumns={1}

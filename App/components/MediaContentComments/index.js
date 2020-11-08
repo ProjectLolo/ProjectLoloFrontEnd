@@ -8,45 +8,6 @@ import images from "@assets/images";
 export default function MediaContentComments(props) {
   const { person, text, video } = props;
 
-  function addComment() {
-    if (text && !video) {
-      return (
-        <Text
-          style={{
-            alignSelf: "left",
-            marginLeft: 20,
-            marginVertical: 5,
-            color: "white",
-            fontFamily: fonts.regular,
-            fontSize: 16,
-          }}
-        >
-          {text}
-        </Text>
-      );
-    }
-
-    if (video && !text) {
-      return (
-        <View
-          style={{
-            backgroundColor: colors.teal,
-            justifyContent: "center",
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            padding: 100,
-          }}
-        >
-          <Text>hello</Text>
-          <Image
-            style={[styles.cardImage, { backgroundColor: "blue" }]}
-            source={images.videoCameraPurple}
-          />
-        </View>
-      );
-    }
-  }
-
   return (
     <View
       style={{
@@ -91,21 +52,24 @@ export default function MediaContentComments(props) {
       ) : (
         <View
           style={{
-            backgroundColor: colors.teal,
-            justifyContent: "center",
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
-            padding: 100,
           }}
         >
-          <Text>hello</Text>
           <Image
-            style={[styles.cardImage, { backgroundColor: "blue" }]}
+            style={{
+              width: "100%",
+              height: 250,
+
+              borderBottomRightRadius: 25,
+              borderBottomLeftRadius: 25,
+              resizeMode: "contain",
+              alignSelf: "center",
+            }}
             source={images.videoCameraPurple}
           />
         </View>
       )}
-      {addComment()}
     </View>
   );
 }
