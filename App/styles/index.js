@@ -77,8 +77,8 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   bottomText: {
-    marginTop: "10%",
-    marginBottom: "10%",
+    marginTop: "8%",
+    marginBottom: "8%",
     fontSize: adjust(12),
     fontFamily: fonts.semiBold,
     color: colors.grey,
@@ -124,11 +124,11 @@ export default StyleSheet.create({
   },
   linTop: {
     width: 180,
-    height: 120,
+    paddingVertical: "2%",
     justifyContent: "center",
     borderRadius: 20,
   },
-  linBottom: { paddingVertical: 20, borderRadius: 20 },
+  linBottom: { paddingVertical: "5%", borderRadius: 20 },
 
   //NavButtons
   navBtsContainer: {
