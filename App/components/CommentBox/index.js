@@ -21,6 +21,7 @@ export default function CommentBox() {
         marginHorizontal: 10,
         width: "95%",
         borderRadius: 25,
+        marginBottom: 10,
       }}
     >
       <View
@@ -108,7 +109,6 @@ export default function CommentBox() {
           <View
             style={{
               flexDirection: "column",
-              justifyContent: "space-between",
               alignItems: "center",
               backgroundColor: colors.purple,
               width: "30%",
@@ -154,7 +154,12 @@ export default function CommentBox() {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setComment("");
+                setWriteComment(false);
+              }}
+            >
               <View
                 style={{
                   backgroundColor: colors.ltPurple,
