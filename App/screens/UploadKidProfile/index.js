@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import * as firebase from "firebase";
-import { Camera } from 'expo-camera';
 import * as ImagePicker from "expo-image-picker";
 import { View,
 Button,
@@ -31,22 +30,6 @@ export default function UploadKidProfile ({ route,navigation }){
     })();
   }, []);
 
-useEffect(()=>{
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-})
-
-  //Take picture using camera
-  const takePhoto = async () => {
-    let result = await camera.takePictureAsync(); 
-    if (result){
-        console.log("result.uri", result)
-        uploadImage (result.uri, "profile")
-        setPicture(result.uri); 
-    }
-  }
   //Choose picture from device
  const pickPhoto = async () => { 
      let result = await ImagePicker.launchImageLibraryAsync({ 
@@ -83,14 +66,14 @@ useEffect(()=>{
 if (hasPermission === false) { 
     return <Text>No access to camera</Text>; 
 }
-    
+    //console.log("props:",props)
 return (
 <View style={[styles.fontFamily]}>
     <View>
-        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
+        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName || 'Kid'} & family! Let's get started`}</Text>
     </View>
     <View>
-        <Text style={[style.label,style.align,style.spacing]}>{`This is the default picture. Please upload a profile picture of ${route.params.kidName} for your family.`}</Text>
+        <Text style={[style.label,style.align,style.spacing]}>{`This is the default picture. Please upload a profile picture of ${route.params.kidName || 'Kid'} for your family.`}</Text>
     </View>
 
    <View style={[{flexDirection:"row"}]}>
@@ -100,9 +83,9 @@ return (
         style={[style.image]}
     />}
     </View>
-    <View style={[style.spacing]}>
+    <View style={[style.spacing,{alignSelf:"center"}]}>
     <Button title="Pick a photo" onPress={pickPhoto} />
-    <Button title="Take Picture" onPress={takePhoto} />
+    {/* <Button title="Take Picture" onPress={takePhoto} /> */}
     </View>
     </View>
    
