@@ -5,7 +5,7 @@ import { Video } from "expo-av";
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
-export default function VideoUploading() {
+export default function VideoUploading({navigation}) {
   const [video, setVideo] = useState(null);
   const [shouldPlay, setShouldPlat] = useState(true);
 
@@ -45,7 +45,10 @@ export default function VideoUploading() {
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      {video ? <Button title="Send" onPress={() => navigation.navigate("MessageSent")}/>
+       :
       <Button title="Pick a video" onPress={pickVideo} />
+  }
       {video && (
         <Video
           source={{ uri: video }}
@@ -53,6 +56,7 @@ export default function VideoUploading() {
           style={{ width: 300, height: 400 }}
         ></Video>
       )}
+    {video ?
       <View style={styles.controlBar}>
         <MaterialIcons
           name={shouldPlay ? "pause" : "play-arrow"}
@@ -63,6 +67,7 @@ export default function VideoUploading() {
           }}
         />
       </View>
+     : null }
     </View>
   );
 }
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
   },
   controlBar: {
     position: "absolute",
-    bottom: 50,
+    bottom: 115,
     left: 0,
     right: 0,
     height: 100,

@@ -7,12 +7,11 @@ import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
 import JoinKidCircle from "../screens/JoinKidCircle";
 import Recommended from "../screens/Recommended";
-import Library from "../screens/Library";
 import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
-
 import ShareSomething from "../screens/CreateContent/ShareSomething";
+import MessageSent from "../screens/CreateContent/MessageSent"
 import VideoRecording from "../components/VideoRecording";
 import VideoUploading from "../components/VideoUploading";
 
@@ -30,7 +29,6 @@ export default function authNavigator() {
         <Stack.Screen name="UploadKidProfile" component={UploadKidProfile} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen name="Recommended" component={Recommended} />
-        <Stack.Screen name="Library" component={Library} />
         <Stack.Screen name="LoveBank" component={LoveBank} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen
@@ -40,6 +38,7 @@ export default function authNavigator() {
         <Stack.Screen name="ShareSomething" component={ShareSomething} />
         <Stack.Screen name="VideoRecording" component={VideoRecording} />
         <Stack.Screen name="VideoUploading" component={VideoUploading} />
+        <Stack.Screen name="MessageSent" component={MessageSent} />
       </Stack.Navigator>
     </NavigationContainer>
   );
