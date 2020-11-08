@@ -1,7 +1,13 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Image,
+  FlatList,
+} from "react-native";
 import NavHome from "../../components/NavHome";
-import MediaContentCard from "../../components/MediaContentCard";
+import MediaContentComments from "../../components/MediaContentComments";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import images from "@assets/colors";
@@ -63,6 +69,30 @@ export default function MediaContentDetails({ route, navigation }) {
           <Image style={styles.cardImage} source={video} />
         </View>
       </View>
+
+      <FlatList
+        style={{ marginBottom: 10 }}
+        contentContainerStyle={{
+          alignSelf: "center",
+        }}
+        data={cardContent}
+        numColumns={1}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("MediaContentDetails")}
+            >
+              <MediaContentComments
+                person={item.person}
+                text={item.text}
+                video={item.video}
+              />
+            </TouchableWithoutFeedback>
+          );
+        }}
+      />
+
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Recommended")}
       >
