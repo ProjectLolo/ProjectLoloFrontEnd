@@ -25,7 +25,7 @@ export default function MediaContentComments(props) {
       >
         <Text
           style={{
-            alignSelf: "left",
+            alignSelf: "flex-start",
             marginLeft: 20,
             marginVertical: 5,
             color: "white",

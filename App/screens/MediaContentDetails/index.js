@@ -12,6 +12,7 @@ import styles from "@styles/styles";
 import colors from "@assets/colors";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import CommentBox from "../../components/CommentBox";
 
@@ -41,60 +42,62 @@ export default function MediaContentDetails({ route, navigation }) {
   ];
 
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
-      <NavHome />
-      <View style={[styles.cardContainer, { marginTop: 0, marginBottom: 10 }]}>
-        <View
-          style={{
-            backgroundColor: colors[topColor],
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            height: 35,
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={[styles.cardTitle, { paddingHorizontal: 5 }]}
-            adjustsFontSizeToFit={true}
-            numberOfLines={1}
+    <FlatList
+      ListHeaderComponent={
+        <>
+          <NavHome />
+          <View
+            style={[styles.cardContainer, { marginTop: 0, marginBottom: 10 }]}
           >
-            {title} by {person}
-          </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: colors[bottomColor],
-            justifyContent: "center",
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            padding: 50,
-          }}
-        >
-          <Image style={styles.cardImage} source={video} />
-        </View>
-      </View>
-
-      <CommentBox />
-
-      <FlatList
-        contentContainerStyle={{ marginHorizontal: 10 }}
-        data={cardContent}
-        numColumns={1}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate("MediaContentDetails")}
+            <View
+              style={{
+                backgroundColor: colors[topColor],
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                height: 35,
+                justifyContent: "center",
+              }}
             >
-              <MediaContentComments
-                person={item.person}
-                text={item.text}
-                video={item.video}
-              />
-            </TouchableWithoutFeedback>
-          );
-        }}
-      />
-    </View>
+              <Text
+                style={[styles.cardTitle, { paddingHorizontal: 5 }]}
+                adjustsFontSizeToFit={true}
+                numberOfLines={1}
+              >
+                {title} by {person}
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: colors[bottomColor],
+                justifyContent: "center",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                padding: 50,
+              }}
+            >
+              <Image style={styles.cardImage} source={video} />
+            </View>
+          </View>
+          <CommentBox />
+        </>
+      }
+      contentContainerStyle={{ marginHorizontal: 10 }}
+      data={cardContent}
+      numColumns={1}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => {
+        return (
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("MediaContentDetails")}
+          >
+            <MediaContentComments
+              person={item.person}
+              text={item.text}
+              video={item.video}
+            />
+          </TouchableWithoutFeedback>
+        );
+      }}
+    />
   );
 }
