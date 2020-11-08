@@ -22,13 +22,14 @@ const style={
     },
     image:{
         borderRadius:100,
-        width:200,
-        height:200,
+        width:180,
+        height:180,
+        marginLeft:10,
     },
     spacing:{
-        marginTop:15,
-        marginBottom:15,
-        padding:20,
+        marginTop:10,
+        marginBottom:10,
+        padding:10,
     },
 }
 

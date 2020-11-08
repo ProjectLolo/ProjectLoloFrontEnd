@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as firebase from "firebase";
+import { Camera } from 'expo-camera';
 import * as ImagePicker from "expo-image-picker";
 import { View,
 Button,
@@ -30,6 +31,23 @@ export default function UploadKidProfile ({ route,navigation }){
     })();
   }, []);
 
+useEffect(()=>{
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+})
+
+  //Take picture using camera
+  const takePhoto = async () => {
+    let result = await camera.takePictureAsync(); 
+    if (result){
+        console.log("result.uri", result)
+        uploadImage (result.uri, "profile")
+        setPicture(result.uri); 
+    }
+  }
+  //Choose picture from device
  const pickPhoto = async () => { 
      let result = await ImagePicker.launchImageLibraryAsync({ 
          mediaTypes: ImagePicker.MediaTypeOptions.All, 
@@ -58,6 +76,10 @@ export default function UploadKidProfile ({ route,navigation }){
     return ref.put(blob);
   };
 
+  if (hasPermission === null) {
+    return <View />;
+  }
+
 if (hasPermission === false) { 
     return <Text>No access to camera</Text>; 
 }
@@ -80,12 +102,12 @@ return (
     </View>
     <View style={[style.spacing]}>
     <Button title="Pick a photo" onPress={pickPhoto} />
-    <Button title="Take Picture" onPress={pickPhoto} />
+    <Button title="Take Picture" onPress={takePhoto} />
     </View>
     </View>
    
      <View style={[{ flexDirection: "row"},style.spacing]}>
-    <View style={[style.button, styles.teal]}>
+    <View style={[style.button, styles.yellow]}>
         <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile")}>
             <Text style={style.button}>Skip this</Text>
         </TouchableOpacity>
