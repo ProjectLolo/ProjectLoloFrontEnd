@@ -10,7 +10,15 @@ export default function MediaContentCard(props) {
   const { title, person, topColor, bottomColor, video } = props;
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate("MediaContentDetails")}
+      onPress={() =>
+        navigation.navigate("MediaContentDetails", {
+          title,
+          person,
+          topColor,
+          bottomColor,
+          video,
+        })
+      }
     >
       <View
         style={[
