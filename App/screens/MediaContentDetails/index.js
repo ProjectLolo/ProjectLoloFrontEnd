@@ -13,7 +13,7 @@ import colors from "@assets/colors";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
 
-import AddCommentBox from "../../components/AddCommentBox";
+import CommentBox from "../../components/CommentBox";
 
 export default function MediaContentDetails({ route, navigation }) {
   const { title, person, topColor, bottomColor, video } = route.params;
@@ -74,7 +74,7 @@ export default function MediaContentDetails({ route, navigation }) {
         </View>
       </View>
 
-      <AddCommentBox />
+      <CommentBox />
 
       <FlatList
         contentContainerStyle={{ marginHorizontal: 10 }}
