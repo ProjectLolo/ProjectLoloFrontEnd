@@ -1,14 +1,13 @@
 import React from "react";
 import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import styles from "@styles/styles";
-import images from "@assets/images";
 import colors from "@assets/colors";
 
 import { useNavigation } from "@react-navigation/native";
 
 export default function MediaContentCard(props) {
   const navigation = useNavigation();
-  const { title, person, topColor, bottomColor } = props;
+  const { title, person, topColor, bottomColor, video } = props;
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation.navigate("MediaContentDetails")}
@@ -45,7 +44,7 @@ export default function MediaContentCard(props) {
             padding: 5,
           }}
         >
-          <Image style={styles.cardImage} source={images.videoCameraPurple} />
+          <Image style={styles.cardImage} source={video} />
         </View>
       </View>
     </TouchableWithoutFeedback>

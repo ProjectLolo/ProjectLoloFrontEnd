@@ -4,6 +4,7 @@ import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import MediaContentCard from "../../components/MediaContentCard";
 import styles from "@styles/styles";
+import images from "@assets/images";
 
 export default function LoveBank({ navigation }) {
   const cardContent = [
@@ -13,6 +14,7 @@ export default function LoveBank({ navigation }) {
       person: "dad",
       topColor: "pink",
       bottomColor: "dkPink",
+      video: images.videoCameraPurple,
     },
     {
       id: 2,
@@ -20,6 +22,7 @@ export default function LoveBank({ navigation }) {
       person: "auntie Annie",
       topColor: "purple",
       bottomColor: "yellow",
+      video: images.videoCameraPurple,
     },
     {
       id: 3,
@@ -27,6 +30,7 @@ export default function LoveBank({ navigation }) {
       person: "cousin Jan",
       topColor: "teal",
       bottomColor: "purple",
+      video: images.videoCameraPurple,
     },
     {
       id: 4,
@@ -34,6 +38,7 @@ export default function LoveBank({ navigation }) {
       person: "grammy Lis",
       topColor: "dkPink",
       bottomColor: "teal",
+      video: images.videoCameraPurple,
     },
     {
       id: 5,
@@ -41,6 +46,7 @@ export default function LoveBank({ navigation }) {
       person: "dad",
       topColor: "pink",
       bottomColor: "dkPink",
+      video: images.videoCameraPurple,
     },
     {
       id: 6,
@@ -48,6 +54,7 @@ export default function LoveBank({ navigation }) {
       person: "auntie Annie",
       topColor: "purple",
       bottomColor: "yellow",
+      video: images.videoCameraPurple,
     },
     {
       id: 7,
@@ -55,6 +62,7 @@ export default function LoveBank({ navigation }) {
       person: "cousin Jan",
       topColor: "teal",
       bottomColor: "purple",
+      video: images.videoCameraPurple,
     },
     {
       id: 8,
@@ -62,6 +70,7 @@ export default function LoveBank({ navigation }) {
       person: "grammy Lis",
       topColor: "dkPink",
       bottomColor: "teal",
+      video: images.videoCameraPurple,
     },
     {
       id: 9,
@@ -69,6 +78,7 @@ export default function LoveBank({ navigation }) {
       person: "dad",
       topColor: "pink",
       bottomColor: "dkPink",
+      video: images.videoCameraPurple,
     },
     {
       id: 10,
@@ -76,6 +86,7 @@ export default function LoveBank({ navigation }) {
       person: "auntie Annie",
       topColor: "purple",
       bottomColor: "yellow",
+      video: images.videoCameraPurple,
     },
     {
       id: 11,
@@ -83,6 +94,7 @@ export default function LoveBank({ navigation }) {
       person: "cousin Jan",
       topColor: "teal",
       bottomColor: "purple",
+      video: images.videoCameraPurple,
     },
     {
       id: 12,
@@ -90,6 +102,7 @@ export default function LoveBank({ navigation }) {
       person: "grammy Lis",
       topColor: "dkPink",
       bottomColor: "teal",
+      video: images.videoCameraPurple,
     },
     {
       id: 13,
@@ -97,6 +110,7 @@ export default function LoveBank({ navigation }) {
       person: "dad",
       topColor: "pink",
       bottomColor: "dkPink",
+      video: images.videoCameraPurple,
     },
     {
       id: 14,
@@ -104,6 +118,7 @@ export default function LoveBank({ navigation }) {
       person: "auntie Annie",
       topColor: "purple",
       bottomColor: "yellow",
+      video: images.videoCameraPurple,
     },
     {
       id: 15,
@@ -111,6 +126,7 @@ export default function LoveBank({ navigation }) {
       person: "cousin Jan",
       topColor: "teal",
       bottomColor: "purple",
+      video: images.videoCameraPurple,
     },
     {
       id: 16,
@@ -118,6 +134,7 @@ export default function LoveBank({ navigation }) {
       person: "grammy Lis",
       topColor: "dkPink",
       bottomColor: "teal",
+      video: images.videoCameraPurple,
     },
   ];
 
@@ -143,6 +160,7 @@ export default function LoveBank({ navigation }) {
                 person={item.person}
                 topColor={item.topColor}
                 bottomColor={item.bottomColor}
+                video={item.video}
               />
             </TouchableWithoutFeedback>
           );
