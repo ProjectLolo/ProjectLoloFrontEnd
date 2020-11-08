@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
+
+import { Camera } from 'expo-camera';
 import { View,
 Button,
 Image,
@@ -42,11 +44,22 @@ export default function UploadKidProfile ({ route,navigation }){
     console.log(result);
     
     if (!result.cancelled) { 
-        console.log("result.uri", result)
+        console.log("pickPhoto result.uri", result)
         uploadImage (result.uri, "profile")
         setPicture(result.uri); 
     } 
 };
+
+
+//Take picture using camera
+const takePhoto = async (ref) => {
+  let result = await ref.takePictureAsync(); 
+  if (result){
+      console.log("takePhoto result.uri", result)
+      uploadImage (result.uri, "profile")
+      setPicture(result.uri); 
+  }
+}
 
 //upload image to firebase
  const uploadImage = async (uri, imageName) => {
@@ -73,7 +86,9 @@ return (
         <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName || 'Kid'} & family! Let's get started`}</Text>
     </View>
     <View>
-        <Text style={[style.label,style.align,style.spacing]}>{`This is the default picture. Please upload a profile picture of ${route.params.kidName || 'Kid'} for your family.`}</Text>
+        <Text style={[style.label,style.align,style.spacing]}>
+          {`This is the default picture. Please upload a profile picture of ${route.params.kidName || 'Kid'} for your family.`}
+        </Text>
     </View>
 
    <View style={[{flexDirection:"row"}]}>
@@ -85,7 +100,8 @@ return (
     </View>
     <View style={[style.spacing,{alignSelf:"center"}]}>
     <Button title="Pick a photo" onPress={pickPhoto} />
-    {/* <Button title="Take Picture" onPress={takePhoto} /> */}
+    <Button title="Take Picture" 
+    onPress={()=> navigation.navigate("TakeProfilePicture",{takePhoto})} /> 
     </View>
     </View>
    
