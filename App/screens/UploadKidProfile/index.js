@@ -1,24 +1,30 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
+import { useMutation } from "@apollo/client";
 
-import { Camera } from 'expo-camera';
-import { View,
-Button,
-Image,
-Text,
-TouchableOpacity } 
-from "react-native";
+import { Camera } from "expo-camera";
+import { View, Button, Image, Text, TouchableOpacity } from "react-native";
 import styles from "../../styles"; //global styles
-import style from"./style"; //local styles
+import style from "./style"; //local styles
+import { CREATE_KID } from "../../../graphql/mutations";
 
-export default function UploadKidProfile ({ route,navigation }){
+export default function UploadKidProfile({ route, navigation }) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [picture, setPicture] = useState(
+    "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
+  );
 
-    const [hasPermission, setHasPermission] = useState(null); 
-    const [picture,setPicture]=useState("https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png");
+  const [createKid, { error }] = useMutation(CREATE_KID, {
+    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("Recommended");
+    },
+  });
 
- // asks permission from used to use camera 
- useEffect(() => {
+  // asks permission from used to use camera
+  useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -26,43 +32,41 @@ export default function UploadKidProfile ({ route,navigation }){
         } = await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
-        }
-        else setHasPermission(status === "granted")
+        } else setHasPermission(status === "granted");
       }
     })();
   }, []);
 
   //Choose picture from device
- const pickPhoto = async () => { 
-     let result = await ImagePicker.launchImageLibraryAsync({ 
-         mediaTypes: ImagePicker.MediaTypeOptions.All, 
-         allowsEditing: true, 
-         aspect: [3, 4], 
-         quality: 1, 
-        });
-        
+  const pickPhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+
     console.log(result);
-    
-    if (!result.cancelled) { 
-        console.log("pickPhoto result.uri", result)
-        uploadImage (result.uri, "profile")
-        setPicture(result.uri); 
-    } 
-};
 
+    if (!result.cancelled) {
+      console.log("pickPhoto result.uri", result);
+      uploadImage(result.uri, "profile");
+      setPicture(result.uri);
+    }
+  };
 
-//Take picture using camera
-const takePhoto = async (ref) => {
-  let result = await ref.takePictureAsync(); 
-  if (result){
-      console.log("takePhoto result.uri", result)
-      uploadImage (result.uri, "profile")
-      setPicture(result.uri); 
-  }
-}
+  //Take picture using camera
+  const takePhoto = async (ref) => {
+    let result = await ref.takePictureAsync();
+    if (result) {
+      console.log("takePhoto result.uri", result);
+      uploadImage(result.uri, "profile");
+      setPicture(result.uri);
+    }
+  };
 
-//upload image to firebase
- const uploadImage = async (uri, imageName) => {
+  //upload image to firebase
+  const uploadImage = async (uri, imageName) => {
     const response = await fetch(uri);
     const blob = await response.blob();
     const ref = firebase
@@ -72,50 +76,75 @@ const takePhoto = async (ref) => {
     return ref.put(blob);
   };
 
+  function onSubmitHandler() {
+    createKid({
+      variables: {
+        name: route.params.kidName,
+        nickName: route.params.kidNickname,
+        birthdate: route.params.kidDateofBirth,
+        profileImageUrl: picture,
+      },
+    });
+  }
+
   if (hasPermission === null) {
     return <View />;
   }
 
-if (hasPermission === false) { 
-    return <Text>No access to camera</Text>; 
-}
-    //console.log("props:",props)
-return (
-<View style={[styles.fontFamily]}>
-    <View>
-        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName || 'Kid'} & family! Let's get started`}</Text>
-    </View>
-    <View>
-        <Text style={[style.label,style.align,style.spacing]}>
-          {`This is the default picture. Please upload a profile picture of ${route.params.kidName || 'Kid'} for your family.`}
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+  //console.log("props:",props)
+  return (
+    <View style={[styles.fontFamily]}>
+      <View>
+        <Text style={[style.text, style.align]}>{`Welcome ${
+          route.params.kidName || "Kid"
+        } & family! Let's get started`}</Text>
+      </View>
+      <View>
+        <Text style={[style.label, style.align, style.spacing]}>
+          {`This is the default picture. Please upload a profile picture of ${
+            route.params.kidName || "Kid"
+          } for your family.`}
         </Text>
-    </View>
+      </View>
 
-   <View style={[{flexDirection:"row"}]}>
-       <View>
-       {picture && <Image source={{ uri:picture }} 
-        alt="no-picture"
-        style={[style.image]}
-    />}
-    </View>
-    <View style={[style.spacing,{alignSelf:"center"}]}>
-    <Button title="Pick a photo" onPress={pickPhoto} />
-    <Button title="Take Picture" 
-    onPress={()=> navigation.navigate("TakeProfilePicture",{takePhoto})} /> 
-    </View>
-    </View>
-   
-     <View style={[{ flexDirection: "row"},style.spacing]}>
-    <View style={[style.button, styles.yellow]}>
-        <TouchableOpacity onPress={() => navigation.navigate("UploadKidProfile")}>
+      <View style={[{ flexDirection: "row" }]}>
+        <View>
+          {picture && (
+            <Image
+              source={{ uri: picture }}
+              alt="no-picture"
+              style={[style.image]}
+            />
+          )}
+        </View>
+        <View style={[style.spacing, { alignSelf: "center" }]}>
+          <Button title="Pick a photo" onPress={pickPhoto} />
+          <Button
+            title="Take Picture"
+            onPress={() =>
+              navigation.navigate("TakeProfilePicture", { takePhoto })
+            }
+          />
+        </View>
+      </View>
+
+      <View style={[{ flexDirection: "row" }, style.spacing]}>
+        <View style={[style.button, styles.yellow]}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UploadKidProfile")}
+          >
             <Text style={style.button}>Skip this</Text>
-        </TouchableOpacity>
-    </View>
-    <View style={[style.button, styles.dkPink]}>
-        <TouchableOpacity onPress={() => navigation.navigate("Recommended")}>
+          </TouchableOpacity>
+        </View>
+        <View style={[style.button, styles.dkPink]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
             <Text style={style.button}>Continue</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
-    </View> 
-</View>
-)}
+  );
+}
