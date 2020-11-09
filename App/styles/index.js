@@ -214,5 +214,6 @@ export default StyleSheet.create({
     resizeMode: "contain",
     width: "50%",
     alignSelf: "center",
+    marginBottom: -30,
   },
 });
