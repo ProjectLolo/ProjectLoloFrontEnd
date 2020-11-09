@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import styles from "@styles/styles";
 import fonts from "@assets/fonts";
 import colors from "@assets/colors";
@@ -34,45 +40,65 @@ export default function ChangeProfilePicture(props) {
       <View
         style={{
           backgroundColor: "white",
-          height: Dimensions.get("window").width * 0.5,
+          height: Dimensions.get("window").width * 0.77,
           width: "80%",
           alignSelf: "center",
           borderRadius: 25,
-          justifyContent: "space-between",
           padding: 20,
+          shadowColor: "black",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 1,
+          shadowRadius: 150,
         }}
       >
-        <View style={[styles.cardContainer]}>
+        <View
+          style={[
+            styles.cardContainer,
+            { marginBottom: "15%", marginTop: "5%" },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.dkPink }]}>
             Change Profile Picture
           </Text>
         </View>
-        <TouchableWithoutFeedback
+        <TouchableOpacity
           onPress={() => navigation.navigate("TakeProfilePicture")}
         >
-          <View style={styles.cardContainer}>
+          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
             <Text
               style={[
                 styles.cardText,
-                { fontFamily: fonts.semiBold, color: colors.grey },
+                { fontFamily: fonts.semiBold, color: colors.purple },
               ]}
             >
               New Profile Picture
             </Text>
           </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={[styles.cardContainer, { marginBottom: "5%" }]}>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
             <Text
               style={[
                 styles.cardText,
-                { fontFamily: fonts.semiBold, color: colors.grey },
+                { fontFamily: fonts.semiBold, color: colors.purple },
               ]}
             >
               Select From Gallery
             </Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
+            <Text
+              style={[
+                styles.cardText,
+                { fontFamily: fonts.semiBold, color: colors.purple },
+              ]}
+            >
+              Delete Profile Picture
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -38,6 +38,7 @@ export default StyleSheet.create({
     height: 60,
     fontSize: adjust(16),
     paddingLeft: 15,
+    paddingRight: 15,
     borderWidth: 0.2,
     borderColor: colors.grey,
     borderRadius: 5,
