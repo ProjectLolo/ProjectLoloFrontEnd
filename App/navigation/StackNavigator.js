@@ -16,9 +16,9 @@ import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoRecording from "../components/VideoRecording";
 import VideoUploading from "../components/VideoUploading";
 
-export default function authNavigator() {
+export default function authNavigator({ route }) {
   const Stack = createStackNavigator();
-
+  console.log("route", route);
   return (
     <NavigationContainer>
       <Stack.Navigator

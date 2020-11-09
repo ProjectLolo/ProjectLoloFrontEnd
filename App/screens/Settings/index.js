@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../context/Auth";
 import {
   View,
   Text,
@@ -18,6 +20,7 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 export default function Settings({ route, navigation }) {
+  const { signOut } = useContext(AuthContext);
   const profileInfo = {
     firstName: "Diégo",
     lastName: "Teixeira da Costa",
@@ -348,9 +351,28 @@ export default function Settings({ route, navigation }) {
         </TouchableWithoutFeedback>
       )}
 
+{!changeInfo && (
+        <TouchableWithoutFeedback onPress={() => signOut()}>
+          <Text
+            style={[
+              styles.cardText,
+              {
+                color: colors.ltPurple,
+                fontFamily: fonts.semiBold,
+                marginTop: 20,
+                marginBottom: 20,
+              },
+            ]}
+          >
+            Log out
+          </Text>
+        </TouchableWithoutFeedback>
+      )}
+
       {showMessage()}
       <NavButtons screen="Settings" />
       {changeProfilePicture && <ChangeProfilePicture hide={hideOptions} />}
+
     </View>
   );
 }
