@@ -38,6 +38,7 @@ export default StyleSheet.create({
     height: 60,
     fontSize: adjust(16),
     paddingLeft: 15,
+    paddingRight: 15,
     borderWidth: 0.2,
     borderColor: colors.grey,
     borderRadius: 5,
@@ -103,7 +104,7 @@ export default StyleSheet.create({
     marginLeft: "5%",
     width: "90%",
   },
-  cardContainer: { marginTop: 10, marginHorizontal: 10 },
+  cardContainer: { marginTop: "5%", marginHorizontal: "2.5%" },
   cardImage: {
     resizeMode: "contain",
     width: 100,
