@@ -21,7 +21,7 @@ export default function authNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="LoveBank"
+        initialRouteName="KidCircles"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="KidCircles" component={KidCircles} />
