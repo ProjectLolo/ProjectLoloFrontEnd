@@ -6,7 +6,8 @@ import { View,
 Button,
 Image,
 Text,
-TouchableOpacity } 
+TouchableOpacity,
+ActivityIndicator } 
 from "react-native";
 import styles from "../../styles"; //global styles
 import style from"./style"; //local styles
@@ -25,6 +26,7 @@ export default function UploadKidProfile ({ route,navigation }){
 
   const [addKidCircle, { data }] = useMutation(ADD_KIDCIRCLE);
 
+    const  [loading, setLoading] = useState(false)
     const [hasPermission, setHasPermission] = useState(null); 
     const [picture,setPicture]=useState("https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png");
 
@@ -43,6 +45,15 @@ export default function UploadKidProfile ({ route,navigation }){
     })();
   }, []);
 
+  //using camera
+useEffect(()=>{
+  const result = route.params.result
+  if (route.params.result) {
+     uploadImage (result.uri, "profile")
+  }
+},[route.params])
+
+
   //Choose picture from device
  const pickPhoto = async () => { 
      let result = await ImagePicker.launchImageLibraryAsync({ 
@@ -56,21 +67,10 @@ export default function UploadKidProfile ({ route,navigation }){
     
     if (!result.cancelled) { 
         console.log("pickPhoto result.uri", result)
-        uploadImage (result.uri, "profile")
-        setPicture(result.uri); 
+        uploadImage(result.uri, "profile")
     } 
 };
 
-
-//Take picture using camera
-const takePhoto = async (ref) => {
-  let result = await ref.takePictureAsync(); 
-  if (result){
-      console.log("takePhoto result.uri", result)
-      uploadImage (result.uri, "profile")
-      setPicture(result.uri); 
-  }
-}
 
 //upload image to firebase
  const uploadImage = async (uri, imageName) => {
@@ -80,21 +80,56 @@ const takePhoto = async (ref) => {
       .storage()
       .ref()
       .child("images/" + imageName);
-    return ref.put(blob);
-  };
+    const uploadTask = ref.put(blob);
 
-  if (hasPermission === null) {
-    return <View />;
+// Register three observers:
+// 1. 'state_changed' observer, called any time the state changes
+// 2. Error observer, called on failure
+// 3. Completion observer, called on successful completion
+uploadTask.on('state_changed', function(snapshot){
+  // Observe state change events such as progress, pause, and resume
+  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+  setLoading(true)
+  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  console.log('Upload is ' + progress + '% done');
+  switch (snapshot.state) {
+    case firebase.storage.TaskState.PAUSED: // or 'paused'
+      console.log('Upload is paused');
+      break;
+    case firebase.storage.TaskState.RUNNING: // or 'running'
+      console.log('Upload is running');
+      break;
   }
+}, function(error) {
+  // Handle unsuccessful uploads
+  console.log("image upload errors:", error)
+}, function() {
+ 
+  // Handle successful uploads on complete
+  console.log("image upload success")
+  setLoading(false)
+  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+    console.log('File available at', downloadURL);
+    setPicture(downloadURL)
+  });
+});
+};
+
+if (hasPermission === null) {
+  return <View />;
+}
 
 if (hasPermission === false) { 
     return <Text>No access to camera</Text>; 
 }
-    //console.log("props:",props)
+    
 return (
 <View style={[styles.fontFamily]}>
+  
     <View>
         <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
+        {loading && <ActivityIndicator size="large" color="#660066" /> }
     </View>
     <View>
         <Text style={[style.label,style.align,style.spacing]}>
@@ -104,7 +139,8 @@ return (
 
    <View style={[{flexDirection:"row"}]}>
        <View>
-       {picture && <Image source={{ uri:picture }} 
+      
+       {picture && <Image source={{uri:picture}} 
         alt="no-picture"
         style={[style.image]}
     />}
@@ -112,7 +148,8 @@ return (
     <View style={[style.spacing,{alignSelf:"center"}]}>
     <Button title="Pick a photo" onPress={pickPhoto} />
     <Button title="Take Picture" 
-    onPress={()=> navigation.navigate("TakeProfilePicture",{takePhoto})} /> 
+    onPress={()=> navigation.navigate("TakeProfilePicture")} /> 
+   
     </View>
     </View>
    

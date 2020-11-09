@@ -21,9 +21,19 @@ export default function TakeProfilePicture({route,navigation}){
   }, []);
 
 
-const handleClick = () =>{
-    route.params.takePhoto(cameraRef);
-    navigation.navigate("UploadKidProfile");
+// const handleClick = () =>{
+//     route.params.takePhoto(cameraRef);
+//     setClick(true)
+//     navigation.navigate("UploadKidProfile");
+// }
+
+//Take picture using camera
+const takePhoto = async () => {
+  let result = await cameraRef.takePictureAsync(); 
+  if (result){
+      console.log("takePhoto result.uri", result)
+      navigation.navigate("UploadKidProfile",{result});
+  }
 }
 
   if (hasPermission === null) {
@@ -81,7 +91,7 @@ return (
       
         <TouchableOpacity
         style={{ alignSelf: "center" }}
-        onPress={handleClick}
+        onPress={takePhoto}
         >
           <View
                 style={{
