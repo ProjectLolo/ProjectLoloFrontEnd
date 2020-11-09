@@ -1,44 +1,44 @@
-import React,{useEffect,useState} from "react";
-import { AntDesign } from '@expo/vector-icons';
+import React, { useEffect, useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Camera } from 'expo-camera';
+import { Camera } from "expo-camera";
 
-export default function TakeProfilePicture({route,navigation}){
-  
-
-    const [click, setClick] = useState(false);
+export default function TakeProfilePicture({ route, navigation }) {
+  const [click, setClick] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
-
-const handleClick = () =>{
+  const handleClick = () => {
     route.params.takePhoto(cameraRef);
     navigation.navigate("UploadKidProfile");
-}
+  };
 
   if (hasPermission === null) {
     return <View />;
   }
 
-if (hasPermission === false) { 
-    return <Text>No access to camera</Text>; 
-}
-return (
-<View style={{ flex: 1 }}>
-<Camera style={{ flex: 1 }} type={type} ref={(ref) => {
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+  return (
+    <View style={{ flex: 1 }}>
+      <Camera
+        style={{ flex: 1 }}
+        type={type}
+        ref={(ref) => {
           setCameraRef(ref);
-        }}>
-   <View
+        }}
+      >
+        <View
           style={{
             flex: 1,
             backgroundColor: "transparent",
@@ -52,8 +52,7 @@ return (
               justifyContent: "space-evenly",
             }}
           >
-      
-      <TouchableOpacity
+            <TouchableOpacity
               style={{
                 flex: 0.1,
                 alignSelf: "flex-end",
@@ -75,15 +74,13 @@ return (
                 size={40}
                 color="white"
               />
-              
             </TouchableOpacity>
-      
-      
-        <TouchableOpacity
-        style={{ alignSelf: "center" }}
-        onPress={handleClick}
-        >
-          <View
+
+            <TouchableOpacity
+              style={{ alignSelf: "center" }}
+              onPress={handleClick}
+            >
+              <View
                 style={{
                   borderWidth: 2,
                   borderRadius: 25,
@@ -107,15 +104,22 @@ return (
                 ></View>
               </View>
             </TouchableOpacity>
-        <TouchableOpacity style={{
+            <TouchableOpacity
+              style={{
                 flex: 0.1,
                 alignSelf: "flex-end",
-              }}>
-       <AntDesign name="back" size={40} color="white"
-        onPress={()=>navigation.navigate("UploadKidProfile")}/>
-        </TouchableOpacity>
-     </View>
+              }}
+            >
+              <AntDesign
+                name="back"
+                size={40}
+                color="white"
+                onPress={() => navigation.navigate("UploadKidProfile")}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-  </Camera>
-</View>
-)}
+      </Camera>
+    </View>
+  );
+}

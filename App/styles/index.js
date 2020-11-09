@@ -103,7 +103,7 @@ export default StyleSheet.create({
     marginLeft: "5%",
     width: "90%",
   },
-  cardContainer: { marginTop: 10, marginHorizontal: 10 },
+  cardContainer: { marginTop: "5%", marginHorizontal: "2.5%" },
   cardImage: {
     resizeMode: "contain",
     width: 100,

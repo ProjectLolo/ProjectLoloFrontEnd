@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
-import TakeProfilePicture from "../components/TakeProfilePicture"
+import TakeProfilePicture from "../components/TakeProfilePicture";
 import JoinKidCircle from "../screens/JoinKidCircle";
 import Recommended from "../screens/Recommended";
 import LoveBank from "../screens/LoveBank";
@@ -22,13 +22,16 @@ export default function authNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="KidCircles"
+        initialRouteName="Settings"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="KidCircles" component={KidCircles} />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
         <Stack.Screen name="UploadKidProfile" component={UploadKidProfile} />
-        <Stack.Screen name="TakeProfilePicture" component={TakeProfilePicture}/>
+        <Stack.Screen
+          name="TakeProfilePicture"
+          component={TakeProfilePicture}
+        />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen name="Recommended" component={Recommended} />
         <Stack.Screen name="LoveBank" component={LoveBank} />
