@@ -11,7 +11,6 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../../graphql/mutations"
 
 export default function Login({ navigation }) {
-  const [errorState, set_errorState] = useState(null);
   const [variables, setVariables] = useState({
     email: "",
     password: "",
