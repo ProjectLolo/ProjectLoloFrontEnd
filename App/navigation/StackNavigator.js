@@ -11,7 +11,7 @@ import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
-import MessageSent from "../screens/CreateContent/MessageSent"
+import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoRecording from "../components/VideoRecording";
 import VideoUploading from "../components/VideoUploading";
 
@@ -21,7 +21,7 @@ export default function authNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Recommended"
+        initialRouteName="LoveBank"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="KidCircles" component={KidCircles} />

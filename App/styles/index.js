@@ -104,7 +104,7 @@ export default StyleSheet.create({
     width: "90%",
   },
   cardContainer: { marginTop: 10, marginHorizontal: 10 },
-  activityImage: {
+  cardImage: {
     resizeMode: "contain",
     width: 100,
     height: 100,
