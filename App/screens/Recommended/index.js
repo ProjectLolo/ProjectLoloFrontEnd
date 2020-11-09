@@ -78,6 +78,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "teal",
       bottom2: "yellow",
+      nav: "ShareSomething"
     },
     {
       id: 2,
@@ -163,6 +164,7 @@ export default function Recommended({ navigation }) {
                   top2={item.top2}
                   bottom1={item.bottom1}
                   bottom2={item.bottom2}
+                  nav={item.nav}
                 />
               </TouchableWithoutFeedback>
             );
