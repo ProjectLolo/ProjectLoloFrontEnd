@@ -10,8 +10,20 @@ TouchableOpacity }
 from "react-native";
 import styles from "../../styles"; //global styles
 import style from"./style"; //local styles
+import { gql, useMutation } from '@apollo/client';
+
+const ADD_KIDCIRCLE = gql`
+  mutation AddKidCircle($type: String!) {
+    addKidCircle(type: $type) {
+      id
+      type
+    }
+  }
+`;
 
 export default function UploadKidProfile ({ route,navigation }){
+
+  const [addKidCircle, { data }] = useMutation(ADD_KIDCIRCLE);
 
     const [hasPermission, setHasPermission] = useState(null); 
     const [picture,setPicture]=useState("https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png");
@@ -82,11 +94,11 @@ if (hasPermission === false) {
 return (
 <View style={[styles.fontFamily]}>
     <View>
-        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName || 'Kid'} & family! Let's get started`}</Text>
+        <Text style={[style.text,style.align]}>{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
     </View>
     <View>
         <Text style={[style.label,style.align,style.spacing]}>
-          {`This is the default picture. Please upload a profile picture of ${route.params.kidName || 'Kid'} for your family.`}
+          {`Please upload a profile picture of ${route.params.kidName} for your family.`}
         </Text>
     </View>
 
