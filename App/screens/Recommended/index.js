@@ -204,7 +204,7 @@ export default function Recommended({ navigation }) {
         </TouchableWithoutFeedback>
       )}
 
-      <NavButtons page="Recommended" />
+      <NavButtons screen="Recommended" />
     </View>
   );
 }

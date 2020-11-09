@@ -77,8 +77,8 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   bottomText: {
-    marginTop: "10%",
-    marginBottom: "10%",
+    marginTop: "8%",
+    marginBottom: "8%",
     fontSize: adjust(12),
     fontFamily: fonts.semiBold,
     color: colors.grey,
@@ -104,7 +104,7 @@ export default StyleSheet.create({
     width: "90%",
   },
   cardContainer: { marginTop: 10, marginHorizontal: 10 },
-  activityImage: {
+  cardImage: {
     resizeMode: "contain",
     width: 100,
     height: 100,
@@ -124,11 +124,11 @@ export default StyleSheet.create({
   },
   linTop: {
     width: 180,
-    height: 120,
+    paddingVertical: "2%",
     justifyContent: "center",
     borderRadius: 20,
   },
-  linBottom: { paddingVertical: 20, borderRadius: 20 },
+  linBottom: { paddingVertical: "5%", borderRadius: 20 },
 
   //NavButtons
   navBtsContainer: {
@@ -214,5 +214,6 @@ export default StyleSheet.create({
     resizeMode: "contain",
     width: "50%",
     alignSelf: "center",
+    marginBottom: -30,
   },
 });

@@ -5,13 +5,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
+import TakeProfilePicture from "../components/TakeProfilePicture"
 import JoinKidCircle from "../screens/JoinKidCircle";
 import Recommended from "../screens/Recommended";
 import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
-import MessageSent from "../screens/CreateContent/MessageSent"
+import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoRecording from "../components/VideoRecording";
 import VideoUploading from "../components/VideoUploading";
 
@@ -21,12 +22,13 @@ export default function authNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Recommended"
+        initialRouteName="KidCircles"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="KidCircles" component={KidCircles} />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
         <Stack.Screen name="UploadKidProfile" component={UploadKidProfile} />
+        <Stack.Screen name="TakeProfilePicture" component={TakeProfilePicture}/>
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen name="Recommended" component={Recommended} />
         <Stack.Screen name="LoveBank" component={LoveBank} />

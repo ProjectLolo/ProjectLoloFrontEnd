@@ -19,7 +19,7 @@ export default function ActivityCard(props) {
           colors={[colors[top1], colors[top2]]}
           style={styles.linTop}
         >
-          <Image style={[styles.activityImage]} source={image} />
+          <Image style={[styles.cardImage]} source={image} />
         </LinearGradient>
       </View>
       <View

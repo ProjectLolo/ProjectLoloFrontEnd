@@ -13,7 +13,7 @@ export default function AuthNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignUp"
+        initialRouteName="Welcome"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Login" component={Login} />

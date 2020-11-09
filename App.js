@@ -37,8 +37,6 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-
-
 export default function App() {
   let [fontLoaded] = useFonts({
     Montserrat_400Regular,

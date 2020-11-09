@@ -7,10 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function NavButtons(props) {
   const navigation = useNavigation();
-  const { page } = props;
+  const { screen } = props;
 
   function today() {
-    if (page === "Recommended") {
+    if (screen === "Recommended") {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
@@ -40,7 +40,7 @@ export default function NavButtons(props) {
   }
 
   function loveBank() {
-    if (page === "LoveBank") {
+    if (screen === "LoveBank") {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
@@ -64,7 +64,7 @@ export default function NavButtons(props) {
   }
 
   function create() {
-    if (page === "Settings") {
+    if (screen === "Settings") {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
