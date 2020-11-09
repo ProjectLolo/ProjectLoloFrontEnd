@@ -7,6 +7,25 @@ export const LOGIN = gql`
     }
   }
 `;
+export const CREATE_KID = gql`
+  mutation createKid(
+    $name: String!
+    $nickName: String!
+    $birthdate: String!
+    $profileImageUrl: String!
+  ) {
+    createKid(
+      kidInput: {
+        name: $name
+        nickName: $nickName
+        birthdate: $birthdate
+        profileImageUrl: $profileImageUrl
+      }
+    ) {
+      _id
+    }
+  }
+`;
 
 export const SIGNUP = gql`
   mutation signup(
