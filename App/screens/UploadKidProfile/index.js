@@ -104,7 +104,6 @@ uploadTask.on('state_changed', function(snapshot){
   // Handle unsuccessful uploads
   console.log("image upload errors:", error)
 }, function() {
- 
   // Handle successful uploads on complete
   console.log("image upload success")
   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
