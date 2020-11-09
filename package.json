@@ -27,6 +27,7 @@
     "expo-video-thumbnails": "~4.3.0",
     "firebase": "7.9.0",
     "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

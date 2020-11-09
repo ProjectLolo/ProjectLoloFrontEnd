@@ -39,7 +39,7 @@ export default function VideoRecording({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Camera
-        style={{ flex: 1 }}
+        style={{ flex: 1, width: screenWidth, height: screenWidth * 1.3 }}
         type={type}
         ref={(ref) => {
           setCameraRef(ref);

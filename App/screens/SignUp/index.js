@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import styles from "@styles/styles";
 
+
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
