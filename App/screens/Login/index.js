@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import styles from "@styles/styles";
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "../../../graphql/mutations"
+import { LOGIN } from "../../../graphql/mutations";
 
 export default function Login({ navigation }) {
   const [variables, setVariables] = useState({
@@ -19,7 +19,7 @@ export default function Login({ navigation }) {
   const [login, { error }] = useMutation(LOGIN, {
     onError: (error) => console.log("hi", error.graphQLErrors),
     onCompleted({ login }) {
-      console.log("completed", login)
+      console.log("completed", login);
       if (login.error) {
         set_errorState(<Alert variant="danger">{login.error}</Alert>);
       }
@@ -36,11 +36,9 @@ export default function Login({ navigation }) {
 
   function submitForm(e) {
     e.preventDefault();
-    console.log("hi")
+    console.log("hi");
     login({ variables });
-  };
-   
-
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -51,9 +49,7 @@ export default function Login({ navigation }) {
           style={styles.inputBox}
           placeholder="Enter email..."
           placeholderTextColor="grey"
-          onChangeText={(text) =>
-            setVariables({ ...variables, email: text })
-          }
+          onChangeText={(text) => setVariables({ ...variables, email: text })}
           value={variables.email}
         />
         <Text style={styles.inputLabel}>Password</Text>
