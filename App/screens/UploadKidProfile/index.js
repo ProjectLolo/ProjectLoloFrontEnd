@@ -107,11 +107,11 @@ uploadTask.on('state_changed', function(snapshot){
  
   // Handle successful uploads on complete
   console.log("image upload success")
-  setLoading(false)
   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
   uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
     console.log('File available at', downloadURL);
     setPicture(downloadURL)
+    setLoading(false)
   });
 });
 };
