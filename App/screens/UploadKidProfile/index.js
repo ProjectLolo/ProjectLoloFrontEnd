@@ -102,6 +102,9 @@ export default function UploadKidProfile({ route, navigation }) {
 
   //upload image to firebase
   const uploadImage = async (uri, imageName) => {
+    setLoading(true);
+    setChangeProfilePicture(false);
+
     const response = await fetch(uri);
     const blob = await response.blob();
     const ref = firebase
@@ -110,8 +113,6 @@ export default function UploadKidProfile({ route, navigation }) {
       .child("images/" + imageName);
     const uploadTask = ref.put(blob);
 
-    setLoading(true);
-    setChangeProfilePicture(false);
     // Register three observers:
     // 1. 'state_changed' observer, called any time the state changes
     // 2. Error observer, called on failure
@@ -139,8 +140,6 @@ export default function UploadKidProfile({ route, navigation }) {
         console.log("image upload errors:", error);
       },
       function () {
-        setLoading(false);
-        setPicture(uri);
         console.log("URIRUIRUIRURIR", uri);
         // Handle successful uploads on complete
         console.log("image upload success");
@@ -148,6 +147,7 @@ export default function UploadKidProfile({ route, navigation }) {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
           setPicture(downloadURL);
+          setLoading(false);
         });
       }
     );
@@ -197,7 +197,6 @@ export default function UploadKidProfile({ route, navigation }) {
         for your family.
       </Text>
 
-      {/*  */}
       {loading ? (
         <ActivityIndicator
           style={{ marginBottom: picture ? "76.5%" : "129.5%" }}
@@ -210,22 +209,18 @@ export default function UploadKidProfile({ route, navigation }) {
             onPress={() => setChangeProfilePicture(true)}
           >
             <View
-              style={
-                picture
-                  ? null
-                  : {
-                      backgroundColor: "white",
-                      width: "50%",
-                      alignSelf: "center",
-                      justifyContent: "space-evenly",
-                      shadowColor: "black",
-                      shadowOffset: { width: 0, height: 0 },
-                      shadowOpacity: 0.05,
-                      shadowRadius: 5,
-                      height: Dimensions.get("window").width * 0.5,
-                      borderRadius: 100,
-                    }
-              }
+              style={{
+                backgroundColor: "white",
+                width: "50%",
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                height: Dimensions.get("window").width * 0.5,
+                borderRadius: 100,
+              }}
             >
               <Image
                 style={
@@ -260,8 +255,6 @@ export default function UploadKidProfile({ route, navigation }) {
           </TouchableWithoutFeedback>
         </View>
       )}
-
-      {/*  */}
 
       {picture && (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
