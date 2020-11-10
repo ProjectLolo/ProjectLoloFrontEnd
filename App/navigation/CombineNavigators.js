@@ -21,6 +21,7 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
+        await AsyncStorage.setItem("userToken", data);
         dispatch({ type: "SIGN_IN", token: data });
       },
     }),
