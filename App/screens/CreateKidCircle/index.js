@@ -21,7 +21,6 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 export default function CreateKidCircles({ navigation }) {
-  const today = new Date("1992-06-10");
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [dateOfBirth, setDOB] = useState("");
