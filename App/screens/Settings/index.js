@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/Auth";
 import {
@@ -20,6 +19,7 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 export default function Settings({ route, navigation }) {
+  const single = route.params;
   const { signOut } = useContext(AuthContext);
   const profileInfo = {
     firstName: "Diégo",
@@ -39,8 +39,6 @@ export default function Settings({ route, navigation }) {
   };
 
   const [variables, setVariables] = useState(initState);
-  const something = route.params;
-  console.log("is there something", something);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
@@ -351,7 +349,7 @@ export default function Settings({ route, navigation }) {
         </TouchableWithoutFeedback>
       )}
 
-{!changeInfo && (
+      {!changeInfo && (
         <TouchableWithoutFeedback onPress={() => signOut()}>
           <Text
             style={[
@@ -360,7 +358,7 @@ export default function Settings({ route, navigation }) {
                 color: colors.ltPurple,
                 fontFamily: fonts.semiBold,
                 marginTop: 20,
-                marginBottom: 20,
+                marginBottom: !single ? 20 : "20%",
               },
             ]}
           >
@@ -370,9 +368,8 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      <NavButtons screen="Settings" />
+      {!single && <NavButtons screen="Settings" />}
       {changeProfilePicture && <ChangeProfilePicture hide={hideOptions} />}
-
     </View>
   );
 }

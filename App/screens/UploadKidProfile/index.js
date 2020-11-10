@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
 
-
 import {
   View,
   Button,
@@ -41,7 +40,6 @@ export default function UploadKidProfile({ route, navigation }) {
 
   const [addKidCircle, { data }] = useMutation(ADD_KIDCIRCLE);
 
-
   // asks permission from used to use camera
   useEffect(() => {
     (async () => {
@@ -65,6 +63,7 @@ export default function UploadKidProfile({ route, navigation }) {
         profileImageUrl: picture,
       },
     });
+    navigation.navigate("Recommended");
   }
   //using camera
   useEffect(() => {
@@ -85,14 +84,12 @@ export default function UploadKidProfile({ route, navigation }) {
 
     console.log(result);
 
-
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
       uploadImage(result.uri, "profile");
       setPicture(result.uri);
     }
   };
-
 
   //upload image to firebase
   const uploadImage = async (uri, imageName) => {
@@ -150,7 +147,6 @@ export default function UploadKidProfile({ route, navigation }) {
     return <Text>No access to camera</Text>;
   }
 
-
   return (
     <View style={[styles.fontFamily]}>
       <View>
@@ -162,7 +158,6 @@ export default function UploadKidProfile({ route, navigation }) {
       <View>
         <Text style={[style.label, style.align, style.spacing]}>
           {`Please upload a profile picture of ${route.params.kidName} for your family.`}
-
         </Text>
       </View>
 
@@ -180,25 +175,19 @@ export default function UploadKidProfile({ route, navigation }) {
           <Button title="Pick a photo" onPress={pickPhoto} />
           <Button
             title="Take Picture"
-
             onPress={() => navigation.navigate("TakeProfilePicture")}
-
           />
         </View>
       </View>
 
       <View style={[{ flexDirection: "row" }, style.spacing]}>
         <View style={[style.button, styles.yellow]}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("UploadKidProfile")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Recommended")}>
             <Text style={style.button}>Skip this</Text>
           </TouchableOpacity>
         </View>
         <View style={[style.button, styles.dkPink]}>
-
           <TouchableOpacity onPress={onSubmitHandler}>
-
             <Text style={style.button}>Continue</Text>
           </TouchableOpacity>
         </View>

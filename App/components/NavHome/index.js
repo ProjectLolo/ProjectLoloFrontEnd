@@ -24,7 +24,7 @@ export default function NavHome() {
             width: 20,
             height: 20,
             marginTop: 57,
-            marginRight: 50,
+            marginRight: 80,
           }}
         ></View>
       </TouchableWithoutFeedback>
@@ -32,7 +32,7 @@ export default function NavHome() {
         onPress={() => navigation.navigate("Recommended")}
       >
         <Image
-          style={[styles.peekabondLogo, { marginRight: 70 }]}
+          style={[styles.peekabondLogo, { marginRight: 90 }]}
           source={images.peekabondLogo}
         />
       </TouchableWithoutFeedback>
