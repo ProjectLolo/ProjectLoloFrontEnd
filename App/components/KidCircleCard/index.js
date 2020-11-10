@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,20 @@ import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../context/Auth";
 
 export default function KidCircleCard(props) {
+  const { activeKid } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
+
+  function handlePress(e) {
+    e.preventDefault();
+    console.log("hi there from KidCircleCard!", id);
+    activeKid(id);
+
+    navigation.navigate("Recommended", { kidName });
+  }
   return (
     <View
       style={{
@@ -24,7 +34,7 @@ export default function KidCircleCard(props) {
         onPress={() =>
           /*This should bring user to the correct Recommended page, for now passing the kids name in param*/ navigation.navigate(
             "Recommended",
-            { kidName }
+            { _id, kidName }
           )
         }
       >
@@ -41,14 +51,7 @@ export default function KidCircleCard(props) {
           {kidName}
         </Text>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() =>
-          /*This should bring user to the correct Recommended page, for now passing the kids name in param*/ navigation.navigate(
-            "Recommended",
-            { kidName }
-          )
-        }
-      >
+      <TouchableWithoutFeedback onPress={handlePress}>
         <View
           style={{
             backgroundColor: "white",

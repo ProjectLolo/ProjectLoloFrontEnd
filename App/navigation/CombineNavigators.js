@@ -21,7 +21,14 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
+        await AsyncStorage.setItem("userToken", data);
         dispatch({ type: "SIGN_IN", token: data });
+      },
+      activeUser: async (data) => {
+        dispatch({ type: "SET_USER", id: data });
+      },
+      activeKid: async (data) => {
+        dispatch({ type: "SET_KID", id: data });
       },
     }),
     []
@@ -74,10 +81,22 @@ export default function CombineNavigators() {
             ...prevState,
             userToken: false,
           };
+        case "SET_USER":
+          return {
+            ...prevState,
+            activeUser: action.id,
+          };
+        case "SET_KID":
+          return {
+            ...prevState,
+            activeKid: action.id,
+          };
       }
     },
     {
       userToken: false,
+      activeKid: false,
+      activeUser: false,
     }
   );
 
@@ -87,7 +106,7 @@ export default function CombineNavigators() {
   return (
     <AuthContext.Provider value={authContextValue}>
       <AuthStateContext.Provider value={state}>
-        {state.userToken ? <StackNavigator /> : <AuthNavigator />}
+        {state.userToken ? <StackNavigator state={state} /> : <AuthNavigator />}
       </AuthStateContext.Provider>
     </AuthContext.Provider>
   );

@@ -7,6 +7,9 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+
+import { useQuery } from "@apollo/client";
+
 import styles from "@styles/styles"; //have to changeit to @styles/styles
 import style from "./style";
 import images from "@assets/images";
@@ -16,25 +19,29 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
-export default function KidCircles({ navigation }) {
-  const circles = [
-    {
-      id: 1,
-      kidImage: images.monkey,
-      kidName: "Atieh",
-    },
-    {
-      id: 2,
-      kidImage: images.monkey,
-      kidName: "Weilong",
-    },
-    {
-      id: 3,
-      kidImage: images.monkey,
-      kidName: "Nazneen",
-    },
-  ];
+import { GET_ALL_KIDS } from "../../../graphql/queries";
 
+export default function KidCircles({ route, navigation }) {
+  const { data } = useQuery(GET_ALL_KIDS, {
+    variables: {
+      userId: "5fa963bbff41f83f6997dc78",
+    },
+  });
+  console.log("route in kidcircly", route);
+  // const circles = [
+  //   {
+  //     id: 1,
+  //     kidImage: images.monkey,
+  //     kidName: "Atieh",
+  //   },
+  // ];
+  if (!data) {
+    return (
+      <View>
+        <Text>...loading</Text>
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -56,16 +63,16 @@ export default function KidCircles({ navigation }) {
           width: "50%",
           paddingTop: 30,
         }}
-        data={circles}
+        data={data.findAllKids}
         numColumns={1}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback>
               <KidCircleCard
-                id={item.id}
-                kidImage={item.kidImage}
-                kidName={item.kidName}
+                id={item._id}
+                kidImage={item.profileImageUrl}
+                kidName={item.name}
               />
             </TouchableWithoutFeedback>
           );

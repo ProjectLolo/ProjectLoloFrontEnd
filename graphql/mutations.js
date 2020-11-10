@@ -33,20 +33,42 @@ export const SIGNUP = gql`
     $lastName: String
     $email: String!
     $password: String!
+    $profilePic: String!
   ) {
     signup(
-      signupInput: {
-        firstName: $firstName
-        lastName: $lastName
-        email: $email
-        password: $password
-      }
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      profilePic: $profilePic
     ) {
       firstName
       lastName
       email
       id
       token
+    }
+  }
+`;
+
+export const CREATE_LOVEBANK = gql`
+  mutation createLoveBank(
+    $title: String!
+    $url: String!
+    $preview: String!
+    $description: String!
+    $category: String!
+    $kidId: ID
+  ) {
+    createLoveBank(
+      title: $title
+      url: $url
+      preview: $preview
+      description: $description
+      category: $category
+      kidId: $kidId
+    ) {
+      _id
     }
   }
 `;
