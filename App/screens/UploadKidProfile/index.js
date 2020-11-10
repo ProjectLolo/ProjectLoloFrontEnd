@@ -30,7 +30,7 @@ export default function UploadKidProfile({ route, navigation }) {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-      navigation.navigate("Recommended");
+      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
     },
   });
 
