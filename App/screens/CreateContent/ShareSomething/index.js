@@ -7,48 +7,112 @@ import {
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
+  Platform,
 } from "react-native";
 import Images from "../../../assets";
 import style from "../../../styles";
-
+import * as ImagePicker from "expo-image-picker";
+import { Video } from "expo-av";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import VideoPreview from "../../../components/VideoPreview"
 export default function ShareSomething({ navigation }) {
+  const [video, setVideo] = useState(null);
+  const [shouldPlay, setShouldPlat] = useState(true);
+
+  handlePlayAndPause = () => {
+    setShouldPlat((prevState) => ({
+      shouldPlay: !prevState.shouldPlay,
+    }));
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickVideo = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setVideo(result.uri);
+    }
+  };
+
+  const takeVideo = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+    console.log(result);
+
+    if (!result.cancelled) {
+      setVideo(result.uri);
+    }
+  };
+
+
   return (
-    <View style={styles.container}>
-      <View style={styles.mainContainer}>
-      <Image style={styles.image} source={Images.videoCameraPurple} />
-      <Text style={[style.h2, style.center]}>Share Something</Text>
-      <Text style={style.center}>
-        Share a video from your media files to upload in the love bank
-      </Text>
-      </View>
-      {/* Icons for record and upload */}
-      <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("VideoRecording")}> 
-          <View style={styles.iconContainer}>
-            <Image style={styles.icon} source={Images.videoCameraPurple} />
-            <Text>Start recording</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("VideoUploading")}>
-        <View style={styles.iconContainer}>
-          <Image style={styles.icon} source={Images.upload} />
-          <Text>Upload video</Text>
+    <>
+    {video
+    ?
+    <VideoPreview uri={video} />
+    :
+  
+      <View style={styles.container}>
+        <View style={styles.mainContainer}>
+          <Image style={styles.image} source={Images.videoCameraPurple} />
+          <Text style={[style.h2, style.center]}>Share Something</Text>
+          <Text style={style.center}>
+            Share a video from your media files to upload in the love bank
+          </Text>
         </View>
-        </TouchableOpacity>
+        {/* Icons for record and upload */}
+        <View style={styles.rowContainer}>
+          <TouchableOpacity onPress={takeVideo}>
+            <View style={styles.iconContainer}>
+              <Image style={styles.icon} source={Images.videoCameraPurple} />
+              <Text>Start recording</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={pickVideo}>
+            <View style={styles.iconContainer}>
+              <Image style={styles.icon} source={Images.upload} />
+              <Text>Upload video</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {/* navigation */}
+        {/* <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("Recommended")}
+        >
+          <Text style={{ textAlign: "center", marginTop: 50 }}>
+            Press here to go to Recommended
+          </Text>
+        </TouchableWithoutFeedback> */}
       </View>
-      {/* navigation */}
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Recommended
-        </Text>
-      </TouchableWithoutFeedback>
-    </View>
+      }
+    </>
   );
 }
 const styles = StyleSheet.create({
-  
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
