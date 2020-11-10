@@ -8,21 +8,20 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
+  let token;
+  try {
+    token = await AsyncStorage.getItem("userToken");
+  } catch (e) {
+    console.log("token error apolloa client", e);
+  }
 
-  // commented out cause no setting storage yet
-
-  // const token = async () => await AsyncStorage.getItem("token");
-
-  // delete the below
-  const token = true;
+  console.log("token within apollo client", token);
 
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token
-        ? `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmE5NjQ0MWZmNDFmODNmNjk5N2RjNzkiLCJlbWFpbCI6IldlQHdlLmNvbSIsImlhdCI6MTYwNDk1MjMyMSwiZXhwIjoxNjA0OTU5NTIxfQ.uNZ4c6xQdiEW14xm0rO8lBoyCnp52TlhtX8deMBlQo8`
-        : "",
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
