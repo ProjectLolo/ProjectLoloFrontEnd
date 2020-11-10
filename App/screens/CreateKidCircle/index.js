@@ -9,11 +9,14 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 
-import styles from "../../styles";
+import styles from "@styles/styles";
 import style from "./style";
-import { ScrollView } from "react-native-gesture-handler";
+import images from "@assets/images";
+import colors from "@assets/colors";
+import NavHome from "../../components/NavHome";
 
 export default function CreateKidCircles({ navigation }) {
   const today = new Date();
@@ -46,63 +49,61 @@ export default function CreateKidCircles({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView>
-        <View style={[styles.fontFamily, style.container]}>
-          <Text style={[style.text]}>Child's Info</Text>
+      <View style={{ flex: 1, justifyContent: "space-evenly" }}>
+        <NavHome onlyBack={true} />
+        <Text style={styles.title}>Child's Info</Text>
 
-          <View style={[style.spacing]}>
-            <Text style={[style.label]}>Name</Text>
-            <TextInput
-              style={[style.input]}
-              placeholder="Kid's name"
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
+        <Text style={styles.inputLabel}>Name</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Kid's name"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
 
-            <Text style={[style.label]}>Nickname</Text>
-            <TextInput
-              style={[style.input]}
-              placeholder="Nickname"
-              maxLength={20}
-              value={nickname}
-              onChangeText={(text) => setNickname(text)}
-            />
+        <Text style={[style.label]}>Nickname</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Nickname"
+          maxLength={20}
+          value={nickname}
+          onChangeText={(text) => setNickname(text)}
+        />
 
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Text style={[style.label]}>Date of birth</Text>
-                <Text>{moment(dateOfBirth).format("DD/MM/YYYY")}</Text>
-              </View>
-              <MaterialIcons
-                style={{ position: "absolute", right: 0 }}
-                name={"date-range"}
-                size={40}
-                color="#990000"
-                onPress={() => {
-                  showDatePicker();
-                }}
-              />
-            </View>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            <Text style={[style.label]}>Date of birth</Text>
+            <Text>{moment(dateOfBirth).format("DD/MM/YYYY")}</Text>
           </View>
-          <Text style={[style.privacyText, styles.fontFamily]}>
-            Peekabond respects your privacy and keep your and your child's data
-            safe and secure. By pressing continue and creating an account, you
-            agree to Peekabond's Terms of use and Privacy Policy.
-          </Text>
-
-          <View style={[styles.dkPink, styles.button]}>
-            <TouchableOpacity onPress={onSubmitHandler}>
-              <Text style={styles.button}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <MaterialIcons
+            style={{ position: "absolute", right: 0 }}
+            name={"date-range"}
+            size={40}
+            color="#990000"
+            onPress={() => {
+              showDatePicker();
+            }}
+          />
         </View>
-      </ScrollView>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+
+        <Text style={[style.privacyText, styles.fontFamily]}>
+          Peekabond respects your privacy and keep your and your child's data
+          safe and secure. By pressing continue and creating an account, you
+          agree to Peekabond's Terms of use and Privacy Policy.
+        </Text>
+
+        <View style={[styles.dkPink, styles.button]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
+            <Text style={styles.button}>Next</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
