@@ -12,18 +12,13 @@ import {
 } from "react-native";
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
-const ADD_KIDCIRCLE = gql`
-  mutation AddKidCircle($type: String!) {
-    addKidCircle(type: $type) {
-      id
-      type
-    }
-  }
-`;
+
 
 export default function UploadKidProfile({ route, navigation }) {
+
+  
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(
     "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
@@ -33,11 +28,13 @@ export default function UploadKidProfile({ route, navigation }) {
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
-      navigation.navigate("Recommended");
+
+      console.log("completed", data);
+      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+
     },
   });
 
-  const [addKidCircle, { data }] = useMutation(ADD_KIDCIRCLE);
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -138,6 +135,11 @@ export default function UploadKidProfile({ route, navigation }) {
     );
   };
 
+  const handleSkip = () =>{
+    uploadImage(picture,"profile")
+    onSubmitHandler()
+  }
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -181,7 +183,11 @@ export default function UploadKidProfile({ route, navigation }) {
 
       <View style={[{ flexDirection: "row" }, style.spacing]}>
         <View style={[style.button, styles.yellow]}>
-          <TouchableOpacity onPress={() => navigation.navigate("Recommended")}>
+
+          <TouchableOpacity
+            onPress={handleSkip}
+          >
+
             <Text style={style.button}>Skip this</Text>
           </TouchableOpacity>
         </View>
