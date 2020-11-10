@@ -160,6 +160,16 @@ export default function UploadKidProfile({ route, navigation }) {
     setChangeProfilePicture(false);
   }
 
+  const handleSkip = () => {
+    // uploadImage(picture, "profile");
+    // onSubmitHandler();
+
+    //when skipping there is nothing in picture..... how do we upload the monkey?
+
+    //for now I just navigate to recommended
+    navigation.navigate("Recommended");
+  };
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -199,12 +209,12 @@ export default function UploadKidProfile({ route, navigation }) {
 
       {loading ? (
         <ActivityIndicator
-          style={{ marginBottom: picture ? "76.5%" : "129.5%" }}
+          style={{ marginBottom: "76.5%" }}
           size="large"
           color="#660066"
         />
       ) : (
-        <View style={{ marginBottom: picture ? "25%" : "80%" }}>
+        <View style={{ marginBottom: "25%" }}>
           <TouchableWithoutFeedback
             onPress={() => setChangeProfilePicture(true)}
           >
@@ -256,10 +266,16 @@ export default function UploadKidProfile({ route, navigation }) {
         </View>
       )}
 
-      {picture && (
+      {picture ? (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
             <Text style={styles.loginButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
+          <TouchableOpacity onPress={handleSkip}>
+            <Text style={styles.loginButtonText}>Skip this</Text>
           </TouchableOpacity>
         </View>
       )}
