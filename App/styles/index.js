@@ -198,15 +198,6 @@ export default StyleSheet.create({
     backgroundColor: "#FF6E5A",
   },
 
-  // button
-  button: {
-    width: 300,
-    fontSize: 24,
-    textAlign: "center",
-    margin: 10,
-    borderRadius: 5,
-  },
-
   buttonPadding: {
     alignItems: "center",
   },
@@ -216,5 +207,14 @@ export default StyleSheet.create({
     width: "50%",
     alignSelf: "center",
     marginBottom: -30,
+  },
+
+  //KidCircle
+  button: {
+    marginTop: "10%",
+    width: "90%",
+    padding: "4.5%",
+    alignSelf: "center",
+    borderRadius: 5,
   },
 });

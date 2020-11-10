@@ -15,21 +15,17 @@ export default function KidCircles({ navigation }) {
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("CreateKidCircle")}
       >
-        <View style={[styles.ltPurple, styles.button]}>
-          <Text style={[styles.button]}>
-            Create Family
-          </Text>
-        </View>
+       <View style={[styles.button,{backgroundColor:"#6464E1"}]}>
+            <Text style={styles.loginButtonText}>CREATE FAMILY</Text>
+          </View>
       </TouchableWithoutFeedback>
 
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("JoinKidCircle")}
       >
-        <View style={[styles.pink, styles.button]}>
-          <Text style={[styles.button]}>
-            Join Family
-          </Text>
-        </View>
+        <View style={[styles.button,{backgroundColor:"#F6ABA7"}]}>
+            <Text style={styles.loginButtonText}>JOIN FAMILY</Text>
+          </View>
       </TouchableWithoutFeedback>
     </View>
   );
