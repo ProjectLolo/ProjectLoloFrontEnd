@@ -37,6 +37,7 @@ export default function CreateKidCircles({ navigation }) {
   };
 
   function onSubmitHandler() {
+   
     navigation.navigate("UploadKidProfile", {
       kidName: name,
       kidNickname: nickname,
@@ -96,9 +97,11 @@ export default function CreateKidCircles({ navigation }) {
             agree to Peekabond's Terms of use and Privacy Policy.
           </Text>
 
-          <View style={[styles.dkPink, styles.button]}>
+          <View style={[styles.button,{backgroundColor:"#FF6E5A"}]}>
             <TouchableOpacity onPress={onSubmitHandler}>
-              <Text style={styles.button}>Next</Text>
+           
+            <Text style={styles.buttonText}>NEXT</Text>
+          
             </TouchableOpacity>
           </View>
         </View>

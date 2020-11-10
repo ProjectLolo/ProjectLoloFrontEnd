@@ -217,4 +217,10 @@ export default StyleSheet.create({
     alignSelf: "center",
     borderRadius: 5,
   },
+  buttonText: {
+    fontSize: adjust(12),
+    color:colors.white,
+    fontFamily: fonts.semiBold,
+    textAlign: "center",
+  },
 });
