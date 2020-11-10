@@ -33,7 +33,6 @@ export default function UploadKidProfile({ route, navigation }) {
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
-      console.log("completed", data);
       navigation.navigate("Recommended");
     },
   });

@@ -24,10 +24,9 @@ import { GET_ALL_KIDS } from "../../../graphql/queries";
 export default function KidCircles({ route, navigation }) {
   const { data } = useQuery(GET_ALL_KIDS, {
     variables: {
-      userId: "5fa963bbff41f83f6997dc78",
+      userId: route.params.activeUser,
     },
   });
-  console.log("route in kidcircly", route);
   // const circles = [
   //   {
   //     id: 1,

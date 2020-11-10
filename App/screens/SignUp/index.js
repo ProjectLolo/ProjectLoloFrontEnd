@@ -25,7 +25,6 @@ export default function SignUp({ navigation }) {
   const [signup, { error }] = useMutation(SIGNUP, {
     onError: (error) => console.log("hi", error.graphQLErrors),
     onCompleted({ signup }) {
-      console.log("completed", signup);
       if (signup.error) {
         set_errorState(<Alert variant="danger">{signup.error}</Alert>);
       }

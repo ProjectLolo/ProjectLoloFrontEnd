@@ -17,7 +17,7 @@ import VideoPreview from "../components/VideoPreview";
 
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
-  console.log("route", state);
+
   return (
     <NavigationContainer>
       <Stack.Navigator

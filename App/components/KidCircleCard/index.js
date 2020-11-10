@@ -19,7 +19,6 @@ export default function KidCircleCard(props) {
 
   function handlePress(e) {
     e.preventDefault();
-    console.log("hi there from KidCircleCard!", id);
     activeKid(id);
 
     navigation.navigate("Recommended", { kidName });

@@ -16,8 +16,6 @@ export default function LoveBank({ route, navigation }) {
       kidId: route.params.activeKid,
     },
   });
-  console.log("routeasdasdadasa", route.params.activeKid);
-  console.log("DATATATATATA", data);
   // const cardContent = [
   //   {
   //     id: 1,
@@ -35,7 +33,6 @@ export default function LoveBank({ route, navigation }) {
       </View>
     );
   }
-  console.log("DATATATATATA", data);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
