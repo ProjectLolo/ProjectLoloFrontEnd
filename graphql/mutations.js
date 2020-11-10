@@ -33,7 +33,7 @@ export const SIGNUP = gql`
     $lastName: String!
     $email: String!
     $password: String!
-    $profilePic: String
+    $profilePic: String!
   ) {
     signup(
       firstName: $firstName
