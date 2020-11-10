@@ -30,7 +30,7 @@ export default function KidCircleCard(props) {
       >
         <Text
           style={[
-            styles.cardText,
+            styles.cardTitle,
             {
               color: colors.dkPink,
               fontFamily: fonts.semiBold,
@@ -52,15 +52,15 @@ export default function KidCircleCard(props) {
         <View
           style={{
             backgroundColor: "white",
-            width: "100%",
-            height: Dimensions.get("window").width * 0.5,
+            width: "75%",
+            height: Dimensions.get("window").width * 0.7,
             alignSelf: "center",
             justifyContent: "space-evenly",
             shadowColor: "black",
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.05,
             shadowRadius: 5,
-            borderRadius: 100,
+            borderRadius: 150,
           }}
         >
           <Image

@@ -9,17 +9,21 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 
-import styles from "../../styles";
+import styles from "@styles/styles";
 import style from "./style";
-import { ScrollView } from "react-native-gesture-handler";
+import images from "@assets/images";
+import colors from "@assets/colors";
+import NavHome from "../../components/NavHome";
+import fonts from "@assets/fonts";
+import adjust from "../../styles/adjust";
 
 export default function CreateKidCircles({ navigation }) {
-  const today = new Date();
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
-  const [dateOfBirth, setDOB] = useState(new Date(today));
+  const [dateOfBirth, setDOB] = useState("");
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -44,65 +48,113 @@ export default function CreateKidCircles({ navigation }) {
     });
   }
 
+  console.log(dateOfBirth);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView>
-        <View style={[styles.fontFamily, style.container]}>
-          <Text style={[style.text]}>Child's Info</Text>
-
-          <View style={[style.spacing]}>
-            <Text style={[style.label]}>Name</Text>
-            <TextInput
-              style={[style.input]}
-              placeholder="Kid's name"
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-
-            <Text style={[style.label]}>Nickname</Text>
-            <TextInput
-              style={[style.input]}
-              placeholder="Nickname"
-              maxLength={20}
-              value={nickname}
-              onChangeText={(text) => setNickname(text)}
-            />
-
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Text style={[style.label]}>Date of birth</Text>
-                <Text>{moment(dateOfBirth).format("DD/MM/YYYY")}</Text>
-              </View>
-              <MaterialIcons
-                style={{ position: "absolute", right: 0 }}
-                name={"date-range"}
-                size={40}
-                color="#990000"
-                onPress={() => {
-                  showDatePicker();
-                }}
-              />
-            </View>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
-          <Text style={[style.privacyText, styles.fontFamily]}>
-            Peekabond respects your privacy and keep your and your child's data
-            safe and secure. By pressing continue and creating an account, you
-            agree to Peekabond's Terms of use and Privacy Policy.
-          </Text>
-
-          <View style={[styles.dkPink, styles.button]}>
-            <TouchableOpacity onPress={onSubmitHandler}>
-              <Text style={styles.button}>Next</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <View style={{ marginBottom: -80 }}>
+          <NavHome onlyBack={true} />
         </View>
-      </ScrollView>
+        <Text
+          style={[styles.title, { fontSize: adjust(25), marginBottom: "5%" }]}
+        >
+          Child's Info
+        </Text>
+
+        <Text style={styles.inputLabel}>Name</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Kid's name"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+
+        <Text style={styles.inputLabel}>Nickname</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Nickname"
+          maxLength={20}
+          value={nickname}
+          onChangeText={(text) => setNickname(text)}
+        />
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View
+            style={{
+              marginLeft: "5%",
+              paddingBottom: 5,
+              paddingTop: "5%",
+              width: "66.5%",
+            }}
+          >
+            <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
+              Date of birth
+            </Text>
+            <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+              <View
+                style={[
+                  styles.inputBox,
+                  { width: "100%", justifyContent: "center" },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: fonts.regular,
+                    color: colors.grey,
+                    fontSize: adjust(16),
+                    opacity: dateOfBirth ? 1 : 0.5,
+                    textAlign: "center",
+                  }}
+                >
+                  {dateOfBirth
+                    ? moment(dateOfBirth).format("DD-MM-YYYY")
+                    : "DD/MM/YYYY"}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <MaterialIcons
+            style={{
+              alignSelf: "flex-end",
+              paddingBottom: 13,
+              paddingRight: "8%",
+            }}
+            name={"date-range"}
+            size={50}
+            color={colors.dkPink}
+            onPress={() => {
+              showDatePicker();
+            }}
+          />
+        </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          date={dateOfBirth ? new Date(dateOfBirth) : new Date()}
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+
+        <View style={[styles.loginButton, { marginTop: "30%" }]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
+            <Text style={styles.loginButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+        <Text
+          style={{
+            fontSize: adjust(8),
+            textAlign: "center",
+            marginHorizontal: "5%",
+            marginBottom: "10%",
+            fontFamily: fonts.regular,
+          }}
+        >
+          Peekabond respects your privacy and keeps you and your child's data
+          safe and secure. By pressing continue and creating an account, you
+          agree to Peekabond's Terms of use and Privacy Policy.
+        </Text>
+      </View>
     </TouchableWithoutFeedback>
   );
 }

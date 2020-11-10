@@ -48,12 +48,13 @@ export default function KidCircles({ navigation }) {
       />
       <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
         Welcome back, [firstNameOfUser]!
+        {/* if no kidCircles exist text='Welcome, [firsNameOfUser]'*/}
       </Text>
 
       <FlatList
         contentContainerStyle={{
           alignSelf: "center",
-          width: "50%",
+          width: "90%",
           paddingTop: 30,
         }}
         data={circles}
@@ -74,8 +75,8 @@ export default function KidCircles({ navigation }) {
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <View
               style={{
-                width: "50%",
-                height: Dimensions.get("window").width * 0.25,
+                width: "25%",
+                height: Dimensions.get("window").width * 0.225,
                 marginHorizontal: "10%",
                 marginBottom: 150,
               }}
@@ -144,8 +145,8 @@ export default function KidCircles({ navigation }) {
             </View>
             <View
               style={{
-                width: "50%",
-                height: Dimensions.get("window").width * 0.25,
+                width: "25%",
+                height: Dimensions.get("window").width * 0.225,
                 marginHorizontal: "10%",
               }}
             >
