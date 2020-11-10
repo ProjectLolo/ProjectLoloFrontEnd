@@ -21,7 +21,7 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 export default function CreateKidCircles({ navigation }) {
-  const today = new Date();
+  const today = new Date("1992-06-10");
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [dateOfBirth, setDOB] = useState("");
@@ -53,9 +53,15 @@ export default function CreateKidCircles({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-        <NavHome onlyBack={true} />
-        <Text style={styles.title}>Child's Info</Text>
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <View style={{ marginBottom: -80 }}>
+          <NavHome onlyBack={true} />
+        </View>
+        <Text
+          style={[styles.title, { fontSize: adjust(25), marginBottom: "5%" }]}
+        >
+          Child's Info
+        </Text>
 
         <Text style={styles.inputLabel}>Name</Text>
         <TextInput
@@ -74,13 +80,13 @@ export default function CreateKidCircles({ navigation }) {
           onChangeText={(text) => setNickname(text)}
         />
 
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View
             style={{
               marginLeft: "5%",
               paddingBottom: 5,
               paddingTop: "5%",
-              width: "70%",
+              width: "66.5%",
             }}
           >
             <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
@@ -98,37 +104,26 @@ export default function CreateKidCircles({ navigation }) {
                     fontFamily: fonts.regular,
                     color: colors.grey,
                     fontSize: adjust(16),
-                    opacity: 0.5,
+                    opacity: dateOfBirth ? 1 : 0.5,
                     textAlign: "center",
                   }}
                 >
                   {dateOfBirth
-                    ? moment(dateOfBirth).format("DD/MM/YYYY")
+                    ? moment(dateOfBirth).format("DD-MM-YYYY")
                     : "DD/MM/YYYY"}
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-
-            {/* <TouchableWithoutFeedback onPress={() => showDatePicker()}>
-              <TextInput
-                style={[styles.inputBox, { width: "100%" }]}
-                placeholder="DD/MM/YYYY"
-                maxLength={20}
-                value={dateOfBirth}
-                onChange={() => showDatePicker()}
-              />
-            </TouchableWithoutFeedback> */}
-            {/* <Text>
-              {dateOfBirth === "DD/MM/YYYY"
-                ? dateOfBirth
-                : moment(dateOfBirth).format("DD/MM/YYYY")}
-            </Text> */}
           </View>
           <MaterialIcons
-            style={{ position: "absolute", right: 0 }}
+            style={{
+              alignSelf: "flex-end",
+              paddingBottom: 13,
+              paddingRight: "8%",
+            }}
             name={"date-range"}
-            size={40}
-            color="#990000"
+            size={50}
+            color={colors.dkPink}
             onPress={() => {
               showDatePicker();
             }}
@@ -137,22 +132,29 @@ export default function CreateKidCircles({ navigation }) {
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
+          date={dateOfBirth ? new Date(dateOfBirth) : new Date()}
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
-          display="calender"
         />
 
-        <Text style={[style.privacyText, styles.fontFamily]}>
-          Peekabond respects your privacy and keep your and your child's data
+        <View style={[styles.loginButton, { marginTop: "30%" }]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
+            <Text style={styles.loginButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+        <Text
+          style={{
+            fontSize: adjust(8),
+            textAlign: "center",
+            marginHorizontal: "5%",
+            marginBottom: "10%",
+            fontFamily: fonts.regular,
+          }}
+        >
+          Peekabond respects your privacy and keeps you and your child's data
           safe and secure. By pressing continue and creating an account, you
           agree to Peekabond's Terms of use and Privacy Policy.
         </Text>
-
-        <View style={[styles.dkPink, styles.button]}>
-          <TouchableOpacity onPress={onSubmitHandler}>
-            <Text style={styles.button}>Next</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </TouchableWithoutFeedback>
   );

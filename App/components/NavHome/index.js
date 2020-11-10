@@ -9,6 +9,7 @@ export default function NavHome(props) {
   const { onlyBack } = props;
   const navigation = useNavigation();
   const { goBack } = navigation;
+  console.log("only back? ", onlyBack);
 
   return (
     <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -33,7 +34,7 @@ export default function NavHome(props) {
         onPress={onlyBack ? null : () => navigation.navigate("Recommended")}
       >
         <Image
-          style={[styles.peekabondLogo, { marginRight: 90 }]}
+          style={[styles.peekabondLogo, { marginRight: 100 }]}
           source={images.peekabondLogo}
         />
       </TouchableWithoutFeedback>
