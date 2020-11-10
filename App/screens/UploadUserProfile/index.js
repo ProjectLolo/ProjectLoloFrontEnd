@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
 
@@ -13,27 +13,33 @@ import {
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
-import { CREATE_KID } from "../../../graphql/mutations";
+import { SIGNUP } from "../../../graphql/mutations";
+import { AuthContext } from "../../context/Auth";
 
-
-export default function UploadKidProfile({ route, navigation }) {
-
-  
+export default function UploadUserProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(
     "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
   );
   const [loading, setLoading] = useState(false);
 
-  const [createKid, { error }] = useMutation(CREATE_KID, {
-    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+  const { signIn, signUp } = useContext(AuthContext);
 
+  const [signup, { error }] = useMutation(SIGNUP, {
+    onError: (error) => console.log("error", error.graphQLErrors),
+    onCompleted({ signup }) {
+      console.log("completed", signup);
+      if (signup.error) {
+        set_errorState(<Alert variant="danger">{signup.error}</Alert>);
+      }
+      if (signup.token) {
+        signUp(signup.token);
+        navigation.navigate("KidCircles");
+      }
     },
   });
 
+  //TODO: add this part into a component and do the same for in UploadKidProfile
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -42,6 +48,7 @@ export default function UploadKidProfile({ route, navigation }) {
         const {
           status,
         } = await ImagePicker.requestCameraRollPermissionsAsync();
+
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         } else setHasPermission(status === "granted");
@@ -50,15 +57,15 @@ export default function UploadKidProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    createKid({
+    signup({
       variables: {
-        name: route.params.kidName,
-        nickName: route.params.kidNickname,
-        birthdate: route.params.kidDateofBirth,
-        profileImageUrl: picture,
+        firstName: route.params.firstName,
+        lastName: route.params.lastName,
+        email: route.params.lastName,
+        password: route.params.password,
+        profilePic: picture,
       },
     });
-    navigation.navigate("Recommended");
   }
   //using camera
   useEffect(() => {
@@ -134,11 +141,6 @@ export default function UploadKidProfile({ route, navigation }) {
     );
   };
 
-  const handleSkip = () =>{
-    uploadImage(picture,"profile")
-    onSubmitHandler()
-  }
-
   if (hasPermission === null) {
     return <View />;
   }
@@ -152,12 +154,12 @@ export default function UploadKidProfile({ route, navigation }) {
       <View>
         <Text
           style={[style.text, style.align]}
-        >{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
+        >{`Welcome ${route.params.firstName}! Almost ready to play & bond :-)`}</Text>
         {loading && <ActivityIndicator size="large" color="#660066" />}
       </View>
       <View>
         <Text style={[style.label, style.align, style.spacing]}>
-          {`Please upload a profile picture of ${route.params.kidName} for your family.`}
+          {`Let's start with a clear profile picture so [kid] can learn to recognize your face.`}
         </Text>
       </View>
 
@@ -182,11 +184,7 @@ export default function UploadKidProfile({ route, navigation }) {
 
       <View style={[{ flexDirection: "row" }, style.spacing]}>
         <View style={[style.button, styles.yellow]}>
-
-          <TouchableOpacity
-            onPress={handleSkip}
-          >
-
+          <TouchableOpacity onPress={() => navigation.navigate("KidCircles")}>
             <Text style={style.button}>Skip this</Text>
           </TouchableOpacity>
         </View>
