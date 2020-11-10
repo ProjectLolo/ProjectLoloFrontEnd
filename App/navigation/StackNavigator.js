@@ -6,6 +6,7 @@ import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
 import TakeProfilePicture from "../components/TakeProfilePicture";
+import ShareFamilyCode from "../screens/ShareFamilyCode";
 import JoinKidCircle from "../screens/JoinKidCircle";
 import Recommended from "../screens/Recommended";
 import LoveBank from "../screens/LoveBank";
@@ -21,9 +22,7 @@ export default function authNavigator({ route }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-
         initialRouteName="KidCircles"
-
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="KidCircles" component={KidCircles} />
@@ -33,6 +32,7 @@ export default function authNavigator({ route }) {
           name="TakeProfilePicture"
           component={TakeProfilePicture}
         />
+        <Stack.Screen name="ShareFamilyCode" component={ShareFamilyCode} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen name="Recommended" component={Recommended} />
         <Stack.Screen name="LoveBank" component={LoveBank} />

@@ -23,6 +23,11 @@ export const CREATE_KID = gql`
       }
     ) {
       _id
+      name
+      nickName
+      birthdate
+      profileImageUrl
+      code
     }
   }
 `;
