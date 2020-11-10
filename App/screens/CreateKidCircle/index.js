@@ -17,12 +17,14 @@ import style from "./style";
 import images from "@assets/images";
 import colors from "@assets/colors";
 import NavHome from "../../components/NavHome";
+import fonts from "@assets/fonts";
+import adjust from "../../styles/adjust";
 
 export default function CreateKidCircles({ navigation }) {
   const today = new Date();
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
-  const [dateOfBirth, setDOB] = useState(new Date(today));
+  const [dateOfBirth, setDOB] = useState("");
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -47,6 +49,8 @@ export default function CreateKidCircles({ navigation }) {
     });
   }
 
+  console.log(dateOfBirth);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, justifyContent: "space-evenly" }}>
@@ -61,7 +65,7 @@ export default function CreateKidCircles({ navigation }) {
           onChangeText={(text) => setName(text)}
         />
 
-        <Text style={[style.label]}>Nickname</Text>
+        <Text style={styles.inputLabel}>Nickname</Text>
         <TextInput
           style={styles.inputBox}
           placeholder="Nickname"
@@ -71,9 +75,54 @@ export default function CreateKidCircles({ navigation }) {
         />
 
         <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text style={[style.label]}>Date of birth</Text>
-            <Text>{moment(dateOfBirth).format("DD/MM/YYYY")}</Text>
+          <View
+            style={{
+              marginLeft: "5%",
+              paddingBottom: 5,
+              paddingTop: "5%",
+              width: "70%",
+            }}
+          >
+            <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
+              Date of birth
+            </Text>
+            <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+              <View
+                style={[
+                  styles.inputBox,
+                  { width: "100%", justifyContent: "center" },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: fonts.regular,
+                    color: colors.grey,
+                    fontSize: adjust(16),
+                    opacity: 0.5,
+                    textAlign: "center",
+                  }}
+                >
+                  {dateOfBirth
+                    ? moment(dateOfBirth).format("DD/MM/YYYY")
+                    : "DD/MM/YYYY"}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+            {/* <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+              <TextInput
+                style={[styles.inputBox, { width: "100%" }]}
+                placeholder="DD/MM/YYYY"
+                maxLength={20}
+                value={dateOfBirth}
+                onChange={() => showDatePicker()}
+              />
+            </TouchableWithoutFeedback> */}
+            {/* <Text>
+              {dateOfBirth === "DD/MM/YYYY"
+                ? dateOfBirth
+                : moment(dateOfBirth).format("DD/MM/YYYY")}
+            </Text> */}
           </View>
           <MaterialIcons
             style={{ position: "absolute", right: 0 }}
@@ -90,6 +139,7 @@ export default function CreateKidCircles({ navigation }) {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          display="calender"
         />
 
         <Text style={[style.privacyText, styles.fontFamily]}>
