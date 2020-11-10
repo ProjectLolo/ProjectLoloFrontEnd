@@ -48,7 +48,10 @@ export const SIGNUP = gql`
       }
     ) {
       firstName
+      lastName
+      email
       id
+      token
     }
   }
 `;

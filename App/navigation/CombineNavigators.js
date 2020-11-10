@@ -36,10 +36,21 @@ export default function CombineNavigators() {
         console.log(e);
       }
       if (userToken != null && userToken != undefined) {
-        dispatch({
-          type: "RESTORE_TOKEN",
-          token: userToken,
-        });
+        const decodedToken = jwtDecode(userToken);
+        const expiresAt = new Date(decodedToken.exp * 1000);
+
+        if (new Date() > expiresAt) {
+          try {
+            await AsyncStorage.removeItem("userToken");
+          } catch (e) {
+            console.log("error bootstrapAsync token", e);
+          }
+        } else {
+          dispatch({
+            type: "RESTORE_TOKEN",
+            token: userToken,
+          });
+        }
       }
     };
     bootstrapAsync();
