@@ -51,25 +51,6 @@ export default function KidCircles({ navigation }) {
         {/* if no kidCircles exist text='Welcome, [firsNameOfUser]'*/}
       </Text>
 
-
-      <View style={[style.spacing]}></View>
-
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("CreateKidCircle")}
-      >
-       <View style={[styles.button,{backgroundColor:"#6464E1"}]}>
-            <Text style={styles.loginButtonText}>CREATE FAMILY</Text>
-          </View>
-      </TouchableWithoutFeedback>
-
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("JoinKidCircle")}
-      >
-        <View style={[styles.button,{backgroundColor:"#F6ABA7"}]}>
-            <Text style={styles.loginButtonText}>JOIN FAMILY</Text>
-          </View>
-      </TouchableWithoutFeedback>
-
       <FlatList
         contentContainerStyle={{
           alignSelf: "center",
