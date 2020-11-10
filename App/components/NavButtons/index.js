@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function NavButtons(props) {
   const navigation = useNavigation();
   const { screen } = props;
+  console.log("screen", screen);
 
   function today() {
     if (screen === "Recommended") {
@@ -22,6 +23,8 @@ export default function NavButtons(props) {
           </View>
         </TouchableWithoutFeedback>
       );
+    } else if (screen === "Single") {
+      return null;
     } else {
       return (
         <TouchableWithoutFeedback
@@ -49,6 +52,8 @@ export default function NavButtons(props) {
           </View>
         </TouchableWithoutFeedback>
       );
+    } else if (screen === "Single") {
+      return null;
     } else {
       return (
         <TouchableWithoutFeedback
@@ -68,6 +73,17 @@ export default function NavButtons(props) {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>
+            <Image style={styles.navBtImage} source={images.monkey} />
+            <Text style={styles.bottomText}>Account</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      );
+    } else if (screen === "Single") {
+      return (
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("Settings", "single")}
+        >
+          <View style={styles.navBtContainer}>
             <Image style={styles.navBtImage} source={images.monkey} />
             <Text style={styles.bottomText}>Account</Text>
           </View>

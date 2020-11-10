@@ -3,8 +3,27 @@ import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
 import styles from "@styles/styles"; //have to changeit to @styles/styles
 import style from "./style";
 import images from "@assets/images";
+import NavButtons from "../../components/NavButtons";
 
 export default function KidCircles({ navigation }) {
+  const circles = [
+    {
+      id: 1,
+      kidImage: images.monkey,
+      kidName: "Atieh",
+    },
+    {
+      id: 2,
+      kidImage: images.monkey,
+      kidName: "Weilong",
+    },
+    {
+      id: 3,
+      kidImage: images.monkey,
+      kidName: "Nazneen",
+    },
+  ];
+
   return (
     <View
       style={{
@@ -13,8 +32,8 @@ export default function KidCircles({ navigation }) {
       }}
     >
       <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
-      <Text style={[style.text]}>
-        Welcome! Do you want to create a family or Join an existing family
+      <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
+        Welcome back, [firstNameOfuser]!
       </Text>
 
       <View style={[style.spacing]}></View>
@@ -34,6 +53,7 @@ export default function KidCircles({ navigation }) {
           <Text style={[styles.button]}>Join Family</Text>
         </View>
       </TouchableWithoutFeedback>
+      <NavButtons screen="Single" />
     </View>
   );
 }

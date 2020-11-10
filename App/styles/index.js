@@ -12,6 +12,7 @@ export default StyleSheet.create({
     textAlign: "center",
     marginTop: "20%",
     marginBottom: "5%",
+    marginHorizontal: "5%",
   },
   titlePassword: {
     fontSize: adjust(22),
