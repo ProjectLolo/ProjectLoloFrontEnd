@@ -28,14 +28,14 @@ export default function ShareSomething({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS !== "web") {
+  
         const {
           status,
         } = await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
-      }
+  
     })();
   }, []);
 
