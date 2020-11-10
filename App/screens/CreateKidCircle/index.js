@@ -138,13 +138,11 @@ export default function CreateKidCircles({ navigation }) {
         />
 
 
-          <View style={[styles.button,{backgroundColor:"#FF6E5A"}]}>
-            <TouchableOpacity onPress={onSubmitHandler}>
-           
-            <Text style={styles.buttonText}>NEXT</Text>
-          
-            </TouchableOpacity>
-          </View>
+        <View style={[styles.loginButton, { marginTop: "30%" }]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
+            <Text style={styles.loginButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
 
         <Text
           style={{
