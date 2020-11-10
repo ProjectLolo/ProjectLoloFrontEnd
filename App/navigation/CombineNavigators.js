@@ -12,7 +12,7 @@ export default function CombineNavigators() {
   const authContextValue = React.useMemo(
     () => ({
       signIn: async (data) => {
-        const decodedToken = jwtDecode(userToken);
+        const decodedToken = jwtDecode(data);
         await AsyncStorage.setItem("userToken", data);
         dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
       },
