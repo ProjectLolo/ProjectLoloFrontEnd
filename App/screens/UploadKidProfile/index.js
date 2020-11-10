@@ -176,7 +176,7 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;{" "}
+        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
         <Text style={{ color: colors.dkPink }}>{route.params.kidName}</Text>!
       </Text>
 
@@ -185,8 +185,8 @@ export default function UploadKidProfile({ route, navigation }) {
           styles.title,
           {
             fontSize: adjust(14),
-            marginTop: picture ? 30 : 10,
-            marginBottom: picture ? 30 : 10,
+            marginTop: picture ? 15 : 10,
+            marginBottom: picture ? 25 : 10,
           },
         ]}
         numberOfLines={2}
@@ -200,12 +200,12 @@ export default function UploadKidProfile({ route, navigation }) {
       {/*  */}
       {loading ? (
         <ActivityIndicator
-          style={{ marginBottom: "100%" }}
+          style={{ marginBottom: picture ? "76.5%" : "129.5%" }}
           size="large"
           color="#660066"
         />
       ) : (
-        <View style={{ marginBottom: picture ? "40%" : "70%" }}>
+        <View style={{ marginBottom: picture ? "25%" : "80%" }}>
           <TouchableWithoutFeedback
             onPress={() => setChangeProfilePicture(true)}
           >
@@ -232,7 +232,7 @@ export default function UploadKidProfile({ route, navigation }) {
                   picture
                     ? {
                         borderRadius: 150,
-                        width: 200,
+                        width: 210,
                         height: 210,
                         alignSelf: "center",
                       }
