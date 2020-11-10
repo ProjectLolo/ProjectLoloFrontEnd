@@ -41,6 +41,7 @@ export default function CreateKidCircles({ navigation }) {
   };
 
   function onSubmitHandler() {
+   
     navigation.navigate("UploadKidProfile", {
       kidName: name,
       kidNickname: nickname,
@@ -136,11 +137,13 @@ export default function CreateKidCircles({ navigation }) {
           onCancel={hideDatePicker}
         />
 
+
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
             <Text style={styles.loginButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
+
         <Text
           style={{
             fontSize: adjust(8),

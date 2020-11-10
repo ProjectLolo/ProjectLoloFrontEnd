@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
 import NavHome from "../../components/NavHome";
 import colors from "@assets/colors";
@@ -43,11 +43,10 @@ export default function UploadKidProfile({ route, navigation }) {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-      navigation.navigate("Recommended");
+      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
     },
   });
 
-  const [addKidCircle, { data }] = useMutation(ADD_KIDCIRCLE);
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -153,6 +152,7 @@ export default function UploadKidProfile({ route, navigation }) {
     );
   };
 
+
   //we need to get user's name here // they are the parent of the kid
   const nameParent = "NameOfParent";
 
@@ -169,6 +169,7 @@ export default function UploadKidProfile({ route, navigation }) {
     //for now I just navigate to recommended
     navigation.navigate("Recommended");
   };
+
 
   if (hasPermission === null) {
     return <View />;
@@ -265,6 +266,7 @@ export default function UploadKidProfile({ route, navigation }) {
           </TouchableWithoutFeedback>
         </View>
       )}
+
 
       {picture ? (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>

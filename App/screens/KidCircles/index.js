@@ -210,6 +210,7 @@ export default function KidCircles({ navigation }) {
         }
       />
       <NavButtons screen="Single" />
+
     </View>
   );
 }
