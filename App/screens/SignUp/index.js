@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   TouchableWithoutFeedback,
@@ -9,6 +9,7 @@ import {
 import styles from "@styles/styles";
 import { useMutation } from "@apollo/client";
 import { SIGNUP } from "../../../graphql/mutations";
+import { AuthContext } from "../../context/Auth";
 
 export default function SignUp({ navigation }) {
   const [variables, setVariables] = useState({
@@ -19,6 +20,8 @@ export default function SignUp({ navigation }) {
   });
   const [hidePassword, setHidePassword] = useState(true);
 
+  const { signIn, signUp } = useContext(AuthContext);
+
   const [signup, { error }] = useMutation(SIGNUP, {
     onError: (error) => console.log("hi", error.graphQLErrors),
     onCompleted({ signup }) {
@@ -26,10 +29,8 @@ export default function SignUp({ navigation }) {
       if (signup.error) {
         set_errorState(<Alert variant="danger">{signup.error}</Alert>);
       }
-      // TODO: get login in and get token(?)
-      if (signup.user && signup.token) {
-        // dispatch(loginSuccess(login));
-        navigation.navigate("Welcome");
+      if (signup.token) {
+        signUp(signup.token);
       }
     },
   });
