@@ -214,7 +214,7 @@ export default StyleSheet.create({
 
   peekabondLogo: {
     resizeMode: "contain",
-    width: "50%",
+    width: "30%",
     alignSelf: "center",
     marginBottom: -30,
   },
