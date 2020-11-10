@@ -1,16 +1,42 @@
-import React from "react";
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import React,{useState} from "react";
+import { View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
+import styles from "@styles/styles"
+import style from "./style"
 
 export default function JoinKidCircles({ navigation }) {
+  const [familyCode, setFamilyCode] = useState(null)
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text style={{ textAlign: "center" }}>JoinKidCircles</Text>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
-      >
-        <Text style={{ textAlign: "center", marginTop: 50 }}>
-          Press here to go to Recommended
+    <View style={[style.container, style.spacing ]}>
+       <Text style={[style.text]}>
+      Joining a family! Please enter your family code
+      </Text>
+
+      <View>
+        <Text style={[style.label,style.spacing]}>
+          {`The code is provided by the owner of the family.`}
         </Text>
+      </View>
+
+
+      <View>
+        <Text style={styles.inputLabel}>Enter Code</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Enter family code..."
+          placeholderTextColor="grey"
+          onChangeText={(text) => setFamilyCode(text)}
+          value={familyCode}
+        />
+      </View>
+
+      <TouchableWithoutFeedback 
+        onPress={() => navigation.navigate("CreateKidCircle")}
+      >
+        <View style={[styles.pink, styles.button]}>
+          <Text style={[styles.button]}>
+            Confirm
+          </Text>
+        </View>
       </TouchableWithoutFeedback>
     </View>
   );
