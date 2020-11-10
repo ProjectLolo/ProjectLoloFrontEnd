@@ -9,11 +9,20 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { gql, useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
+import NavHome from "../../components/NavHome";
+import colors from "@assets/colors";
+import adjust from "../../styles/adjust";
+import images from "@assets/images";
+import fonts from "@assets/fonts";
+import ChangeProfilePicture from "../../components/ChangeProfilePicture";
+
 const ADD_KIDCIRCLE = gql`
   mutation AddKidCircle($type: String!) {
     addKidCircle(type: $type) {
@@ -24,11 +33,11 @@ const ADD_KIDCIRCLE = gql`
 `;
 
 export default function UploadKidProfile({ route, navigation }) {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [picture, setPicture] = useState(
-    "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
-  );
+  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [picture, setPicture] = useState(null);
+  console.log("picture", picture);
 
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
@@ -87,7 +96,7 @@ export default function UploadKidProfile({ route, navigation }) {
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
       uploadImage(result.uri, "profile");
-      setPicture(result.uri);
+      // setPicture(result.uri);
     }
   };
 
@@ -101,16 +110,19 @@ export default function UploadKidProfile({ route, navigation }) {
       .child("images/" + imageName);
     const uploadTask = ref.put(blob);
 
+    setLoading(true);
+    setChangeProfilePicture(false);
     // Register three observers:
     // 1. 'state_changed' observer, called any time the state changes
     // 2. Error observer, called on failure
     // 3. Completion observer, called on successful completion
     uploadTask.on(
       "state_changed",
+
       function (snapshot) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        setLoading(true);
+
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
         switch (snapshot.state) {
@@ -127,17 +139,26 @@ export default function UploadKidProfile({ route, navigation }) {
         console.log("image upload errors:", error);
       },
       function () {
+        setLoading(false);
+        setPicture(uri);
+        console.log("URIRUIRUIRURIR", uri);
         // Handle successful uploads on complete
         console.log("image upload success");
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
           setPicture(downloadURL);
-          setLoading(false);
         });
       }
     );
   };
+
+  //we need to get user's name here // they are the parent of the kid
+  const nameParent = "NameOfParent";
+
+  function hideOptions() {
+    setChangeProfilePicture(false);
+  }
 
   if (hasPermission === null) {
     return <View />;
@@ -148,50 +169,115 @@ export default function UploadKidProfile({ route, navigation }) {
   }
 
   return (
-    <View style={[styles.fontFamily]}>
-      <View>
-        <Text
-          style={[style.text, style.align]}
-        >{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
-        {loading && <ActivityIndicator size="large" color="#660066" />}
-      </View>
-      <View>
-        <Text style={[style.label, style.align, style.spacing]}>
-          {`Please upload a profile picture of ${route.params.kidName} for your family.`}
-        </Text>
-      </View>
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <NavHome onlyBack={true} />
+      <Text
+        style={[styles.title, { marginTop: 10, marginBottom: 0 }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit={true}
+      >
+        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;{" "}
+        <Text style={{ color: colors.dkPink }}>{route.params.kidName}</Text>!
+      </Text>
 
-      <View style={[{ flexDirection: "row" }]}>
-        <View>
-          {picture && (
-            <Image
-              source={{ uri: picture }}
-              alt="no-picture"
-              style={[style.image]}
-            />
-          )}
-        </View>
-        <View style={[style.spacing, { alignSelf: "center" }]}>
-          <Button title="Pick a photo" onPress={pickPhoto} />
-          <Button
-            title="Take Picture"
-            onPress={() => navigation.navigate("TakeProfilePicture")}
-          />
-        </View>
-      </View>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontSize: adjust(14),
+            marginTop: picture ? 30 : 10,
+            marginBottom: picture ? 30 : 10,
+          },
+        ]}
+        numberOfLines={2}
+        adjustsFontSizeToFit={true}
+      >
+        Please upload a profile picture of
+        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
+        for your family.
+      </Text>
 
-      <View style={[{ flexDirection: "row" }, style.spacing]}>
-        <View style={[style.button, styles.yellow]}>
-          <TouchableOpacity onPress={() => navigation.navigate("Recommended")}>
-            <Text style={style.button}>Skip this</Text>
-          </TouchableOpacity>
+      {/*  */}
+      {loading ? (
+        <ActivityIndicator
+          style={{ marginBottom: "100%" }}
+          size="large"
+          color="#660066"
+        />
+      ) : (
+        <View style={{ marginBottom: picture ? "40%" : "70%" }}>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
+          >
+            <View
+              style={
+                picture
+                  ? null
+                  : {
+                      backgroundColor: "white",
+                      width: "50%",
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      shadowColor: "black",
+                      shadowOffset: { width: 0, height: 0 },
+                      shadowOpacity: 0.05,
+                      shadowRadius: 5,
+                      height: Dimensions.get("window").width * 0.5,
+                      borderRadius: 100,
+                    }
+              }
+            >
+              <Image
+                style={
+                  picture
+                    ? {
+                        borderRadius: 150,
+                        width: 200,
+                        height: 210,
+                        alignSelf: "center",
+                      }
+                    : styles.cardImage
+                }
+                source={picture ? { uri: picture } : images.monkey}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
+          >
+            <Text
+              style={[
+                styles.cardText,
+                {
+                  color: colors.dkPink,
+                  fontFamily: fonts.semiBold,
+                  paddingTop: 15,
+                },
+              ]}
+            >
+              Change Profile Picture
+            </Text>
+          </TouchableWithoutFeedback>
         </View>
-        <View style={[style.button, styles.dkPink]}>
+      )}
+
+      {/*  */}
+
+      {picture && (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
-            <Text style={style.button}>Continue</Text>
+            <Text style={styles.loginButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      )}
+
+      {changeProfilePicture && (
+        <ChangeProfilePicture
+          hide={hideOptions}
+          loading={loading}
+          pickPhoto={pickPhoto}
+        />
+      )}
     </View>
   );
 }
