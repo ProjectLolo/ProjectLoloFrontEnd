@@ -30,17 +30,17 @@ export const CREATE_KID = gql`
 export const SIGNUP = gql`
   mutation signup(
     $firstName: String!
-    $lastName: String
+    $lastName: String!
     $email: String!
     $password: String!
+    $profilePic: String
   ) {
     signup(
-      signupInput: {
-        firstName: $firstName
-        lastName: $lastName
-        email: $email
-        password: $password
-      }
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      profilePic: $profilePic
     ) {
       firstName
       lastName

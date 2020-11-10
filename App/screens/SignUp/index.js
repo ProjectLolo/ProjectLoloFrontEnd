@@ -17,13 +17,14 @@ export default function SignUp({ navigation }) {
     lastName: "",
     email: "",
     password: "",
+    profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
 
   const { signIn, signUp } = useContext(AuthContext);
 
   const [signup, { error }] = useMutation(SIGNUP, {
-    onError: (error) => console.log("hi", error.graphQLErrors),
+    onError: (error) => console.log("error", error.graphQLErrors),
     onCompleted({ signup }) {
       console.log("completed", signup);
       if (signup.error) {
