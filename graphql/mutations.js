@@ -27,6 +27,7 @@ export const CREATE_KID = gql`
       nickName
       birthdate
       profileImageUrl
+      code
     }
   }
 `;

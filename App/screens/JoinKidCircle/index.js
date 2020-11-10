@@ -30,7 +30,7 @@ export default function JoinKidCircles({ navigation }) {
       </View>
 
       <TouchableWithoutFeedback 
-        onPress={() => navigation.navigate("CreateKidCircle")}
+        onPress={() => navigation.navigate("Recommended")}
       >
         <View style={[styles.pink, styles.button]}>
           <Text style={[styles.button]}>

@@ -135,6 +135,11 @@ export default function UploadKidProfile({ route, navigation }) {
     );
   };
 
+  const handleSkip = () =>{
+    uploadImage(picture,"profile")
+    onSubmitHandler()
+  }
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -183,7 +188,7 @@ export default function UploadKidProfile({ route, navigation }) {
       <View style={[{ flexDirection: "row" }, style.spacing]}>
         <View style={[style.button, styles.yellow]}>
           <TouchableOpacity
-            onPress={onSubmitHandler}
+            onPress={handleSkip}
           >
             <Text style={style.button}>Skip this</Text>
           </TouchableOpacity>
