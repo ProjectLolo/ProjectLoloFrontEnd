@@ -9,7 +9,6 @@ export default function NavHome(props) {
   const { onlyBack } = props;
   const navigation = useNavigation();
   const { goBack } = navigation;
-  console.log("only back? ", onlyBack);
 
   return (
     <View style={{ flexDirection: "row", justifyContent: "center" }}>
