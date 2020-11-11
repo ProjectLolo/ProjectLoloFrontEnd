@@ -4,6 +4,7 @@ import images from "@assets/images";
 import styles from "@styles/styles";
 
 import { useNavigation } from "@react-navigation/native";
+import colors from "../../assets/colors";
 
 export default function NavButtons(props) {
   const navigation = useNavigation();
@@ -94,9 +95,24 @@ export default function NavButtons(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Settings", "single")}
         >
-          <View style={styles.navBtContainer}>
+          <View
+            style={[
+              styles.navActiveBtContainer,
+              {
+                backgroundColor: "white",
+                borderWidth: 0,
+                paddingHorizontal: 20,
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.1,
+                shadowRadius: 50,
+              },
+            ]}
+          >
             <Image style={styles.navBtImage} source={images.monkey} />
-            <Text style={styles.bottomText}>Account</Text>
+            <Text style={[styles.bottomText, { color: colors.purple }]}>
+              Account
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       );

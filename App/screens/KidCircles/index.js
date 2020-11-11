@@ -57,19 +57,29 @@ export default function KidCircles({ route, navigation }) {
         style={[styles.peekabondLogo, { marginBottom: -120, width: "30%" }]}
         source={images.peekabondLogo}
       />
-      <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
-        Welcome {data && `back`},
-        <Text style={{ color: colors.dkPink }}> {userName} </Text>!
+      <Text
+        style={[
+          styles.title,
+          {
+            marginTop: data ? "40%" : "20%",
+            marginBottom: data ? "10%" : "5%",
+          },
+        ]}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
+      >
+        Welcome{!data && ` back,`} {userName} !
       </Text>
 
-      {!data && (
+      {data && (
         <Text
-          style={[styles.title, { marginTop: "5%" }]}
+          style={[styles.title, { marginTop: "10%", marginBottom: "10%" }]}
           adjustsFontSizeToFit={true}
           numberOfLines={1}
         >
-          Please <Text style={{ color: colors.dkPink }}>Create</Text> or
-          <Text style={{ color: colors.dkPink }}> Join</Text> your first circle!
+          Please <Text style={{ color: colors.dkTeal }}>Join</Text> or
+          <Text style={{ color: colors.dkPink }}> Create</Text> your first
+          circle!
         </Text>
       )}
 
@@ -111,7 +121,7 @@ export default function KidCircles({ route, navigation }) {
                     style={[
                       styles.cardText,
                       {
-                        color: colors.dkPink,
+                        color: colors.dkTeal,
                         fontFamily: fonts.semiBold,
                       },
                     ]}
@@ -125,6 +135,7 @@ export default function KidCircles({ route, navigation }) {
                         color: colors.purple,
                         fontFamily: fonts.semiBold,
                         paddingBottom: 15,
+
                         fontSize: adjust(10),
                       },
                     ]}
