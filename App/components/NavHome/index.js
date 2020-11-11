@@ -5,7 +5,8 @@ import images from "@assets/images";
 import { useNavigation } from "@react-navigation/native";
 import colors from "@assets/colors";
 
-export default function NavHome() {
+export default function NavHome(props) {
+  const { onlyBack } = props;
   const navigation = useNavigation();
   const { goBack } = navigation;
 
@@ -29,10 +30,10 @@ export default function NavHome() {
         ></View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
+        onPress={onlyBack ? null : () => navigation.navigate("Recommended")}
       >
         <Image
-          style={[styles.peekabondLogo, { marginRight: 90 }]}
+          style={[styles.peekabondLogo, { marginRight: 100 }]}
           source={images.peekabondLogo}
         />
       </TouchableWithoutFeedback>

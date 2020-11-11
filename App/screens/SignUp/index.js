@@ -7,9 +7,6 @@ import {
   Text,
 } from "react-native";
 import styles from "@styles/styles";
-import { useMutation } from "@apollo/client";
-import { SIGNUP } from "../../../graphql/mutations";
-import { AuthContext } from "../../context/Auth";
 
 export default function SignUp({ navigation }) {
   const [variables, setVariables] = useState({
@@ -17,31 +14,26 @@ export default function SignUp({ navigation }) {
     lastName: "",
     email: "",
     password: "",
+    profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
 
-  const { signIn, signUp } = useContext(AuthContext);
+  // TODO: validate the input from the user/get error and showcase it from the backend
 
-  const [signup, { error }] = useMutation(SIGNUP, {
-    onError: (error) => console.log("hi", error.graphQLErrors),
-    onCompleted({ signup }) {
-      console.log("completed", signup);
-      if (signup.error) {
-        set_errorState(<Alert variant="danger">{signup.error}</Alert>);
-      }
-      if (signup.token) {
-        signUp(signup.token);
-      }
-    },
-  });
+
+  function onSubmitHandler() {
+    navigation.navigate("UploadUserProfile", {
+      firstName: variables.firstName,
+      lastName: variables.lastName,
+      email: variables.email,
+      password: variables.password,
+      profilePic: variables.profilePic,
+    });
+  }
+
 
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
-  }
-
-  function submitForm(e) {
-    e.preventDefault();
-    signup({ variables });
   }
 
   return (
@@ -94,10 +86,7 @@ export default function SignUp({ navigation }) {
             </Text>
           </TouchableWithoutFeedback>
         )}
-        <TouchableWithoutFeedback
-          // onPress={() => navigation.navigate("Welcome")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
-          onPress={submitForm}
-        >
+        <TouchableWithoutFeedback onPress={onSubmitHandler}>
           <View style={styles.loginButton}>
             <Text style={styles.loginButtonText}>SIGNUP</Text>
           </View>

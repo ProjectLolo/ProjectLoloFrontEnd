@@ -7,6 +7,9 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+
+import { useQuery } from "@apollo/client";
+
 import styles from "@styles/styles"; //have to changeit to @styles/styles
 import style from "./style";
 import images from "@assets/images";
@@ -16,25 +19,28 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
-export default function KidCircles({ navigation }) {
-  const circles = [
-    {
-      id: 1,
-      kidImage: images.monkey,
-      kidName: "Atieh",
-    },
-    {
-      id: 2,
-      kidImage: images.monkey,
-      kidName: "Weilong",
-    },
-    {
-      id: 3,
-      kidImage: images.monkey,
-      kidName: "Nazneen",
-    },
-  ];
+import { GET_ALL_KIDS } from "../../../graphql/queries";
 
+export default function KidCircles({ route, navigation }) {
+  const { data } = useQuery(GET_ALL_KIDS, {
+    variables: {
+      userId: route.params.activeUser,
+    },
+  });
+  // const circles = [
+  //   {
+  //     id: 1,
+  //     kidImage: images.monkey,
+  //     kidName: "Atieh",
+  //   },
+  // ];
+  if (!data) {
+    return (
+      <View>
+        <Text>...loading</Text>
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -48,24 +54,25 @@ export default function KidCircles({ navigation }) {
       />
       <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
         Welcome back, [firstNameOfUser]!
+        {/* if no kidCircles exist text='Welcome, [firsNameOfUser]'*/}
       </Text>
 
       <FlatList
         contentContainerStyle={{
           alignSelf: "center",
-          width: "50%",
+          width: "90%",
           paddingTop: 30,
         }}
-        data={circles}
+        data={data.findAllKids}
         numColumns={1}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback>
               <KidCircleCard
-                id={item.id}
-                kidImage={item.kidImage}
-                kidName={item.kidName}
+                id={item._id}
+                kidImage={item.profileImageUrl}
+                kidName={item.name}
               />
             </TouchableWithoutFeedback>
           );
@@ -74,8 +81,8 @@ export default function KidCircles({ navigation }) {
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <View
               style={{
-                width: "50%",
-                height: Dimensions.get("window").width * 0.25,
+                width: "25%",
+                height: Dimensions.get("window").width * 0.225,
                 marginHorizontal: "10%",
                 marginBottom: 150,
               }}
@@ -144,8 +151,8 @@ export default function KidCircles({ navigation }) {
             </View>
             <View
               style={{
-                width: "50%",
-                height: Dimensions.get("window").width * 0.25,
+                width: "25%",
+                height: Dimensions.get("window").width * 0.225,
                 marginHorizontal: "10%",
               }}
             >
@@ -209,6 +216,7 @@ export default function KidCircles({ navigation }) {
         }
       />
       <NavButtons screen="Single" />
+
     </View>
   );
 }
