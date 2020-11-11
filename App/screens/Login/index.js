@@ -23,12 +23,13 @@ export default function Login({ navigation }) {
   const [login, { error }] = useMutation(LOGIN, {
     onError: (error) => console.log("hi", error.graphQLErrors),
     onCompleted({ login }) {
+      console.log("loginMutation", login.user.firstName);
       if (login.error) {
         set_errorState(<Alert variant="danger">{login.error}</Alert>);
       }
       if (login.token) {
         // dispatch(loginSuccess(login));
-        signIn(login.token);
+        signIn(login.token, login.user.firstName);
       }
     },
   });

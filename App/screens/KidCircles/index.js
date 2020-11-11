@@ -11,7 +11,6 @@ import {
 import { useQuery } from "@apollo/client";
 
 import styles from "@styles/styles"; //have to changeit to @styles/styles
-import style from "./style";
 import images from "@assets/images";
 import NavButtons from "../../components/NavButtons";
 import KidCircleCard from "../../components/KidCircleCard";
@@ -28,6 +27,8 @@ export default function KidCircles({ route, navigation }) {
     },
   });
 
+  const userName = route.params.userToken.firstName;
+
   if (!data) {
     return (
       <View>
@@ -35,6 +36,7 @@ export default function KidCircles({ route, navigation }) {
       </View>
     );
   }
+
   return (
     <View
       style={{
@@ -47,9 +49,20 @@ export default function KidCircles({ route, navigation }) {
         source={images.peekabondLogo}
       />
       <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
-        Welcome back, [firstNameOfUser]!
-        {/* if no kidCircles exist text='Welcome, [firsNameOfUser]'*/}
+        Welcome {data && `back`},
+        <Text style={{ color: colors.dkPink }}> {userName} </Text>!
       </Text>
+
+      {!data && (
+        <Text
+          style={[styles.title, { marginTop: "5%" }]}
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+        >
+          Please <Text style={{ color: colors.dkPink }}>Create</Text> or
+          <Text style={{ color: colors.dkPink }}> Join</Text> your first circle!
+        </Text>
+      )}
 
       <FlatList
         contentContainerStyle={{

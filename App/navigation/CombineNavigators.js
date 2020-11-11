@@ -11,10 +11,13 @@ const AuthStateContext = createContext();
 export default function CombineNavigators() {
   const authContextValue = React.useMemo(
     () => ({
-      signIn: async (data) => {
-        const decodedToken = jwtDecode(data);
-        await AsyncStorage.setItem("userToken", data);
-        dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
+      signIn: async (token, firstName) => {
+        const decodedToken = jwtDecode(token);
+        await AsyncStorage.setItem("userToken", token);
+        dispatch({
+          type: "SIGN_IN",
+          token: { token, decodedToken, firstName },
+        });
       },
       signOut: async () => {
         await AsyncStorage.removeItem("userToken");
@@ -78,6 +81,7 @@ export default function CombineNavigators() {
             ...prevState,
             userToken: action.token,
             activeUser: action.token.decodedToken.userId,
+            firstName: action.token.firstName,
           };
         case "SIGN_OUT":
           return {
