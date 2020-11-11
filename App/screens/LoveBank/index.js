@@ -16,6 +16,7 @@ export default function LoveBank({ route, navigation }) {
       kidId: route.params.activeKid,
     },
   });
+
   // const cardContent = [
   //   {
   //     id: 1,
@@ -33,6 +34,7 @@ export default function LoveBank({ route, navigation }) {
       </View>
     );
   }
+  console.log("data.loveBanks", data.loveBanks);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -56,6 +58,7 @@ export default function LoveBank({ route, navigation }) {
                 topColor="pink"
                 bottomColor="purple"
                 video={images.videoCameraPurple}
+                loveBankId={item._id}
               />
             </TouchableWithoutFeedback>
           );

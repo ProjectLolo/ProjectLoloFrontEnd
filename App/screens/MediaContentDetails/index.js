@@ -19,15 +19,23 @@ import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
 
 import CommentBox from "../../components/CommentBox";
 
-export default function MediaContentDetails({ route, navigation }) {
-  const { title, person, topColor, bottomColor, video } = route.params;
+export default function MediaContentDetails({ navigation, route }) {
+  const {
+    title,
+    person,
+    topColor,
+    bottomColor,
+    video,
+    loveBankId,
+  } = route.params;
 
   const { data } = useQuery(GET_COMMENTS_AND_LIKES, {
     variables: {
-      _id: "5fa56a0506a12f6f1ddba384",
-      kidId: "5fa1844d6b1bea7994cecb91",
+      id: loveBankId,
+      kidId: route.params.activeKid,
     },
   });
+
   console.log("data in mediaContent", data);
   const cardContent = [
     {
