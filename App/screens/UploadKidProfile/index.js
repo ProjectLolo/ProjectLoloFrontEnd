@@ -15,9 +15,7 @@ import {
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
-<<<<<<< HEAD
 import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
-=======
 import { CREATE_KID } from "../../../graphql/mutations";
 import NavHome from "../../components/NavHome";
 import colors from "@assets/colors";
@@ -25,7 +23,6 @@ import adjust from "../../styles/adjust";
 import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
->>>>>>> 78fed4434e56aef01529a972d3d50a926fd96d83
 
 
 
@@ -36,7 +33,6 @@ export default function UploadKidProfile({ route, navigation }) {
   const [picture, setPicture] = useState(null);
   console.log("picture", picture);
 
-<<<<<<< HEAD
   // const [createKid, { error }] = useMutation(CREATE_KID, {
   //   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
   //   onCompleted(data) {
@@ -52,17 +48,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     navigation.navigate("ShareFamilyCode", { familyCode: "XXXXXXX" } );
   },
 });
-=======
-  const [createKid, { error }] = useMutation(CREATE_KID, {
-    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
-
-    },
-  });
-
->>>>>>> 78fed4434e56aef01529a972d3d50a926fd96d83
 
   // asks permission from used to use camera
   useEffect(() => {
