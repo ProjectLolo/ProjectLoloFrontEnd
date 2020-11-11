@@ -20,6 +20,9 @@ import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
+import { useMutation } from "@apollo/client";
+import { CREATE_KID } from "../../../graphql/mutations";
+
 export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
@@ -40,13 +43,32 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-  function onSubmitHandler() {
+  // function onSubmitHandler() {
    
-    navigation.navigate("UploadKidProfile", {
-      kidName: name,
-      kidNickname: nickname,
-      kidDateofBirth: moment(dateOfBirth).format("DD/MM/YYYY"),
-    });
+  //   navigation.navigate("UploadKidProfile", {
+  //     kidName: name,
+  //     kidNickname: nickname,
+  //     kidDateofBirth: moment(dateOfBirth).format("DD/MM/YYYY"),
+  //   });
+  // }
+
+  const [createKid, { error }] = useMutation(CREATE_KID, {
+    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("UploadKidProfile",{ kidName: name});
+    },
+  });
+
+  function onSubmitHandler() {
+    createKid({
+      variables: {
+        name: route.params.kidName,
+        nickName: route.params.kidNickname,
+        birthdate: route.params.kidDateofBirth,
+        profileImageUrl: null,
+      },
+    }); 
   }
 
   console.log(dateOfBirth);

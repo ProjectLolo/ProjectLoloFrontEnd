@@ -13,7 +13,7 @@ import {
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
-import { CREATE_KID } from "../../../graphql/mutations";
+import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
 
 
 export default function UploadKidProfile({ route, navigation }) {
@@ -25,14 +25,21 @@ export default function UploadKidProfile({ route, navigation }) {
   );
   const [loading, setLoading] = useState(false);
 
-  const [createKid, { error }] = useMutation(CREATE_KID, {
-    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
-    },
-  });
+  // const [createKid, { error }] = useMutation(CREATE_KID, {
+  //   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+  //   onCompleted(data) {
+  //     console.log("completed", data);
+  //     navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+  //   },
+  // });
 
+const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+  onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+  onCompleted(data) {
+    console.log("completed", data);
+    navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+  },
+});
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -49,16 +56,14 @@ export default function UploadKidProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    createKid({
+    addKidProfileImage({
       variables: {
-        name: route.params.kidName,
-        nickName: route.params.kidNickname,
-        birthdate: route.params.kidDateofBirth,
         profileImageUrl: picture,
       },
     });
     navigation.navigate("Recommended");
   }
+
   //using camera
   useEffect(() => {
     const result = route.params.result;
