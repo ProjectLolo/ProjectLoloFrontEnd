@@ -28,9 +28,10 @@ export default function KidCircles({ route, navigation }) {
   });
 
   // console.log("data", data);
-  // console.log("paramsssss", route.params);
+  console.log("paramsssss", route.params);
 
-  const userName = route.params.userToken.firstName;
+  const userName = route.params.firstName;
+  console.log("userName", userName);
 
   //if no data then it shouldn't be loading! Because when you just start out, there is no data.
 
@@ -82,15 +83,15 @@ export default function KidCircles({ route, navigation }) {
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
-          return (
-            <TouchableWithoutFeedback>
-              <KidCircleCard
-                id={item._id}
-                kidImage={item.profileImageUrl}
-                kidName={item.name}
-              />
-            </TouchableWithoutFeedback>
-          );
+          // return (
+          //   <TouchableWithoutFeedback>
+          //     <KidCircleCard
+          //       id={item._id}
+          //       kidImage={item.profileImageUrl}
+          //       kidName={item.name}
+          //     />
+          //   </TouchableWithoutFeedback>
+          // );
         }}
         ListFooterComponent={
           <View style={{ flexDirection: "row", justifyContent: "center" }}>

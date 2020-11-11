@@ -14,7 +14,18 @@ export default function NavButtons(props) {
     if (screen === "Recommended") {
       return (
         <TouchableWithoutFeedback>
-          <View style={styles.navActiveBtContainer}>
+          <View
+            style={[
+              styles.navActiveBtContainer,
+              {
+                borderWidth: 0,
+                borderBottomWidth: 5,
+                borderLeftWidth: 1,
+                borderColor: "grey",
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
             <Image
               style={styles.navBtImage}
               source={images.videoCameraYellow}
