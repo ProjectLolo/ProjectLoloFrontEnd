@@ -88,7 +88,13 @@ export default function CreateKidCircles({ route, navigation }) {
               width: "66.5%",
             }}
           >
-            <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
+            <Text
+              style={{
+                fontFamily: fonts.regular,
+                paddingBottom: 23,
+                color: colors.purple,
+              }}
+            >
               Date of birth
             </Text>
             <TouchableWithoutFeedback onPress={() => showDatePicker()}>

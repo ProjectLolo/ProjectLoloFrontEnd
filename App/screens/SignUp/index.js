@@ -20,7 +20,6 @@ export default function SignUp({ navigation }) {
 
   // TODO: validate the input from the user/get error and showcase it from the backend
 
-
   function onSubmitHandler() {
     navigation.navigate("UploadUserProfile", {
       firstName: variables.firstName,
@@ -30,7 +29,6 @@ export default function SignUp({ navigation }) {
       profilePic: variables.profilePic,
     });
   }
-
 
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);

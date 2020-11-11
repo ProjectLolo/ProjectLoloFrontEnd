@@ -49,6 +49,7 @@ export default StyleSheet.create({
     paddingBottom: 5,
     paddingTop: "5%",
     fontFamily: fonts.regular,
+    color: colors.purple,
   },
   passwordButton: {
     backgroundColor: colors.teal,
@@ -220,7 +221,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: adjust(12),
-    color:colors.white,
+    color: colors.white,
     fontFamily: fonts.semiBold,
     textAlign: "center",
   },
