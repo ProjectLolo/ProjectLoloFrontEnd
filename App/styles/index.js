@@ -141,9 +141,14 @@ export default StyleSheet.create({
   },
   navActiveBtContainer: {
     resizeMode: "contain",
-    borderWidth: 1,
     borderRadius: 10,
     padding: 5,
+    backgroundColor: "white",
+    width: "25%",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 50,
   },
   navBtContainer: { padding: 5 },
   navBtImage: {

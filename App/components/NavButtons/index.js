@@ -15,18 +15,7 @@ export default function NavButtons(props) {
     if (screen === "Recommended") {
       return (
         <TouchableWithoutFeedback>
-          <View
-            style={[
-              styles.navActiveBtContainer,
-              {
-                borderWidth: 0,
-                borderBottomWidth: 5,
-                borderLeftWidth: 1,
-                borderColor: "grey",
-                paddingHorizontal: 20,
-              },
-            ]}
-          >
+          <View style={styles.navActiveBtContainer}>
             <Image
               style={styles.navBtImage}
               source={images.videoCameraYellow}
@@ -95,20 +84,7 @@ export default function NavButtons(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Settings", "single")}
         >
-          <View
-            style={[
-              styles.navActiveBtContainer,
-              {
-                backgroundColor: "white",
-                borderWidth: 0,
-                paddingHorizontal: 20,
-                shadowColor: "black",
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.1,
-                shadowRadius: 50,
-              },
-            ]}
-          >
+          <View style={styles.navActiveBtContainer}>
             <Image style={styles.navBtImage} source={images.monkey} />
             <Text style={[styles.bottomText, { color: colors.purple }]}>
               Account
