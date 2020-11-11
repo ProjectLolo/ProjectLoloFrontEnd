@@ -61,17 +61,17 @@ export default function KidCircles({ route, navigation }) {
         style={[
           styles.title,
           {
-            marginTop: data ? "40%" : "20%",
-            marginBottom: data ? "10%" : "5%",
+            marginTop: !data ? "40%" : "20%",
+            marginBottom: !data ? "10%" : "5%",
           },
         ]}
         adjustsFontSizeToFit={true}
         numberOfLines={1}
       >
-        Welcome{!data && ` back,`} {userName} !
+        Welcome{data && ` back,`} {userName} !
       </Text>
 
-      {data && (
+      {!data && (
         <Text
           style={[styles.title, { marginTop: "10%", marginBottom: "10%" }]}
           adjustsFontSizeToFit={true}
@@ -93,15 +93,15 @@ export default function KidCircles({ route, navigation }) {
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
-          // return (
-          //   <TouchableWithoutFeedback>
-          //     <KidCircleCard
-          //       id={item._id}
-          //       kidImage={item.profileImageUrl}
-          //       kidName={item.name}
-          //     />
-          //   </TouchableWithoutFeedback>
-          // );
+          return (
+            <TouchableWithoutFeedback>
+              <KidCircleCard
+                id={item._id}
+                kidImage={item.profileImageUrl}
+                kidName={item.name}
+              />
+            </TouchableWithoutFeedback>
+          );
         }}
         ListFooterComponent={
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -246,7 +246,9 @@ export default function KidCircles({ route, navigation }) {
           </View>
         }
       />
-      <NavButtons screen="Single" />
+      <View style={{ marginTop: "5%" }}>
+        <NavButtons screen="Single" />
+      </View>
     </View>
   );
 }
