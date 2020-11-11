@@ -70,7 +70,7 @@ export default function KidCircleCard(props) {
         >
           <Image
             style={
-              kidImage
+              kidImage && kidImage !== "http://google.com"
                 ? {
                     borderRadius: 150,
                     width: 290,
@@ -85,7 +85,11 @@ export default function KidCircleCard(props) {
                     },
                   ]
             }
-            source={kidImage ? { uri: kidImage } : images.monkey}
+            source={
+              kidImage && kidImage !== "http://google.com"
+                ? { uri: kidImage }
+                : images.monkey
+            }
           />
         </View>
       </TouchableWithoutFeedback>
