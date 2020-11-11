@@ -22,7 +22,9 @@ export default function authNavigator({ route, state }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="KidsCircles"
+
+        initialRouteName="KidCircles"
+
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
@@ -50,11 +52,7 @@ export default function authNavigator({ route, state }) {
           component={MediaContentDetails}
         />
         <Stack.Screen name="ShareSomething" component={ShareSomething} />
-        <Stack.Screen
-          name="VideoPreview"
-          component={VideoPreview}
-          initialParams={state}
-        />
+        <Stack.Screen name="VideoPreview" component={VideoPreview} />
         <Stack.Screen name="MessageSent" component={MessageSent} />
       </Stack.Navigator>
     </NavigationContainer>
