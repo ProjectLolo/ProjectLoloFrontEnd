@@ -17,31 +17,31 @@ export default function SignUp({ navigation }) {
     lastName: "",
     email: "",
     password: "",
+    profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
-
   const { signIn, signUp } = useContext(AuthContext);
 
   const [signup, { error }] = useMutation(SIGNUP, {
-    onError: (error) => console.log("hi", error.graphQLErrors),
+    onError: (error) =>
+      //TODO: give proper error message , now just giving the user the error from graphQL
+      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ signup }) {
-      console.log("completed", signup);
-      if (signup.error) {
-        set_errorState(<Alert variant="danger">{signup.error}</Alert>);
-      }
       if (signup.token) {
         signUp(signup.token);
       }
     },
   });
 
-  function togglePassword() {
-    hidePassword ? setHidePassword(false) : setHidePassword(true);
-  }
 
   function submitForm(e) {
     e.preventDefault();
     signup({ variables });
+
+  }
+
+  function togglePassword() {
+    hidePassword ? setHidePassword(false) : setHidePassword(true);
   }
 
   return (
@@ -94,10 +94,7 @@ export default function SignUp({ navigation }) {
             </Text>
           </TouchableWithoutFeedback>
         )}
-        <TouchableWithoutFeedback
-          // onPress={() => navigation.navigate("Welcome")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
-          onPress={submitForm}
-        >
+        <TouchableWithoutFeedback onPress={submitForm}>
           <View style={styles.loginButton}>
             <Text style={styles.loginButtonText}>SIGNUP</Text>
           </View>

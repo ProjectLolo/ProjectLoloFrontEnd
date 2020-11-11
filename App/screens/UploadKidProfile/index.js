@@ -9,22 +9,34 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
+<<<<<<< HEAD
 import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
+=======
+import { CREATE_KID } from "../../../graphql/mutations";
+import NavHome from "../../components/NavHome";
+import colors from "@assets/colors";
+import adjust from "../../styles/adjust";
+import images from "@assets/images";
+import fonts from "@assets/fonts";
+import ChangeProfilePicture from "../../components/ChangeProfilePicture";
+>>>>>>> 78fed4434e56aef01529a972d3d50a926fd96d83
+
 
 
 export default function UploadKidProfile({ route, navigation }) {
-
-  
-  const [hasPermission, setHasPermission] = useState(null);
-  const [picture, setPicture] = useState(
-    "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
-  );
+  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [picture, setPicture] = useState(null);
+  console.log("picture", picture);
 
+<<<<<<< HEAD
   // const [createKid, { error }] = useMutation(CREATE_KID, {
   //   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
   //   onCompleted(data) {
@@ -40,6 +52,17 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     navigation.navigate("ShareFamilyCode", { familyCode: "XXXXXXX" } );
   },
 });
+=======
+  const [createKid, { error }] = useMutation(CREATE_KID, {
+    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+
+    },
+  });
+
+>>>>>>> 78fed4434e56aef01529a972d3d50a926fd96d83
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -86,12 +109,15 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
       uploadImage(result.uri, "profile");
-      setPicture(result.uri);
+      // setPicture(result.uri);
     }
   };
 
   //upload image to firebase
   const uploadImage = async (uri, imageName) => {
+    setLoading(true);
+    setChangeProfilePicture(false);
+
     const response = await fetch(uri);
     const blob = await response.blob();
     const ref = firebase
@@ -106,10 +132,11 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     // 3. Completion observer, called on successful completion
     uploadTask.on(
       "state_changed",
+
       function (snapshot) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        setLoading(true);
+
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
         switch (snapshot.state) {
@@ -126,6 +153,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         console.log("image upload errors:", error);
       },
       function () {
+        console.log("URIRUIRUIRURIR", uri);
         // Handle successful uploads on complete
         console.log("image upload success");
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
@@ -138,10 +166,24 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     );
   };
 
-  const handleSkip = () =>{
-    uploadImage(picture,"profile")
-    onSubmitHandler()
+
+  //we need to get user's name here // they are the parent of the kid
+  const nameParent = "NameOfParent";
+
+  function hideOptions() {
+    setChangeProfilePicture(false);
   }
+
+  const handleSkip = () => {
+    // uploadImage(picture, "profile");
+    // onSubmitHandler();
+
+    //when skipping there is nothing in picture..... how do we upload the monkey?
+
+    //for now I just navigate to recommended
+    navigation.navigate("Recommended");
+  };
+
 
   if (hasPermission === null) {
     return <View />;
@@ -152,54 +194,115 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   }
 
   return (
-    <View style={[styles.fontFamily]}>
-      <View>
-        <Text
-          style={[style.text, style.align]}
-        >{`Welcome ${route.params.kidName} & family! Let's get started`}</Text>
-        {loading && <ActivityIndicator size="large" color="#660066" />}
-      </View>
-      <View>
-        <Text style={[style.label, style.align, style.spacing]}>
-          {`Please upload a profile picture of ${route.params.kidName} for your family.`}
-        </Text>
-      </View>
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <NavHome onlyBack={true} />
+      <Text
+        style={[styles.title, { marginTop: 10, marginBottom: 0 }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit={true}
+      >
+        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
+        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
+      </Text>
 
-      <View style={[{ flexDirection: "row" }]}>
-        <View>
-          {picture && (
-            <Image
-              source={{ uri: picture }}
-              alt="no-picture"
-              style={[style.image]}
-            />
-          )}
-        </View>
-        <View style={[style.spacing, { alignSelf: "center" }]}>
-          <Button title="Pick a photo" onPress={pickPhoto} />
-          <Button
-            title="Take Picture"
-            onPress={() => navigation.navigate("TakeProfilePicture")}
-          />
-        </View>
-      </View>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontSize: adjust(14),
+            marginTop: picture ? 15 : 10,
+            marginBottom: picture ? 25 : 10,
+          },
+        ]}
+        numberOfLines={2}
+        adjustsFontSizeToFit={true}
+      >
+        Please upload a profile picture of
+        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
+        for your family.
+      </Text>
 
-      <View style={[{ flexDirection: "row" }, style.spacing]}>
-        <View style={[style.button, styles.yellow]}>
-
-          <TouchableOpacity
-            onPress={handleSkip}
+      {loading ? (
+        <ActivityIndicator
+          style={{ marginBottom: "76.5%" }}
+          size="large"
+          color="#660066"
+        />
+      ) : (
+        <View style={{ marginBottom: "25%" }}>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
           >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "50%",
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                height: Dimensions.get("window").width * 0.5,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                style={
+                  picture
+                    ? {
+                        borderRadius: 150,
+                        width: 210,
+                        height: 210,
+                        alignSelf: "center",
+                      }
+                    : styles.cardImage
+                }
+                source={picture ? { uri: picture } : images.monkey}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
+          >
+            <Text
+              style={[
+                styles.cardText,
+                {
+                  color: colors.dkPink,
+                  fontFamily: fonts.semiBold,
+                  paddingTop: 15,
+                },
+              ]}
+            >
+              Change Profile Picture
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
 
-            <Text style={style.button}>Skip this</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={[style.button, styles.dkPink]}>
+
+      {picture ? (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
-            <Text style={style.button}>Continue</Text>
+            <Text style={styles.loginButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      ) : (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
+          <TouchableOpacity onPress={handleSkip}>
+            <Text style={styles.loginButtonText}>Skip this</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {changeProfilePicture && (
+        <ChangeProfilePicture
+          hide={hideOptions}
+          loading={loading}
+          pickPhoto={pickPhoto}
+        />
+      )}
     </View>
   );
 }

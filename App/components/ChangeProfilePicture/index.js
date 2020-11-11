@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import styles from "@styles/styles";
 import fonts from "@assets/fonts";
@@ -13,7 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ChangeProfilePicture(props) {
   const navigation = useNavigation();
-  const { hide } = props;
+  const { hide, pickPhoto, loading } = props;
+
   return (
     <View
       style={{
@@ -75,7 +77,7 @@ export default function ChangeProfilePicture(props) {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={pickPhoto}>
           <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
             <Text
               style={[

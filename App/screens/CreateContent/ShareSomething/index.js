@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Image,
   StyleSheet,
   Platform,
@@ -12,19 +11,7 @@ import {
 import Images from "../../../assets";
 import style from "../../../styles";
 import * as ImagePicker from "expo-image-picker";
-import { Video } from "expo-av";
-import { MaterialIcons, Octicons } from "@expo/vector-icons";
-import Constants from "expo-constants";
-import VideoPreview from "../../../components/VideoPreview"
 export default function ShareSomething({ navigation }) {
-  const [video, setVideo] = useState(null);
-  const [shouldPlay, setShouldPlat] = useState(true);
-
-  handlePlayAndPause = () => {
-    setShouldPlat((prevState) => ({
-      shouldPlay: !prevState.shouldPlay,
-    }));
-  };
 
   useEffect(() => {
     (async () => {
@@ -50,7 +37,9 @@ export default function ShareSomething({ navigation }) {
     console.log(result);
 
     if (!result.cancelled) {
-      setVideo(result.uri);
+      navigation.navigate("VideoPreview", {
+        uri: result.uri
+      })
     }
   };
 
@@ -64,18 +53,15 @@ export default function ShareSomething({ navigation }) {
     console.log(result);
 
     if (!result.cancelled) {
-      setVideo(result.uri);
+      navigation.navigate("VideoPreview", {
+        uri: result.uri
+      })
     }
   };
 
 
   return (
-    <>
-    {video
-    ?
-    <VideoPreview uri={video} />
-    :
-  
+     
       <View style={styles.container}>
         <View style={styles.mainContainer}>
           <Image style={styles.image} source={Images.videoCameraPurple} />
@@ -108,8 +94,6 @@ export default function ShareSomething({ navigation }) {
           </Text>
         </TouchableWithoutFeedback> */}
       </View>
-      }
-    </>
   );
 }
 const styles = StyleSheet.create({
