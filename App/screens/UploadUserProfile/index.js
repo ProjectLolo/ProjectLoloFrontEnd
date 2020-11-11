@@ -12,9 +12,6 @@ import {
 } from "react-native";
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
-import { useMutation } from "@apollo/client";
-import { SIGNUP } from "../../../graphql/mutations";
-import { AuthContext } from "../../context/Auth";
 
 export default function UploadUserProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -23,21 +20,7 @@ export default function UploadUserProfile({ route, navigation }) {
   );
   const [loading, setLoading] = useState(false);
 
-  const { signIn, signUp } = useContext(AuthContext);
-
-  const [signup, { error }] = useMutation(SIGNUP, {
-    onError: (error) => console.log("error", error.graphQLErrors),
-    onCompleted({ signup }) {
-      console.log("completed", signup);
-      if (signup.error) {
-        set_errorState(<Alert variant="danger">{signup.error}</Alert>);
-      }
-      if (signup.token) {
-        signUp(signup.token);
-        navigation.navigate("KidCircles");
-      }
-    },
-  });
+  // TODO: mutation to change/upload profile picture
 
   //TODO: add this part into a component and do the same for in UploadKidProfile
 
@@ -57,15 +40,11 @@ export default function UploadUserProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    signup({
-      variables: {
-        firstName: route.params.firstName,
-        lastName: route.params.lastName,
-        email: route.params.lastName,
-        password: route.params.password,
-        profilePic: picture,
-      },
-    });
+    // changeProfilePic({
+    //   variables: {
+    //     profilePic: picture,
+    //   },
+    // });
   }
   //using camera
   useEffect(() => {
