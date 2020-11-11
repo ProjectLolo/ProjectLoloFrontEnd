@@ -17,6 +17,9 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
+  console.log("data", data);
+  console.log("route", route.params.activeKid);
+
   // const cardContent = [
   //   {
   //     id: 1,

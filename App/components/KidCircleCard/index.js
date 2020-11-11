@@ -18,7 +18,7 @@ export default function KidCircleCard(props) {
   const { activeKid } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
-  // console.log("kidImage", kidImage);
+  console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();
@@ -56,7 +56,8 @@ export default function KidCircleCard(props) {
       <TouchableWithoutFeedback onPress={handlePress}>
         <View
           style={{
-            backgroundColor: kidImage ? null : "white",
+            backgroundColor:
+              kidImage && kidImage !== "http://google.com" ? null : "white",
             width: "75%",
             height: Dimensions.get("window").width * 0.7,
             alignSelf: "center",
