@@ -55,3 +55,25 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const CREATE_LOVEBANK = gql`
+  mutation createLoveBank(
+    $title: String!
+    $url: String!
+    $preview: String!
+    $description: String!
+    $category: String!
+    $kidId: ID
+  ) {
+    createLoveBank(
+      title: $title
+      url: $url
+      preview: $preview
+      description: $description
+      category: $category
+      kidId: $kidId
+    ) {
+      _id
+    }
+  }
+`;

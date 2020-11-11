@@ -44,6 +44,7 @@ export default function UploadKidProfile({ route, navigation }) {
     onCompleted(data) {
       console.log("completed", data);
       navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+
     },
   });
 
