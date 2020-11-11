@@ -188,7 +188,7 @@ export default function UploadKidProfile({ route, navigation }) {
         adjustsFontSizeToFit={true}
       >
         Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}>{route.params.kidName}</Text>!
+        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
       </Text>
 
       <Text
