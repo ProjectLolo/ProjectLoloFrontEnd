@@ -71,7 +71,7 @@ export default function CreateKidCircles({ navigation }) {
     }); 
   }
 
-  console.log(dateOfBirth);
+  //console.log(dateOfBirth);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

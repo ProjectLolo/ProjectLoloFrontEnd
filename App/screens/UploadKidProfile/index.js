@@ -37,7 +37,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
   onCompleted(data) {
     console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+    navigation.navigate("ShareFamilyCode", { familyCode: "XXXXXXX" } );
   },
 });
 
@@ -61,7 +61,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         profileImageUrl: picture,
       },
     });
-    navigation.navigate("Recommended");
+    console.log("data:",data.createKid.code)
   }
 
   //using camera
