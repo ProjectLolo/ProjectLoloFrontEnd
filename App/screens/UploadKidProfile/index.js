@@ -23,15 +23,6 @@ import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
-// const ADD_KIDCIRCLE = gql`
-//   mutation AddKidCircle($type: String!) {
-//     addKidCircle(type: $type) {
-//       id
-//       type
-//     }
-//   }
-// `;
-
 export default function UploadKidProfile({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
