@@ -38,7 +38,7 @@ export default function SignUp({ navigation }) {
     e.preventDefault();
     signup({ variables });
 
-
+  }
 
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
