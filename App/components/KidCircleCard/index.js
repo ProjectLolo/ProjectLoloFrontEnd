@@ -18,7 +18,7 @@ export default function KidCircleCard(props) {
   const { activeKid } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
-  console.log("kidImage", kidImage);
+  // console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();
@@ -68,33 +68,25 @@ export default function KidCircleCard(props) {
             borderRadius: 150,
           }}
         >
-          {kidImage ? (
-            <Image
-              style={
-                kidImage
-                  ? {
-                      borderRadius: 150,
-                      width: 290,
-                      height: 290,
-                      alignSelf: "center",
-                    }
-                  : [
-                      styles.cardImage,
-                      {
-                        width: "100%",
-                        height: Dimensions.get("window").width * 0.3,
-                      },
-                    ]
-              }
-              source={kidImage ? { uri: kidImage } : images.monkey}
-            />
-          ) : (
-            <ActivityIndicator
-              style={{ marginBottom: "76.5%" }}
-              size="large"
-              color={colors.dkPink}
-            />
-          )}
+          <Image
+            style={
+              kidImage
+                ? {
+                    borderRadius: 150,
+                    width: 290,
+                    height: 290,
+                    alignSelf: "center",
+                  }
+                : [
+                    styles.cardImage,
+                    {
+                      width: "100%",
+                      height: Dimensions.get("window").width * 0.3,
+                    },
+                  ]
+            }
+            source={kidImage ? { uri: kidImage } : images.monkey}
+          />
         </View>
       </TouchableWithoutFeedback>
       {/* 

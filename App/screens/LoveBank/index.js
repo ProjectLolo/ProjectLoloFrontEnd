@@ -16,6 +16,7 @@ export default function LoveBank({ route, navigation }) {
       kidId: route.params.activeKid,
     },
   });
+
   // const cardContent = [
   //   {
   //     id: 1,
@@ -26,13 +27,13 @@ export default function LoveBank({ route, navigation }) {
   //     video: images.videoCameraPurple,
   //   },
   // ];
-  if (!data) {
-    return (
-      <View>
-        <Text>...loading</Text>
-      </View>
-    );
-  }
+  // if (!data) {
+  //   return (
+  //     <View>
+  //       <Text>...loading</Text>
+  //     </View>
+  //   );
+  // }
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -42,7 +43,7 @@ export default function LoveBank({ route, navigation }) {
         contentContainerStyle={{
           alignSelf: "center",
         }}
-        data={data.loveBanks}
+        data={data && data.loveBanks}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {

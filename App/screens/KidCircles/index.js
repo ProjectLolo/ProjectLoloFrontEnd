@@ -27,9 +27,8 @@ export default function KidCircles({ route, navigation }) {
     },
   });
 
-  console.log("data", data);
-
   // console.log("data", data);
+  // console.log("paramsssss", route.params);
 
   const userName = route.params.userToken.firstName;
 
@@ -42,6 +41,9 @@ export default function KidCircles({ route, navigation }) {
   //     </View>
   //   );
   // }
+
+  // const tempArray = data && data.findAllKids.slice(0, 3).map((i) => i);
+  // console.log("tempArray", tempArray);
 
   return (
     <View
@@ -80,15 +82,15 @@ export default function KidCircles({ route, navigation }) {
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
-          // return (
-          //   <TouchableWithoutFeedback>
-          //     <KidCircleCard
-          //       id={item._id}
-          //       kidImage={item.profileImageUrl}
-          //       kidName={item.name}
-          //     />
-          //   </TouchableWithoutFeedback>
-          // );
+          return (
+            <TouchableWithoutFeedback>
+              <KidCircleCard
+                id={item._id}
+                kidImage={item.profileImageUrl}
+                kidName={item.name}
+              />
+            </TouchableWithoutFeedback>
+          );
         }}
         ListFooterComponent={
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
