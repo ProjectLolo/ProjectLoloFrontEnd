@@ -27,15 +27,21 @@ export default function KidCircles({ route, navigation }) {
     },
   });
 
+  console.log("data", data);
+
+  // console.log("data", data);
+
   const userName = route.params.userToken.firstName;
 
-  if (!data) {
-    return (
-      <View>
-        <Text>...loading</Text>
-      </View>
-    );
-  }
+  //if no data then it shouldn't be loading! Because when you just start out, there is no data.
+
+  // if (!data) {
+  //   return (
+  //     <View>
+  //       <Text>...loading</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View
@@ -74,15 +80,15 @@ export default function KidCircles({ route, navigation }) {
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
-          return (
-            <TouchableWithoutFeedback>
-              <KidCircleCard
-                id={item._id}
-                kidImage={item.profileImageUrl}
-                kidName={item.name}
-              />
-            </TouchableWithoutFeedback>
-          );
+          // return (
+          //   <TouchableWithoutFeedback>
+          //     <KidCircleCard
+          //       id={item._id}
+          //       kidImage={item.profileImageUrl}
+          //       kidName={item.name}
+          //     />
+          //   </TouchableWithoutFeedback>
+          // );
         }}
         ListFooterComponent={
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -164,7 +170,9 @@ export default function KidCircles({ route, navigation }) {
               }}
             >
               <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("CreateKidCircle")}
+                onPress={() =>
+                  navigation.navigate("CreateKidCircle", { userName })
+                }
               >
                 <Text
                   style={[
@@ -180,7 +188,9 @@ export default function KidCircles({ route, navigation }) {
                 </Text>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("CreateKidCircle")}
+                onPress={() =>
+                  navigation.navigate("CreateKidCircle", { userName })
+                }
               >
                 <View
                   style={{

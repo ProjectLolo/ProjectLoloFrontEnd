@@ -18,6 +18,7 @@ export default function KidCircleCard(props) {
   const { activeKid } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
+  console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();

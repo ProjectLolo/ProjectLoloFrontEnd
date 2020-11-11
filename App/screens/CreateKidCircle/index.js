@@ -20,12 +20,12 @@ import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
-export default function CreateKidCircles({ navigation }) {
+export default function CreateKidCircles({ route, navigation }) {
   const [name, setName] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [dateOfBirth, setDOB] = useState("");
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  console.log("route.params", route.params);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -41,7 +41,6 @@ export default function CreateKidCircles({ navigation }) {
   };
 
   function onSubmitHandler() {
-   
     navigation.navigate("UploadKidProfile", {
       kidName: name,
       kidNickname: nickname,
@@ -136,7 +135,6 @@ export default function CreateKidCircles({ navigation }) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-
 
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
