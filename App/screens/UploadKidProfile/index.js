@@ -33,19 +33,12 @@ export default function UploadKidProfile({ route, navigation }) {
   const [picture, setPicture] = useState(null);
   console.log("picture", picture);
 
-  // const [createKid, { error }] = useMutation(CREATE_KID, {
-  //   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
-  //   onCompleted(data) {
-  //     console.log("completed", data);
-  //     navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
-  //   },
-  // });
 
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   onError: (error) => console.log("mutation create kid", error.graphQLErrors),
   onCompleted(data) {
     console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: "XXXXXXX" } );
+    navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
   },
 });
 
@@ -66,10 +59,11 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   function onSubmitHandler() {
     addKidProfileImage({
       variables: {
+        id: route.params.kidId,
         profileImageUrl: picture,
       },
     });
-    console.log("data:",data.createKid.code)
+    //console.log("data:",data.createKid.code)
   }
 
   //using camera

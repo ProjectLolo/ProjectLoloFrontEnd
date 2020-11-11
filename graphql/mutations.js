@@ -56,7 +56,6 @@ export const SIGNUP = gql`
   }
 `;
 
-<<<<<<< HEAD
 export const ADD_KID_PROFILE_IMAGE = gql`
 mutation addKidProfileImage(
   $kidId: String!
@@ -75,7 +74,7 @@ mutation addKidProfileImage(
   }
 }
 `;
-=======
+
 export const CREATE_LOVEBANK = gql`
   mutation createLoveBank(
     $title: String!
@@ -97,4 +96,4 @@ export const CREATE_LOVEBANK = gql`
     }
   }
 `;
->>>>>>> 78fed4434e56aef01529a972d3d50a926fd96d83
+

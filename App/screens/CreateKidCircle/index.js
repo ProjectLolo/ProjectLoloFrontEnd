@@ -56,19 +56,21 @@ export default function CreateKidCircles({ navigation }) {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-      navigation.navigate("UploadKidProfile",{ kidName: name});
+      navigation.navigate("UploadKidProfile",{ kidId:data._id, kidName: name});
     },
   });
 
   function onSubmitHandler() {
     createKid({
       variables: {
-        name: route.params.kidName,
-        nickName: route.params.kidNickname,
-        birthdate: route.params.kidDateofBirth,
-        profileImageUrl: null,
+        name: "kidzzz",
+        nickName: "zzz",
+        birthdate: "04-11-2005",
+        profileImageUrl: "",
       },
     }); 
+
+    //navigation.navigate("UploadKidProfile",{ kidName: name});
   }
 
   //console.log(dateOfBirth);

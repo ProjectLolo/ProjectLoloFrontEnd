@@ -34,13 +34,12 @@ export default function KidCircles({ route, navigation }) {
   //     kidName: "Atieh",
   //   },
   // ];
-  if (!data) {
-    return (
-      <View>
-        <Text>...loading</Text>
-      </View>
-    );
+  if(!data){
+  return  <View>
+  <Text>Loading....</Text>
+</View>
   }
+
   return (
     <View
       style={{
