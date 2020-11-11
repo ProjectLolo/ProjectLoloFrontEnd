@@ -27,13 +27,7 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
-  // const circles = [
-  //   {
-  //     id: 1,
-  //     kidImage: images.monkey,
-  //     kidName: "Atieh",
-  //   },
-  // ];
+
   if (!data) {
     return (
       <View>
@@ -63,9 +57,9 @@ export default function KidCircles({ route, navigation }) {
           width: "90%",
           paddingTop: 30,
         }}
-        data={data.findAllKids}
+        data={data && data.findAllKids}
         numColumns={1}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback>
@@ -216,7 +210,6 @@ export default function KidCircles({ route, navigation }) {
         }
       />
       <NavButtons screen="Single" />
-
     </View>
   );
 }

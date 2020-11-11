@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
   Dimensions,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/Auth";
+import images from "@assets/images";
 
 export default function KidCircleCard(props) {
   const { activeKid } = useContext(AuthContext);
@@ -47,13 +49,13 @@ export default function KidCircleCard(props) {
             },
           ]}
         >
-          {kidName}
+          {kidName && kidName}
         </Text>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={handlePress}>
         <View
           style={{
-            backgroundColor: "white",
+            backgroundColor: kidImage ? null : "white",
             width: "75%",
             height: Dimensions.get("window").width * 0.7,
             alignSelf: "center",
@@ -65,13 +67,33 @@ export default function KidCircleCard(props) {
             borderRadius: 150,
           }}
         >
-          <Image
-            style={[
-              styles.cardImage,
-              { width: "100%", height: Dimensions.get("window").width * 0.3 },
-            ]}
-            source={kidImage}
-          />
+          {kidImage ? (
+            <Image
+              style={
+                kidImage
+                  ? {
+                      borderRadius: 150,
+                      width: 290,
+                      height: 290,
+                      alignSelf: "center",
+                    }
+                  : [
+                      styles.cardImage,
+                      {
+                        width: "100%",
+                        height: Dimensions.get("window").width * 0.3,
+                      },
+                    ]
+              }
+              source={kidImage ? { uri: kidImage } : images.monkey}
+            />
+          ) : (
+            <ActivityIndicator
+              style={{ marginBottom: "76.5%" }}
+              size="large"
+              color={colors.dkPink}
+            />
+          )}
         </View>
       </TouchableWithoutFeedback>
       {/* 
