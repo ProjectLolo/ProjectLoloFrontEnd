@@ -216,7 +216,6 @@ export default function KidCircles({ route, navigation }) {
         }
       />
       <NavButtons screen="Single" />
-
     </View>
   );
 }

@@ -23,15 +23,6 @@ import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
-const ADD_KIDCIRCLE = gql`
-  mutation AddKidCircle($type: String!) {
-    addKidCircle(type: $type) {
-      id
-      type
-    }
-  }
-`;
-
 export default function UploadKidProfile({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,11 +34,11 @@ export default function UploadKidProfile({ route, navigation }) {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
-
+      navigation.navigate("ShareFamilyCode", {
+        familyCode: data.createKid.code,
+      });
     },
   });
-
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -153,7 +144,6 @@ export default function UploadKidProfile({ route, navigation }) {
     );
   };
 
-
   //we need to get user's name here // they are the parent of the kid
   const nameParent = "NameOfParent";
 
@@ -170,7 +160,6 @@ export default function UploadKidProfile({ route, navigation }) {
     //for now I just navigate to recommended
     navigation.navigate("Recommended");
   };
-
 
   if (hasPermission === null) {
     return <View />;
@@ -267,7 +256,6 @@ export default function UploadKidProfile({ route, navigation }) {
           </TouchableWithoutFeedback>
         </View>
       )}
-
 
       {picture ? (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>

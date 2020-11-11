@@ -13,12 +13,22 @@ import colors from "@assets/colors";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useQuery } from "@apollo/client";
+
+import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
 
 import CommentBox from "../../components/CommentBox";
 
 export default function MediaContentDetails({ route, navigation }) {
   const { title, person, topColor, bottomColor, video } = route.params;
 
+  const { data } = useQuery(GET_COMMENTS_AND_LIKES, {
+    variables: {
+      _id: "5fa56a0506a12f6f1ddba384",
+      kidId: "5fa1844d6b1bea7994cecb91",
+    },
+  });
+  console.log("data in mediaContent", data);
   const cardContent = [
     {
       id: 1,

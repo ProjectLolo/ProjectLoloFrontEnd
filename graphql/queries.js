@@ -23,7 +23,19 @@ export const GET_ALL_KIDS = gql`
       birthdate
       profileImageUrl
       userId
-      code
+    }
+  }
+`;
+
+export const GET_COMMENTS_AND_LIKES = gql`
+  query loveBankById($id: String!, $kidId: String!) {
+    loveBankById(_id: $id, kidId: $kidId) {
+      comments {
+        userId
+      }
+      likes {
+        userId
+      }
     }
   }
 `;
