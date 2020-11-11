@@ -58,11 +58,11 @@ export const SIGNUP = gql`
 
 export const ADD_KID_PROFILE_IMAGE = gql`
 mutation addKidProfileImage(
-  $kidId: String!
+  $id: String!
   $imageUrl: String!
 ) {
   addKidProfileImage(
-      id: $kidId
+      id: $id
       imageUrl: $imageUrl
   ) {
     _id

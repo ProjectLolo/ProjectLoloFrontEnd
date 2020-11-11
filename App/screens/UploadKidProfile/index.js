@@ -16,7 +16,6 @@ import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
 import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
-import { CREATE_KID } from "../../../graphql/mutations";
 import NavHome from "../../components/NavHome";
 import colors from "@assets/colors";
 import adjust from "../../styles/adjust";
@@ -35,10 +34,10 @@ export default function UploadKidProfile({ route, navigation }) {
 
 
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
-  onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
   onCompleted(data) {
     console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: data.createKid.code } );
+    navigation.navigate("ShareFamilyCode", { familyCode: data.addKidProfileImage.code } );
   },
 });
 
@@ -56,11 +55,13 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     })();
   }, []);
 
+
   function onSubmitHandler() {
+    console.log("route.params.kidId:",route.params.kidId)
     addKidProfileImage({
       variables: {
         id: route.params.kidId,
-        profileImageUrl: picture,
+        imageUrl: picture,
       },
     });
     //console.log("data:",data.createKid.code)

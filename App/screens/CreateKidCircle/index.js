@@ -43,21 +43,13 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-  // function onSubmitHandler() {
-
-  //   navigation.navigate("UploadKidProfile", {
-  //     kidName: name,
-  //     kidNickname: nickname,
-  //     kidDateofBirth: moment(dateOfBirth).format("DD/MM/YYYY"),
-  //   });
-  // }
 
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
       navigation.navigate("UploadKidProfile", {
-        kidId: data._id,
+        kidId: data.createKid._id,
         kidName: name,
       });
     },
@@ -73,10 +65,7 @@ export default function CreateKidCircles({ navigation }) {
       },
     });
 
-    //navigation.navigate("UploadKidProfile",{ kidName: name});
   }
-
-  //console.log(dateOfBirth);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
