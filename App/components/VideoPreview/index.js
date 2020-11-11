@@ -12,26 +12,11 @@ import Images from "../../assets";
 import style from "../../styles";
 import { Video } from "expo-av";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { onError, useMutation } from "@apollo/client";
-import { CREATE_LOVEBANK} from "../../../graphql/mutations"
+import { gql, useMutation } from "@apollo/client";
 
-export default function VideoPreview({ route, navigation }) {
- 
+export default function ShareSomething({ route, navigation }) {
 
   const [loading, setLoading] = useState(false);
-  const [video, setVideo] = useState(null);
-
-  const [loveBankEntry, { error }] = useMutation(CREATE_LOVEBANK, {
-    onError: (error) => console.log("mutation create lovebank content", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-
-    },
-  });  
-
-  useEffect(() => {
-    uploadVideo(route.params.uri)
-  }, [route.params.uri]);
 
   const uploadVideo = async (uri) => {
     const response = await fetch(uri);
@@ -73,27 +58,19 @@ export default function VideoPreview({ route, navigation }) {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
-          setVideo(downloadURL)
-          setLoading(false)
-
+          setLoading(false);
         });
       }
     );
   };
 
   function handleSend() {
-    loveBankEntry({
-      variables: {
-        title: "a video",
-        url: video,
-        description: "this is a video",
-        category: "video",
-        kidId: route.params.activeKid,
-      },
-    });   
-    navigation.navigate("MessageSent", { uri: route.params.uri})
+    uploadVideo(downloadURL)
+    navigation.navigate("MessageSent", { uri: route.params.uri })
+    
+
   }
-  console.log("useeeeer", route.params.activeKid)
+
   console.log("vid", route.params.uri);
   return (
     <View style={styles.container}>

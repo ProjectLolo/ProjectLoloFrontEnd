@@ -23,6 +23,8 @@ import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
+
+
 export default function UploadKidProfile({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
