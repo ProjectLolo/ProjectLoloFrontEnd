@@ -27,6 +27,7 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
+  console.log("route.params.activeUser", route.params.activeUser);
   // const circles = [
   //   {
   //     id: 1,
@@ -34,10 +35,12 @@ export default function KidCircles({ route, navigation }) {
   //     kidName: "Atieh",
   //   },
   // ];
-  if(!data){
-  return  <View>
-  <Text>Loading....</Text>
-</View>
+  if (!data) {
+    return (
+      <View>
+        <Text>Loading....</Text>
+      </View>
+    );
   }
 
   return (
@@ -215,7 +218,6 @@ export default function KidCircles({ route, navigation }) {
         }
       />
       <NavButtons screen="Single" />
-
     </View>
   );
 }

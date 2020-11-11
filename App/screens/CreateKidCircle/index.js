@@ -24,8 +24,8 @@ import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
 
 export default function CreateKidCircles({ navigation }) {
-  const [name, setName] = useState(null);
-  const [nickname, setNickname] = useState(null);
+  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -44,7 +44,7 @@ export default function CreateKidCircles({ navigation }) {
   };
 
   // function onSubmitHandler() {
-   
+
   //   navigation.navigate("UploadKidProfile", {
   //     kidName: name,
   //     kidNickname: nickname,
@@ -56,19 +56,22 @@ export default function CreateKidCircles({ navigation }) {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-      navigation.navigate("UploadKidProfile",{ kidId:data._id, kidName: name});
+      navigation.navigate("UploadKidProfile", {
+        kidId: data._id,
+        kidName: name,
+      });
     },
   });
 
   function onSubmitHandler() {
     createKid({
       variables: {
-        name: "kidzzz",
-        nickName: "zzz",
-        birthdate: "04-11-2005",
+        name: name,
+        nickName: nickname,
+        birthdate: dateOfBirth,
         profileImageUrl: "",
       },
-    }); 
+    });
 
     //navigation.navigate("UploadKidProfile",{ kidName: name});
   }
@@ -160,7 +163,6 @@ export default function CreateKidCircles({ navigation }) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-
 
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
