@@ -30,7 +30,6 @@ export default function UploadKidProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
-  console.log("picture", picture);
 
 
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
@@ -57,21 +56,19 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
 
 
   function onSubmitHandler() {
-    console.log("route.params.kidId:",route.params.kidId)
     addKidProfileImage({
       variables: {
         id: route.params.kidId,
         imageUrl: picture,
       },
     });
-    //console.log("data:",data.createKid.code)
   }
 
   //using camera
   useEffect(() => {
     const result = route.params.result;
     if (route.params.result) {
-      uploadImage(result.uri, "profile");
+      uploadImage(result.uri, `Image_${route.params.kidId}`);
     }
   }, [route.params]);
 
@@ -88,7 +85,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
-      uploadImage(result.uri, "profile");
+      uploadImage(result.uri, `Image_${route.params.kidId}`);
       // setPicture(result.uri);
     }
   };
@@ -103,7 +100,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     const ref = firebase
       .storage()
       .ref()
-      .child("images/" + imageName);
+      .child("kidProfileImages/" + imageName);
     const uploadTask = ref.put(blob);
 
     // Register three observers:
@@ -161,7 +158,9 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("Recommended");
+    navigation.navigate("ShareFamilyCode", { 
+      familyCode: route.params.familyCode 
+    });
   };
 
 

@@ -51,6 +51,7 @@ export default function CreateKidCircles({ navigation }) {
       navigation.navigate("UploadKidProfile", {
         kidId: data.createKid._id,
         kidName: name,
+        familyCode:data.createKid.code
       });
     },
   });
