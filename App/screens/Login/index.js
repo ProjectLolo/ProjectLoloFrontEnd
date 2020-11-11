@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
 
   function submitForm(e) {
     e.preventDefault();
-    console.log("hi");
+
     login({ variables });
   }
 
