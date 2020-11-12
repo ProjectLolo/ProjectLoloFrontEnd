@@ -52,7 +52,7 @@ export default function Recommended({ navigation }) {
       id: 3,
       title: "Teach",
       text: "How To Count Till 10",
-      image: images.monkey,
+      image: images.settings,
       top1: "teal",
       top2: "orange",
       bottom1: "ltPurple",
