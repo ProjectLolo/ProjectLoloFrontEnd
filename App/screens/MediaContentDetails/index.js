@@ -14,7 +14,7 @@ import colors from "@assets/colors";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
 
@@ -38,11 +38,21 @@ export default function MediaContentDetails({ navigation, route }) {
       kidId: activeKid,
     },
   });
+
+  const [giveLike, { data: likeData }] = useMutation(GIVE_LIKE, {
+    variables: {
+      loveBankId: loveBankId,
+    },
+  });
   // Time constraints prevent me from making a subscription for the comments.
   useEffect(() => {
     refetch();
     setComments(data);
   }, [refetch, data]);
+
+  function handleLikeButton() {
+    giveLike();
+  }
 
   if (!comments) {
     return (
