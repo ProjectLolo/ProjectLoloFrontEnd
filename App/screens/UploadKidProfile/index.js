@@ -177,8 +177,7 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
+        Welcome {nameParent} &amp; {route.params.kidName} !
       </Text>
 
       <Text
@@ -193,9 +192,8 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={2}
         adjustsFontSizeToFit={true}
       >
-        Please upload a profile picture of
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
-        for your family.
+        Please upload a profile picture of {route.params.kidName} for your
+        family.
       </Text>
 
       {loading ? (
@@ -251,7 +249,11 @@ export default function UploadKidProfile({ route, navigation }) {
                 },
               ]}
             >
-              Change Profile Picture
+              Change{" "}
+              <Text style={{ color: colors.purple }}>
+                {route.params.kidName}
+              </Text>
+              's Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>
@@ -266,7 +268,7 @@ export default function UploadKidProfile({ route, navigation }) {
       ) : (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={handleSkip}>
-            <Text style={styles.loginButtonText}>Skip this</Text>
+            <Text style={styles.loginButtonText}>Skip for now</Text>
           </TouchableOpacity>
         </View>
       )}

@@ -28,9 +28,11 @@ export default function TakeProfilePicture({ route, navigation }) {
   const takePhoto = async () => {
     let result = await cameraRef.takePictureAsync();
     if (result) {
+
       hide();
       console.log("takePhoto result.uri", result);
       navigation.navigate(nav, { result });
+
     }
   };
 

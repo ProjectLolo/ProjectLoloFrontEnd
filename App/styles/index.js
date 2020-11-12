@@ -49,6 +49,7 @@ export default StyleSheet.create({
     paddingBottom: 5,
     paddingTop: "5%",
     fontFamily: fonts.regular,
+    color: colors.purple,
   },
   passwordButton: {
     backgroundColor: colors.teal,
@@ -140,9 +141,14 @@ export default StyleSheet.create({
   },
   navActiveBtContainer: {
     resizeMode: "contain",
-    borderWidth: 1,
     borderRadius: 10,
     padding: 5,
+    backgroundColor: "white",
+    width: "25%",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 50,
   },
   navBtContainer: { padding: 5 },
   navBtImage: {
@@ -220,7 +226,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: adjust(12),
-    color:colors.white,
+    color: colors.white,
     fontFamily: fonts.semiBold,
     textAlign: "center",
   },

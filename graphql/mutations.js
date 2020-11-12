@@ -69,6 +69,31 @@ export const ADD_KID_PROFILE_IMAGE = gql`
   }
 `;
 
+export const UPDATE_KID_PROFILE = gql`
+mutation updateKidProfile(
+  $id: String!
+  $name: String!
+  $nickName: String!
+  $birthdate: String!
+  $profileImageUrl: String!
+) {
+  updateKidProfile(
+      id: $id
+      name: $name
+      nickName: $nickName
+      birthdate: $birthdate
+      profileImageUrl: $profileImageUrl
+  ) {
+    _id
+    name
+    nickName
+    birthdate
+    profileImageUrl
+    code
+  }
+}
+`;
+
 export const CREATE_LOVEBANK = gql`
   mutation createLoveBank(
     $title: String!
