@@ -27,6 +27,7 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
+  console.log("route.params.activeUser", route.params.activeUser);
   // const circles = [
   //   {
   //     id: 1,
@@ -34,6 +35,7 @@ export default function KidCircles({ route, navigation }) {
   //     kidName: "Atieh",
   //   },
   // ];
+<<<<<<< HEAD
   // if (!data) {
   //   return (
   //     <View>
@@ -41,6 +43,16 @@ export default function KidCircles({ route, navigation }) {
   //     </View>
   //   );
   // }
+=======
+  if (!data) {
+    return (
+      <View>
+        <Text>Loading....</Text>
+      </View>
+    );
+  }
+
+>>>>>>> d002dba92c577f03b1a4fecd12e4549cd8deff50
   return (
     <View
       style={{
@@ -217,7 +229,6 @@ export default function KidCircles({ route, navigation }) {
         }
       />
       <NavButtons screen="Single" />
-
     </View>
   );
 }
