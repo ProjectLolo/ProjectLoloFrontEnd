@@ -68,7 +68,7 @@ export default function Recommended({ navigation }) {
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
-      nav: "ShareSomething",
+      nav: "SingASong",
     },
   ];
 
@@ -93,7 +93,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "yellow",
       bottom2: "dkPink",
-      nav: "ShareSomething",
+      nav: "ReadAStory",
     },
     {
       id: 3,
@@ -115,12 +115,12 @@ export default function Recommended({ navigation }) {
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
-      nav: "ShareSomething",
+      nav: "SingASong",
     },
     {
       id: 5,
-      title: "Teach",
-      text: "How to count till 10",
+      title: "Activate",
+      text: "Do a magic trick",
       image: images.monkey,
       top1: "teal",
       top2: "orange",
@@ -131,13 +131,13 @@ export default function Recommended({ navigation }) {
     {
       id: 6,
       title: "Sing",
-      text: "This is the way we",
+      text: "Holdiday memory",
       image: images.twitter,
       top1: "yellow",
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
-      nav: "ShareSomething",
+      nav: "SingASong",
     },
   ];
 

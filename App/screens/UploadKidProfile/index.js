@@ -29,13 +29,16 @@ export default function UploadKidProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
 
-const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
-  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
-  onCompleted(data) {
-    console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: data.addKidProfileImage.code } );
-  },
-});
+  const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+    onError: (error) =>
+      console.log("mutation upload Kid profileImage ", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("ShareFamilyCode", {
+        familyCode: data.addKidProfileImage.code,
+      });
+    },
+  });
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -50,7 +53,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
       }
     })();
   }, []);
-
 
   function onSubmitHandler() {
     addKidProfileImage({
@@ -154,8 +156,8 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("ShareFamilyCode", { 
-      familyCode: route.params.familyCode 
+    navigation.navigate("ShareFamilyCode", {
+      familyCode: route.params.familyCode,
     });
   };
 
