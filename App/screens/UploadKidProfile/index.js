@@ -31,12 +31,13 @@ export default function UploadKidProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
 
+  const kidId=route.params.profile._id;
+  const {name,code } = route.params.profile;
 
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
   onCompleted(data) {
     console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: data.addKidProfileImage.code } );
   },
 });
 
@@ -58,17 +59,19 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   function onSubmitHandler() {
     addKidProfileImage({
       variables: {
-        id: route.params.kidId,
+        id: kidId,
         imageUrl: picture,
       },
     });
+
+    navigation.navigate("ShareFamilyCode", { familyCode: code } );
   }
 
   //using camera
   useEffect(() => {
     const result = route.params.result;
     if (route.params.result) {
-      uploadImage(result.uri, `Image_${route.params.kidId}`);
+      uploadImage(result.uri, `Image_${kidId}`);
     }
   }, [route.params]);
 
@@ -85,7 +88,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
-      uploadImage(result.uri, `Image_${route.params.kidId}`);
+      uploadImage(result.uri, `Image_${kidId}`);
       // setPicture(result.uri);
     }
   };
@@ -159,7 +162,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
 
     //for now I just navigate to recommended
     navigation.navigate("ShareFamilyCode", { 
-      familyCode: route.params.familyCode 
+      familyCode: code 
     });
   };
 
@@ -181,7 +184,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         adjustsFontSizeToFit={true}
       >
         Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
+        <Text style={{ color: colors.dkPink }}> {name} </Text>!
       </Text>
 
       <Text
@@ -197,7 +200,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         adjustsFontSizeToFit={true}
       >
         Please upload a profile picture of
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
+        <Text style={{ color: colors.dkPink }}> {name} </Text>
         for your family.
       </Text>
 
