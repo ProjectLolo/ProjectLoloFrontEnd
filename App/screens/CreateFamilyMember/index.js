@@ -12,7 +12,7 @@ export default function CreateFamilyMember({ route, navigation }) {
   const [variables, setVariables] = useState({
     relation: "Mother",
     notification: "1",
-    kidId: route.params.data._id,
+    kidId: "5fa42e821ead8f4fb5d1c76d",
   });
 
   const [selectedValueRelation, setSelectedValueRelation] = useState("Father");
@@ -29,12 +29,9 @@ export default function CreateFamilyMember({ route, navigation }) {
   });
 
   function submitForm(e) {
-    console.log(variables);
+    console.log("DOES THIS WORK", variables);
     e.preventDefault();
-    AddFamilyMember({
-      variables
-       
-    });
+    AddFamilyMember({ variables });
   }
 
   return (

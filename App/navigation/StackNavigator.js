@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import CreateFamilyMember from "../screens/CreateFamilyMember";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
@@ -22,14 +22,17 @@ export default function authNavigator({ route, state }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-
-        initialRouteName="KidCircles"
-
+        initialRouteName="CreateFamilyMember"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
           name="KidCircles"
           component={KidCircles}
+          initialParams={state}
+        />
+        <Stack.Screen
+          name="CreateFamilyMember"
+          component={CreateFamilyMember}
           initialParams={state}
         />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
