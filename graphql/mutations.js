@@ -77,3 +77,20 @@ export const CREATE_LOVEBANK = gql`
     }
   }
 `;
+
+export const ADD_MEMBER = gql`
+  mutation addMember(
+    $kidId: String!
+    $relation: String!
+    $notification: String!
+  ) {
+    addMember(
+      kidId: $kidId
+     relation: $relation
+      notification: $notification) {
+      kidId
+      relation
+      notification
+    }
+  }
+`;
