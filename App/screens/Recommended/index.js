@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Image,
-  ScrollView,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
@@ -28,46 +20,22 @@ export default function Recommended({ navigation }) {
   const cardContent = [
     {
       id: 1,
-      title: "Share",
-      text: "Something Random",
       image: images.Share,
-      top1: "pink",
-      top2: "ltPink",
-      bottom1: "teal",
-      bottom2: "purple",
       nav: "ShareSomething",
     },
     {
       id: 2,
-      title: "Read",
-      text: "A Bedtime Story",
-      image: images.chat,
-      top1: "purple",
-      top2: "ltPink",
-      bottom1: "yellow",
-      bottom2: "dkPink",
+      image: images.Read,
       nav: "ReadAStory",
     },
     {
       id: 3,
-      title: "Teach",
-      text: "How To Count Till 10",
-      image: images.settings,
-      top1: "teal",
-      top2: "orange",
-      bottom1: "ltPurple",
-      bottom2: "purple",
+      image: images.Teach,
       nav: "Teach",
     },
     {
       id: 4,
-      title: "Sing",
-      text: "This Is The Way We",
-      image: images.twitter,
-      top1: "yellow",
-      top2: "teal",
-      bottom1: "ltPink",
-      bottom2: "orange",
+      image: images.Sing,
       nav: "SingASong",
     },
   ];
@@ -75,79 +43,37 @@ export default function Recommended({ navigation }) {
   const cardContent2 = [
     {
       id: 1,
-      title: "Share",
-      text: "Something Random",
-      image: images.videoCameraPurple,
-      top1: "pink",
-      top2: "ltPink",
-      bottom1: "teal",
-      bottom2: "purple",
+      image: images.Share,
       nav: "ShareSomething",
     },
     {
       id: 2,
-      title: "Read",
-      text: "A Bedtime Story",
-      image: images.chat,
-      top1: "purple",
-      top2: "ltPink",
-      bottom1: "yellow",
-      bottom2: "dkPink",
+      image: images.Read,
       nav: "ReadAStory",
     },
     {
       id: 3,
-      title: "Teach",
-      text: "How To Count Till 10",
-      image: images.settings,
-      top1: "teal",
-      top2: "orange",
-      bottom1: "ltPurple",
-      bottom2: "purple",
+      image: images.Teach,
       nav: "Teach",
     },
     {
       id: 4,
-      title: "Sing",
-      text: "This Is The Way We",
-      image: images.twitter,
-      top1: "yellow",
-      top2: "teal",
-      bottom1: "ltPink",
-      bottom2: "orange",
+      image: images.Sing,
       nav: "SingASong",
     },
     {
       id: 5,
-      title: "Activate",
-      text: "Do a Magic Trick",
-      image: images.paperPlane,
-      top1: "yellow",
-      top2: "orange",
-      bottom1: "dkTeal",
-      bottom2: "purple",
+      image: images.Activate,
       nav: "Activate",
     },
     {
       id: 6,
-      title: "Fun Animals",
-      text: "Teach About Animal Sounds",
-      image: images.monkey,
-      top1: "dkPink",
-      top2: "ltPink",
-      bottom1: "teal",
-      bottom2: "dkPink",
+      image: images.Fun,
       nav: "FunAnimals",
     },
     {
       id: 7,
-      title: "Holiday Memory",
-      text: "Share a Holiday Memory",
-      image: images.upload,
-      top1: "pink",
-      top2: "teal",
-      bottom1: "pink",
-      bottom2: "purple",
+      image: images.Memory,
       nav: "Holiday Memory",
     },
   ];
@@ -168,25 +94,16 @@ export default function Recommended({ navigation }) {
         <FlatList
           contentContainerStyle={{
             alignSelf: "center",
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "90%",
           }}
           data={cardContent}
           numColumns={2}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
-            return (
-              <TouchableWithoutFeedback>
-                <ActivityCard
-                  title={item.title}
-                  text={item.text}
-                  image={item.image}
-                  top1={item.top1}
-                  top2={item.top2}
-                  bottom1={item.bottom1}
-                  bottom2={item.bottom2}
-                  nav={item.nav}
-                />
-              </TouchableWithoutFeedback>
-            );
+            return <ActivityCard image={item.image} nav={item.nav} />;
           }}
         />
       ) : (
@@ -194,6 +111,10 @@ export default function Recommended({ navigation }) {
           style={{ marginBottom: 10 }}
           contentContainerStyle={{
             alignSelf: "center",
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "90%",
           }}
           data={cardContent2}
           numColumns={2}
@@ -201,15 +122,7 @@ export default function Recommended({ navigation }) {
           renderItem={({ item }) => {
             return (
               <TouchableWithoutFeedback>
-                <ActivityCard
-                  title={item.title}
-                  text={item.text}
-                  image={item.image}
-                  top1={item.top1}
-                  top2={item.top2}
-                  bottom1={item.bottom1}
-                  bottom2={item.bottom2}
-                />
+                <ActivityCard image={item.image} nav={item.nav} />
               </TouchableWithoutFeedback>
             );
           }}
