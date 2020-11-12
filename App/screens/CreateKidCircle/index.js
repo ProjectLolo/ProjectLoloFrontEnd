@@ -22,8 +22,20 @@ import adjust from "../../styles/adjust";
 
 import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
+import { UPDATE_KID_PROFILE } from "../../../graphql/mutations"
 
 export default function CreateKidCircles({ navigation }) {
+
+  const [profile,setProfile]=useState({
+    created:false,
+    kidId:""
+  });
+
+  const [message,setMessage]=useState({
+    color:"",
+    text:""
+  })
+
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
@@ -43,11 +55,15 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-
+// createKid row in DB
   const [createKid, { error }] = useMutation(CREATE_KID, {
-    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+    onError: (error) => {
+      console.log("mutation create kid", error.graphQLErrors)
+      //setErrors({ errorFound: true, errorMessage: error.graphQLErrors.map(errObject => errObject.message)})
+    },
     onCompleted(data) {
-      console.log("completed", data);
+      console.log("create kid completed", data);
+      setProfile({ created: true, kidId:data.createKid._id })
       navigation.navigate("UploadKidProfile", {
         kidId: data.createKid._id,
         kidName: name,
@@ -56,7 +72,30 @@ export default function CreateKidCircles({ navigation }) {
     },
   });
 
+  //update the row,if user moves back from UploadKidProfile Screen
+  const [updateKid, { updateerror }] = useMutation(UPDATE_KID_PROFILE, {
+    onError: (error) => console.log("mutation update kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("updatekid completed", data);
+      navigation.navigate("UploadKidProfile", {
+        kidId: data.updateKidProfile._id,
+        kidName: name,
+        familyCode:data.updateKidProfile.code
+      });
+    },
+  });
+
   function onSubmitHandler() {
+
+    if(name.trim() === ""){
+      setMessage({
+        text: "Kid name is required!",
+        color: "orange",
+      })
+    }
+
+    //console.log("profile:",profile)
+    if(!profile.created) {
     createKid({
       variables: {
         name: name,
@@ -65,7 +104,44 @@ export default function CreateKidCircles({ navigation }) {
         profileImageUrl: "",
       },
     });
+  }
+  else {
+    updateKid({
+      variables: {
+        id:profile.kidId,
+        name: name,
+        nickName: nickname,
+        birthdate: dateOfBirth,
+        profileImageUrl: "",
+      },
+    });
+  }
 
+  }
+
+  const showMessage = () => {
+    //console.log("message:",message)
+    if (message.text !== "" && message.color !== "") {
+      setTimeout(() => {
+        setMessage({ text: "", color: "" });
+      }, 2000);
+      return (
+        <View>
+          <Text
+            style={[
+              styles.cardText,
+              {
+                color: colors[message.color],
+                fontFamily: fonts.semiBold,
+                paddingVertical: 15,
+              },
+            ]}
+          >
+            {message.text}
+          </Text>
+        </View>
+      );
+    }
   }
 
   return (
@@ -87,7 +163,7 @@ export default function CreateKidCircles({ navigation }) {
           value={name}
           onChangeText={(text) => setName(text)}
         />
-
+        
         <Text style={styles.inputLabel}>Nickname</Text>
         <TextInput
           style={styles.inputBox}
@@ -153,7 +229,7 @@ export default function CreateKidCircles({ navigation }) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-
+        {showMessage()}
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
             <Text style={styles.loginButtonText}>Continue</Text>
