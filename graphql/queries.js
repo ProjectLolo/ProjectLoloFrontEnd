@@ -7,6 +7,7 @@ export const GET_LOVEBANKS = gql`
       url
       preview
       description
+      type
       category
       kidId
       userId

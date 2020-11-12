@@ -106,6 +106,7 @@ export const CREATE_LOVEBANK = gql`
     $url: String!
     $preview: String!
     $description: String!
+    $type:String!
     $category: String!
     $kidId: ID
   ) {
@@ -114,6 +115,7 @@ export const CREATE_LOVEBANK = gql`
       url: $url
       preview: $preview
       description: $description
+      type:$type
       category: $category
       kidId: $kidId
     ) {
