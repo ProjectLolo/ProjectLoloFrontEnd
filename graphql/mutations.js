@@ -77,3 +77,13 @@ export const CREATE_LOVEBANK = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation createComment($loveBankId: String!, $comment: String!) {
+    createComment(loveBankId: $loveBankId, comment: $comment) {
+      comments {
+        _id
+      }
+    }
+  }
+`;

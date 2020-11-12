@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
 import CommentBox from "../../components/CommentBox";
 
 export default function MediaContentDetails({ navigation, route }) {
+  const [comments, setComments] = useState(false);
   const {
     title,
     person,
@@ -27,38 +28,59 @@ export default function MediaContentDetails({ navigation, route }) {
     bottomColor,
     video,
     loveBankId,
+    activeKid,
   } = route.params;
 
-  const { data } = useQuery(GET_COMMENTS_AND_LIKES, {
+  const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
     variables: {
-      id: loveBankId,
-      kidId: route.params.activeKid,
+      _id: loveBankId,
+      kidId: activeKid,
     },
   });
 
-  console.log("data in mediaContent", data);
-  const cardContent = [
-    {
-      id: 1,
-      person: "mom",
-      text: "Love this video!",
-      video: null,
-    },
-    {
-      id: 2,
-      person: "auntie Annie",
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      video: null,
-    },
-    {
-      id: 3,
-      person: "cousin Jan",
-      text: null,
-      video: images.videoCameraPurple,
-    },
-  ];
+  useEffect(() => {
+    refetch();
+    setComments(data);
+  }, [refetch, data]);
 
+  // useEffect(() => {
+  //   console.log("do i get here");
+
+  // }, []);
+
+  // need to integrate comments and likes. Hardcoded Id and kidId in the query, replace withloveBankId and activeKid
+  // Kept this hardcoded because of no data in this user account in comments/likes
+  console.log("data in mediaContent", comments);
+  console.log("lovebankid activekid", loveBankId, activeKid);
+  console.log("length", comments);
+  // const cardContent = [
+  //   {
+  //     id: 1,
+  //     person: "mom",
+  //     text: "Love this video!",
+  //     video: null,
+  //   },
+  //   {
+  //     id: 2,
+  //     person: "auntie Annie",
+  //     text:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  //     video: null,
+  //   },
+  //   {
+  //     id: 3,
+  //     person: "cousin Jan",
+  //     text: null,
+  //     video: images.videoCameraPurple,
+  //   },
+  // ];
+  if (!comments) {
+    return (
+      <View>
+        <Text>...No comments, please fix me</Text>
+      </View>
+    );
+  }
   return (
     <FlatList
       ListHeaderComponent={
@@ -99,21 +121,21 @@ export default function MediaContentDetails({ navigation, route }) {
               <Image style={styles.cardImage} source={video} />
             </View>
           </View>
-          <CommentBox />
+          <CommentBox loveBankId={loveBankId} refetch={refetch} />
         </>
       }
       contentContainerStyle={{ marginHorizontal: 10 }}
-      data={cardContent}
+      data={comments.loveBankById.comments}
       numColumns={1}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item._id.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate("MediaContentDetails")}
           >
             <MediaContentComments
-              person={item.person}
-              text={item.text}
+              person={item.firstName}
+              text={item.comment}
               video={item.video}
             />
           </TouchableWithoutFeedback>

@@ -29,10 +29,13 @@ export const GET_ALL_KIDS = gql`
 `;
 
 export const GET_COMMENTS_AND_LIKES = gql`
-  query loveBankById($id: ID, $kidId: ID) {
-    loveBankById(_id: $id, kidId: $kidId) {
+  query loveBankById($_id: ID, $kidId: ID) {
+    loveBankById(_id: $_id, kidId: $kidId) {
       comments {
+        _id
         userId
+        comment
+        firstName
       }
       likes {
         userId

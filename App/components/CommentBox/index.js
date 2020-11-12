@@ -6,13 +6,36 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from "react-native";
+import { useMutation } from "@apollo/client";
+
+import { CREATE_COMMENT } from "../../../graphql/mutations";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import images from "@assets/images";
 
-export default function CommentBox() {
-  const [comment, setComment] = useState("");
+export default function CommentBox({ loveBankId, refetch }) {
+  const [variables, setVariables] = useState({
+    loveBankId: loveBankId,
+    comment: "",
+  });
+  console.log(variables);
+
+  const [commentLovebank, { error }] = useMutation(CREATE_COMMENT, {
+    onError: (error) => console.log("hi from the commentbox"),
+    onCompleted(data) {
+      console.log("succes!", data);
+      setVariables({ ...variables, comment: "" });
+      refetch();
+    },
+  });
+
+  function submitComment(e) {
+    // e.preventDefault();
+
+    commentLovebank({ variables });
+  }
+
   const [writeComment, setWriteComment] = useState(false);
   return (
     <View
@@ -99,8 +122,10 @@ export default function CommentBox() {
             placeholder='"Write comment here..."'
             placeholderTextColor={colors.purple}
             multiline={true}
-            onChangeText={(text) => setComment(text)}
-            value={comment}
+            onChangeText={(text) =>
+              setVariables({ ...variables, comment: text })
+            }
+            value={variables.comment}
           />
           <View
             style={{
@@ -150,12 +175,7 @@ export default function CommentBox() {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                setComment("");
-                setWriteComment(false);
-              }}
-            >
+            <TouchableWithoutFeedback onPress={submitComment}>
               <View
                 style={{
                   backgroundColor: colors.ltPurple,

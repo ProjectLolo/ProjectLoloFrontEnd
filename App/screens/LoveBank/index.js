@@ -1,7 +1,13 @@
-import React from "react";
-import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  FlatList,
+  RefreshControl,
+} from "react-native";
 import { AuthContext } from "../../context/Auth";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import MediaContentCard from "../../components/MediaContentCard";
@@ -11,11 +17,21 @@ import { GET_LOVEBANKS } from "../../../graphql/queries";
 
 export default function LoveBank({ route, navigation }) {
   //hardcoded kidId, not sure atm where to get it from
-  const { data } = useQuery(GET_LOVEBANKS, {
-    variables: {
-      kidId: route.params.activeKid,
+
+  const [loveBanks, setLoveBanks] = useState([]);
+  const [getLove, { data }] = useLazyQuery(GET_LOVEBANKS, {
+    onCompleted(data) {
+      setLoveBanks(data);
     },
   });
+
+  useEffect(() => {
+    getLove({
+      variables: {
+        kidId: route.params.activeKid,
+      },
+    });
+  }, []);
 
   // const cardContent = [
   //   {
@@ -27,14 +43,15 @@ export default function LoveBank({ route, navigation }) {
   //     video: images.videoCameraPurple,
   //   },
   // ];
-  if (!data) {
+  if (!loveBanks) {
     return (
       <View>
         <Text>...loading</Text>
       </View>
     );
+    ``;
   }
-  console.log("data.loveBanks", data.loveBanks);
+  console.log("data.loveBanks", loveBanks.loveBanks);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -44,7 +61,7 @@ export default function LoveBank({ route, navigation }) {
         contentContainerStyle={{
           alignSelf: "center",
         }}
-        data={data.loveBanks}
+        data={loveBanks.loveBanks}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
