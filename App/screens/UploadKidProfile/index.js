@@ -250,11 +250,7 @@ export default function UploadKidProfile({ route, navigation }) {
                 },
               ]}
             >
-              Change{" "}
-              <Text style={{ color: colors.purple }}>
-                {route.params.kidName}
-              </Text>
-              's Profile Picture
+              Change {name}'s Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>
