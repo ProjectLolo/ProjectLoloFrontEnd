@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,19 +19,25 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 import { GET_ALL_KIDS } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function KidCircles({ route, navigation }) {
-  const { data } = useQuery(GET_ALL_KIDS, {
+  const isFocused = useIsFocused();
+  const [fetchedData, setFetchedData] = useState(data);
+  const { data, refetch } = useQuery(GET_ALL_KIDS, {
     variables: {
       userId: route.params.activeUser,
     },
   });
 
-  // console.log("data", data);
-  console.log("paramsssss", route.params);
-
   const userName = route.params.firstName;
-  console.log("userName", userName);
+
+  useEffect(() => {
+    console.log("refetch", refetch);
+    console.log("fetchedData", fetchedData);
+    refetch();
+    setFetchedData(data);
+  }, [refetch, data, isFocused]);
 
   return (
     <View
@@ -55,7 +61,7 @@ export default function KidCircles({ route, navigation }) {
         adjustsFontSizeToFit={true}
         numberOfLines={1}
       >
-        Welcome{data && ` back,`} {userName} !
+        Welcome{data && !data.findAllKids.length === 0 && ` back,`} {userName} !
       </Text>
 
       {!data && (
@@ -76,7 +82,7 @@ export default function KidCircles({ route, navigation }) {
           width: "90%",
           paddingTop: 30,
         }}
-        data={data && data.findAllKids}
+        data={fetchedData && fetchedData.findAllKids}
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
@@ -230,7 +236,6 @@ export default function KidCircles({ route, navigation }) {
                 </View>
               </TouchableWithoutFeedback>
             </View>
-            
           </View>
         }
       />
@@ -238,7 +243,6 @@ export default function KidCircles({ route, navigation }) {
       <View style={{ marginTop: "5%" }}>
         <NavButtons screen="Single" />
       </View>
-
     </View>
   );
 }

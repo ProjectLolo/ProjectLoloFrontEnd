@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text } from "react-native";
 import NavHome from "../../../components/NavHome";
 
-export default function ReadAStory() {
+export default function Teach() {
   return (
     <View>
       <NavHome />
-      <Text>ReadAStory</Text>
+      <Text>Teach</Text>
     </View>
   );
 }
