@@ -32,6 +32,7 @@ export default function UploadKidProfile({ route, navigation }) {
   const kidId=route.params.profile._id;
   const {name,code } = route.params.profile;
 
+
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
   onCompleted(data) {
@@ -144,7 +145,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   };
 
   //we need to get user's name here // they are the parent of the kid
-  const nameParent = "NameOfParent";
+  const nameParent = route.params.firstName;
 
   function hideOptions() {
     setChangeProfilePicture(false);
