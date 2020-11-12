@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import {
 import { useQuery } from "@apollo/client";
 
 import styles from "@styles/styles"; //have to changeit to @styles/styles
-import style from "./style";
 import images from "@assets/images";
 import NavButtons from "../../components/NavButtons";
 import KidCircleCard from "../../components/KidCircleCard";
@@ -20,27 +19,26 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 import { GET_ALL_KIDS } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function KidCircles({ route, navigation }) {
-  const { data } = useQuery(GET_ALL_KIDS, {
+  const isFocused = useIsFocused();
+  const [fetchedData, setFetchedData] = useState(data);
+  const { data, refetch } = useQuery(GET_ALL_KIDS, {
     variables: {
       userId: route.params.activeUser,
     },
   });
-  // const circles = [
-  //   {
-  //     id: 1,
-  //     kidImage: images.monkey,
-  //     kidName: "Atieh",
-  //   },
-  // ];
-  if (!data) {
-    return (
-      <View>
-        <Text>...loading</Text>
-      </View>
-    );
-  }
+
+  const userName = route.params.firstName;
+
+  useEffect(() => {
+    console.log("refetch", refetch);
+    console.log("fetchedData", fetchedData);
+    refetch();
+    setFetchedData(data);
+  }, [refetch, data, isFocused]);
+
   return (
     <View
       style={{
@@ -52,10 +50,31 @@ export default function KidCircles({ route, navigation }) {
         style={[styles.peekabondLogo, { marginBottom: -120, width: "30%" }]}
         source={images.peekabondLogo}
       />
-      <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>
-        Welcome back, [firstNameOfUser]!
-        {/* if no kidCircles exist text='Welcome, [firsNameOfUser]'*/}
+      <Text
+        style={[
+          styles.title,
+          {
+            marginTop: !data ? "40%" : "20%",
+            marginBottom: !data ? "10%" : "5%",
+          },
+        ]}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
+      >
+        Welcome{data && !data.findAllKids.length === 0 && ` back,`} {userName} !
       </Text>
+
+      {!data && (
+        <Text
+          style={[styles.title, { marginTop: "10%", marginBottom: "10%" }]}
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+        >
+          Please <Text style={{ color: colors.dkTeal }}>Join</Text> or
+          <Text style={{ color: colors.dkPink }}> Create</Text> your first
+          circle!
+        </Text>
+      )}
 
       <FlatList
         contentContainerStyle={{
@@ -63,9 +82,9 @@ export default function KidCircles({ route, navigation }) {
           width: "90%",
           paddingTop: 30,
         }}
-        data={data.findAllKids}
+        data={fetchedData && fetchedData.findAllKids}
         numColumns={1}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback>
@@ -95,7 +114,7 @@ export default function KidCircles({ route, navigation }) {
                     style={[
                       styles.cardText,
                       {
-                        color: colors.dkPink,
+                        color: colors.dkTeal,
                         fontFamily: fonts.semiBold,
                       },
                     ]}
@@ -109,6 +128,7 @@ export default function KidCircles({ route, navigation }) {
                         color: colors.purple,
                         fontFamily: fonts.semiBold,
                         paddingBottom: 15,
+
                         fontSize: adjust(10),
                       },
                     ]}
@@ -157,7 +177,9 @@ export default function KidCircles({ route, navigation }) {
               }}
             >
               <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("CreateKidCircle")}
+                onPress={() =>
+                  navigation.navigate("CreateKidCircle", { userName })
+                }
               >
                 <Text
                   style={[
@@ -173,7 +195,9 @@ export default function KidCircles({ route, navigation }) {
                 </Text>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("CreateKidCircle")}
+                onPress={() =>
+                  navigation.navigate("CreateKidCircle", { userName })
+                }
               >
                 <View
                   style={{
@@ -215,8 +239,10 @@ export default function KidCircles({ route, navigation }) {
           </View>
         }
       />
-      <NavButtons screen="Single" />
 
+      <View style={{ marginTop: "5%" }}>
+        <NavButtons screen="Single" />
+      </View>
     </View>
   );
 }

@@ -56,6 +56,50 @@ export const SIGNUP = gql`
   }
 `;
 
+export const ADD_KID_PROFILE_IMAGE = gql`
+mutation addKidProfileImage(
+  $id: String!
+  $imageUrl: String!
+) {
+  addKidProfileImage(
+      id: $id
+      imageUrl: $imageUrl
+  ) {
+    _id
+    name
+    nickName
+    birthdate
+    profileImageUrl
+    code
+  }
+}
+`;
+
+export const UPDATE_KID_PROFILE = gql`
+mutation updateKidProfile(
+  $id: String!
+  $name: String!
+  $nickName: String!
+  $birthdate: String!
+  $profileImageUrl: String!
+) {
+  updateKidProfile(
+      id: $id
+      name: $name
+      nickName: $nickName
+      birthdate: $birthdate
+      profileImageUrl: $profileImageUrl
+  ) {
+    _id
+    name
+    nickName
+    birthdate
+    profileImageUrl
+    code
+  }
+}
+`;
+
 export const CREATE_LOVEBANK = gql`
   mutation createLoveBank(
     $title: String!
@@ -78,6 +122,7 @@ export const CREATE_LOVEBANK = gql`
   }
 `;
 
+
 export const ADD_MEMBER = gql`
   mutation addMember(
     $kidId: String!
@@ -95,3 +140,4 @@ export const ADD_MEMBER = gql`
     }
   }
 `;
+

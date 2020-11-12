@@ -12,7 +12,13 @@ import Recommended from "../screens/Recommended";
 import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import MediaContentDetails from "../screens/MediaContentDetails";
+import Activate from "../screens/CreateContent/Activate";
+import FunAnimals from "../screens/CreateContent/FunAnimals";
+import HolidayMemory from "../screens/CreateContent/HolidayMemory";
+import ReadAStory from "../screens/CreateContent/ReadAStory";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
+import SingASong from "../screens/CreateContent/SingASong";
+import Teach from "../screens/CreateContent/Teach";
 import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoPreview from "../components/VideoPreview";
 import CreateFamilyMember from "../screens/CreateFamilyMember";
@@ -23,7 +29,8 @@ export default function authNavigator({ route, state }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="CreateFamilyMember"
+
+        initialRouteName="KidCircles"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
@@ -56,8 +63,18 @@ export default function authNavigator({ route, state }) {
           name="MediaContentDetails"
           component={MediaContentDetails}
         />
+        <Stack.Screen name="Activate" component={Activate} />
+        <Stack.Screen name="FunAnimals" component={FunAnimals} />
+        <Stack.Screen name="HolidayMemory" component={HolidayMemory} />
+        <Stack.Screen name="ReadAStory" component={ReadAStory} />
         <Stack.Screen name="ShareSomething" component={ShareSomething} />
-        <Stack.Screen name="VideoPreview" component={VideoPreview} />
+        <Stack.Screen name="SingASong" component={SingASong} />
+        <Stack.Screen name="Teach" component={Teach} />
+        <Stack.Screen
+          name="VideoPreview"
+          component={VideoPreview}
+          initialParams={state}
+        />
         <Stack.Screen name="MessageSent" component={MessageSent} />
       </Stack.Navigator>
     </NavigationContainer>

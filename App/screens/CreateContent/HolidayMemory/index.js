@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text } from "react-native";
 import NavHome from "../../../components/NavHome";
 
-export default function SingASong() {
+export default function HolidayMemory() {
   return (
     <View>
       <NavHome />
-      <Text>SingASong</Text>
+      <Text>HolidayMemory</Text>
     </View>
   );
 }
