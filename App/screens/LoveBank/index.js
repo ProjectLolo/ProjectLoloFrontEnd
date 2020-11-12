@@ -27,6 +27,7 @@ export default function LoveBank({ route, navigation }) {
       kidId: route.params.activeKid,
     },
   });
+
   console.log("data in loveBank", data);
   useEffect(() => {
     refetch();
@@ -41,7 +42,9 @@ export default function LoveBank({ route, navigation }) {
     );
     ``;
   }
-  console.log("NUMBER OF LIKES", loveBanks.loveBanks);
+
+
+
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -51,7 +54,9 @@ export default function LoveBank({ route, navigation }) {
         contentContainerStyle={{
           alignSelf: "center",
         }}
+
         data={loveBanks.loveBanks}
+
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {

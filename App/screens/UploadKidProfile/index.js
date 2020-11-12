@@ -15,7 +15,7 @@ import {
 import styles from "../../styles"; //global styles
 import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
-import { CREATE_KID } from "../../../graphql/mutations";
+import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
 import NavHome from "../../components/NavHome";
 import colors from "@assets/colors";
 import adjust from "../../styles/adjust";
@@ -28,17 +28,18 @@ export default function UploadKidProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
-  console.log("picture", picture);
 
-  const [createKid, { error }] = useMutation(CREATE_KID, {
-    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", {
-        familyCode: data.createKid.code,
-      });
-    },
-  });
+
+  const kidId=route.params.profile._id;
+  const {name,code } = route.params.profile;
+
+
+const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
+  onCompleted(data) {
+    console.log("completed", data);
+  },
+});
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -55,21 +56,21 @@ export default function UploadKidProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    createKid({
+    addKidProfileImage({
       variables: {
-        name: route.params.kidName,
-        nickName: route.params.kidNickname,
-        birthdate: route.params.kidDateofBirth,
-        profileImageUrl: picture,
+        id: kidId,
+        imageUrl: picture,
       },
     });
-    navigation.navigate("Recommended");
+
+    navigation.navigate("ShareFamilyCode", { familyCode: code } );
   }
+
   //using camera
   useEffect(() => {
     const result = route.params.result;
     if (route.params.result) {
-      uploadImage(result.uri, "profile");
+      uploadImage(result.uri, `Image_${kidId}`);
     }
   }, [route.params]);
 
@@ -86,7 +87,7 @@ export default function UploadKidProfile({ route, navigation }) {
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
-      uploadImage(result.uri, "profile");
+      uploadImage(result.uri, `Image_${kidId}`);
       // setPicture(result.uri);
     }
   };
@@ -101,7 +102,7 @@ export default function UploadKidProfile({ route, navigation }) {
     const ref = firebase
       .storage()
       .ref()
-      .child("images/" + imageName);
+      .child("kidProfileImages/" + imageName);
     const uploadTask = ref.put(blob);
 
     // Register three observers:
@@ -145,7 +146,7 @@ export default function UploadKidProfile({ route, navigation }) {
   };
 
   //we need to get user's name here // they are the parent of the kid
-  const nameParent = "NameOfParent";
+  const nameParent = route.params.firstName;
 
   function hideOptions() {
     setChangeProfilePicture(false);
@@ -158,7 +159,9 @@ export default function UploadKidProfile({ route, navigation }) {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("Recommended");
+    navigation.navigate("ShareFamilyCode", { 
+      familyCode: code 
+    });
   };
 
   if (hasPermission === null) {
@@ -177,8 +180,10 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
+
         Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
+        <Text style={{ color: colors.dkPink }}> {name} </Text>!
+
       </Text>
 
       <Text
@@ -194,7 +199,7 @@ export default function UploadKidProfile({ route, navigation }) {
         adjustsFontSizeToFit={true}
       >
         Please upload a profile picture of
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
+        <Text style={{ color: colors.dkPink }}> {name} </Text>
         for your family.
       </Text>
 
@@ -251,7 +256,11 @@ export default function UploadKidProfile({ route, navigation }) {
                 },
               ]}
             >
-              Change Profile Picture
+              Change{" "}
+              <Text style={{ color: colors.purple }}>
+                {route.params.kidName}
+              </Text>
+              's Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>
@@ -266,7 +275,7 @@ export default function UploadKidProfile({ route, navigation }) {
       ) : (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={handleSkip}>
-            <Text style={styles.loginButtonText}>Skip this</Text>
+            <Text style={styles.loginButtonText}>Skip for now</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -276,6 +285,7 @@ export default function UploadKidProfile({ route, navigation }) {
           hide={hideOptions}
           loading={loading}
           pickPhoto={pickPhoto}
+          nav="UploadKidProfile"
         />
       )}
     </View>

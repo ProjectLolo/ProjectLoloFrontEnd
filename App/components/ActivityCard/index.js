@@ -1,42 +1,24 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Dimensions, Image } from "react-native";
 import styles from "@styles/styles";
-import colors from "@assets/colors";
-import { LinearGradient } from "expo-linear-gradient";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ActivityCard(props) {
-  const { title, text, image, top1, top2, bottom1, bottom2 } = props;
+  const navigation = useNavigation();
+  const { image, nav } = props;
   return (
-    <View style={styles.cardContainer}>
-      <View
-        style={{
-          backgroundColor: colors[top2],
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-        }}
-      >
-        <LinearGradient
-          colors={[colors[top1], colors[top2]]}
-          style={styles.linTop}
-        >
-          <Image style={[styles.cardImage]} source={image} />
-        </LinearGradient>
-      </View>
-      <View
-        style={{
-          backgroundColor: colors[bottom1],
-          borderBottomLeftRadius: 25,
-          borderBottomRightRadius: 25,
-        }}
-      >
-        <LinearGradient
-          colors={[colors[bottom1], colors[bottom2]]}
-          style={styles.linBottom}
-        >
-          <Text style={styles.cardTitle}>{title}</Text>
-          <Text style={styles.cardText}>{text}</Text>
-        </LinearGradient>
-      </View>
+    <View style={[styles.cardContainer]}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate(nav)}>
+        <Image
+          style={{
+            width: Dimensions.get("window").width * 0.405,
+            height: Dimensions.get("window").width * 0.405,
+            borderRadius: 25,
+          }}
+          source={image}
+        />
+      </TouchableWithoutFeedback>
     </View>
   );
 }

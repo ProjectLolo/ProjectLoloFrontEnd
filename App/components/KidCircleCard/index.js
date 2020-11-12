@@ -1,21 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
   Dimensions,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/Auth";
+import images from "@assets/images";
 
 export default function KidCircleCard(props) {
   const { activeKid } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
+  console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();
@@ -47,13 +50,14 @@ export default function KidCircleCard(props) {
             },
           ]}
         >
-          {kidName}
+          {kidName && kidName}
         </Text>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={handlePress}>
         <View
           style={{
-            backgroundColor: "white",
+            backgroundColor:
+              kidImage && kidImage !== "http://google.com" ? null : "white",
             width: "75%",
             height: Dimensions.get("window").width * 0.7,
             alignSelf: "center",
@@ -66,11 +70,27 @@ export default function KidCircleCard(props) {
           }}
         >
           <Image
-            style={[
-              styles.cardImage,
-              { width: "100%", height: Dimensions.get("window").width * 0.3 },
-            ]}
-            source={kidImage}
+            style={
+              kidImage && kidImage !== "http://google.com"
+                ? {
+                    borderRadius: 150,
+                    width: 290,
+                    height: 290,
+                    alignSelf: "center",
+                  }
+                : [
+                    styles.cardImage,
+                    {
+                      width: "100%",
+                      height: Dimensions.get("window").width * 0.3,
+                    },
+                  ]
+            }
+            source={
+              kidImage && kidImage !== "http://google.com"
+                ? { uri: kidImage }
+                : images.monkey
+            }
           />
         </View>
       </TouchableWithoutFeedback>

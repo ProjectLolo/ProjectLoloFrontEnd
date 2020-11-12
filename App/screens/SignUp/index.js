@@ -7,6 +7,9 @@ import {
   Text,
 } from "react-native";
 import styles from "@styles/styles";
+import { useMutation } from "@apollo/client";
+import { SIGNUP } from "../../../graphql/mutations";
+import { AuthContext } from "../../context/Auth";
 
 export default function SignUp({ navigation }) {
   const [variables, setVariables] = useState({
@@ -17,20 +20,23 @@ export default function SignUp({ navigation }) {
     profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
+  const { signIn, signUp } = useContext(AuthContext);
 
-  // TODO: validate the input from the user/get error and showcase it from the backend
+  const [signup, { error }] = useMutation(SIGNUP, {
+    onError: (error) =>
+      //TODO: give proper error message , now just giving the user the error from graphQL
+      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
+    onCompleted({ signup }) {
+      if (signup.token) {
+        signIn(signup.token);
+      }
+    },
+  });
 
-
-  function onSubmitHandler() {
-    navigation.navigate("UploadUserProfile", {
-      firstName: variables.firstName,
-      lastName: variables.lastName,
-      email: variables.email,
-      password: variables.password,
-      profilePic: variables.profilePic,
-    });
+  function submitForm(e) {
+    e.preventDefault();
+    signup({ variables });
   }
-
 
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
@@ -86,7 +92,7 @@ export default function SignUp({ navigation }) {
             </Text>
           </TouchableWithoutFeedback>
         )}
-        <TouchableWithoutFeedback onPress={onSubmitHandler}>
+        <TouchableWithoutFeedback onPress={submitForm}>
           <View style={styles.loginButton}>
             <Text style={styles.loginButtonText}>SIGNUP</Text>
           </View>

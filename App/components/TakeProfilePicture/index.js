@@ -9,6 +9,7 @@ export default function TakeProfilePicture({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const { nav, hide } = route.params;
 
   useEffect(() => {
     (async () => {
@@ -17,22 +18,23 @@ export default function TakeProfilePicture({ route, navigation }) {
     })();
   }, []);
 
+  // const handleClick = () =>{
+  //     route.params.takePhoto(cameraRef);
+  //     setClick(true)
+  //     navigation.navigate("UploadKidProfile");
+  // }
 
-// const handleClick = () =>{
-//     route.params.takePhoto(cameraRef);
-//     setClick(true)
-//     navigation.navigate("UploadKidProfile");
-// }
+  //Take picture using camera
+  const takePhoto = async () => {
+    let result = await cameraRef.takePictureAsync();
+    if (result) {
 
-//Take picture using camera
-const takePhoto = async () => {
-  let result = await cameraRef.takePictureAsync(); 
-  if (result){
-      console.log("takePhoto result.uri", result)
-      navigation.navigate("UploadKidProfile",{result});
-  }
-}
+      hide();
+      console.log("takePhoto result.uri", result);
+      navigation.navigate(nav, { result });
 
+    }
+  };
 
   if (hasPermission === null) {
     return <View />;
@@ -88,14 +90,11 @@ const takePhoto = async () => {
               />
             </TouchableOpacity>
 
-      
-      
-        <TouchableOpacity
-        style={{ alignSelf: "center" }}
-        onPress={takePhoto}
-        >
-          <View
-
+            <TouchableOpacity
+              style={{ alignSelf: "center" }}
+              onPress={takePhoto}
+            >
+              <View
                 style={{
                   borderWidth: 2,
                   borderRadius: 25,
@@ -129,7 +128,10 @@ const takePhoto = async () => {
                 name="back"
                 size={40}
                 color="white"
-                onPress={() => navigation.navigate("UploadKidProfile")}
+                onPress={() => {
+                  navigation.navigate(nav);
+                  hide();
+                }}
               />
             </TouchableOpacity>
           </View>

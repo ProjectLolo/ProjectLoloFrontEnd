@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ChangeProfilePicture(props) {
   const navigation = useNavigation();
-  const { hide, pickPhoto, loading } = props;
+  const { hide, pickPhoto, nav } = props;
 
   return (
     <View
@@ -64,7 +64,9 @@ export default function ChangeProfilePicture(props) {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("TakeProfilePicture")}
+          onPress={() =>
+            navigation.navigate("TakeProfilePicture", { nav, hide })
+          }
         >
           <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
             <Text
