@@ -27,7 +27,6 @@ export default function CreateKidCircles({ navigation }) {
   const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  console.log("route.params", route.params);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -42,7 +41,6 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => console.log("mutation create kid", error.graphQLErrors),
     onCompleted(data) {
@@ -50,7 +48,7 @@ export default function CreateKidCircles({ navigation }) {
       navigation.navigate("UploadKidProfile", {
         kidId: data.createKid._id,
         kidName: name,
-        familyCode:data.createKid.code
+        familyCode: data.createKid.code,
       });
     },
   });
@@ -64,7 +62,6 @@ export default function CreateKidCircles({ navigation }) {
         profileImageUrl: "",
       },
     });
-
   }
 
   return (

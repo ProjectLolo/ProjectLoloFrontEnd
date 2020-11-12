@@ -27,6 +27,8 @@ export default function KidCircles({ route, navigation }) {
     },
   });
 
+  console.log("data", data.findAllKids.length);
+
   // console.log("data", data);
   console.log("paramsssss", route.params);
 
@@ -55,7 +57,7 @@ export default function KidCircles({ route, navigation }) {
         adjustsFontSizeToFit={true}
         numberOfLines={1}
       >
-        Welcome{data && ` back,`} {userName} !
+        Welcome{!data.findAllKids.length === 0 && ` back,`} {userName} !
       </Text>
 
       {!data && (
@@ -230,7 +232,6 @@ export default function KidCircles({ route, navigation }) {
                 </View>
               </TouchableWithoutFeedback>
             </View>
-            
           </View>
         }
       />
@@ -238,7 +239,6 @@ export default function KidCircles({ route, navigation }) {
       <View style={{ marginTop: "5%" }}>
         <NavButtons screen="Single" />
       </View>
-
     </View>
   );
 }
