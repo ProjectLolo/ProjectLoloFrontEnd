@@ -35,6 +35,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "teal",
       bottom2: "yellow",
+      nav: "ShareSomething",
     },
     {
       id: 2,
@@ -45,6 +46,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "yellow",
       bottom2: "dkPink",
+      nav: "ShareSomething",
     },
     {
       id: 3,
@@ -55,6 +57,7 @@ export default function Recommended({ navigation }) {
       top2: "orange",
       bottom1: "ltPurple",
       bottom2: "purple",
+      nav: "ShareSomething",
     },
     {
       id: 4,
@@ -65,6 +68,7 @@ export default function Recommended({ navigation }) {
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
+      nav: "ShareSomething",
     },
   ];
 
@@ -78,7 +82,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "teal",
       bottom2: "yellow",
-      nav: "ShareSomething"
+      nav: "ShareSomething",
     },
     {
       id: 2,
@@ -89,6 +93,7 @@ export default function Recommended({ navigation }) {
       top2: "ltPink",
       bottom1: "yellow",
       bottom2: "dkPink",
+      nav: "ShareSomething",
     },
     {
       id: 3,
@@ -99,6 +104,7 @@ export default function Recommended({ navigation }) {
       top2: "orange",
       bottom1: "ltPurple",
       bottom2: "purple",
+      nav: "ShareSomething",
     },
     {
       id: 4,
@@ -109,6 +115,7 @@ export default function Recommended({ navigation }) {
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
+      nav: "ShareSomething",
     },
     {
       id: 5,
@@ -119,6 +126,7 @@ export default function Recommended({ navigation }) {
       top2: "orange",
       bottom1: "ltPurple",
       bottom2: "purple",
+      nav: "ShareSomething",
     },
     {
       id: 6,
@@ -129,6 +137,7 @@ export default function Recommended({ navigation }) {
       top2: "teal",
       bottom1: "ltPink",
       bottom2: "orange",
+      nav: "ShareSomething",
     },
   ];
 
@@ -144,7 +153,6 @@ export default function Recommended({ navigation }) {
     >
       <NavHome />
       <Text style={styles.titleText}>What do you want to share today?</Text>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("ShareSomething")}><Text>Share something</Text></TouchableWithoutFeedback>
       {!showMore ? (
         <FlatList
           contentContainerStyle={{
@@ -155,7 +163,6 @@ export default function Recommended({ navigation }) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             return (
-              
               <TouchableWithoutFeedback>
                 <ActivityCard
                   title={item.title}
