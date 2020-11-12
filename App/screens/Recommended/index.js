@@ -144,7 +144,7 @@ export default function Recommended({ navigation }) {
     >
       <NavHome />
       <Text style={styles.titleText}>What do you want to share today?</Text>
-
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("ShareSomething")}><Text>Share something</Text></TouchableWithoutFeedback>
       {!showMore ? (
         <FlatList
           contentContainerStyle={{
@@ -155,6 +155,7 @@ export default function Recommended({ navigation }) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             return (
+              
               <TouchableWithoutFeedback>
                 <ActivityCard
                   title={item.title}
