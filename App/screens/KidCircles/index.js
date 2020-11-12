@@ -27,6 +27,7 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
+  console.log("route.params.activeUser", route.params.activeUser);
   // const circles = [
   //   {
   //     id: 1,
@@ -37,10 +38,11 @@ export default function KidCircles({ route, navigation }) {
   if (!data) {
     return (
       <View>
-        <Text>...loading</Text>
+        <Text>Loading....</Text>
       </View>
     );
   }
+
   return (
     <View
       style={{
@@ -216,7 +218,6 @@ export default function KidCircles({ route, navigation }) {
         }
       />
       <NavButtons screen="Single" />
-
     </View>
   );
 }

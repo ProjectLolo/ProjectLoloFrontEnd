@@ -20,9 +20,12 @@ import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
+import { useMutation } from "@apollo/client";
+import { CREATE_KID } from "../../../graphql/mutations";
+
 export default function CreateKidCircles({ navigation }) {
-  const [name, setName] = useState(null);
-  const [nickname, setNickname] = useState(null);
+  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -40,16 +43,30 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-  function onSubmitHandler() {
-   
-    navigation.navigate("UploadKidProfile", {
-      kidName: name,
-      kidNickname: nickname,
-      kidDateofBirth: moment(dateOfBirth).format("DD/MM/YYYY"),
-    });
-  }
 
-  console.log(dateOfBirth);
+  const [createKid, { error }] = useMutation(CREATE_KID, {
+    onError: (error) => console.log("mutation create kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("UploadKidProfile", {
+        kidId: data.createKid._id,
+        kidName: name,
+        familyCode:data.createKid.code
+      });
+    },
+  });
+
+  function onSubmitHandler() {
+    createKid({
+      variables: {
+        name: name,
+        nickName: nickname,
+        birthdate: dateOfBirth,
+        profileImageUrl: "",
+      },
+    });
+
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -136,7 +153,6 @@ export default function CreateKidCircles({ navigation }) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-
 
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
