@@ -23,14 +23,11 @@ import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
-
-
 export default function UploadKidProfile({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
-
 
 const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
   onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
@@ -143,7 +140,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     );
   };
 
-
   //we need to get user's name here // they are the parent of the kid
   const nameParent = "NameOfParent";
 
@@ -163,7 +159,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     });
   };
 
-
   if (hasPermission === null) {
     return <View />;
   }
@@ -180,8 +175,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>!
+        Welcome {nameParent} &amp; {route.params.kidName} !
       </Text>
 
       <Text
@@ -196,9 +190,8 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         numberOfLines={2}
         adjustsFontSizeToFit={true}
       >
-        Please upload a profile picture of
-        <Text style={{ color: colors.dkPink }}> {route.params.kidName} </Text>
-        for your family.
+        Please upload a profile picture of {route.params.kidName} for your
+        family.
       </Text>
 
       {loading ? (
@@ -254,12 +247,15 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
                 },
               ]}
             >
-              Change Profile Picture
+              Change{" "}
+              <Text style={{ color: colors.purple }}>
+                {route.params.kidName}
+              </Text>
+              's Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>
       )}
-
 
       {picture ? (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
@@ -270,7 +266,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
       ) : (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={handleSkip}>
-            <Text style={styles.loginButtonText}>Skip this</Text>
+            <Text style={styles.loginButtonText}>Skip for now</Text>
           </TouchableOpacity>
         </View>
       )}

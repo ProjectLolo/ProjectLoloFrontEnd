@@ -19,7 +19,6 @@ import colors from "@assets/colors";
 import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
-
 import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
 
@@ -27,8 +26,8 @@ export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  console.log("route.params", route.params);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -106,7 +105,13 @@ export default function CreateKidCircles({ navigation }) {
               width: "66.5%",
             }}
           >
-            <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
+            <Text
+              style={{
+                fontFamily: fonts.regular,
+                paddingBottom: 23,
+                color: colors.purple,
+              }}
+            >
               Date of birth
             </Text>
             <TouchableWithoutFeedback onPress={() => showDatePicker()}>

@@ -33,11 +33,9 @@ export default function SignUp({ navigation }) {
     },
   });
 
-
   function submitForm(e) {
     e.preventDefault();
     signup({ variables });
-
   }
 
   function togglePassword() {
