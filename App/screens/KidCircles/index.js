@@ -33,19 +33,6 @@ export default function KidCircles({ route, navigation }) {
   const userName = route.params.firstName;
   console.log("userName", userName);
 
-  //if no data then it shouldn't be loading! Because when you just start out, there is no data.
-
-  // if (!data) {
-  //   return (
-  //     <View>
-  //       <Text>...loading</Text>
-  //     </View>
-  //   );
-  // }
-
-  // const tempArray = data && data.findAllKids.slice(0, 3).map((i) => i);
-  // console.log("tempArray", tempArray);
-
   return (
     <View
       style={{
@@ -243,12 +230,15 @@ export default function KidCircles({ route, navigation }) {
                 </View>
               </TouchableWithoutFeedback>
             </View>
+            
           </View>
         }
       />
+
       <View style={{ marginTop: "5%" }}>
         <NavButtons screen="Single" />
       </View>
+
     </View>
   );
 }
