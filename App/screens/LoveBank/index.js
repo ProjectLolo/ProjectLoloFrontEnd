@@ -7,7 +7,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { AuthContext } from "../../context/Auth";
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import MediaContentCard from "../../components/MediaContentCard";
@@ -19,30 +19,17 @@ export default function LoveBank({ route, navigation }) {
   //hardcoded kidId, not sure atm where to get it from
 
   const [loveBanks, setLoveBanks] = useState([]);
-  const [getLove, { data }] = useLazyQuery(GET_LOVEBANKS, {
-    onCompleted(data) {
-      setLoveBanks(data);
+  const { data, refetch } = useQuery(GET_LOVEBANKS, {
+    variables: {
+      kidId: route.params.activeKid,
     },
   });
 
   useEffect(() => {
-    getLove({
-      variables: {
-        kidId: route.params.activeKid,
-      },
-    });
-  }, []);
+    refetch();
+    setLoveBanks(data);
+  }, [refetch, data]);
 
-  // const cardContent = [
-  //   {
-  //     id: 1,
-  //     title: "Kid goes to bed story",
-  //     person: "dad",
-  //     topColor: "pink",
-  //     bottomColor: "purple",
-  //     video: images.videoCameraPurple,
-  //   },
-  // ];
   if (!loveBanks) {
     return (
       <View>
@@ -51,7 +38,7 @@ export default function LoveBank({ route, navigation }) {
     );
     ``;
   }
-  console.log("data.loveBanks", loveBanks.loveBanks);
+  console.log("NUMBER OF LIKES", data);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />

@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   Image,
   FlatList,
+  Button,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import MediaContentComments from "../../components/MediaContentComments";
@@ -37,43 +38,12 @@ export default function MediaContentDetails({ navigation, route }) {
       kidId: activeKid,
     },
   });
-
+  // Time constraints prevent me from making a subscription for the comments.
   useEffect(() => {
     refetch();
     setComments(data);
   }, [refetch, data]);
 
-  // useEffect(() => {
-  //   console.log("do i get here");
-
-  // }, []);
-
-  // need to integrate comments and likes. Hardcoded Id and kidId in the query, replace withloveBankId and activeKid
-  // Kept this hardcoded because of no data in this user account in comments/likes
-  console.log("data in mediaContent", comments);
-  console.log("lovebankid activekid", loveBankId, activeKid);
-  console.log("length", comments);
-  // const cardContent = [
-  //   {
-  //     id: 1,
-  //     person: "mom",
-  //     text: "Love this video!",
-  //     video: null,
-  //   },
-  //   {
-  //     id: 2,
-  //     person: "auntie Annie",
-  //     text:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //     video: null,
-  //   },
-  //   {
-  //     id: 3,
-  //     person: "cousin Jan",
-  //     text: null,
-  //     video: images.videoCameraPurple,
-  //   },
-  // ];
   if (!comments) {
     return (
       <View>
@@ -122,6 +92,7 @@ export default function MediaContentDetails({ navigation, route }) {
             </View>
           </View>
           <CommentBox loveBankId={loveBankId} refetch={refetch} />
+          <Button title="like this" />
         </>
       }
       contentContainerStyle={{ marginHorizontal: 10 }}

@@ -22,6 +22,7 @@ const images = {
   instruction1: require("./images/instruction1.jpg"),
   instruction2: require("./images/instruction2.jpg"),
   instruction3: require("./images/instruction3.jpg"),
+  heart: require("./images/heart.png"),
 };
 
 export default images;

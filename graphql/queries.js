@@ -11,6 +11,9 @@ export const GET_LOVEBANKS = gql`
       category
       kidId
       userId
+      likes {
+        userId
+      }
     }
   }
 `;
