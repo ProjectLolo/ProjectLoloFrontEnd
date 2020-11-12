@@ -19,7 +19,6 @@ import colors from "@assets/colors";
 import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
-
 import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
 import { UPDATE_KID_PROFILE } from "../../../graphql/mutations"
@@ -39,7 +38,6 @@ export default function CreateKidCircles({ navigation }) {
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDOB] = useState("");
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -55,7 +53,6 @@ export default function CreateKidCircles({ navigation }) {
     setDOB(date);
   };
 
-// createKid row in DB
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => {
       console.log("mutation create kid", error.graphQLErrors)
@@ -76,7 +73,7 @@ export default function CreateKidCircles({ navigation }) {
     onCompleted(data) {
       console.log("updatekid completed", data);
       navigation.navigate("UploadKidProfile", {
-        profile:data.updateKidProfile
+        profile:data.updateKid
       });
     },
   });
@@ -112,7 +109,6 @@ export default function CreateKidCircles({ navigation }) {
       },
     });
   }
-
   }
 
   const showMessage = () => {
@@ -178,7 +174,13 @@ export default function CreateKidCircles({ navigation }) {
               width: "66.5%",
             }}
           >
-            <Text style={{ fontFamily: fonts.regular, paddingBottom: 23 }}>
+            <Text
+              style={{
+                fontFamily: fonts.regular,
+                paddingBottom: 23,
+                color: colors.purple,
+              }}
+            >
               Date of birth
             </Text>
             <TouchableWithoutFeedback onPress={() => showDatePicker()}>

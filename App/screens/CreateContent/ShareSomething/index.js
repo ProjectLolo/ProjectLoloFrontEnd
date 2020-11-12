@@ -11,18 +11,15 @@ import {
 import Images from "../../../assets";
 import style from "../../../styles";
 import * as ImagePicker from "expo-image-picker";
-export default function ShareSomething({ navigation }) {
+import NavHome from "../../../components/NavHome";
 
+export default function ShareSomething({ navigation }) {
   useEffect(() => {
     (async () => {
-  
-        const {
-          status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-  
+      const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
     })();
   }, []);
 
@@ -38,8 +35,8 @@ export default function ShareSomething({ navigation }) {
 
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
-        uri: result.uri
-      })
+        uri: result.uri,
+      });
     }
   };
 
@@ -54,46 +51,45 @@ export default function ShareSomething({ navigation }) {
 
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
-        uri: result.uri
-      })
+        uri: result.uri,
+      });
     }
   };
 
-
   return (
-     
-      <View style={styles.container}>
-        <View style={styles.mainContainer}>
-          <Image style={styles.image} source={Images.videoCameraPurple} />
-          <Text style={[style.h2, style.center]}>Share Something</Text>
-          <Text style={style.center}>
-            Share a video from your media files to upload in the love bank
-          </Text>
-        </View>
-        {/* Icons for record and upload */}
-        <View style={styles.rowContainer}>
-          <TouchableOpacity onPress={takeVideo}>
-            <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={Images.videoCameraPurple} />
-              <Text>Start recording</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={pickVideo}>
-            <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={Images.upload} />
-              <Text>Upload video</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        {/* navigation */}
-        {/* <TouchableWithoutFeedback
+    <View style={styles.container}>
+      <NavHome />
+      <View style={styles.mainContainer}>
+        <Image style={styles.image} source={Images.videoCameraPurple} />
+        <Text style={[style.h2, style.center]}>Share Something</Text>
+        <Text style={style.center}>
+          Share a video from your media files to upload in the love bank
+        </Text>
+      </View>
+      {/* Icons for record and upload */}
+      <View style={styles.rowContainer}>
+        <TouchableOpacity onPress={takeVideo}>
+          <View style={styles.iconContainer}>
+            <Image style={styles.icon} source={Images.videoCameraPurple} />
+            <Text>Start recording</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={pickVideo}>
+          <View style={styles.iconContainer}>
+            <Image style={styles.icon} source={Images.upload} />
+            <Text>Upload video</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* navigation */}
+      {/* <TouchableWithoutFeedback
           onPress={() => navigation.navigate("Recommended")}
         >
           <Text style={{ textAlign: "center", marginTop: 50 }}>
             Press here to go to Recommended
           </Text>
         </TouchableWithoutFeedback> */}
-      </View>
+    </View>
   );
 }
 const styles = StyleSheet.create({

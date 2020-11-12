@@ -40,6 +40,7 @@ export default function Login({ navigation }) {
   function submitForm(e) {
     e.preventDefault();
 
+    console.log("variables", variables);
     login({ variables });
   }
 

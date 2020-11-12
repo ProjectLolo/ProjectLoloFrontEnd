@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const GET_LOVEBANKS = gql`
-  query loveBanks($kidId: String!) {
+  query loveBanks($kidId: ID) {
     loveBanks(kidId: $kidId) {
       title
       url

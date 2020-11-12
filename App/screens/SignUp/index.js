@@ -28,16 +28,14 @@ export default function SignUp({ navigation }) {
       error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ signup }) {
       if (signup.token) {
-        signUp(signup.token);
+        signIn(signup.token);
       }
     },
   });
 
-
   function submitForm(e) {
     e.preventDefault();
     signup({ variables });
-
   }
 
   function togglePassword() {
