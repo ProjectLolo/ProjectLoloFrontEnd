@@ -35,13 +35,6 @@ export default function KidCircles({ route, navigation }) {
   //     kidName: "Atieh",
   //   },
   // ];
-  if (!data) {
-    return (
-      <View>
-        <Text>Loading....</Text>
-      </View>
-    );
-  }
 
   return (
     <View
@@ -65,7 +58,7 @@ export default function KidCircles({ route, navigation }) {
           width: "90%",
           paddingTop: 30,
         }}
-        data={data.findAllKids}
+        // data={data.findAllKids}
         numColumns={1}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
@@ -214,6 +207,7 @@ export default function KidCircles({ route, navigation }) {
                 </View>
               </TouchableWithoutFeedback>
             </View>
+            
           </View>
         }
       />
