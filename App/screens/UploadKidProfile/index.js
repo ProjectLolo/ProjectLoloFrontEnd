@@ -23,22 +23,22 @@ import images from "@assets/images";
 import fonts from "@assets/fonts";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
-
-
 export default function UploadKidProfile({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
 
-
-const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
-  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
-  onCompleted(data) {
-    console.log("completed", data);
-    navigation.navigate("ShareFamilyCode", { familyCode: data.addKidProfileImage.code } );
-  },
-});
+  const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+    onError: (error) =>
+      console.log("mutation upload Kid profileImage ", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+      navigation.navigate("ShareFamilyCode", {
+        familyCode: data.addKidProfileImage.code,
+      });
+    },
+  });
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -53,7 +53,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
       }
     })();
   }, []);
-
 
   function onSubmitHandler() {
     addKidProfileImage({
@@ -143,7 +142,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     );
   };
 
-
   //we need to get user's name here // they are the parent of the kid
   const nameParent = "NameOfParent";
 
@@ -158,11 +156,10 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("ShareFamilyCode", { 
-      familyCode: route.params.familyCode 
+    navigation.navigate("ShareFamilyCode", {
+      familyCode: route.params.familyCode,
     });
   };
-
 
   if (hasPermission === null) {
     return <View />;
@@ -260,7 +257,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         </View>
       )}
 
-
       {picture ? (
         <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
@@ -280,6 +276,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
           hide={hideOptions}
           loading={loading}
           pickPhoto={pickPhoto}
+          nav="UploadKidProfile"
         />
       )}
     </View>

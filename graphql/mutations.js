@@ -57,22 +57,16 @@ export const SIGNUP = gql`
 `;
 
 export const ADD_KID_PROFILE_IMAGE = gql`
-mutation addKidProfileImage(
-  $id: String!
-  $imageUrl: String!
-) {
-  addKidProfileImage(
-      id: $id
-      imageUrl: $imageUrl
-  ) {
-    _id
-    name
-    nickName
-    birthdate
-    profileImageUrl
-    code
+  mutation addKidProfileImage($id: String!, $imageUrl: String!) {
+    addKidProfileImage(id: $id, imageUrl: $imageUrl) {
+      _id
+      name
+      nickName
+      birthdate
+      profileImageUrl
+      code
+    }
   }
-}
 `;
 
 export const CREATE_LOVEBANK = gql`
@@ -97,3 +91,28 @@ export const CREATE_LOVEBANK = gql`
   }
 `;
 
+export const SETTINGS = gql`
+  mutation setting(
+    $password: String!
+    $firstName: String!
+    $lastName: String!
+    $profilePic: String!
+    $nickName: String!
+  ) {
+    setting(
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+      profilePic: $profilePic
+      nickName: $nickName
+    ) {
+      id
+      email
+      password
+      firstName
+      lastName
+      nickName
+      profilePic
+    }
+  }
+`;
