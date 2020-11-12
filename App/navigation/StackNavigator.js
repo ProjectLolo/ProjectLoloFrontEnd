@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import CreateFamilyMember from "../screens/CreateFamilyMember";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
@@ -21,6 +21,7 @@ import SingASong from "../screens/CreateContent/SingASong";
 import Teach from "../screens/CreateContent/Teach";
 import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoPreview from "../components/VideoPreview";
+import CreateFamilyMember from "../screens/CreateFamilyMember";
 
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
@@ -28,12 +29,18 @@ export default function authNavigator({ route, state }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
+
         initialRouteName="KidCircles"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
           name="KidCircles"
           component={KidCircles}
+          initialParams={state}
+        />
+        <Stack.Screen
+          name="CreateFamilyMember"
+          component={CreateFamilyMember}
           initialParams={state}
         />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
@@ -44,6 +51,7 @@ export default function authNavigator({ route, state }) {
         />
         <Stack.Screen name="ShareFamilyCode" component={ShareFamilyCode} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
+        <Stack.Screen name="CreateFamilyMember" component={CreateFamilyMember} />
         <Stack.Screen name="Recommended" component={Recommended} />
         <Stack.Screen
           name="LoveBank"

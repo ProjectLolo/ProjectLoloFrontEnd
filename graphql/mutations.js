@@ -116,6 +116,24 @@ export const CREATE_LOVEBANK = gql`
   }
 `;
 
+export const ADD_MEMBER = gql`
+  mutation addMember(
+    $kidId: String!
+    $relation: String!
+    $notification: String!
+  ) {
+    addMember(kidId: $kidId, relation: $relation, notification: $notification) {
+      _id
+      userId
+      relation
+      notification
+      kid {
+        _id
+      }
+    }
+  }
+`;
+
 export const SETTINGS = gql`
   mutation setting(
     $password: String!
