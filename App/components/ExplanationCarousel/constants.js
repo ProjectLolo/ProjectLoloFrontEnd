@@ -6,7 +6,7 @@ export const carouselData = [
   {
     title: "Explanation 1 of 3:",
     description:
-      "Peekaboo helps families to create bonds regardless of age, time and location.",
+      "Peekabond helps families to create bonds regardless of age, time and location.",
     renderImage: () => (
       <Image style={styles.image} source={images.instruction1} />
     ),
