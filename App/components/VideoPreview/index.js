@@ -38,7 +38,8 @@ export default function VideoPreview({ route, navigation }) {
         url: video,
         preview: route.params.uri,
         description: "this is a video",
-        category: "video",
+        type:"video",
+        category: "share",
         kidId: "5fa96915ff41f83f6997dc7a",
         
       },

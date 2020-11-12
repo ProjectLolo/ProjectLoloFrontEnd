@@ -29,16 +29,16 @@ export default function UploadKidProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
 
-  const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
-    onError: (error) =>
-      console.log("mutation upload Kid profileImage ", error.graphQLErrors),
-    onCompleted(data) {
-      console.log("completed", data);
-      navigation.navigate("ShareFamilyCode", {
-        familyCode: data.addKidProfileImage.code,
-      });
-    },
-  });
+  const kidId=route.params.profile._id;
+  const {name,code } = route.params.profile;
+
+
+const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
+  onCompleted(data) {
+    console.log("completed", data);
+  },
+});
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -57,17 +57,19 @@ export default function UploadKidProfile({ route, navigation }) {
   function onSubmitHandler() {
     addKidProfileImage({
       variables: {
-        id: route.params.kidId,
+        id: kidId,
         imageUrl: picture,
       },
     });
+
+    navigation.navigate("ShareFamilyCode", { familyCode: code } );
   }
 
   //using camera
   useEffect(() => {
     const result = route.params.result;
     if (route.params.result) {
-      uploadImage(result.uri, `Image_${route.params.kidId}`);
+      uploadImage(result.uri, `Image_${kidId}`);
     }
   }, [route.params]);
 
@@ -84,7 +86,7 @@ export default function UploadKidProfile({ route, navigation }) {
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
-      uploadImage(result.uri, `Image_${route.params.kidId}`);
+      uploadImage(result.uri, `Image_${kidId}`);
       // setPicture(result.uri);
     }
   };
@@ -143,7 +145,7 @@ export default function UploadKidProfile({ route, navigation }) {
   };
 
   //we need to get user's name here // they are the parent of the kid
-  const nameParent = "NameOfParent";
+  const nameParent = route.params.firstName;
 
   function hideOptions() {
     setChangeProfilePicture(false);
@@ -156,8 +158,8 @@ export default function UploadKidProfile({ route, navigation }) {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("ShareFamilyCode", {
-      familyCode: route.params.familyCode,
+    navigation.navigate("ShareFamilyCode", { 
+      familyCode: code 
     });
   };
 
@@ -177,7 +179,10 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome {nameParent} &amp; {route.params.kidName} !
+
+        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
+        <Text style={{ color: colors.dkPink }}> {name} </Text>!
+
       </Text>
 
       <Text
@@ -192,8 +197,9 @@ export default function UploadKidProfile({ route, navigation }) {
         numberOfLines={2}
         adjustsFontSizeToFit={true}
       >
-        Please upload a profile picture of {route.params.kidName} for your
-        family.
+        Please upload a profile picture of
+        <Text style={{ color: colors.dkPink }}> {name} </Text>
+        for your family.
       </Text>
 
       {loading ? (
@@ -278,6 +284,7 @@ export default function UploadKidProfile({ route, navigation }) {
           hide={hideOptions}
           loading={loading}
           pickPhoto={pickPhoto}
+          nav="UploadKidProfile"
         />
       )}
     </View>

@@ -9,6 +9,7 @@ export default function TakeProfilePicture({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const { nav, hide } = route.params;
 
   useEffect(() => {
     (async () => {
@@ -27,8 +28,11 @@ export default function TakeProfilePicture({ route, navigation }) {
   const takePhoto = async () => {
     let result = await cameraRef.takePictureAsync();
     if (result) {
+
+      hide();
       console.log("takePhoto result.uri", result);
-      navigation.navigate("UploadKidProfile", { result });
+      navigation.navigate(nav, { result });
+
     }
   };
 
@@ -124,7 +128,10 @@ export default function TakeProfilePicture({ route, navigation }) {
                 name="back"
                 size={40}
                 color="white"
-                onPress={() => navigation.navigate("UploadKidProfile")}
+                onPress={() => {
+                  navigation.navigate(nav);
+                  hide();
+                }}
               />
             </TouchableOpacity>
           </View>

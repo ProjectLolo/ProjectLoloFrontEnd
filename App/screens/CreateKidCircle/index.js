@@ -62,9 +62,7 @@ export default function CreateKidCircles({ navigation }) {
       console.log("create kid completed", data);
       setProfile({ created: true, kidId:data.createKid._id })
       navigation.navigate("UploadKidProfile", {
-        kidId: data.createKid._id,
-        kidName: name,
-        familyCode: data.createKid.code,
+        profile: data.createKid
       });
     },
   });
@@ -75,9 +73,7 @@ export default function CreateKidCircles({ navigation }) {
     onCompleted(data) {
       console.log("updatekid completed", data);
       navigation.navigate("UploadKidProfile", {
-        kidId: data.updateKidProfile._id,
-        kidName: name,
-        familyCode:data.updateKidProfile.code
+        profile:data.updateKid
       });
     },
   });

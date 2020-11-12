@@ -7,6 +7,7 @@ export const GET_LOVEBANKS = gql`
       url
       preview
       description
+      type
       category
       kidId
       userId
@@ -24,6 +25,19 @@ export const GET_ALL_KIDS = gql`
       profileImageUrl
       userId
       code
+    }
+  }
+`;
+
+export const FIND_KID_BY_CODE = gql`
+  query findKidByCode($code: String!) {
+    findKidByCode(code: $code) {
+      _id
+      name
+      nickName
+      birthdate
+      profileImageUrl
+      userId
     }
   }
 `;
