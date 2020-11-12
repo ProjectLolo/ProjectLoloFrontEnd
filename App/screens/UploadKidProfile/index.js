@@ -278,6 +278,7 @@ export default function UploadKidProfile({ route, navigation }) {
           hide={hideOptions}
           loading={loading}
           pickPhoto={pickPhoto}
+          nav="UploadKidProfile"
         />
       )}
     </View>
