@@ -9,20 +9,42 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import styles from "../../styles"; //global styles
-import style from "./style"; //local styles
+import { useMutation } from "@apollo/client";
+import NavHome from "../../components/NavHome";
+import colors from "@assets/colors";
+import adjust from "../../styles/adjust";
+import images from "@assets/images";
+import fonts from "@assets/fonts";
+import ChangeProfilePicture from "../../components/ChangeProfilePicture";
+import { ADD_USER_PROFILE_IMAGE } from "../../../graphql/mutations";
+import { AuthContext } from "../../context/Auth";
 
 export default function UploadUserProfile({ route, navigation }) {
+  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
-  const [picture, setPicture] = useState(
-    "https://www.kindpng.com/picc/m/33-332538_boy-icon-01-01-cartoon-hd-png-download.png"
-  );
+  const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useContext(AuthContext);
 
-  // TODO: mutation to change/upload profile picture
+  const [addUserProfileImage, { error }] = useMutation(ADD_USER_PROFILE_IMAGE, {
+    onError: (error) =>
+      console.log("mutation upload user profileImage ", error.graphQLErrors),
 
-  //TODO: add this part into a component and do the same for in UploadKidProfile
+    onCompleted(data) {
+      console.log(route.params.data.token);
+
+      if (route.params.data.token) {
+        //Does this work?
+        signIn(route.params.data.token);
+        // TODO: Navigate to the right screen , Missing screen , shouldnt there be a create a kid or join a family page?
+        // navigation.navigate("KidCircles");
+      }
+    },
+  });
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -40,12 +62,27 @@ export default function UploadUserProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    // changeProfilePic({
-    //   variables: {
-    //     profilePic: picture,
-    //   },
-    // });
+    addUserProfileImage({
+      variables: {
+        id: route.params.data.id,
+        imageUrl: picture,
+      },
+    });
   }
+
+  function hideOptions() {
+    setChangeProfilePicture(false);
+  }
+
+  const handleSkip = () => {
+    if (route.params.data.token) {
+      //Does this work?
+      signIn(route.params.data.token);
+      // TODO: Navigate to the right screen , Missing screen , shouldnt there be a create a kid or join a family page?
+      // navigation.navigate("KidCircles");
+    }
+  };
+
   //using camera
   useEffect(() => {
     const result = route.params.result;
@@ -129,50 +166,129 @@ export default function UploadUserProfile({ route, navigation }) {
   }
 
   return (
-    <View style={[styles.fontFamily]}>
-      <View>
-        <Text
-          style={[style.text, style.align]}
-        >{`Welcome ${route.params.firstName}! Almost ready to play & bond :-)`}</Text>
-        {loading && <ActivityIndicator size="large" color="#660066" />}
-      </View>
-      <View>
-        <Text style={[style.label, style.align, style.spacing]}>
-          {`Let's start with a clear profile picture so [kid] can learn to recognize your face.`}
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <NavHome onlyBack={true} />
+      <Text
+        style={[styles.title, { marginTop: 10, marginBottom: 0 }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit={true}
+      >
+        Welcome
+        <Text style={{ color: colors.dkPink }}>
+          {route.params.data.firstName}
         </Text>
-      </View>
+        &amp;
+        <Text style={{ color: colors.dkPink }}>
+          {" "}
+          {route.params.data.firstName}{" "}
+        </Text>
+        !
+      </Text>
 
-      <View style={[{ flexDirection: "row" }]}>
-        <View>
-          {picture && (
-            <Image
-              source={{ uri: picture }}
-              alt="no-picture"
-              style={[style.image]}
-            />
-          )}
-        </View>
-        <View style={[style.spacing, { alignSelf: "center" }]}>
-          <Button title="Pick a photo" onPress={pickPhoto} />
-          <Button
-            title="Take Picture"
-            onPress={() => navigation.navigate("TakeProfilePicture")}
-          />
-        </View>
-      </View>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontSize: adjust(14),
+            marginTop: picture ? 15 : 10,
+            marginBottom: picture ? 25 : 10,
+          },
+        ]}
+        numberOfLines={2}
+        adjustsFontSizeToFit={true}
+      >
+        Almost ready to play & bond.
+        <Text style={{ color: colors.dkPink }}></Text>
+        {/* probably need annother text */}
+        Let's start with a clear profile picture so [Kid] can learn how to
+        recongnize your face.
+      </Text>
 
-      <View style={[{ flexDirection: "row" }, style.spacing]}>
-        <View style={[style.button, styles.yellow]}>
-          <TouchableOpacity onPress={() => navigation.navigate("KidCircles")}>
-            <Text style={style.button}>Skip this</Text>
-          </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator
+          style={{ marginBottom: "76.5%" }}
+          size="large"
+          color="#660066"
+        />
+      ) : (
+        <View style={{ marginBottom: "25%" }}>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "50%",
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                height: Dimensions.get("window").width * 0.5,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                style={
+                  picture
+                    ? {
+                        borderRadius: 150,
+                        width: 210,
+                        height: 210,
+                        alignSelf: "center",
+                      }
+                    : styles.cardImage
+                }
+                source={picture ? { uri: picture } : images.monkey}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => setChangeProfilePicture(true)}
+          >
+            <Text
+              style={[
+                styles.cardText,
+                {
+                  color: colors.dkPink,
+                  fontFamily: fonts.semiBold,
+                  paddingTop: 15,
+                },
+              ]}
+            >
+              Change{" "}
+              <Text style={{ color: colors.purple }}>
+                {route.params.kidName}
+              </Text>
+              's Profile Picture
+            </Text>
+          </TouchableWithoutFeedback>
         </View>
-        <View style={[style.button, styles.dkPink]}>
+      )}
+
+      {picture ? (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
-            <Text style={style.button}>Continue</Text>
+            <Text style={styles.loginButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      ) : (
+        <View style={[styles.loginButton, { marginBottom: "20%" }]}>
+          <TouchableOpacity onPress={handleSkip}>
+            <Text style={styles.loginButtonText}>Skip for now</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {changeProfilePicture && (
+        <ChangeProfilePicture
+          hide={hideOptions}
+          loading={loading}
+          pickPhoto={pickPhoto}
+          nav="UploadKidProfile"
+        />
+      )}
     </View>
   );
 }
