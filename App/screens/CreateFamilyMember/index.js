@@ -7,10 +7,8 @@ import { useMutation } from "@apollo/client";
 import { ADD_MEMBER } from "../../../graphql/mutations";
 
 export default function CreateFamilyMember({ route, navigation }) {
-  //   console.log("hi from create family", route.params);
-
   const [variables, setVariables] = useState({
-    relation: "Mother",
+    relation: "",
     notification: "1",
     kidId: route.params.data._id,
   });
@@ -24,7 +22,7 @@ export default function CreateFamilyMember({ route, navigation }) {
     onError: (error) => console.log("error: ", error.graphQLErrors),
     onCompleted: (data) => {
       console.log("result", data);
-      //   navigation.navigate("KidCircles");
+     navigation.navigate("KidCircles");
     },
   });
 

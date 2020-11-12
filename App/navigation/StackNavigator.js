@@ -15,6 +15,7 @@ import MediaContentDetails from "../screens/MediaContentDetails";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
 import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoPreview from "../components/VideoPreview";
+import CreateFamilyMember from "../screens/CreateFamilyMember";
 
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ export default function authNavigator({ route, state }) {
         />
         <Stack.Screen name="ShareFamilyCode" component={ShareFamilyCode} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
+        <Stack.Screen name="CreateFamilyMember" component={CreateFamilyMember} />
         <Stack.Screen name="Recommended" component={Recommended} />
         <Stack.Screen
           name="LoveBank"

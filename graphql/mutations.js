@@ -84,13 +84,14 @@ export const ADD_MEMBER = gql`
     $relation: String!
     $notification: String!
   ) {
-    addMember(
-      kidId: $kidId
-     relation: $relation
-      notification: $notification) {
-      kidId
+    addMember(kidId: $kidId, relation: $relation, notification: $notification) {
+      _id
+      userId
       relation
       notification
+      kid {
+        _id
+      }
     }
   }
 `;
