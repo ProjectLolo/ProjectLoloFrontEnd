@@ -40,8 +40,6 @@ export default function UploadUserProfile({ route, navigation }) {
       if (route.params.data.token) {
         //Does this work?
         signIn(route.params.data.token);
-        // TODO: Navigate to the right screen , Missing screen , shouldnt there be a create a kid or join a family page?
-        // navigation.navigate("KidCircles");
       }
     },
   });
@@ -78,8 +76,6 @@ export default function UploadUserProfile({ route, navigation }) {
     if (route.params.data.token) {
       //Does this work?
       signIn(route.params.data.token);
-      // TODO: Navigate to the right screen , Missing screen , shouldnt there be a create a kid or join a family page?
-      // navigation.navigate("KidCircles");
     }
   };
 
