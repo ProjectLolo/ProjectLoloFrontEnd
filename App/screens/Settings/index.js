@@ -18,8 +18,12 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
+import { useMutation } from "@apollo/client";
+import { SETTINGS } from "../../../graphql/mutations";
+
 export default function Settings({ route, navigation }) {
   const single = route.params;
+
   const { signOut } = useContext(AuthContext);
   const profileInfo = {
     firstName: "Diégo",
@@ -27,6 +31,7 @@ export default function Settings({ route, navigation }) {
     nickName: null,
     email: "diegosreallylongemailaddress@email.com",
     password: 1234,
+    profilePic: "knhfbg",
   };
 
   const initState = {
@@ -34,6 +39,7 @@ export default function Settings({ route, navigation }) {
     lastName: profileInfo.lastName,
     nickName: profileInfo.nickName,
     email: profileInfo.email,
+    profilePic: profileInfo.profilePic,
     password: "",
     passwordControl: "",
   };
@@ -43,6 +49,26 @@ export default function Settings({ route, navigation }) {
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
 
+  const [submitSettings, { error }] = useMutation(SETTINGS, {
+    onError: (error) =>
+      //TODO: give proper error message , now just giving the user the error from graphQL
+      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
+    // onCompleted({ submitSettings }) {
+    //   if (submitSettings.token) {
+    //     signUp(signup.token);
+    //   }
+    // },
+  });
+
+  function submitForm(e) {
+    e.preventDefault();
+    setVariables({ ...variables, profilePic: route.params.result.uri });
+    submitSettings({ variables });
+    // console.log("outPut", {
+    //   ...variables,
+    //   profilePic: route.params.result.uri,
+    // });
+  }
   function hideOptions() {
     setChangeProfilePicture(false);
   }
@@ -261,9 +287,9 @@ export default function Settings({ route, navigation }) {
               style={[styles.inputBox, { backgroundColor: colors.white }]}
               placeholder="Enter email..."
               placeholderTextColor="grey"
-              onChangeText={(text) =>
-                setVariables({ ...variables, email: text })
-              }
+              // onChangeText={(text) =>
+              //   setVariables({ ...variables, email: text })
+              // }
               value={variables.email}
             />
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
@@ -292,9 +318,11 @@ export default function Settings({ route, navigation }) {
             />
 
             <TouchableWithoutFeedback
-              onPress={() => {
+              onPress={(e) => {
                 if (variables.password === variables.passwordControl) {
-                  /*submit changes to backend + */ setChangeInfo(false),
+                  /*submit changes to backend + */
+                  submitForm(e);
+                  setChangeInfo(false),
                     setSuccessMessage({ text: "SUCCESS!!!", color: "teal" }),
                     setVariables({
                       ...variables,
@@ -369,7 +397,9 @@ export default function Settings({ route, navigation }) {
 
       {showMessage()}
       {!single && <NavButtons screen="Settings" />}
-      {changeProfilePicture && <ChangeProfilePicture hide={hideOptions} />}
+      {changeProfilePicture && (
+        <ChangeProfilePicture hide={hideOptions} nav="Settings" />
+      )}
     </View>
   );
 }
