@@ -13,7 +13,7 @@ export default function CombineNavigators() {
     () => ({
       signIn: async (token) => {
         const decodedToken = jwtDecode(token);
-        console.log("decodedTOken on logIn", decodedToken);
+
         await AsyncStorage.setItem("userToken", token);
         dispatch({
           type: "SIGN_IN",
@@ -25,8 +25,9 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
+        const decodedToken = jwtDecode(token);
         await AsyncStorage.setItem("userToken", data);
-        dispatch({ type: "SIGN_IN", token: data });
+        dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
       },
       activeUser: async (data) => {
         dispatch({ type: "SET_USER", id: data });

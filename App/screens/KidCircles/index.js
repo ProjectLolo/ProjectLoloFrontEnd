@@ -29,13 +29,12 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
+  console.log("WHAT IS IN ROUTE?", route);
 
   const userName = route.params.firstName;
+  console.log("userName", userName);
 
-  console.log("dataaaaaaaaaaaaalenggth", !data.findAllKids.length);
   useEffect(() => {
-    console.log("refetch", refetch);
-    console.log("fetchedData", fetchedData);
     refetch();
     setFetchedData(data);
   }, [refetch, data, isFocused]);
