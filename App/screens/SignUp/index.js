@@ -9,7 +9,6 @@ import {
 import styles from "@styles/styles";
 import { useMutation } from "@apollo/client";
 import { SIGNUP } from "../../../graphql/mutations";
-import { AuthContext } from "../../context/Auth";
 
 export default function SignUp({ navigation }) {
   const [variables, setVariables] = useState({
@@ -20,16 +19,13 @@ export default function SignUp({ navigation }) {
     profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
-  const { signIn, signUp } = useContext(AuthContext);
 
   const [signup, { error }] = useMutation(SIGNUP, {
     onError: (error) =>
       //TODO: give proper error message , now just giving the user the error from graphQL
       error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ signup }) {
-      if (signup.token) {
-        signIn(signup.token);
-      }
+      navigation.navigate("UploadUserProfile", { data: signup });
     },
   });
 
