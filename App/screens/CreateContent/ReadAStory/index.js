@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
+import { View, Text } from "react-native";
+import NavHome from "../../../components/NavHome";
 
 export default function ReadAStory() {
   return (
-    <div></div>
-  )
+    <View>
+      <NavHome />
+      <Text>ReadAStory</Text>
+    </View>
+  );
 }

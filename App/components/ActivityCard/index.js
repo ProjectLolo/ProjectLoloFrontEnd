@@ -17,6 +17,7 @@ export default function ActivityCard(props) {
             backgroundColor: colors[top2],
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
+            width: 180,
           }}
         >
           <LinearGradient
@@ -35,10 +36,22 @@ export default function ActivityCard(props) {
         >
           <LinearGradient
             colors={[colors[bottom1], colors[bottom2]]}
-            style={styles.linBottom}
+            style={[styles.linBottom, { height: 60 }]}
           >
-            <Text style={styles.cardTitle}>{title}</Text>
-            <Text style={styles.cardText}>{text}</Text>
+            <Text
+              style={[styles.cardTitle, { width: 150, alignSelf: "center" }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
+            >
+              {title}
+            </Text>
+            <Text
+              style={[styles.cardText, { width: 150, alignSelf: "center" }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
+            >
+              {text}
+            </Text>
           </LinearGradient>
         </View>
       </TouchableWithoutFeedback>
