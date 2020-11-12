@@ -74,7 +74,7 @@ export default function Recommended({ navigation }) {
     {
       id: 7,
       image: images.Memory,
-      nav: "Holiday Memory",
+      nav: "HolidayMemory",
     },
   ];
 
