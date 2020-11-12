@@ -15,13 +15,16 @@ import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useQuery, useMutation } from "@apollo/client";
-
+import { CREATE_LIKE } from "../../../graphql/mutations";
 import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
-
+import { useIsFocused } from "@react-navigation/native";
 import CommentBox from "../../components/CommentBox";
 
 export default function MediaContentDetails({ navigation, route }) {
   const [comments, setComments] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeLength, setLikeLength] = useState(0);
+  const isFocused = useIsFocused();
   const {
     title,
     person,
@@ -30,6 +33,7 @@ export default function MediaContentDetails({ navigation, route }) {
     video,
     loveBankId,
     activeKid,
+    activeUser,
   } = route.params;
 
   const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
@@ -37,21 +41,40 @@ export default function MediaContentDetails({ navigation, route }) {
       _id: loveBankId,
       kidId: activeKid,
     },
+    onCompleted(data) {
+      const hasLike = data.loveBankById.likes.some(
+        (item) => item.userId === activeUser
+      );
+      const length = data.loveBankById.likes.length;
+      setLikeLength(length);
+      setLiked(hasLike);
+      setComments(data);
+    },
   });
 
-  const [giveLike, { data: likeData }] = useMutation(GIVE_LIKE, {
+  const [giveLike, { data: likeData }] = useMutation(CREATE_LIKE, {
     variables: {
       loveBankId: loveBankId,
     },
+    onCompleted() {
+      setLiked(!liked);
+    },
   });
+
   // Time constraints prevent me from making a subscription for the comments.
   useEffect(() => {
     refetch();
     setComments(data);
-  }, [refetch, data]);
+  }, [refetch, data, isFocused]);
 
   function handleLikeButton() {
-    giveLike();
+    if (liked) {
+      setLikeLength(likeLength - 1);
+      giveLike();
+    } else {
+      setLikeLength(likeLength + 1);
+      giveLike();
+    }
   }
 
   if (!comments) {
@@ -102,13 +125,17 @@ export default function MediaContentDetails({ navigation, route }) {
             </View>
           </View>
           <CommentBox loveBankId={loveBankId} refetch={refetch} />
-          <Button title="like this" />
+          <Button
+            title={liked ? "Liked!" : "Like this"}
+            onPress={handleLikeButton}
+          />
+          <Text>Likes: {likeLength}</Text>
         </>
       }
       contentContainerStyle={{ marginHorizontal: 10 }}
       data={comments.loveBankById.comments}
       numColumns={1}
-      keyExtractor={(item) => item._id.toString()}
+      keyExtractor={(item) => item.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableWithoutFeedback

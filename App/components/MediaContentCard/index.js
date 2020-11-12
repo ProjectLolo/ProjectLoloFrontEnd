@@ -14,8 +14,16 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function MediaContentCard(props) {
   const navigation = useNavigation();
-  const { title, person, topColor, bottomColor, video, loveBankId } = props;
-
+  const {
+    title,
+    person,
+    topColor,
+    bottomColor,
+    video,
+    loveBankId,
+    likes,
+  } = props;
+  console.log("LIKES AMOUNT THIS", likes);
   return (
     <TouchableWithoutFeedback
       onPress={() =>
@@ -53,7 +61,7 @@ export default function MediaContentCard(props) {
           </Text>
           <Text style={[styles.cardTitle, { paddingHorizontal: 5 }]}>
             <Image source={images.heart} style={style.heart} />
-            Likes
+            {likes}
           </Text>
         </View>
         <View

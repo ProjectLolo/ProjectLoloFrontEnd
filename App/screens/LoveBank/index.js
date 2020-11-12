@@ -13,22 +13,25 @@ import NavButtons from "../../components/NavButtons";
 import MediaContentCard from "../../components/MediaContentCard";
 import styles from "@styles/styles";
 import images from "@assets/images";
+import { useIsFocused } from "@react-navigation/native";
+
 import { GET_LOVEBANKS } from "../../../graphql/queries";
 
 export default function LoveBank({ route, navigation }) {
   //hardcoded kidId, not sure atm where to get it from
-
+  const isFocused = useIsFocused();
   const [loveBanks, setLoveBanks] = useState([]);
+
   const { data, refetch } = useQuery(GET_LOVEBANKS, {
     variables: {
       kidId: route.params.activeKid,
     },
   });
-
+  console.log("data in loveBank", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
-  }, [refetch, data]);
+  }, [refetch, data, isFocused]);
 
   if (!loveBanks) {
     return (
@@ -38,7 +41,7 @@ export default function LoveBank({ route, navigation }) {
     );
     ``;
   }
-  console.log("NUMBER OF LIKES", data);
+  console.log("NUMBER OF LIKES", loveBanks.loveBanks);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -63,6 +66,7 @@ export default function LoveBank({ route, navigation }) {
                 bottomColor="purple"
                 video={images.videoCameraPurple}
                 loveBankId={item._id}
+                likes={item.likes.length}
               />
             </TouchableWithoutFeedback>
           );
