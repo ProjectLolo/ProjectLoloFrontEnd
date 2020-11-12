@@ -56,7 +56,7 @@ export default function ChangeProfilePicture(props) {
         <View
           style={[
             styles.cardContainer,
-            { marginBottom: "15%", marginTop: "5%" },
+            { marginBottom: "15%", marginTop: "5%", width: "90%" },
           ]}
         >
           <Text style={[styles.cardTitle, { color: colors.dkPink }]}>
@@ -68,7 +68,12 @@ export default function ChangeProfilePicture(props) {
             navigation.navigate("TakeProfilePicture", { nav, hide })
           }
         >
-          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
+          <View
+            style={[
+              styles.cardContainer,
+              { marginBottom: "11%", width: "90%" },
+            ]}
+          >
             <Text
               style={[
                 styles.cardText,
@@ -80,7 +85,12 @@ export default function ChangeProfilePicture(props) {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={pickPhoto}>
-          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
+          <View
+            style={[
+              styles.cardContainer,
+              { marginBottom: "11%", width: "90%" },
+            ]}
+          >
             <Text
               style={[
                 styles.cardText,
@@ -92,7 +102,12 @@ export default function ChangeProfilePicture(props) {
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
-          <View style={[styles.cardContainer, { marginBottom: "11%" }]}>
+          <View
+            style={[
+              styles.cardContainer,
+              { marginBottom: "11%", width: "90%" },
+            ]}
+          >
             <Text
               style={[
                 styles.cardText,

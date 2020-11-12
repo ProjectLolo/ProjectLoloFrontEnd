@@ -21,19 +21,19 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
-import { UPDATE_KID_PROFILE } from "../../../graphql/mutations"
+import { UPDATE_KID_PROFILE } from "../../../graphql/mutations";
 
-export default function CreateKidCircles({ navigation }) {
-
-  const [profile,setProfile]=useState({
-    created:false,
-    kidId:""
+export default function CreateKidCircles({ route, navigation }) {
+  const { userName } = route.params;
+  const [profile, setProfile] = useState({
+    created: false,
+    kidId: "",
   });
 
-  const [message,setMessage]=useState({
-    color:"",
-    text:""
-  })
+  const [message, setMessage] = useState({
+    color: "",
+    text: "",
+  });
 
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
@@ -55,14 +55,15 @@ export default function CreateKidCircles({ navigation }) {
 
   const [createKid, { error }] = useMutation(CREATE_KID, {
     onError: (error) => {
-      console.log("mutation create kid", error.graphQLErrors)
+      console.log("mutation create kid", error.graphQLErrors);
       //setErrors({ errorFound: true, errorMessage: error.graphQLErrors.map(errObject => errObject.message)})
     },
     onCompleted(data) {
       console.log("create kid completed", data);
-      setProfile({ created: true, kidId:data.createKid._id })
+      setProfile({ created: true, kidId: data.createKid._id });
       navigation.navigate("UploadKidProfile", {
-        profile: data.createKid
+        profile: data.createKid,
+        userName,
       });
     },
   });
@@ -73,42 +74,41 @@ export default function CreateKidCircles({ navigation }) {
     onCompleted(data) {
       console.log("updatekid completed", data);
       navigation.navigate("UploadKidProfile", {
-        profile:data.updateKid
+        profile: data.updateKid,
+        userName,
       });
     },
   });
 
   function onSubmitHandler() {
-
-    if(name.trim() === ""){
+    if (name.trim() === "") {
       setMessage({
         text: "Kid name is required!",
         color: "orange",
-      })
+      });
     }
 
     //console.log("profile:",profile)
-    if(!profile.created) {
-    createKid({
-      variables: {
-        name: name,
-        nickName: nickname,
-        birthdate: dateOfBirth,
-        profileImageUrl: "",
-      },
-    });
-  }
-  else {
-    updateKid({
-      variables: {
-        id:profile.kidId,
-        name: name,
-        nickName: nickname,
-        birthdate: dateOfBirth,
-        profileImageUrl: "",
-      },
-    });
-  }
+    if (!profile.created) {
+      createKid({
+        variables: {
+          name: name,
+          nickName: nickname,
+          birthdate: dateOfBirth,
+          profileImageUrl: "",
+        },
+      });
+    } else {
+      updateKid({
+        variables: {
+          id: profile.kidId,
+          name: name,
+          nickName: nickname,
+          birthdate: dateOfBirth,
+          profileImageUrl: "",
+        },
+      });
+    }
   }
 
   const showMessage = () => {
@@ -134,7 +134,7 @@ export default function CreateKidCircles({ navigation }) {
         </View>
       );
     }
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -155,7 +155,7 @@ export default function CreateKidCircles({ navigation }) {
           value={name}
           onChangeText={(text) => setName(text)}
         />
-        
+
         <Text style={styles.inputLabel}>Nickname</Text>
         <TextInput
           style={styles.inputBox}

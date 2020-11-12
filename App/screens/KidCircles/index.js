@@ -29,10 +29,8 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
-  console.log("WHAT IS IN ROUTE?", route);
 
   const userName = route.params.firstName;
-  console.log("userName", userName);
 
   useEffect(() => {
     refetch();
