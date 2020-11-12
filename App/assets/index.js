@@ -22,6 +22,13 @@ const images = {
   instruction1: require("./images/instruction1.jpg"),
   instruction2: require("./images/instruction2.jpg"),
   instruction3: require("./images/instruction3.jpg"),
+  Share: require("./images/01.Share.png"),
+  Read: require("./images/02.Read.png"),
+  Sing: require("./images/03.Sing.png"),
+  Teach: require("./images/04.Teach.png"),
+  Activate: require("./images/05.Activate.png"),
+  Memory: require("./images/06.Memory.png"),
+  Fun: require("./images/07.Fun.png"),
 };
 
 export default images;

@@ -29,7 +29,6 @@ export default function authNavigator({ route, state }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-
         initialRouteName="KidCircles"
         screenOptions={{ headerShown: false }}
       >
