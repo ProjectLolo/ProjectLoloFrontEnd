@@ -26,8 +26,8 @@ export default function KidCircles({ route, navigation }) {
       userId: route.params.activeUser,
     },
   });
-
-  console.log("data", data.findAllKids.length);
+  console.log("data", data);
+  console.log("data", data && data.findAllKids.length);
 
   // console.log("data", data);
   console.log("paramsssss", route.params);
@@ -57,7 +57,7 @@ export default function KidCircles({ route, navigation }) {
         adjustsFontSizeToFit={true}
         numberOfLines={1}
       >
-        Welcome{!data.findAllKids.length === 0 && ` back,`} {userName} !
+        Welcome{data && !data.findAllKids.length === 0 && ` back,`} {userName} !
       </Text>
 
       {!data && (
