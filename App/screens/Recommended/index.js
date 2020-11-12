@@ -30,7 +30,7 @@ export default function Recommended({ navigation }) {
       id: 1,
       title: "Share",
       text: "Something Random",
-      image: images.videoCameraPurple,
+      image: images.Share,
       top1: "pink",
       top2: "ltPink",
       bottom1: "teal",
