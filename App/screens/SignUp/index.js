@@ -48,7 +48,7 @@ export default function SignUp({ navigation }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
         <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
-        <Text style={[styles.title, { marginTop: "10%" }]}>Sign up</Text>
+        <Text style={[styles.title, { marginTop: "10%" }]}>Sign Up</Text>
         <Text style={styles.inputLabel}>First name</Text>
         <TextInput
           style={styles.inputBox}
