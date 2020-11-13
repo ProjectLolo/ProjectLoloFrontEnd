@@ -89,16 +89,16 @@ export default function Recommended({ navigation }) {
       }}
     >
       <NavHome />
-      <Text style={[styles.title, { marginTop: "5%" }]}>
+      <Text style={[styles.title, { marginTop: 0 }]}>
         {"What do you want to \n share today?"}
       </Text>
       {!showMore ? (
         <FlatList
+          style={{ marginBottom: "-5%", marginTop: "-5%" }}
           contentContainerStyle={{
             alignSelf: "center",
             flexGrow: 1,
             justifyContent: "center",
-            alignItems: "center",
             width: "90%",
           }}
           data={cardContent}
@@ -115,7 +115,6 @@ export default function Recommended({ navigation }) {
             alignSelf: "center",
             flexGrow: 1,
             justifyContent: "center",
-            alignItems: "center",
             width: "90%",
           }}
           data={cardContent2}
@@ -134,7 +133,7 @@ export default function Recommended({ navigation }) {
         <TouchableWithoutFeedback
           onPress={() => (!showMore ? setShowMore(true) : setShowMore(false))}
         >
-          <View style={[styles.loginButton, { marginBottom: "10%" }]}>
+          <View style={[styles.loginButton, { marginBottom: "5%" }]}>
             <Text style={styles.loginButtonText}>SEE MORE SUGGESTIONS</Text>
           </View>
         </TouchableWithoutFeedback>
