@@ -4,10 +4,11 @@ import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import images from "@assets/images";
+import moment from "moment";
 
 export default function MediaContentComments(props) {
-  const { person, text, video } = props;
-
+  const { person, text, video, date } = props;
+  console.log("props in comments", person);
   return (
     <View
       style={{
@@ -37,18 +38,32 @@ export default function MediaContentComments(props) {
         </Text>
       </View>
       {text ? (
-        <Text
-          style={{
-            alignSelf: "flex-start",
-            marginLeft: 20,
-            marginVertical: 5,
-            color: "white",
-            fontFamily: fonts.regular,
-            fontSize: 16,
-          }}
-        >
-          {text}
-        </Text>
+        <View style={{ flexDirection: "column", width: "100%" }}>
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              marginLeft: 20,
+              marginVertical: 5,
+              color: "white",
+              fontFamily: fonts.regular,
+              fontSize: 16,
+            }}
+          >
+            {text}
+          </Text>
+          <Text
+            style={{
+              alignSelf: "flex-end",
+              marginRight: 20,
+              marginVertical: 5,
+              color: "white",
+              fontFamily: fonts.regular,
+              fontSize: 9,
+            }}
+          >
+            {moment(date).fromNow()}
+          </Text>
+        </View>
       ) : (
         <View
           style={{

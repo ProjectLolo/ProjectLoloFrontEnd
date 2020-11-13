@@ -23,7 +23,7 @@ export default function MediaContentCard(props) {
     loveBankId,
     likes,
   } = props;
-  console.log("LIKES AMOUNT THIS", likes);
+
   return (
     <TouchableWithoutFeedback
       onPress={() =>

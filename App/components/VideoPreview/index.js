@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import * as firebase from "firebase";
 import {
   View,
@@ -14,14 +14,18 @@ import { Video } from "expo-av";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation } from "@apollo/client";
 import { CREATE_LOVEBANK} from "../../../graphql/mutations"
+import { AuthContext } from "../../context/Auth";
 
 export default function VideoPreview({ route, navigation }) {
  
 
   const [loading, setLoading] = useState(false);
   const [video, setVideo] = useState(null);
+  const { activeKid } = useContext(AuthContext);
 
 
+  activeKid(route.params.activeKid)
+  console.log("AK", route.params.activeKid)
   // Mutation
   const [loveBankEntry, { error }] = useMutation(CREATE_LOVEBANK, {
     onError: (error) => console.log("mutation create lovebank content", error.graphQLErrors),
@@ -29,7 +33,7 @@ export default function VideoPreview({ route, navigation }) {
       console.log("completed", data);
 
     },
-  });  
+  });
 
   function handleSend() {
     loveBankEntry({
@@ -40,13 +44,12 @@ export default function VideoPreview({ route, navigation }) {
         description: "this is a video",
         type:"video",
         category: "share",
-        kidId: "5fa96915ff41f83f6997dc7a",
-        
+        kidId: route.params.activeKid,
+
       },
     });   
     navigation.navigate("MessageSent", { uri: route.params.uri})
   }
-
   // Upload Video
   useEffect(() => {
     uploadVideo(route.params.uri)
@@ -119,7 +122,7 @@ export default function VideoPreview({ route, navigation }) {
       </View>
       {/* Icons for record and upload */}
       <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("ShareSomething")}>
+        <TouchableOpacity onPress={() => navigation.goBack(null)}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons name="delete" color="#FF6E5A" size={60} />
             <Text>Start over</Text>

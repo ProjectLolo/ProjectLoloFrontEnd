@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
 import {
   View,
@@ -21,24 +21,30 @@ import adjust from "../../styles/adjust";
 import { useMutation, useQuery } from "@apollo/client";
 import { SETTINGS } from "../../../graphql/mutations";
 import { FIND_USER_BY_ID } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
+  const isFocused = useIsFocused();
   const single = route.params;
 
-  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
-    variables: {
-      id: route.params.activeUser,
-    },
-  });
-  console.log("I want userId", data.findUserById);
   const { signOut } = useContext(AuthContext);
+
   const profileInfo = {
-    firstName: data.findUserById.firstName,
-    lastName: data.findUserById.lastName,
-    nickName: data.findUserById.nickName,
-    email: data.findUserById.email,
-    password: 1234,
-    profilePic: data.findUserById.profilePic,
+
+    firstName: data && data.findUserById.firstName,
+    lastName: data && data.findUserById.lastName,
+    nickName: null,
+    email: data && data.findUserById.email,
+    password: "",
+    profilePic: "",
+
+//     firstName: "Atieh",
+//     lastName: "ha",
+//     nickName: null,
+//     email: "test1@email.com",
+//     password: "1234",
+//     profilePic: "dff",
+
   };
 
   const initState = {
@@ -50,11 +56,32 @@ export default function Settings({ route, navigation }) {
     password: "",
     passwordControl: "",
   };
-
+  const [photo, setPhoto] = useState();
   const [variables, setVariables] = useState(initState);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
+
+
+  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
+    variables: {
+      id: route.params.activeUser,
+    },
+  });
+  console.log("I want userId", data);
+
+  useEffect(() => {
+    refetch();
+    setVariables({
+      firstName: data.findUserById.firstName,
+      lastName: data.findUserById.lastName,
+      nickName: data.findUserById.nickName,
+      email: data.findUserById.email,
+      profilePic: data.findUserById.profilePic,
+      password: "",
+      passwordControl: "",
+    });
+  }, [data, isFocused]);
 
   const [submitSettings, { error }] = useMutation(SETTINGS, {
     onError: (error) =>
@@ -69,12 +96,11 @@ export default function Settings({ route, navigation }) {
 
   function submitForm(e) {
     e.preventDefault();
-    setVariables({ ...variables, profilePic: route.params.result.uri });
+    setPhoto(route.params.result);
+    console.log(photo);
+    photo ? photo : setVariables.profilePic;
+    setVariables({ ...variables, profilePic: photo });
     submitSettings({ variables });
-    // console.log("outPut", {
-    //   ...variables,
-    //   profilePic: route.params.result.uri,
-    // });
   }
   function hideOptions() {
     setChangeProfilePicture(false);
@@ -171,10 +197,10 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {`${profileInfo.firstName} ${profileInfo.lastName}`}
+                {`${variables.firstName} ${variables.lastName}`}
               </Text>
             </View>
-            <Text
+            {/* <Text
               style={[
                 styles.inputLabel,
                 { color: colors.purple, paddingTop: 0 },
@@ -201,9 +227,9 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {profileInfo.nickName ? profileInfo.nickName : "-"}
+                {variables.nickName ? variables.nickName : "-"}
               </Text>
-            </View>
+            </View> */}
             <Text
               style={[
                 styles.inputLabel,
@@ -231,7 +257,7 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {profileInfo.email}
+                {variables.email}
               </Text>
             </View>
             <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
@@ -275,7 +301,7 @@ export default function Settings({ route, navigation }) {
               }
               value={variables.lastName}
             />
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
+            {/* <Text style={[styles.inputLabel, { color: colors.purple }]}>
               Nickname
             </Text>
             <TextInput
@@ -286,7 +312,7 @@ export default function Settings({ route, navigation }) {
                 setVariables({ ...variables, nickName: text })
               }
               value={variables.nickName}
-            />
+            /> */}
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
               Email
             </Text>
@@ -364,7 +390,7 @@ export default function Settings({ route, navigation }) {
       {changeInfo && (
         <TouchableWithoutFeedback
           onPress={() => {
-            setVariables(initState);
+            setVariables(variables);
             setChangeInfo(false);
           }}
         >

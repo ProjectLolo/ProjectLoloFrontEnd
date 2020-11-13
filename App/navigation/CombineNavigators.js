@@ -13,7 +13,7 @@ export default function CombineNavigators() {
     () => ({
       signIn: async (token) => {
         const decodedToken = jwtDecode(token);
-        console.log("decodedTOken on logIn", decodedToken);
+
         await AsyncStorage.setItem("userToken", token);
         dispatch({
           type: "SIGN_IN",
@@ -25,14 +25,18 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
+        const decodedToken = jwtDecode(token);
         await AsyncStorage.setItem("userToken", data);
-        dispatch({ type: "SIGN_IN", token: data });
+        dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
       },
       activeUser: async (data) => {
         dispatch({ type: "SET_USER", id: data });
       },
       activeKid: async (data) => {
         dispatch({ type: "SET_KID", id: data });
+      },
+      kidName: async (data) => {
+        dispatch({ type: "SET_KID_NAME", name: data });
       },
     }),
     []
@@ -99,13 +103,20 @@ export default function CombineNavigators() {
         case "SET_KID":
           return {
             ...prevState,
-            activeKid: action.id,
+            activeKid: action.id, 
           };
-      }
+          case "SET_KID_NAME":
+            return {
+              ...prevState,
+              kidName: action.name, 
+            };
+        }
+
     },
     {
       userToken: false,
       activeKid: false,
+      kidName: false,
       activeUser: false,
       firstName: false,
     }

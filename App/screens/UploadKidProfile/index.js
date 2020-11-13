@@ -28,18 +28,17 @@ export default function UploadKidProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
+  const kidId = route.params.profile._id;
+  const { name, code } = route.params.profile;
+  const { userName } = route.params;
 
-
-  const kidId=route.params.profile._id;
-  const {name,code } = route.params.profile;
-
-
-const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
-  onError: (error) => console.log("mutation upload Kid profileImage ", error.graphQLErrors),
-  onCompleted(data) {
-    console.log("completed", data);
-  },
-});
+  const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
+    onError: (error) =>
+      console.log("mutation upload Kid profileImage ", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("completed", data);
+    },
+  });
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -63,7 +62,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
       },
     });
 
-    navigation.navigate("ShareFamilyCode", { familyCode: code } );
+    navigation.navigate("ShareFamilyCode", { familyCode: code });
   }
 
   //using camera
@@ -145,9 +144,6 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     );
   };
 
-  //we need to get user's name here // they are the parent of the kid
-  const nameParent = route.params.firstName;
-
   function hideOptions() {
     setChangeProfilePicture(false);
   }
@@ -159,8 +155,8 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
     //when skipping there is nothing in picture..... how do we upload the monkey?
 
     //for now I just navigate to recommended
-    navigation.navigate("ShareFamilyCode", { 
-      familyCode: code 
+    navigation.navigate("ShareFamilyCode", {
+      familyCode: code,
     });
   };
 
@@ -180,10 +176,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-
-        Welcome <Text style={{ color: colors.dkPink }}>{nameParent}</Text> &amp;
-        <Text style={{ color: colors.dkPink }}> {name} </Text>!
-
+        Welcome {userName} &amp; {name} !
       </Text>
 
       <Text
@@ -256,11 +249,7 @@ const [addKidProfileImage, { error }] = useMutation(ADD_KID_PROFILE_IMAGE, {
                 },
               ]}
             >
-              Change{" "}
-              <Text style={{ color: colors.purple }}>
-                {route.params.kidName}
-              </Text>
-              's Profile Picture
+              Change {name}'s Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>

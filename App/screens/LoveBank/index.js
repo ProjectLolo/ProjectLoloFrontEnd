@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import { AuthContext } from "../../context/Auth";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import { useQuery } from "@apollo/client";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
@@ -14,7 +7,6 @@ import MediaContentCard from "../../components/MediaContentCard";
 import styles from "@styles/styles";
 import images from "@assets/images";
 import { useIsFocused } from "@react-navigation/native";
-
 import { GET_LOVEBANKS } from "../../../graphql/queries";
 
 export default function LoveBank({ route, navigation }) {
@@ -28,22 +20,10 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
-  console.log("data in loveBank", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
   }, [refetch, data, isFocused]);
-
-  if (!loveBanks) {
-    return (
-      <View>
-        <Text>...loading</Text>
-      </View>
-    );
-    ``;
-  }
-
-
 
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
@@ -54,11 +34,9 @@ export default function LoveBank({ route, navigation }) {
         contentContainerStyle={{
           alignSelf: "center",
         }}
-
-        data={loveBanks.loveBanks}
-
+        data={loveBanks && loveBanks.loveBanks}
         numColumns={2}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
