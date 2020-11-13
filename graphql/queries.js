@@ -32,6 +32,19 @@ export const GET_ALL_KIDS = gql`
   }
 `;
 
+export const GET_KIDS_THAT_BELONGS_TO_USER = gql`
+  query findKidBelongsToMember($userId: String!) {
+    findKidBelongsToMember(userId: $userId) {
+      _id
+      name
+      nickName
+      birthdate
+      profileImageUrl
+      userId
+    }
+  }
+`;
+
 export const GET_COMMENTS_AND_LIKES = gql`
   query loveBankById($_id: ID, $kidId: ID) {
     loveBankById(_id: $_id, kidId: $kidId) {
