@@ -22,6 +22,7 @@ const images = {
   instruction1: require("./images/instruction1.jpg"),
   instruction2: require("./images/instruction2.jpg"),
   instruction3: require("./images/instruction3.jpg"),
+  heart: require("./images/heart.png"),
   Share: require("./images/01.Share.png"),
   Read: require("./images/02.Read.png"),
   Sing: require("./images/03.Sing.png"),

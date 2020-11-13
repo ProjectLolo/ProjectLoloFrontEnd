@@ -55,16 +55,22 @@ export default function authNavigator({ route, state }) {
           component={LoveBank}
           initialParams={state}
         />
-        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          initialParams={state}
+        />
+
         <Stack.Screen
           name="MediaContentDetails"
           component={MediaContentDetails}
+          initialParams={state}
         />
         <Stack.Screen name="Activate" component={Activate} />
         <Stack.Screen name="FunAnimals" component={FunAnimals} />
         <Stack.Screen name="HolidayMemory" component={HolidayMemory} />
         <Stack.Screen name="ReadAStory" component={ReadAStory} />
-        <Stack.Screen name="ShareSomething" component={ShareSomething} />
+        <Stack.Screen name="ShareSomething" component={ShareSomething} initialParams={state} />
         <Stack.Screen name="SingASong" component={SingASong} />
         <Stack.Screen name="Teach" component={Teach} />
         <Stack.Screen

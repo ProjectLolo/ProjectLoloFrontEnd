@@ -23,16 +23,13 @@ export default function SignUp({ navigation }) {
     profilePic: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
-  const { signIn, signUp } = useContext(AuthContext);
 
   const [signup, { error }] = useMutation(SIGNUP, {
     onError: (error) =>
       //TODO: give proper error message , now just giving the user the error from graphQL
       error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ signup }) {
-      if (signup.token) {
-        signIn(signup.token);
-      }
+      navigation.navigate("UploadUserProfile", { data: signup });
     },
   });
 

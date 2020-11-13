@@ -1,14 +1,29 @@
 import React from "react";
-import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  StyleSheet,
+} from "react-native";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
+import images from "@assets/images";
 
 import { useNavigation } from "@react-navigation/native";
 
 export default function MediaContentCard(props) {
   const navigation = useNavigation();
-  const { title, person, topColor, bottomColor, video } = props;
-
+  const {
+    title,
+    person,
+    topColor,
+    bottomColor,
+    video,
+    loveBankId,
+    likes,
+  } = props;
+  console.log("LIKES AMOUNT THIS", likes);
   return (
     <TouchableWithoutFeedback
       onPress={() =>
@@ -18,6 +33,7 @@ export default function MediaContentCard(props) {
           topColor,
           bottomColor,
           video,
+          loveBankId,
         })
       }
     >
@@ -43,6 +59,10 @@ export default function MediaContentCard(props) {
           >
             {title} by {person}
           </Text>
+          <Text style={[styles.cardTitle, { paddingHorizontal: 5 }]}>
+            <Image source={images.heart} style={style.heart} />
+            {likes}
+          </Text>
         </View>
         <View
           style={{
@@ -59,3 +79,10 @@ export default function MediaContentCard(props) {
     </TouchableWithoutFeedback>
   );
 }
+
+const style = StyleSheet.create({
+  heart: {
+    height: 20,
+    width: 20,
+  },
+});

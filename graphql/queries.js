@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const GET_LOVEBANKS = gql`
   query loveBanks($kidId: ID) {
     loveBanks(kidId: $kidId) {
+      _id
       title
       url
       preview
@@ -11,6 +12,9 @@ export const GET_LOVEBANKS = gql`
       category
       kidId
       userId
+      likes {
+        userId
+      }
     }
   }
 `;
@@ -24,7 +28,22 @@ export const GET_ALL_KIDS = gql`
       birthdate
       profileImageUrl
       userId
-      code
+    }
+  }
+`;
+
+export const GET_COMMENTS_AND_LIKES = gql`
+  query loveBankById($_id: ID, $kidId: ID) {
+    loveBankById(_id: $_id, kidId: $kidId) {
+      comments {
+        _id
+        userId
+        comment
+        firstName
+      }
+      likes {
+        userId
+      }
     }
   }
 `;
@@ -38,6 +57,19 @@ export const FIND_KID_BY_CODE = gql`
       birthdate
       profileImageUrl
       userId
+    }
+  }
+`;
+
+export const FIND_USER_BY_ID = gql`
+  query findUserById($id: String!) {
+    findUserById(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      nickName
+      profilePic
     }
   }
 `;

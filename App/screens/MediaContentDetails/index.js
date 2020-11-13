@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableWithoutFeedback,
   Image,
   FlatList,
+  Button,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import MediaContentComments from "../../components/MediaContentComments";
@@ -13,34 +14,76 @@ import colors from "@assets/colors";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { useQuery, useMutation } from "@apollo/client";
+import { CREATE_LIKE } from "../../../graphql/mutations";
+import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
 import CommentBox from "../../components/CommentBox";
 
-export default function MediaContentDetails({ route, navigation }) {
-  const { title, person, topColor, bottomColor, video } = route.params;
+export default function MediaContentDetails({ navigation, route }) {
+  const [comments, setComments] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeLength, setLikeLength] = useState(0);
+  const isFocused = useIsFocused();
+  const {
+    title,
+    person,
+    topColor,
+    bottomColor,
+    video,
+    loveBankId,
+    activeKid,
+    activeUser,
+  } = route.params;
 
-  const cardContent = [
-    {
-      id: 1,
-      person: "mom",
-      text: "Love this video!",
-      video: null,
+  const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
+    variables: {
+      _id: loveBankId,
+      kidId: activeKid,
     },
-    {
-      id: 2,
-      person: "auntie Annie",
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      video: null,
+    onCompleted(data) {
+      const hasLike = data.loveBankById.likes.some(
+        (item) => item.userId === activeUser
+      );
+      const length = data.loveBankById.likes.length;
+      setLikeLength(length);
+      setLiked(hasLike);
+      setComments(data);
     },
-    {
-      id: 3,
-      person: "cousin Jan",
-      text: null,
-      video: images.videoCameraPurple,
-    },
-  ];
+  });
 
+  const [giveLike, { data: likeData }] = useMutation(CREATE_LIKE, {
+    variables: {
+      loveBankId: loveBankId,
+    },
+    onCompleted() {
+      setLiked(!liked);
+    },
+  });
+
+  // Time constraints prevent me from making a subscription for the comments.
+  useEffect(() => {
+    refetch();
+    setComments(data);
+  }, [refetch, data, isFocused]);
+
+  function handleLikeButton() {
+    if (liked) {
+      setLikeLength(likeLength - 1);
+      giveLike();
+    } else {
+      setLikeLength(likeLength + 1);
+      giveLike();
+    }
+  }
+
+  if (!comments) {
+    return (
+      <View>
+        <Text>...No comments, please fix me</Text>
+      </View>
+    );
+  }
   return (
     <FlatList
       ListHeaderComponent={
@@ -81,21 +124,26 @@ export default function MediaContentDetails({ route, navigation }) {
               <Image style={styles.cardImage} source={video} />
             </View>
           </View>
-          <CommentBox />
+          <CommentBox loveBankId={loveBankId} refetch={refetch} />
+          <Button
+            title={liked ? "Liked!" : "Like this"}
+            onPress={handleLikeButton}
+          />
+          <Text>Likes: {likeLength}</Text>
         </>
       }
       contentContainerStyle={{ marginHorizontal: 10 }}
-      data={cardContent}
+      data={comments.loveBankById.comments}
       numColumns={1}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate("MediaContentDetails")}
           >
             <MediaContentComments
-              person={item.person}
-              text={item.text}
+              person={item.firstName}
+              text={item.comment}
               video={item.video}
             />
           </TouchableWithoutFeedback>

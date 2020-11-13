@@ -28,7 +28,6 @@ export default function UploadKidProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
-
   const kidId = route.params.profile._id;
   const { name, code } = route.params.profile;
   const { userName } = route.params;
