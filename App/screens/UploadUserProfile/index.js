@@ -40,6 +40,7 @@ export default function UploadUserProfile({ route, navigation }) {
       if (route.params.data.token) {
         //Does this work?
         signIn(route.params.data.token);
+        navigation.navigate("KidCircles");
       }
     },
   });
@@ -100,6 +101,7 @@ export default function UploadUserProfile({ route, navigation }) {
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
+      setChangeProfilePicture(false);
       uploadImage(result.uri, "profile");
       setPicture(result.uri);
     }
@@ -169,16 +171,7 @@ export default function UploadUserProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome
-        <Text style={{ color: colors.dkPink }}>
-          {route.params.data.firstName}
-        </Text>
-        &amp;
-        <Text style={{ color: colors.dkPink }}>
-          {" "}
-          {route.params.data.firstName}{" "}
-        </Text>
-        !
+        Welcome {route.params.data.firstName} !
       </Text>
 
       <Text
@@ -190,14 +183,13 @@ export default function UploadUserProfile({ route, navigation }) {
             marginBottom: picture ? 25 : 10,
           },
         ]}
-        numberOfLines={2}
+        numberOfLines={4}
         adjustsFontSizeToFit={true}
       >
-        Almost ready to play & bond.
+        Almost ready to play &amp; bond.
         <Text style={{ color: colors.dkPink }}></Text>
-        {/* probably need annother text */}
-        Let's start with a clear profile picture so [Kid] can learn how to
-        recongnize your face.
+        {"\n"} Let's start with a clear profile picture so the kids can learn
+        how to {"\n"}recognize your face.
       </Text>
 
       {loading ? (
@@ -207,7 +199,7 @@ export default function UploadUserProfile({ route, navigation }) {
           color="#660066"
         />
       ) : (
-        <View style={{ marginBottom: "25%" }}>
+        <View style={{ marginBottom: "15%" }}>
           <TouchableWithoutFeedback
             onPress={() => setChangeProfilePicture(true)}
           >
@@ -253,11 +245,7 @@ export default function UploadUserProfile({ route, navigation }) {
                 },
               ]}
             >
-              Change{" "}
-              <Text style={{ color: colors.purple }}>
-                {route.params.kidName}
-              </Text>
-              's Profile Picture
+              Change Profile Picture
             </Text>
           </TouchableWithoutFeedback>
         </View>
