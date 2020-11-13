@@ -52,7 +52,7 @@ export default function ShareFamilyCode({ route, navigation }) {
         <View
           style={[
             styles.loginButton,
-            { marginBottom: "10%", marginTop: "70%" },
+            { marginBottom: "10%", marginTop: "50%" },
           ]}
         >
           <Text style={styles.loginButtonText}>CONTINUE</Text>
