@@ -131,6 +131,16 @@ export const CREATE_LOVEBANK = gql`
   }
 `;
 
+export const CREATE_COMMENT = gql`
+  mutation createComment($loveBankId: String!, $comment: String!) {
+    createComment(loveBankId: $loveBankId, comment: $comment) {
+      comments {
+        _id
+      }
+    }
+  }
+`;
+
 export const ADD_MEMBER = gql`
   mutation addMember(
     $kidId: String!
@@ -144,6 +154,17 @@ export const ADD_MEMBER = gql`
       notification
       kid {
         _id
+      }
+    }
+  }
+`;
+
+
+export const CREATE_LIKE = gql`
+  mutation likeLoveBank($loveBankId: String!) {
+    likeLoveBank(loveBankId: $loveBankId) {
+      likes {
+        userId
       }
     }
   }
@@ -174,3 +195,4 @@ export const SETTINGS = gql`
     }
   }
 `;
+

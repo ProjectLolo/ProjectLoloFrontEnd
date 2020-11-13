@@ -79,7 +79,6 @@ export default function CreateKidCircles({ navigation }) {
   });
 
   function onSubmitHandler() {
-
     if(name.trim() === ""){
       setMessage({
         text: "Kid name is required!",
@@ -227,7 +226,9 @@ export default function CreateKidCircles({ navigation }) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
+
         {showMessage()}
+
         <View style={[styles.loginButton, { marginTop: "30%" }]}>
           <TouchableOpacity onPress={onSubmitHandler}>
             <Text style={styles.loginButtonText}>Continue</Text>

@@ -64,6 +64,7 @@ export default function authNavigator({ route, state }) {
         <Stack.Screen
           name="MediaContentDetails"
           component={MediaContentDetails}
+          initialParams={state}
         />
         <Stack.Screen name="Activate" component={Activate} />
         <Stack.Screen name="FunAnimals" component={FunAnimals} />

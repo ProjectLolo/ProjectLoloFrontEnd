@@ -240,9 +240,11 @@ export default function KidCircles({ route, navigation }) {
         }
       />
 
+
       <View style={{ marginTop: "5%" }}>
         <NavButtons screen="Single" />
       </View>
+
     </View>
   );
 }
