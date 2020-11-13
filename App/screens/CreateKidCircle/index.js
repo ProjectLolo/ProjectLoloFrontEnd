@@ -73,7 +73,7 @@ export default function CreateKidCircles({ navigation }) {
     onCompleted(data) {
       console.log("updatekid completed", data);
       navigation.navigate("UploadKidProfile", {
-        profile:data.updateKid
+        profile: data.updateKidProfile
       });
     },
   });
