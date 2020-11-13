@@ -23,20 +23,24 @@ export default function Welcome({ navigation }) {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
       <Image style={style.peekabondLogo} source={images.peekabondLogo} />
       <ExplanationCarousel />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <View style={[styles.buttonTextContainer, style.purple]}>
-            <Text style={styles.buttonText}>Continue</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <View style={[style.loginButton, { marginVertical: "15%" }]}>
+          <Text style={style.loginButtonText}>Continue</Text>
+        </View>
+      </TouchableOpacity>
+
       {animation ? (
         <View style={styles.swipeContainer}>
           <Image style={styles.swipe} source={images.swipe} />
-          <Text style={[styles.swipe, style.purpleText, styles.swipeText]}>
+          <Text
+            style={[styles.swipe, style.purpleText, styles.swipeText]}
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}
+          >
             SWIPE
           </Text>
         </View>
@@ -46,13 +50,9 @@ export default function Welcome({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 1,
-    marginTop: 70,
-  },
   buttonTextContainer: {
     borderRadius: 10,
-    paddingVertical: 15,
+    paddingVertical: 10,
     width: screenWidth * 0.3,
   },
   buttonText: { alignSelf: "center", color: "white" },

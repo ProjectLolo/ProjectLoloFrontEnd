@@ -5,11 +5,13 @@ import {
   TextInput,
   Keyboard,
   Text,
+  Image,
 } from "react-native";
 import styles from "@styles/styles";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../../graphql/mutations";
 import { AuthContext } from "../../context/Auth";
+import images from "@assets/images";
 
 export default function Login({ navigation }) {
   const [variables, setVariables] = useState({
@@ -47,7 +49,8 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Login</Text>
+        <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
+        <Text style={[styles.title, { marginTop: "10%" }]}>Login</Text>
         <Text style={styles.inputLabel}>Email</Text>
         <TextInput
           style={styles.inputBox}

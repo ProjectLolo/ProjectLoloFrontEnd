@@ -8,7 +8,7 @@ export default function ActivityCard(props) {
   const navigation = useNavigation();
   const { image, nav } = props;
   return (
-    <View style={[styles.cardContainer]}>
+    <View style={styles.cardContainer}>
       <TouchableWithoutFeedback onPress={() => navigation.navigate(nav)}>
         <Image
           style={{

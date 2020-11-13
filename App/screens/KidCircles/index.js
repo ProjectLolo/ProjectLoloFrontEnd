@@ -33,8 +33,6 @@ export default function KidCircles({ route, navigation }) {
   const userName = route.params.firstName;
 
   useEffect(() => {
-    console.log("refetch", refetch);
-    console.log("fetchedData", fetchedData);
     refetch();
     setFetchedData(data);
   }, [refetch, data, isFocused]);
@@ -54,8 +52,8 @@ export default function KidCircles({ route, navigation }) {
         style={[
           styles.title,
           {
-            marginTop: !data ? "40%" : "20%",
-            marginBottom: !data ? "10%" : "5%",
+            marginTop: data && data.findAllKids.length === 0 ? "40%" : "20%",
+            marginBottom: data && data.findAllKids.length === 0 ? "10%" : "5%",
           },
         ]}
         adjustsFontSizeToFit={true}
@@ -64,7 +62,7 @@ export default function KidCircles({ route, navigation }) {
         Welcome{data && !data.findAllKids.length === 0 && ` back,`} {userName} !
       </Text>
 
-      {!data && (
+      {data && data.findAllKids.length === 0 && (
         <Text
           style={[styles.title, { marginTop: "10%", marginBottom: "10%" }]}
           adjustsFontSizeToFit={true}
