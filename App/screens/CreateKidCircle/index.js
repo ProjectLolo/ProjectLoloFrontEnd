@@ -22,6 +22,7 @@ import adjust from "../../styles/adjust";
 import { useMutation } from "@apollo/client";
 import { CREATE_KID } from "../../../graphql/mutations";
 import { UPDATE_KID_PROFILE } from "../../../graphql/mutations";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function CreateKidCircles({ route, navigation }) {
   const { userName } = route.params;
@@ -137,117 +138,121 @@ export default function CreateKidCircles({ route, navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={{ flex: 1, justifyContent: "space-between" }}>
-        <View style={{ marginBottom: -80 }}>
-          <NavHome onlyBack={true} />
-        </View>
-        <Text
-          style={[styles.title, { fontSize: adjust(25), marginBottom: "5%" }]}
-        >
-          Child's Info
-        </Text>
-
-        <Text style={styles.inputLabel}>Name</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Kid's name"
-          value={name}
-          onChangeText={(text) => setName(text)}
-        />
-
-        <Text style={styles.inputLabel}>Nickname</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Nickname"
-          maxLength={20}
-          value={nickname}
-          onChangeText={(text) => setNickname(text)}
-        />
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View
-            style={{
-              marginLeft: "5%",
-              paddingBottom: 5,
-              paddingTop: "5%",
-              width: "66.5%",
-            }}
+    <KeyboardAwareScrollView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ justifyContent: "space-between" }}>
+          <View style={{ marginBottom: -80 }}>
+            <NavHome onlyBack={true} />
+          </View>
+          <Text
+            style={[styles.title, { fontSize: adjust(25), marginBottom: "5%" }]}
           >
-            <Text
+            Child's Info
+          </Text>
+
+          <Text style={styles.inputLabel}>Name</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Kid's name"
+            value={name}
+            onChangeText={(text) => setName(text)}
+          />
+
+          <Text style={styles.inputLabel}>Nickname</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Nickname"
+            maxLength={20}
+            value={nickname}
+            onChangeText={(text) => setNickname(text)}
+          />
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
               style={{
-                fontFamily: fonts.regular,
-                paddingBottom: 23,
-                color: colors.purple,
+                marginLeft: "5%",
+                paddingBottom: 5,
+                paddingTop: "5%",
+                width: "66.5%",
               }}
             >
-              Date of birth
-            </Text>
-            <TouchableWithoutFeedback onPress={() => showDatePicker()}>
-              <View
-                style={[
-                  styles.inputBox,
-                  { width: "100%", justifyContent: "center" },
-                ]}
+              <Text
+                style={{
+                  fontFamily: fonts.regular,
+                  paddingBottom: 23,
+                  color: colors.purple,
+                }}
               >
-                <Text
-                  style={{
-                    fontFamily: fonts.regular,
-                    color: colors.grey,
-                    fontSize: adjust(16),
-                    opacity: dateOfBirth ? 1 : 0.5,
-                    textAlign: "center",
-                  }}
+                Date of birth
+              </Text>
+              <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+                <View
+                  style={[
+                    styles.inputBox,
+                    { width: "100%", justifyContent: "center" },
+                  ]}
                 >
-                  {dateOfBirth
-                    ? moment(dateOfBirth).format("DD-MM-YYYY")
-                    : "DD/MM/YYYY"}
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
+                  <Text
+                    style={{
+                      fontFamily: fonts.regular,
+                      color: colors.grey,
+                      fontSize: adjust(16),
+                      opacity: dateOfBirth ? 1 : 0.5,
+                      textAlign: "center",
+                    }}
+                  >
+                    {dateOfBirth
+                      ? moment(dateOfBirth).format("DD-MM-YYYY")
+                      : "DD/MM/YYYY"}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+            <MaterialIcons
+              style={{
+                alignSelf: "flex-end",
+                paddingBottom: 13,
+                paddingRight: "8%",
+              }}
+              name={"date-range"}
+              size={50}
+              color={colors.dkPink}
+              onPress={() => {
+                showDatePicker();
+              }}
+            />
           </View>
-          <MaterialIcons
-            style={{
-              alignSelf: "flex-end",
-              paddingBottom: 13,
-              paddingRight: "8%",
-            }}
-            name={"date-range"}
-            size={50}
-            color={colors.dkPink}
-            onPress={() => {
-              showDatePicker();
-            }}
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            date={dateOfBirth ? new Date(dateOfBirth) : new Date()}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
           />
-        </View>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          date={dateOfBirth ? new Date(dateOfBirth) : new Date()}
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
-        {showMessage()}
-        <View style={[styles.loginButton, { marginTop: "30%" }]}>
-          <TouchableOpacity onPress={onSubmitHandler}>
-            <Text style={styles.loginButtonText}>Continue</Text>
-          </TouchableOpacity>
-        </View>
+          {showMessage()}
+          <View style={[styles.loginButton, { marginTop: "30%" }]}>
+            <TouchableOpacity onPress={onSubmitHandler}>
+              <Text style={styles.loginButtonText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
 
-        <Text
-          style={{
-            fontSize: adjust(8),
-            textAlign: "center",
-            marginHorizontal: "5%",
-            marginBottom: "10%",
-            fontFamily: fonts.regular,
-          }}
-        >
-          Peekabond respects your privacy and keeps you and your child's data
-          safe and secure. By pressing continue and creating an account, you
-          agree to Peekabond's Terms of use and Privacy Policy.
-        </Text>
-      </View>
-    </TouchableWithoutFeedback>
+          <Text
+            style={{
+              fontSize: adjust(8),
+              textAlign: "center",
+              marginHorizontal: "5%",
+              marginBottom: "10%",
+              fontFamily: fonts.regular,
+            }}
+          >
+            Peekabond respects your privacy and keeps you and your child's data
+            safe and secure. By pressing continue and creating an account, you
+            agree to Peekabond's Terms of use and Privacy Policy.
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }

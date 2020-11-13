@@ -89,7 +89,9 @@ export default function Recommended({ navigation }) {
       }}
     >
       <NavHome />
-      <Text style={styles.titleText}>What do you want to share today?</Text>
+      <Text style={[styles.title, { marginTop: "5%" }]}>
+        {"What do you want to \n share today?"}
+      </Text>
       {!showMore ? (
         <FlatList
           contentContainerStyle={{
@@ -132,7 +134,9 @@ export default function Recommended({ navigation }) {
         <TouchableWithoutFeedback
           onPress={() => (!showMore ? setShowMore(true) : setShowMore(false))}
         >
-          <Text style={styles.bottomText}>SEE MORE SUGGESTIONS</Text>
+          <View style={[styles.loginButton, { marginBottom: "10%" }]}>
+            <Text style={styles.loginButtonText}>SEE MORE SUGGESTIONS</Text>
+          </View>
         </TouchableWithoutFeedback>
       )}
 
