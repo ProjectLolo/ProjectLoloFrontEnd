@@ -21,57 +21,49 @@ import adjust from "../../styles/adjust";
 import { useMutation, useQuery } from "@apollo/client";
 import { SETTINGS } from "../../../graphql/mutations";
 import { FIND_USER_BY_ID } from "../../../graphql/queries";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const single = route.params;
-  const isFocused = useIsFocused();
-  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
-    variables: {
-      id: route.params.activeUser,
-    },
-  });
-
-  const [fetchedData, setFetchedData] = useState(data);
-  useEffect(() => {
-    refetch();
-    setFetchedData(data);
-  }, [refetch, data, isFocused]);
 
   const { signOut } = useContext(AuthContext);
-  const profileInfoinit = {
-    firstName: "",
-    lastName: "",
-    nickName: "",
-    email: "",
-    password: 1234,
-    profilePic: "",
+
+  const profileInfo = {
+    firstName: "Atieh",
+    lastName: "ha",
+    nickName: null,
+    email: "test1@email.com",
+    password: "1234",
+    profilePic: "dff",
   };
 
   const initState = {
-    firstName: profileInfoinit.firstName,
-    lastName: profileInfoinit.lastName,
-    nickName: profileInfoinit.nickName,
-    email: profileInfoinit.email,
-    profilePic: profileInfoinit.profilePic,
+    firstName: profileInfo.firstName,
+    lastName: profileInfo.lastName,
+    nickName: profileInfo.nickName,
+    email: profileInfo.email,
+    profilePic: profileInfo.profilePic,
     password: "",
     passwordControl: "",
   };
-  const [profileInfo, setProfileInfo] = useState(profileInfoinit);
+  const [photo, setPhoto] = useState();
   const [variables, setVariables] = useState(initState);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
 
+  const { data } = useQuery(FIND_USER_BY_ID, {
+    variables: {
+      id: route.params.activeUser,
+    },
+  });
+  console.log("I want userId", data);
   useEffect(() => {
-    console.log("fetchedData", variables);
-
-    setProfileInfo({
-      firstName: fetchedData && fetchedData.findUserById.firstName,
-      lastName: fetchedData && fetchedData.findUserById.lastName,
-      nickName: fetchedData && fetchedData.findUserById.nickName,
-      email: fetchedData && fetchedData.findUserById.email,
-      profilePic: fetchedData && fetchedData.findUserById.profilePic,
+    setVariables({
+      firstName: data.findUserById.firstName,
+      lastName: data.findUserById.lastName,
+      nickName: data.findUserById.nickName,
+      email: data.findUserById.email,
+      profilePic: data.findUserById.profilePic,
       password: "",
       passwordControl: "",
     });
@@ -90,7 +82,10 @@ export default function Settings({ route, navigation }) {
 
   function submitForm(e) {
     e.preventDefault();
-    setVariables({ ...variables, profilePic: route.params.result.uri });
+    setPhoto(route.params.result);
+    console.log(photo);
+    photo ? photo : setVariables.profilePic;
+    setVariables({ ...variables, profilePic: photo });
     submitSettings({ variables });
   }
   function hideOptions() {
@@ -188,7 +183,7 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {`${profileInfo.firstName} ${profileInfo.lastName}`}
+                {`${variables.firstName} ${variables.lastName}`}
               </Text>
             </View>
             <Text
@@ -218,7 +213,7 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {profileInfo.nickName ? profileInfo.nickName : "-"}
+                {variables.nickName ? variables.nickName : "-"}
               </Text>
             </View>
             <Text
@@ -248,7 +243,7 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {profileInfo.email}
+                {variables.email}
               </Text>
             </View>
             <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>

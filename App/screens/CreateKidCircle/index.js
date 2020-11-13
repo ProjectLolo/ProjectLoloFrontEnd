@@ -1,246 +1,253 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
+  Keyboard,
   View,
   Text,
+  TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Image,
-  FlatList,
-  Dimensions,
 } from "react-native";
 
-import { useQuery } from "@apollo/client";
-
-import styles from "@styles/styles"; //have to changeit to @styles/styles
+import styles from "@styles/styles";
+import style from "./style";
 import images from "@assets/images";
-import NavButtons from "../../components/NavButtons";
-import KidCircleCard from "../../components/KidCircleCard";
 import colors from "@assets/colors";
+import NavHome from "../../components/NavHome";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
+import { useMutation } from "@apollo/client";
+import { CREATE_KID } from "../../../graphql/mutations";
+import { UPDATE_KID_PROFILE } from "../../../graphql/mutations";
 
-import { GET_ALL_KIDS } from "../../../graphql/queries";
-import { useIsFocused } from "@react-navigation/native";
+export default function CreateKidCircles({ route, navigation }) {
+  const { userName } = route.params;
+  const [profile, setProfile] = useState({
+    created: false,
+    kidId: "",
+  });
 
-export default function KidCircles({ route, navigation }) {
-  const isFocused = useIsFocused();
-  const [fetchedData, setFetchedData] = useState(data);
-  const { data, refetch } = useQuery(GET_ALL_KIDS, {
-    variables: {
-      userId: route.params.activeUser,
+  const [message, setMessage] = useState({
+    color: "",
+    text: "",
+  });
+
+  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [dateOfBirth, setDOB] = useState("");
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    hideDatePicker();
+    setDOB(date);
+  };
+
+  const [createKid, { error }] = useMutation(CREATE_KID, {
+    onError: (error) => {
+      console.log("mutation create kid", error.graphQLErrors);
+      //setErrors({ errorFound: true, errorMessage: error.graphQLErrors.map(errObject => errObject.message)})
+    },
+    onCompleted(data) {
+      console.log("create kid completed", data);
+      setProfile({ created: true, kidId: data.createKid._id });
+      navigation.navigate("UploadKidProfile", {
+        profile: data.createKid,
+        userName,
+      });
     },
   });
 
-  const userName = route.params.firstName;
+  //update the row,if user moves back from UploadKidProfile Screen
+  const [updateKid, { updateerror }] = useMutation(UPDATE_KID_PROFILE, {
+    onError: (error) => console.log("mutation update kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("updatekid completed", data);
+      navigation.navigate("UploadKidProfile", {
+        profile: data.updateKid,
+        userName,
+      });
+    },
+  });
 
-  useEffect(() => {
-    refetch();
-    setFetchedData(data);
-  }, [refetch, data, isFocused]);
+  function onSubmitHandler() {
+    if (name.trim() === "") {
+      setMessage({
+        text: "Kid name is required!",
+        color: "orange",
+      });
+    }
+
+    //console.log("profile:",profile)
+    if (!profile.created) {
+      createKid({
+        variables: {
+          name: name,
+          nickName: nickname,
+          birthdate: dateOfBirth,
+          profileImageUrl: "",
+        },
+      });
+    } else {
+      updateKid({
+        variables: {
+          id: profile.kidId,
+          name: name,
+          nickName: nickname,
+          birthdate: dateOfBirth,
+          profileImageUrl: "",
+        },
+      });
+    }
+  }
+
+  const showMessage = () => {
+    //console.log("message:",message)
+    if (message.text !== "" && message.color !== "") {
+      setTimeout(() => {
+        setMessage({ text: "", color: "" });
+      }, 2000);
+      return (
+        <View>
+          <Text
+            style={[
+              styles.cardText,
+              {
+                color: colors[message.color],
+                fontFamily: fonts.semiBold,
+                paddingVertical: 15,
+              },
+            ]}
+          >
+            {message.text}
+          </Text>
+        </View>
+      );
+    }
+  };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "space-evenly",
-      }}
-    >
-      <Image
-        style={[styles.peekabondLogo, { marginBottom: -120, width: "30%" }]}
-        source={images.peekabondLogo}
-      />
-      <Text
-        style={[
-          styles.title,
-          {
-            marginTop: data && data.findAllKids.length === 0 ? "40%" : "20%",
-            marginBottom: data && data.findAllKids.length === 0 ? "10%" : "5%",
-          },
-        ]}
-        adjustsFontSizeToFit={true}
-        numberOfLines={1}
-      >
-        Welcome{data && !data.findAllKids.length === 0 && ` back,`} {userName} !
-      </Text>
-
-      {data && data.findAllKids.length === 0 && (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <View style={{ marginBottom: -80 }}>
+          <NavHome onlyBack={true} />
+        </View>
         <Text
-          style={[styles.title, { marginTop: "10%", marginBottom: "10%" }]}
-          adjustsFontSizeToFit={true}
-          numberOfLines={1}
+          style={[styles.title, { fontSize: adjust(25), marginBottom: "5%" }]}
         >
-          Please <Text style={{ color: colors.dkTeal }}>Join</Text> or
-          <Text style={{ color: colors.dkPink }}> Create</Text> your first
-          circle!
+          Child's Info
         </Text>
-      )}
 
-      <FlatList
-        contentContainerStyle={{
-          alignSelf: "center",
-          width: "90%",
-          paddingTop: 30,
-        }}
-        data={fetchedData && fetchedData.findAllKids}
-        numColumns={1}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableWithoutFeedback>
-              <KidCircleCard
-                id={item._id}
-                kidImage={item.profileImageUrl}
-                kidName={item.name}
-              />
-            </TouchableWithoutFeedback>
-          );
-        }}
-        ListFooterComponent={
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <View
+        <Text style={styles.inputLabel}>Name</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Kid's name"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+
+        <Text style={styles.inputLabel}>Nickname</Text>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Nickname"
+          maxLength={20}
+          value={nickname}
+          onChangeText={(text) => setNickname(text)}
+        />
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View
+            style={{
+              marginLeft: "5%",
+              paddingBottom: 5,
+              paddingTop: "5%",
+              width: "66.5%",
+            }}
+          >
+            <Text
               style={{
-                width: "25%",
-                height: Dimensions.get("window").width * 0.225,
-                marginHorizontal: "10%",
-                marginBottom: 150,
+                fontFamily: fonts.regular,
+                paddingBottom: 23,
+                color: colors.purple,
               }}
             >
-              <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("JoinKidCircle")}
-              >
-                <View>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: colors.dkTeal,
-                        fontFamily: fonts.semiBold,
-                      },
-                    ]}
-                  >
-                    Join Circle
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: colors.purple,
-                        fontFamily: fonts.semiBold,
-                        paddingBottom: 15,
-
-                        fontSize: adjust(10),
-                      },
-                    ]}
-                  >
-                    (Access Code)
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("JoinKidCircle")}
-              >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    width: "100%",
-                    height: "100%",
-                    alignSelf: "center",
-                    justifyContent: "space-evenly",
-                    shadowColor: "black",
-                    shadowOffset: { width: 0, height: 0 },
-                    shadowOpacity: 0.05,
-                    shadowRadius: 5,
-                    borderRadius: 100,
-                  }}
-                >
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: colors.purple,
-                        fontFamily: fonts.bold,
-                        fontSize: adjust(50),
-                      },
-                    ]}
-                  >
-                    #
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-            <View
-              style={{
-                width: "25%",
-                height: Dimensions.get("window").width * 0.225,
-                marginHorizontal: "10%",
-              }}
-            >
-              <TouchableWithoutFeedback
-                onPress={() =>
-                  navigation.navigate("CreateKidCircle", { userName })
-                }
+              Date of birth
+            </Text>
+            <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+              <View
+                style={[
+                  styles.inputBox,
+                  { width: "100%", justifyContent: "center" },
+                ]}
               >
                 <Text
-                  style={[
-                    styles.cardText,
-                    {
-                      color: colors.dkPink,
-                      fontFamily: fonts.semiBold,
-                      paddingBottom: 15,
-                    },
-                  ]}
-                >
-                  Create New Circle
-                </Text>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                onPress={() =>
-                  navigation.navigate("CreateKidCircle", { userName })
-                }
-              >
-                <View
                   style={{
-                    backgroundColor: "white",
-                    width: "100%",
-                    height: "100%",
-                    alignSelf: "center",
-                    justifyContent: "space-evenly",
-                    shadowColor: "black",
-                    shadowOffset: { width: 0, height: 0 },
-                    shadowOpacity: 0.05,
-                    shadowRadius: 5,
-                    borderRadius: 100,
+                    fontFamily: fonts.regular,
+                    color: colors.grey,
+                    fontSize: adjust(16),
+                    opacity: dateOfBirth ? 1 : 0.5,
+                    textAlign: "center",
                   }}
                 >
-                  <View
-                    style={{
-                      alignSelf: "center",
-                      width: "50%",
-                      backgroundColor: colors.purple,
-                      height: "10%",
-                      borderRadius: 25,
-                    }}
-                  ></View>
-                  <View
-                    style={{
-                      top: "25%",
-                      alignSelf: "center",
-                      position: "absolute",
-                      width: "10%",
-                      backgroundColor: colors.purple,
-                      height: "50%",
-                      borderRadius: 25,
-                    }}
-                  ></View>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
+                  {dateOfBirth
+                    ? moment(dateOfBirth).format("DD-MM-YYYY")
+                    : "DD/MM/YYYY"}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        }
-      />
+          <MaterialIcons
+            style={{
+              alignSelf: "flex-end",
+              paddingBottom: 13,
+              paddingRight: "8%",
+            }}
+            name={"date-range"}
+            size={50}
+            color={colors.dkPink}
+            onPress={() => {
+              showDatePicker();
+            }}
+          />
+        </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          date={dateOfBirth ? new Date(dateOfBirth) : new Date()}
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+        {showMessage()}
+        <View style={[styles.loginButton, { marginTop: "30%" }]}>
+          <TouchableOpacity onPress={onSubmitHandler}>
+            <Text style={styles.loginButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={{ marginTop: "5%" }}>
-        <NavButtons screen="Single" />
+        <Text
+          style={{
+            fontSize: adjust(8),
+            textAlign: "center",
+            marginHorizontal: "5%",
+            marginBottom: "10%",
+            fontFamily: fonts.regular,
+          }}
+        >
+          Peekabond respects your privacy and keeps you and your child's data
+          safe and secure. By pressing continue and creating an account, you
+          agree to Peekabond's Terms of use and Privacy Policy.
+        </Text>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
