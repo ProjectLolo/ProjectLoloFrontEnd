@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { server } from "@env";
 
 const httpLink = createHttpLink({
-  // uri: server || "http://192.168.42.151:5000/graphql",
   uri: server || "http://localhost:5000/graphql",
 });
 
