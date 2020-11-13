@@ -69,7 +69,6 @@ export const FIND_USER_BY_ID = gql`
       firstName
       lastName
       email
-      nickName
       profilePic
     }
   }

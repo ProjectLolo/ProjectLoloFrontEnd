@@ -21,25 +21,31 @@ import adjust from "../../styles/adjust";
 import { useMutation, useQuery } from "@apollo/client";
 import { SETTINGS } from "../../../graphql/mutations";
 import { FIND_USER_BY_ID } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const single = route.params;
-
-  const { data } = useQuery(FIND_USER_BY_ID, {
+  const isFocused = useIsFocused();
+  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
 
-  console.log("I want userId", data);
+  const [fetchedData, setFetchedData] = useState(data);
+  useEffect(() => {
+    refetch();
+    setFetchedData(data);
+  }, [refetch, data, isFocused]);
+
   const { signOut } = useContext(AuthContext);
   const profileInfoinit = {
-    firstName: "Atieh",
-    lastName: "ha",
-    nickName: null,
-    email: "test1@email.com",
+    firstName: "",
+    lastName: "",
+    nickName: "",
+    email: "",
     password: 1234,
-    profilePic: "dff",
+    profilePic: "",
   };
 
   const initState = {
@@ -61,11 +67,11 @@ export default function Settings({ route, navigation }) {
     console.log("fetchedData", variables);
 
     setProfileInfo({
-      firstName: data.findUserById.firstName,
-      lastName: data.findUserById.lastName,
-      nickName: data.findUserById.nickName,
-      email: data.findUserById.email,
-      profilePic: data.findUserById.profilePic,
+      firstName: fetchedData && fetchedData.findUserById.firstName,
+      lastName: fetchedData && fetchedData.findUserById.lastName,
+      nickName: fetchedData && fetchedData.findUserById.nickName,
+      email: fetchedData && fetchedData.findUserById.email,
+      profilePic: fetchedData && fetchedData.findUserById.profilePic,
       password: "",
       passwordControl: "",
     });
@@ -86,10 +92,6 @@ export default function Settings({ route, navigation }) {
     e.preventDefault();
     setVariables({ ...variables, profilePic: route.params.result.uri });
     submitSettings({ variables });
-    // console.log("outPut", {
-    //   ...variables,
-    //   profilePic: route.params.result.uri,
-    // });
   }
   function hideOptions() {
     setChangeProfilePicture(false);
