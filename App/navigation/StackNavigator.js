@@ -70,7 +70,7 @@ export default function authNavigator({ route, state }) {
         <Stack.Screen name="FunAnimals" component={FunAnimals} />
         <Stack.Screen name="HolidayMemory" component={HolidayMemory} />
         <Stack.Screen name="ReadAStory" component={ReadAStory} />
-        <Stack.Screen name="ShareSomething" component={ShareSomething} />
+        <Stack.Screen name="ShareSomething" component={ShareSomething} initialParams={state} />
         <Stack.Screen name="SingASong" component={SingASong} />
         <Stack.Screen name="Teach" component={Teach} />
         <Stack.Screen

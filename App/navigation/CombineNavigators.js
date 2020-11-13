@@ -34,6 +34,9 @@ export default function CombineNavigators() {
       activeKid: async (data) => {
         dispatch({ type: "SET_KID", id: data });
       },
+      kidName: async (data) => {
+        dispatch({ type: "SET_KID_NAME", name: data });
+      },
     }),
     []
   );
@@ -99,13 +102,20 @@ export default function CombineNavigators() {
         case "SET_KID":
           return {
             ...prevState,
-            activeKid: action.id,
+            activeKid: action.id, 
           };
-      }
+          case "SET_KID_NAME":
+            return {
+              ...prevState,
+              kidName: action.name, 
+            };
+        }
+
     },
     {
       userToken: false,
       activeKid: false,
+      kidName: false,
       activeUser: false,
       firstName: false,
     }
