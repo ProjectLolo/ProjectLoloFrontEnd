@@ -68,7 +68,10 @@ export default function CreateFamilyMember({ route, navigation }) {
         }
       >
         <Picker.Item
-          color={variables.relation === "Father" && colors.dkPink}
+          color={
+            (variables.relation === "Father" || variables.relation === "") &&
+            colors.dkPink
+          }
           label="Father"
           value="Father"
         />
