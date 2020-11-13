@@ -62,7 +62,7 @@ export default function MediaContentComments(props) {
               fontSize: 9,
             }}
           >
-            {moment(date).format("MMMM Do YYYY, h:mm:ss a")}
+            {moment(date).fromNow()}
           </Text>
         </View>
       ) : (
