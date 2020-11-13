@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
               color: colors.purple,
               fontSize: adjust(12),
               marginTop: "5%",
-              marginBottom: "25%",
+              marginBottom: "10%",
             },
           ]}
         >

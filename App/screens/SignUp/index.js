@@ -5,8 +5,10 @@ import {
   TextInput,
   Keyboard,
   Text,
+  Image,
 } from "react-native";
 import styles from "@styles/styles";
+import images from "@assets/images";
 import { useMutation } from "@apollo/client";
 import { SIGNUP } from "../../../graphql/mutations";
 import { AuthContext } from "../../context/Auth";
@@ -45,7 +47,8 @@ export default function SignUp({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Sign up</Text>
+        <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
+        <Text style={[styles.title, { marginTop: "10%" }]}>Sign up</Text>
         <Text style={styles.inputLabel}>First name</Text>
         <TextInput
           style={styles.inputBox}
