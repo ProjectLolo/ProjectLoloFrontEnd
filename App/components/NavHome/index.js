@@ -6,15 +6,21 @@ import { useNavigation } from "@react-navigation/native";
 import colors from "@assets/colors";
 
 export default function NavHome(props) {
-  const { onlyBack } = props;
+  const { onlyBack, screen } = props;
   const navigation = useNavigation();
   const { goBack } = navigation;
+
+const handleGoBack = () => {
+  if(screen === "Recommended") navigation.navigate("KidCircles")
+  else goBack()
+}
 
   return (
     <View style={{ flexDirection: "row", justifyContent: "center" }}>
       <TouchableWithoutFeedback
         style={{ alignSelf: "center" }}
-        onPress={() => goBack()}
+        // onPress={() => goBack()}
+        onPress={handleGoBack}
       >
         <View
           style={{
