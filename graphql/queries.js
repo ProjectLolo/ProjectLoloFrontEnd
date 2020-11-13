@@ -40,6 +40,7 @@ export const GET_COMMENTS_AND_LIKES = gql`
         userId
         comment
         firstName
+        createdAt
       }
       likes {
         userId
