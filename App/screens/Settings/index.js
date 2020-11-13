@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
 import {
   View,
@@ -25,36 +25,51 @@ import { FIND_USER_BY_ID } from "../../../graphql/queries";
 export default function Settings({ route, navigation }) {
   const single = route.params;
 
-  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
+  const { data } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
-  console.log("I want userId", data.findUserById);
+
+  console.log("I want userId", data);
   const { signOut } = useContext(AuthContext);
-  const profileInfo = {
-    firstName: data.findUserById.firstName,
-    lastName: data.findUserById.lastName,
-    nickName: data.findUserById.nickName,
-    email: data.findUserById.email,
+  const profileInfoinit = {
+    firstName: "Atieh",
+    lastName: "ha",
+    nickName: null,
+    email: "test1@email.com",
     password: 1234,
-    profilePic: data.findUserById.profilePic,
+    profilePic: "dff",
   };
 
   const initState = {
-    firstName: profileInfo.firstName,
-    lastName: profileInfo.lastName,
-    nickName: profileInfo.nickName,
-    email: profileInfo.email,
-    profilePic: profileInfo.profilePic,
+    firstName: profileInfoinit.firstName,
+    lastName: profileInfoinit.lastName,
+    nickName: profileInfoinit.nickName,
+    email: profileInfoinit.email,
+    profilePic: profileInfoinit.profilePic,
     password: "",
     passwordControl: "",
   };
-
+  const [profileInfo, setProfileInfo] = useState(profileInfoinit);
   const [variables, setVariables] = useState(initState);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
+
+  useEffect(() => {
+    console.log("fetchedData", variables);
+
+    setProfileInfo({
+      firstName: data.findUserById.firstName,
+      lastName: data.findUserById.lastName,
+      nickName: data.findUserById.nickName,
+      email: data.findUserById.email,
+      profilePic: data.findUserById.profilePic,
+      password: "",
+      passwordControl: "",
+    });
+  }, [data]);
 
   const [submitSettings, { error }] = useMutation(SETTINGS, {
     onError: (error) =>

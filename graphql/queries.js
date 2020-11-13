@@ -40,6 +40,7 @@ export const GET_COMMENTS_AND_LIKES = gql`
         userId
         comment
         firstName
+        createdAt
       }
       likes {
         userId
@@ -68,7 +69,6 @@ export const FIND_USER_BY_ID = gql`
       firstName
       lastName
       email
-      nickName
       profilePic
     }
   }

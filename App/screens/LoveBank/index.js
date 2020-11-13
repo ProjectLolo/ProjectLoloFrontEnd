@@ -28,7 +28,6 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
-  console.log("data in loveBank", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
@@ -43,8 +42,6 @@ export default function LoveBank({ route, navigation }) {
     ``;
   }
 
-
-
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
@@ -54,11 +51,9 @@ export default function LoveBank({ route, navigation }) {
         contentContainerStyle={{
           alignSelf: "center",
         }}
-
         data={loveBanks.loveBanks}
-
         numColumns={2}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
