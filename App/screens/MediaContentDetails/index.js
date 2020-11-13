@@ -51,7 +51,7 @@ export default function MediaContentDetails({ navigation, route }) {
       setComments(data);
     },
   });
-  console.log("COMMENETSS", comments);
+
   const [giveLike, { data: likeData }] = useMutation(CREATE_LIKE, {
     variables: {
       loveBankId: loveBankId,

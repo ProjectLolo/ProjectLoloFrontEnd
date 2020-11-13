@@ -30,12 +30,21 @@ export default function Settings({ route, navigation }) {
   const { signOut } = useContext(AuthContext);
 
   const profileInfo = {
+
     firstName: data && data.findUserById.firstName,
     lastName: data && data.findUserById.lastName,
     nickName: null,
     email: data && data.findUserById.email,
     password: "",
     profilePic: "",
+
+//     firstName: "Atieh",
+//     lastName: "ha",
+//     nickName: null,
+//     email: "test1@email.com",
+//     password: "1234",
+//     profilePic: "dff",
+
   };
 
   const initState = {
@@ -52,6 +61,7 @@ export default function Settings({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
+
 
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {

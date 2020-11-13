@@ -16,7 +16,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_LOVEBANK} from "../../../graphql/mutations"
 import { AuthContext } from "../../context/Auth";
 
-export default function VideoPreview({ route, navigation, }) {
+export default function VideoPreview({ route, navigation }) {
  
 
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function VideoPreview({ route, navigation, }) {
 
 
   activeKid(route.params.activeKid)
-  console.log("AK", route.params)
+  console.log("AK", route.params.activeKid)
   // Mutation
   const [loveBankEntry, { error }] = useMutation(CREATE_LOVEBANK, {
     onError: (error) => console.log("mutation create lovebank content", error.graphQLErrors),
@@ -50,7 +50,6 @@ export default function VideoPreview({ route, navigation, }) {
     });   
     navigation.navigate("MessageSent", { uri: route.params.uri})
   }
-  console.log("Kid", route.params.activeKid)
   // Upload Video
   useEffect(() => {
     uploadVideo(route.params.uri)

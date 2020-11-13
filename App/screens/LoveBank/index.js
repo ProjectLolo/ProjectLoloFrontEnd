@@ -20,7 +20,6 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
-  console.log("data in loveBank", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
@@ -37,7 +36,7 @@ export default function LoveBank({ route, navigation }) {
         }}
         data={loveBanks && loveBanks.loveBanks}
         numColumns={2}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
