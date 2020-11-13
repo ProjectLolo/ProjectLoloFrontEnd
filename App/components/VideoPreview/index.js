@@ -13,27 +13,27 @@ import style from "../../styles";
 import { Video } from "expo-av";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation } from "@apollo/client";
-import { CREATE_LOVEBANK} from "../../../graphql/mutations"
+import { CREATE_LOVEBANK } from "../../../graphql/mutations";
 import { AuthContext } from "../../context/Auth";
 
 export default function VideoPreview({ route, navigation }) {
- 
-
   const [loading, setLoading] = useState(false);
   const [video, setVideo] = useState(null);
   const { activeKid } = useContext(AuthContext);
 
-
-  activeKid(route.params.activeKid)
-  console.log("AK", route.params.activeKid)
+  activeKid(route.params.activeKid);
+  console.log("AK", route.params.activeKid);
   // Mutation
   const [loveBankEntry, { error }] = useMutation(CREATE_LOVEBANK, {
-    onError: (error) => console.log("mutation create lovebank content", error.graphQLErrors),
+    onError: (error) =>
+      console.log("mutation create lovebank content", error.graphQLErrors),
     onCompleted(data) {
       console.log("completed", data);
-
+      navigation.navigate("LoveBank");
     },
   });
+
+  console.log("video", video);
 
   function handleSend() {
     loveBankEntry({
@@ -42,17 +42,16 @@ export default function VideoPreview({ route, navigation }) {
         url: video,
         preview: route.params.uri,
         description: "this is a video",
-        type:"video",
+        type: "video",
         category: "share",
         kidId: route.params.activeKid,
-
       },
-    });   
-    navigation.navigate("MessageSent", { uri: route.params.uri})
+    });
   }
+
   // Upload Video
   useEffect(() => {
-    uploadVideo(route.params.uri)
+    uploadVideo(route.params.uri);
   }, [route.params.uri]);
 
   const uploadVideo = async (uri) => {
@@ -95,15 +94,12 @@ export default function VideoPreview({ route, navigation }) {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
-          setVideo(downloadURL)
-          setLoading(false)
-
+          setVideo(downloadURL);
+          setLoading(false);
         });
       }
     );
   };
-
- 
 
   return (
     <View style={styles.container}>

@@ -22,7 +22,11 @@ export default function MediaContentCard(props) {
     video,
     loveBankId,
     likes,
+    category,
   } = props;
+  console.log(category);
+
+  console.log("loveBankId");
 
   return (
     <TouchableWithoutFeedback
@@ -45,9 +49,20 @@ export default function MediaContentCard(props) {
       >
         <View
           style={{
-            backgroundColor: colors[topColor],
+            backgroundColor: colors[bottomColor],
+            justifyContent: "center",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
+            padding: 5,
+          }}
+        >
+          <Image style={styles.cardImage} source={video} />
+        </View>
+        <View
+          style={{
+            backgroundColor: colors[topColor],
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
             height: 35,
             justifyContent: "center",
           }}
@@ -63,17 +78,6 @@ export default function MediaContentCard(props) {
             <Image source={images.heart} style={style.heart} />
             {likes}
           </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: colors[bottomColor],
-            justifyContent: "center",
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            padding: 5,
-          }}
-        >
-          <Image style={styles.cardImage} source={video} />
         </View>
       </View>
     </TouchableWithoutFeedback>
