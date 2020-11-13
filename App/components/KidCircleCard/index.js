@@ -15,7 +15,7 @@ import { AuthContext } from "../../context/Auth";
 import images from "@assets/images";
 
 export default function KidCircleCard(props) {
-  const { activeKid } = useContext(AuthContext);
+  const { activeKid, kidName:kName } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
   console.log("kidImage", kidImage);
@@ -23,8 +23,9 @@ export default function KidCircleCard(props) {
   function handlePress(e) {
     e.preventDefault();
     activeKid(id);
+    kName(kidName)
 
-    navigation.navigate("Recommended", { kidName });
+    navigation.navigate("Recommended", { id, kidName });
   }
   return (
     <View

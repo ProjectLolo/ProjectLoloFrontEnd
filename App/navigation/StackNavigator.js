@@ -16,6 +16,7 @@ import Activate from "../screens/CreateContent/Activate";
 import FunAnimals from "../screens/CreateContent/FunAnimals";
 import HolidayMemory from "../screens/CreateContent/HolidayMemory";
 import ReadAStory from "../screens/CreateContent/ReadAStory";
+import Story from "../screens/CreateContent/ReadAStory/Story";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
 import SingASong from "../screens/CreateContent/SingASong";
 import Teach from "../screens/CreateContent/Teach";
@@ -70,7 +71,8 @@ export default function authNavigator({ route, state }) {
         <Stack.Screen name="FunAnimals" component={FunAnimals} />
         <Stack.Screen name="HolidayMemory" component={HolidayMemory} />
         <Stack.Screen name="ReadAStory" component={ReadAStory} />
-        <Stack.Screen name="ShareSomething" component={ShareSomething} />
+        <Stack.Screen name="Story" component={Story} />
+        <Stack.Screen name="ShareSomething" component={ShareSomething} initialParams={state} />
         <Stack.Screen name="SingASong" component={SingASong} />
         <Stack.Screen name="Teach" component={Teach} />
         <Stack.Screen

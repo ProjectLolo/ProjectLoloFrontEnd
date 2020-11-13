@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
@@ -9,7 +10,10 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Recommended({ navigation }) {
   const [showMore, setShowMore] = useState(false);
+  
   const isFocused = useIsFocused();
+
+ 
 
   useEffect(() => {
     if (isFocused) {
@@ -37,6 +41,11 @@ export default function Recommended({ navigation }) {
       id: 4,
       image: images.Sing,
       nav: "SingASong",
+    },
+    {
+      id: 4,
+      image: images.Sing,
+      nav: "TakeVideo",
     },
   ];
 
@@ -88,15 +97,18 @@ export default function Recommended({ navigation }) {
         justifyContent: "space-evenly",
       }}
     >
+
       <NavHome screen="Recommended"/>
-      <Text style={styles.titleText}>What do you want to share today?</Text>
+      <Text style={[styles.title, { marginTop: 0 }]}>
+        {"What do you want to \n share today?"}
+      </Text>
       {!showMore ? (
         <FlatList
+          style={{ marginBottom: "-5%", marginTop: "-5%" }}
           contentContainerStyle={{
             alignSelf: "center",
             flexGrow: 1,
             justifyContent: "center",
-            alignItems: "center",
             width: "90%",
           }}
           data={cardContent}
@@ -113,7 +125,6 @@ export default function Recommended({ navigation }) {
             alignSelf: "center",
             flexGrow: 1,
             justifyContent: "center",
-            alignItems: "center",
             width: "90%",
           }}
           data={cardContent2}
@@ -132,7 +143,9 @@ export default function Recommended({ navigation }) {
         <TouchableWithoutFeedback
           onPress={() => (!showMore ? setShowMore(true) : setShowMore(false))}
         >
-          <Text style={styles.bottomText}>SEE MORE SUGGESTIONS</Text>
+          <View style={[styles.loginButton, { marginBottom: "5%" }]}>
+            <Text style={styles.loginButtonText}>SEE MORE SUGGESTIONS</Text>
+          </View>
         </TouchableWithoutFeedback>
       )}
 

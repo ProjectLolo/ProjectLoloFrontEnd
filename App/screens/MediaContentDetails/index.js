@@ -135,7 +135,7 @@ export default function MediaContentDetails({ navigation, route }) {
       contentContainerStyle={{ marginHorizontal: 10 }}
       data={comments.loveBankById.comments}
       numColumns={1}
-      keyExtractor={(item) => item.toString()}
+      keyExtractor={(item) => item._id.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableWithoutFeedback
@@ -145,6 +145,7 @@ export default function MediaContentDetails({ navigation, route }) {
               person={item.firstName}
               text={item.comment}
               video={item.video}
+              date={item.createdAt}
             />
           </TouchableWithoutFeedback>
         );
