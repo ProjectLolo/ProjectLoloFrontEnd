@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
@@ -9,7 +10,10 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Recommended({ navigation }) {
   const [showMore, setShowMore] = useState(false);
+  
   const isFocused = useIsFocused();
+
+ 
 
   useEffect(() => {
     if (isFocused) {
@@ -37,6 +41,11 @@ export default function Recommended({ navigation }) {
       id: 4,
       image: images.Sing,
       nav: "SingASong",
+    },
+    {
+      id: 4,
+      image: images.Sing,
+      nav: "TakeVideo",
     },
   ];
 
