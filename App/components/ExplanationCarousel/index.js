@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
 import { carouselData, SCREEN_WIDTH, CAROUSEL_ITEM_WIDTH } from "./constants";
 import style from "@styles/styles";
+import adjust from "../../styles/adjust";
+import colors from "@assets/colors";
+import fonts from "@assets/fonts";
 
 export default function ExplanationCarousel() {
   const [activeSlide, setActiveSlide] = useState(0); //current active slide
@@ -14,8 +17,12 @@ export default function ExplanationCarousel() {
     <View style={styles.snapCarousel}>
       <View style={styles.imageContainer}>{item.renderImage()}</View>
       {renderPagination()}
-      <View style={styles.descrContainer}>
-        <Text style={[style.purpleText, styles.descrText, style.bold]}>
+      <View style={[styles.descrContainer]}>
+        <Text
+          style={styles.descrText}
+          numberOfLines={8}
+          adjustsFontSizeToFit={true}
+        >
           {item.description}
         </Text>
       </View>
@@ -45,16 +52,17 @@ export default function ExplanationCarousel() {
 const styles = StyleSheet.create({
   snapCarousel: {
     height: "50%",
-    width: "80%",
+    width: "90%",
     alignSelf: "center",
   },
   imageContainer: {
     width: "50%",
-    height: "100%",
+    height: Dimensions.get("window").width * 0.7,
+    marginTop: "10%",
   },
   paginationContainer: {
     paddingVertical: 3,
-    paddingTop: 50,
+    paddingVertical: adjust(20),
     alignSelf: "center",
   },
   dotStyle: {
@@ -63,8 +71,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   descrContainer: {
-    paddingTop: 50,
     alignSelf: "center",
+    width: "100%",
   },
-  descrText: { fontSize: 18 },
+  descrText: {
+    fontSize: adjust(14),
+    fontFamily: fonts.bold,
+    color: colors.purple,
+    textAlign: "center",
+    height: "100%",
+  },
 });
