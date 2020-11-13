@@ -20,6 +20,7 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
+  console.log("data", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);

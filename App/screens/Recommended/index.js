@@ -10,10 +10,8 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Recommended({ navigation }) {
   const [showMore, setShowMore] = useState(false);
-  
-  const isFocused = useIsFocused();
 
- 
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
@@ -41,11 +39,6 @@ export default function Recommended({ navigation }) {
       id: 4,
       image: images.Sing,
       nav: "SingASong",
-    },
-    {
-      id: 4,
-      image: images.Sing,
-      nav: "TakeVideo",
     },
   ];
 
@@ -84,6 +77,11 @@ export default function Recommended({ navigation }) {
       id: 7,
       image: images.Memory,
       nav: "HolidayMemory",
+    },
+    {
+      id: 8,
+      image: images.Sing,
+      nav: "TakeVideo",
     },
   ];
 
