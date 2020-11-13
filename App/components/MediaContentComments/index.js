@@ -8,7 +8,7 @@ import moment from "moment";
 
 export default function MediaContentComments(props) {
   const { person, text, video, date } = props;
-
+  console.log("props in comments", person);
   return (
     <View
       style={{
