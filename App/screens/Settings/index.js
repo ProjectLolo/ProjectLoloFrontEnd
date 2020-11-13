@@ -18,20 +18,27 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { SETTINGS } from "../../../graphql/mutations";
+import { FIND_USER_BY_ID } from "../../../graphql/queries";
 
 export default function Settings({ route, navigation }) {
   const single = route.params;
 
+  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
+    variables: {
+      id: route.params.activeUser,
+    },
+  });
+  console.log("I want userId", data.findUserById);
   const { signOut } = useContext(AuthContext);
   const profileInfo = {
-    firstName: "Diégo",
-    lastName: "Teixeira da Costa",
-    nickName: null,
-    email: "diegosreallylongemailaddress@email.com",
+    firstName: data.findUserById.firstName,
+    lastName: data.findUserById.lastName,
+    nickName: data.findUserById.nickName,
+    email: data.findUserById.email,
     password: 1234,
-    profilePic: "knhfbg",
+    profilePic: data.findUserById.profilePic,
   };
 
   const initState = {

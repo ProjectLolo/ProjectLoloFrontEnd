@@ -55,7 +55,12 @@ export default function authNavigator({ route, state }) {
           component={LoveBank}
           initialParams={state}
         />
-        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          initialParams={state}
+        />
+
         <Stack.Screen
           name="MediaContentDetails"
           component={MediaContentDetails}
