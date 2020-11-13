@@ -5,8 +5,10 @@ import {
   TextInput,
   Keyboard,
   Text,
+  Image,
 } from "react-native";
 import styles from "@styles/styles";
+import images from "@assets/images";
 import colors from "../../assets/colors";
 import adjust from "../../styles/adjust";
 import NavHome from "../../components/NavHome";
@@ -30,7 +32,7 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1 }}>
-        <NavHome />
+        <Image style={styles.peekabondLogo} source={images.peekabondLogo} />
         <Text style={[styles.title, { marginTop: "10%" }]}>Password Reset</Text>
         <Text
           style={[
