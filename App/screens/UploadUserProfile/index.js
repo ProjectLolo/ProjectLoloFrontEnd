@@ -29,6 +29,7 @@ export default function UploadUserProfile({ route, navigation }) {
   const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useContext(AuthContext);
+  console.log("UPLOADUSERPORIFLE");
 
   const [addUserProfileImage, { error }] = useMutation(ADD_USER_PROFILE_IMAGE, {
     onError: (error) =>

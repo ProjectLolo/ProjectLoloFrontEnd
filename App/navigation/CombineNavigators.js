@@ -25,7 +25,9 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
+        console.log("DATA IN SIGNUP", data);
         const decodedToken = jwtDecode(token);
+        console.log("TOKEN IN SIGNUP", token);
         await AsyncStorage.setItem("userToken", data);
         dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
       },
@@ -103,15 +105,14 @@ export default function CombineNavigators() {
         case "SET_KID":
           return {
             ...prevState,
-            activeKid: action.id, 
+            activeKid: action.id,
           };
-          case "SET_KID_NAME":
-            return {
-              ...prevState,
-              kidName: action.name, 
-            };
-        }
-
+        case "SET_KID_NAME":
+          return {
+            ...prevState,
+            kidName: action.name,
+          };
+      }
     },
     {
       userToken: false,

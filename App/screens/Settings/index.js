@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
+import * as firebase from "firebase";
+import * as ImagePicker from "expo-image-picker";
 import { AuthContext } from "../../context/Auth";
 import {
   View,
@@ -26,36 +28,21 @@ import { useIsFocused } from "@react-navigation/native";
 export default function Settings({ route, navigation }) {
   const isFocused = useIsFocused();
   const single = route.params;
-
+  const { result } = route.params;
   const { signOut } = useContext(AuthContext);
 
-  const profileInfo = {
+  console.log("WHAT IS IN RESULT?", result);
+
+  const [variables, setVariables] = useState({
     firstName: "",
     lastName: "",
-    nickName: null,
+    nickName: "",
     email: "",
     password: "",
-    profilePic: "",
-
-    //     firstName: "Atieh",
-    //     lastName: "ha",
-    //     nickName: null,
-    //     email: "test1@email.com",
-    //     password: "1234",
-    //     profilePic: "dff",
-  };
-
-  const initState = {
-    firstName: profileInfo.firstName,
-    lastName: profileInfo.lastName,
-    nickName: profileInfo.nickName,
-    email: profileInfo.email,
-    profilePic: profileInfo.profilePic,
-    password: "",
     passwordControl: "",
-  };
-  const [photo, setPhoto] = useState();
-  const [variables, setVariables] = useState(initState);
+    profilePic: "",
+  });
+
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
@@ -65,15 +52,13 @@ export default function Settings({ route, navigation }) {
       id: route.params.activeUser,
     },
   });
-  console.log("I want userId", data);
-  console.log("route.params.activeUser", route.params.activeUser);
 
   useEffect(() => {
     refetch();
     setVariables({
       firstName: data && data.findUserById.firstName,
       lastName: data && data.findUserById.lastName,
-      nickName: data && data.findUserById.nickName,
+      nickName: "",
       email: data && data.findUserById.email,
       profilePic: data && data.findUserById.profilePic,
       password: "",
@@ -81,25 +66,28 @@ export default function Settings({ route, navigation }) {
     });
   }, [data, isFocused]);
 
+  // console.log("variables", variables);
+
   const [submitSettings, { error }] = useMutation(SETTINGS, {
-    onError: (error) =>
-      //TODO: give proper error message , now just giving the user the error from graphQL
-      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
-    onCompleted({ submitSettings }) {
-      if (submitSettings.token) {
-        signUp(signup.token);
-      }
+    onError: (error) => console.log("SETTINGS ERROR: ", error.graphQLErrors),
+    onCompleted(data) {
+      setChangeInfo(false);
+      // setVariables(...variables, {password: "", passwordControl: ""})
+      setSuccessMessage({ text: "SUCCESS!!!", color: "teal" });
+      console.log("SUCCESSFULLY UPDATED INFO", data);
     },
   });
 
+  console.log("VARIABLES", variables);
   function submitForm(e) {
     e.preventDefault();
-    setPhoto(route.params.result);
-    console.log(photo);
-    photo ? photo : setVariables.profilePic;
-    setVariables({ ...variables, profilePic: photo });
+    // setPhoto(route.params.result);
     submitSettings({ variables });
+    // console.log("photo", photo);
+    // photo ? photo : setVariables.profilePic;
+    // setVariables({ ...variables, profilePic: photo });
   }
+
   function hideOptions() {
     setChangeProfilePicture(false);
   }
@@ -127,6 +115,77 @@ export default function Settings({ route, navigation }) {
       );
     }
   }
+
+  //Choose picture from device
+  const pickPhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      console.log("pickPhoto result.uri", result);
+      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+      // setPicture(result.uri);
+    }
+  };
+
+  //upload image to firebase
+  const uploadImage = async (uri, imageName) => {
+    setLoading(true);
+    setChangeProfilePicture(false);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const ref = firebase
+      .storage()
+      .ref()
+      .child("userProfileImages/" + imageName);
+    const uploadTask = ref.put(blob);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on(
+      "state_changed",
+
+      function (snapshot) {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log("Upload is paused");
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log("Upload is running");
+            break;
+        }
+      },
+      function (error) {
+        // Handle unsuccessful uploads
+        console.log("image upload errors:", error);
+      },
+      function () {
+        console.log("URIRUIRUIRURIR", uri);
+        // Handle successful uploads on complete
+        console.log("image upload success");
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          console.log("File available at", downloadURL);
+          setPicture(downloadURL);
+          setLoading(false);
+        });
+      }
+    );
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
@@ -353,13 +412,12 @@ export default function Settings({ route, navigation }) {
                 if (variables.password === variables.passwordControl) {
                   /*submit changes to backend + */
                   submitForm(e);
-                  setChangeInfo(false),
-                    setSuccessMessage({ text: "SUCCESS!!!", color: "teal" }),
-                    setVariables({
-                      ...variables,
-                      password: initState.password,
-                      passwordControl: initState.passwordControl,
-                    });
+
+                  // setVariables({
+                  //   ...variables,
+                  //   password: initState.password,
+                  //   passwordControl: initState.passwordControl,
+                  // });
                 } else {
                   setSuccessMessage({
                     text: "PASSWORDS DON'T MATCH",
@@ -429,7 +487,11 @@ export default function Settings({ route, navigation }) {
       {showMessage()}
       {!single && <NavButtons screen="Settings" />}
       {changeProfilePicture && (
-        <ChangeProfilePicture hide={hideOptions} nav="Settings" />
+        <ChangeProfilePicture
+          hide={hideOptions}
+          nav="Settings"
+          pickPhoto={pickPhoto}
+        />
       )}
     </View>
   );
