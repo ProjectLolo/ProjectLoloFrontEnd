@@ -28,13 +28,12 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const isFocused = useIsFocused();
-  const single = route.params;
-  const { result } = route.params;
+  const { result, screen } = route.params;
   const { signOut } = useContext(AuthContext);
-
-  console.log("WHAT IS IN RESULT?", result);
-  console.log("WHAT IS IN ROUTE PARAMS", route.params);
-
+  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
+  const [changeInfo, setChangeInfo] = useState(false);
+  const [message, setMessage] = useState({ text: "", color: "" });
+  const [loading, setLoading] = useState(false);
   const [variables, setVariables] = useState({
     firstName: "",
     lastName: "",
@@ -45,17 +44,12 @@ export default function Settings({ route, navigation }) {
     profilePic: "",
   });
 
-  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
-  const [changeInfo, setChangeInfo] = useState(false);
-  const [message, setMessage] = useState({ text: "", color: "" });
-  const [loading, setLoading] = useState(false);
-
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
-  console.log("WHAT IS IN THE DATA", data);
+
   useEffect(() => {
     refetch();
     setVariables({
@@ -75,8 +69,6 @@ export default function Settings({ route, navigation }) {
     }
   }, [result]);
 
-  // console.log("variables", variables);
-
   const [submitSettings, { error }] = useMutation(SETTINGS, {
     onError: (error) => {
       console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
@@ -89,21 +81,14 @@ export default function Settings({ route, navigation }) {
     },
     onCompleted(data) {
       setChangeInfo(false);
-      // setVariables(...variables, {password: "", passwordControl: ""})
       setMessage({ text: "SUCCESS!!!", color: "teal" });
       setVariables({ ...variables, password: "", passwordControl: "" });
-      console.log("SUCCESSFULLY UPDATED INFO", data);
     },
   });
 
-  console.log("VARIABLES", variables);
   function submitForm(e) {
     e.preventDefault();
-    // setPhoto(route.params.result);
     submitSettings({ variables });
-    // console.log("photo", photo);
-    // photo ? photo : setVariables.profilePic;
-    // setVariables({ ...variables, profilePic: photo });
   }
 
   function hideOptions() {
@@ -149,7 +134,6 @@ export default function Settings({ route, navigation }) {
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
       uploadImage(result.uri, `Image_${route.params.activeUser}`);
-      // setPicture(result.uri);
     }
   };
 
@@ -174,7 +158,6 @@ export default function Settings({ route, navigation }) {
       function (snapshot) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
         switch (snapshot.state) {
@@ -204,13 +187,17 @@ export default function Settings({ route, navigation }) {
     );
   };
 
-  console.log("loading?", loading);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
 
       <ScrollView>
-        <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setChangeProfilePicture(true);
+            setChangeInfo(true);
+          }}
+        >
           {loading ? (
             <ActivityIndicator
               style={{ marginBottom: "76.5%" }}
@@ -252,7 +239,12 @@ export default function Settings({ route, navigation }) {
             </View>
           )}
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setChangeProfilePicture(true);
+            setChangeInfo(true);
+          }}
+        >
           <Text
             style={[
               styles.cardText,
@@ -419,9 +411,6 @@ export default function Settings({ route, navigation }) {
               style={[styles.inputBox, { backgroundColor: colors.white }]}
               placeholder="Enter email..."
               placeholderTextColor="grey"
-              // onChangeText={(text) =>
-              //   setVariables({ ...variables, email: text })
-              // }
               value={variables.email}
             />
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
@@ -448,33 +437,29 @@ export default function Settings({ route, navigation }) {
               }}
               value={variables.passwordControl}
             />
-
-            <TouchableWithoutFeedback
-              onPress={(e) => {
-                if (variables.password === variables.passwordControl) {
-                  /*submit changes to backend + */
-                  submitForm(e);
-
-                  // setVariables({
-                  //   ...variables,
-                  //   password: initState.password,
-                  //   passwordControl: initState.passwordControl,
-                  // });
-                } else {
-                  setMessage({
-                    text: "PASSWORDS DON'T MATCH",
-                    color: "orange",
-                  });
-                }
-              }}
-            >
-              <View style={styles.loginButton}>
-                <Text style={styles.loginButtonText}>Submit changes</Text>
-              </View>
-            </TouchableWithoutFeedback>
           </View>
         )}
       </ScrollView>
+
+      {changeInfo && (
+        <TouchableWithoutFeedback
+          onPress={(e) => {
+            if (variables.password === variables.passwordControl) {
+              submitForm(e);
+            } else {
+              setMessage({
+                text: "PASSWORDS DON'T MATCH",
+                color: "orange",
+              });
+            }
+          }}
+        >
+          <View style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>Submit changes</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+
       {changeInfo && (
         <TouchableWithoutFeedback
           onPress={() => {
@@ -488,8 +473,8 @@ export default function Settings({ route, navigation }) {
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: "10%",
-                marginBottom: "15%",
+                marginTop: screen !== "single" ? "5%" : "10%",
+                marginBottom: screen !== "single" ? "5%" : "15%",
               },
             ]}
           >
@@ -507,7 +492,7 @@ export default function Settings({ route, navigation }) {
                 color: colors.ltPurple,
                 fontFamily: fonts.semiBold,
                 marginTop: 20,
-                marginBottom: !single ? 20 : "20%",
+                marginBottom: screen !== "single" ? 20 : "20%",
               },
             ]}
           >
@@ -517,7 +502,7 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {!single && <NavButtons screen="Settings" />}
+      {screen !== "single" && <NavButtons screen="Settings" />}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}

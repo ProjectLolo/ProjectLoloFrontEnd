@@ -82,7 +82,7 @@ export default function NavButtons(props) {
     } else if (screen === "Single") {
       return (
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Settings", "single")}
+          onPress={() => navigation.navigate("Settings", { screen: "single" })}
         >
           <View style={styles.navActiveBtContainer}>
             <Image style={styles.navBtImage} source={images.monkey} />
