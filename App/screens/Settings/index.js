@@ -10,6 +10,7 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
@@ -32,6 +33,7 @@ export default function Settings({ route, navigation }) {
   const { signOut } = useContext(AuthContext);
 
   console.log("WHAT IS IN RESULT?", result);
+  console.log("WHAT IS IN ROUTE PARAMS", route.params);
 
   const [variables, setVariables] = useState({
     firstName: "",
@@ -46,13 +48,14 @@ export default function Settings({ route, navigation }) {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [message, setMessage] = useState({ text: "", color: "" });
+  const [loading, setLoading] = useState(false);
 
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
-
+  console.log("WHAT IS IN THE DATA", data);
   useEffect(() => {
     refetch();
     setVariables({
@@ -65,6 +68,12 @@ export default function Settings({ route, navigation }) {
       passwordControl: "",
     });
   }, [data, isFocused]);
+
+  useEffect(() => {
+    if (result && result.uri) {
+      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+    }
+  }, [result]);
 
   // console.log("variables", variables);
 
@@ -82,6 +91,7 @@ export default function Settings({ route, navigation }) {
       setChangeInfo(false);
       // setVariables(...variables, {password: "", passwordControl: ""})
       setMessage({ text: "SUCCESS!!!", color: "teal" });
+      setVariables({ ...variables, password: "", passwordControl: "" });
       console.log("SUCCESSFULLY UPDATED INFO", data);
     },
   });
@@ -126,6 +136,7 @@ export default function Settings({ route, navigation }) {
 
   //Choose picture from device
   const pickPhoto = async () => {
+    setChangeProfilePicture(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -145,8 +156,6 @@ export default function Settings({ route, navigation }) {
   //upload image to firebase
   const uploadImage = async (uri, imageName) => {
     setLoading(true);
-    setChangeProfilePicture(false);
-
     const response = await fetch(uri);
     const blob = await response.blob();
     const ref = firebase
@@ -188,35 +197,60 @@ export default function Settings({ route, navigation }) {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
-          setPicture(downloadURL);
+          setVariables({ ...variables, profilePic: downloadURL });
           setLoading(false);
         });
       }
     );
   };
 
+  console.log("loading?", loading);
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
 
       <ScrollView>
         <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
-          <View
-            style={{
-              backgroundColor: "white",
-              width: "50%",
-              alignSelf: "center",
-              justifyContent: "space-evenly",
-              shadowColor: "black",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              height: Dimensions.get("window").width * 0.5,
-              borderRadius: 100,
-            }}
-          >
-            <Image style={styles.cardImage} source={images.monkey} />
-          </View>
+          {loading ? (
+            <ActivityIndicator
+              style={{ marginBottom: "76.5%" }}
+              size="large"
+              color="#660066"
+            />
+          ) : (
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "50%",
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                height: Dimensions.get("window").width * 0.5,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                style={
+                  variables.profilePic
+                    ? {
+                        borderRadius: 150,
+                        width: 210,
+                        height: 210,
+                        alignSelf: "center",
+                      }
+                    : styles.cardImage
+                }
+                source={
+                  variables.profilePic
+                    ? { uri: variables.profilePic }
+                    : images.monkey
+                }
+              />
+            </View>
+          )}
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
           <Text
