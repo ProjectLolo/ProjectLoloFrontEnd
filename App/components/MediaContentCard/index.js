@@ -78,6 +78,7 @@ export default function MediaContentCard(props) {
           video,
           preview,
           recImage,
+          likes,
         })
       }
     >
@@ -97,7 +98,7 @@ export default function MediaContentCard(props) {
       >
         <View
           style={{
-            backgroundColor: backCol,
+            backgroundColor: colors.black,
             width: 170,
             height: 225,
             alignSelf: "center",
