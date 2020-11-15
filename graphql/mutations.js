@@ -159,7 +159,6 @@ export const ADD_MEMBER = gql`
   }
 `;
 
-
 export const CREATE_LIKE = gql`
   mutation likeLoveBank($loveBankId: String!) {
     likeLoveBank(loveBankId: $loveBankId) {
@@ -195,4 +194,3 @@ export const SETTINGS = gql`
     }
   }
 `;
-

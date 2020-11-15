@@ -29,6 +29,7 @@ export default function UploadUserProfile({ route, navigation }) {
   const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useContext(AuthContext);
+  console.log("UPLOADUSERPORIFLE");
 
   const [addUserProfileImage, { error }] = useMutation(ADD_USER_PROFILE_IMAGE, {
     onError: (error) =>
@@ -102,7 +103,7 @@ export default function UploadUserProfile({ route, navigation }) {
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
       setChangeProfilePicture(false);
-      uploadImage(result.uri, "profile");
+      uploadImage(result.uri, `Image_${route.params.activeUser}`);
       setPicture(result.uri);
     }
   };
@@ -114,7 +115,7 @@ export default function UploadUserProfile({ route, navigation }) {
     const ref = firebase
       .storage()
       .ref()
-      .child("images/" + imageName);
+      .child("userProfileImages/" + imageName);
     const uploadTask = ref.put(blob);
 
     // Register three observers:

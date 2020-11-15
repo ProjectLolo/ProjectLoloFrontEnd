@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
+import * as firebase from "firebase";
+import * as ImagePicker from "expo-image-picker";
 import { AuthContext } from "../../context/Auth";
 import {
   View,
@@ -8,6 +10,7 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
@@ -25,55 +28,34 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const isFocused = useIsFocused();
-  const single = route.params;
-
+  const { result, screen } = route.params;
   const { signOut } = useContext(AuthContext);
-
-  const profileInfo = {
-    firstName: "",
-    lastName: "",
-    nickName: null,
-    email: "",
-    password: "",
-    profilePic: "",
-
-    //     firstName: "Atieh",
-    //     lastName: "ha",
-    //     nickName: null,
-    //     email: "test1@email.com",
-    //     password: "1234",
-    //     profilePic: "dff",
-  };
-
-  const initState = {
-    firstName: profileInfo.firstName,
-    lastName: profileInfo.lastName,
-    nickName: profileInfo.nickName,
-    email: profileInfo.email,
-    profilePic: profileInfo.profilePic,
-    password: "",
-    passwordControl: "",
-  };
-  const [photo, setPhoto] = useState();
-  const [variables, setVariables] = useState(initState);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
-  const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
+  const [message, setMessage] = useState({ text: "", color: "" });
+  const [loading, setLoading] = useState(false);
+  const [variables, setVariables] = useState({
+    firstName: "",
+    lastName: "",
+    nickName: "",
+    email: "",
+    password: "",
+    passwordControl: "",
+    profilePic: "",
+  });
 
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
-  console.log("I want userId", data);
-  console.log("route.params.activeUser", route.params.activeUser);
 
   useEffect(() => {
     refetch();
     setVariables({
       firstName: data && data.findUserById.firstName,
       lastName: data && data.findUserById.lastName,
-      nickName: data && data.findUserById.nickName,
+      nickName: "",
       email: data && data.findUserById.email,
       profilePic: data && data.findUserById.profilePic,
       password: "",
@@ -81,77 +63,188 @@ export default function Settings({ route, navigation }) {
     });
   }, [data, isFocused]);
 
+  useEffect(() => {
+    if (result && result.uri) {
+      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+    }
+  }, [result]);
+
   const [submitSettings, { error }] = useMutation(SETTINGS, {
-    onError: (error) =>
-      //TODO: give proper error message , now just giving the user the error from graphQL
-      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
-    onCompleted({ submitSettings }) {
-      if (submitSettings.token) {
-        signUp(signup.token);
+    onError: (error) => {
+      console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
+      if (error.graphQLErrors[0].message === "Please fill the form") {
+        setMessage({
+          text: "To submit changes, please add password",
+          color: "orange",
+        });
       }
+    },
+    onCompleted(data) {
+      setChangeInfo(false);
+      setMessage({ text: "SUCCESS!!!", color: "teal" });
+      setVariables({ ...variables, password: "", passwordControl: "" });
     },
   });
 
   function submitForm(e) {
     e.preventDefault();
-    setPhoto(route.params.result);
-    console.log(photo);
-    photo ? photo : setVariables.profilePic;
-    setVariables({ ...variables, profilePic: photo });
     submitSettings({ variables });
   }
+
   function hideOptions() {
     setChangeProfilePicture(false);
   }
 
   function showMessage() {
-    if (successMessage.text !== "" && successMessage.color !== "") {
+    if (message.text !== "" && message.color !== "") {
       setTimeout(() => {
-        setSuccessMessage({ text: "", color: "" });
+        setMessage({ text: "", color: "" });
       }, 2000);
       return (
-        <View>
+        <View style={{ marginBottom: "5%", marginTop: "-5%" }}>
           <Text
             style={[
               styles.cardText,
               {
-                color: colors[successMessage.color],
+                color: colors[message.color],
                 fontFamily: fonts.semiBold,
                 paddingVertical: 15,
               },
             ]}
           >
-            {successMessage.text}
+            {message.text}
           </Text>
         </View>
       );
     }
   }
 
+  //Choose picture from device
+  const pickPhoto = async () => {
+    setChangeProfilePicture(false);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      console.log("pickPhoto result.uri", result);
+      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+    }
+  };
+
+  //upload image to firebase
+  const uploadImage = async (uri, imageName) => {
+    setLoading(true);
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const ref = firebase
+      .storage()
+      .ref()
+      .child("userProfileImages/" + imageName);
+    const uploadTask = ref.put(blob);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on(
+      "state_changed",
+
+      function (snapshot) {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log("Upload is paused");
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log("Upload is running");
+            break;
+        }
+      },
+      function (error) {
+        // Handle unsuccessful uploads
+        console.log("image upload errors:", error);
+      },
+      function () {
+        console.log("URIRUIRUIRURIR", uri);
+        // Handle successful uploads on complete
+        console.log("image upload success");
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          console.log("File available at", downloadURL);
+          setVariables({ ...variables, profilePic: downloadURL });
+          setLoading(false);
+        });
+      }
+    );
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
 
       <ScrollView>
-        <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
-          <View
-            style={{
-              backgroundColor: "white",
-              width: "50%",
-              alignSelf: "center",
-              justifyContent: "space-evenly",
-              shadowColor: "black",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              height: Dimensions.get("window").width * 0.5,
-              borderRadius: 100,
-            }}
-          >
-            <Image style={styles.cardImage} source={images.monkey} />
-          </View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setChangeProfilePicture(true);
+            setChangeInfo(true);
+          }}
+        >
+          {loading ? (
+            <ActivityIndicator
+              style={{ marginBottom: "76.5%" }}
+              size="large"
+              color="#660066"
+            />
+          ) : (
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "50%",
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                shadowColor: "black",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                height: Dimensions.get("window").width * 0.5,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                style={
+                  variables.profilePic
+                    ? {
+                        borderRadius: 150,
+                        width: 210,
+                        height: 210,
+                        alignSelf: "center",
+                      }
+                    : styles.cardImage
+                }
+                source={
+                  variables.profilePic
+                    ? { uri: variables.profilePic }
+                    : images.monkey
+                }
+              />
+            </View>
+          )}
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setChangeProfilePicture(true)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setChangeProfilePicture(true);
+            setChangeInfo(true);
+          }}
+        >
           <Text
             style={[
               styles.cardText,
@@ -318,9 +411,6 @@ export default function Settings({ route, navigation }) {
               style={[styles.inputBox, { backgroundColor: colors.white }]}
               placeholder="Enter email..."
               placeholderTextColor="grey"
-              // onChangeText={(text) =>
-              //   setVariables({ ...variables, email: text })
-              // }
               value={variables.email}
             />
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
@@ -347,44 +437,29 @@ export default function Settings({ route, navigation }) {
               }}
               value={variables.passwordControl}
             />
-
-            <TouchableWithoutFeedback
-              onPress={(e) => {
-                if (variables.password === variables.passwordControl) {
-                  /*submit changes to backend + */
-                  submitForm(e);
-                  setChangeInfo(false),
-                    setSuccessMessage({ text: "SUCCESS!!!", color: "teal" }),
-                    setVariables({
-                      ...variables,
-                      password: initState.password,
-                      passwordControl: initState.passwordControl,
-                    });
-                } else {
-                  setSuccessMessage({
-                    text: "PASSWORDS DON'T MATCH",
-                    color: "orange",
-                  });
-                }
-              }}
-            >
-              <Text
-                style={[
-                  styles.cardText,
-                  {
-                    color: colors.dkPink,
-                    fontFamily: fonts.semiBold,
-                    marginTop: 20,
-                    marginBottom: 20,
-                  },
-                ]}
-              >
-                Submit changes
-              </Text>
-            </TouchableWithoutFeedback>
           </View>
         )}
       </ScrollView>
+
+      {changeInfo && (
+        <TouchableWithoutFeedback
+          onPress={(e) => {
+            if (variables.password === variables.passwordControl) {
+              submitForm(e);
+            } else {
+              setMessage({
+                text: "PASSWORDS DON'T MATCH",
+                color: "orange",
+              });
+            }
+          }}
+        >
+          <View style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>Submit changes</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+
       {changeInfo && (
         <TouchableWithoutFeedback
           onPress={() => {
@@ -398,8 +473,8 @@ export default function Settings({ route, navigation }) {
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: 20,
-                marginBottom: 20,
+                marginTop: screen !== "single" ? "5%" : "10%",
+                marginBottom: screen !== "single" ? "5%" : "15%",
               },
             ]}
           >
@@ -417,7 +492,7 @@ export default function Settings({ route, navigation }) {
                 color: colors.ltPurple,
                 fontFamily: fonts.semiBold,
                 marginTop: 20,
-                marginBottom: !single ? 20 : "20%",
+                marginBottom: screen !== "single" ? 20 : "20%",
               },
             ]}
           >
@@ -427,9 +502,13 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {!single && <NavButtons screen="Settings" />}
+      {screen !== "single" && <NavButtons screen="Settings" />}
       {changeProfilePicture && (
-        <ChangeProfilePicture hide={hideOptions} nav="Settings" />
+        <ChangeProfilePicture
+          hide={hideOptions}
+          nav="Settings"
+          pickPhoto={pickPhoto}
+        />
       )}
     </View>
   );

@@ -5,15 +5,18 @@ import {
   TouchableWithoutFeedback,
   Image,
   FlatList,
-  Button,
+  StyleSheet,
+  TouchableWithoutFeedbackBase,
 } from "react-native";
+import { Video } from "expo-av";
 import NavHome from "../../components/NavHome";
 import MediaContentComments from "../../components/MediaContentComments";
+import EnlargeVideo from "../../components/EnlargeVideo";
 import styles from "@styles/styles";
-import colors from "@assets/colors";
+import adjust from "../../styles/adjust";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import colors from "@assets/colors";
 import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_LIKE } from "../../../graphql/mutations";
 import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
@@ -24,16 +27,19 @@ export default function MediaContentDetails({ navigation, route }) {
   const [comments, setComments] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likeLength, setLikeLength] = useState(0);
+  const [startVideo, setStartVideo] = useState(false);
   const isFocused = useIsFocused();
   const {
-    title,
-    person,
-    topColor,
-    bottomColor,
-    video,
+    backCol,
+    firstName,
+    titleVid,
     loveBankId,
+    preview,
+    video,
     activeKid,
     activeUser,
+    recImage,
+    likes,
   } = route.params;
 
   const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
@@ -61,6 +67,8 @@ export default function MediaContentDetails({ navigation, route }) {
     },
   });
 
+  console.log("liked", liked);
+
   // Time constraints prevent me from making a subscription for the comments.
   useEffect(() => {
     refetch();
@@ -84,72 +92,140 @@ export default function MediaContentDetails({ navigation, route }) {
       </View>
     );
   }
+
+  console.log("startVideo", startVideo);
+  function hideOptions() {
+    setStartVideo(false);
+  }
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        <>
-          <NavHome />
-          <View
-            style={[
-              styles.cardContainer,
-              { marginTop: 0, marginBottom: 10, marginHorizontal: 0 },
-            ]}
-          >
+    <View style={{ flex: 1 }}>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <NavHome />
             <View
               style={{
-                backgroundColor: colors[topColor],
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                height: 35,
-                justifyContent: "center",
+                backgroundColor: colors.black,
+                alignSelf: "center",
+                justifyContent: "flex-start",
+                borderRadius: 20,
+                width: "90%",
+                height: 220,
+                marginBottom: "8.5%",
               }}
             >
-              <Text
-                style={[styles.cardTitle, { paddingHorizontal: 5 }]}
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-              >
-                {title} by {person}
-              </Text>
+              <TouchableWithoutFeedback onPress={() => setStartVideo(true)}>
+                <Image
+                  style={[
+                    {
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                      width: "100%",
+                      height: 192,
+                    },
+                  ]}
+                  source={{ uri: preview }}
+                />
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback onPress={handleLikeButton}>
+                <View
+                  style={{
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                    width: "100%",
+                    height: "15%",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderBottomLeftRadius: 20,
+                      borderBottomRightRadius: 20,
+                      position: "absolute",
+                    }}
+                    source={recImage}
+                  />
+                  <View
+                    style={{
+                      width: "60%",
+                      marginRight: "5%",
+                      marginLeft: "10%",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        {
+                          width: "100%",
+                          color: "white",
+                          fontFamily: fonts.bold,
+                          textAlign: "center",
+                          fontSize: adjust(16),
+                        },
+                      ]}
+                      adjustsFontSizeToFit={true}
+                      numberOfLines={2}
+                    >
+                      {titleVid} by {firstName}
+                    </Text>
+                  </View>
+
+                  <Image source={images.star} style={style.heart} />
+                  <Text
+                    style={[
+                      styles.cardTitle,
+                      {
+                        marginLeft: "5%",
+                        marginRight: "10%",
+                      },
+                    ]}
+                  >
+                    {likeLength}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
-            <View
-              style={{
-                backgroundColor: colors[bottomColor],
-                justifyContent: "center",
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                padding: 50,
-              }}
-            >
-              <Image style={styles.cardImage} source={video} />
-            </View>
-          </View>
-          <CommentBox loveBankId={loveBankId} refetch={refetch} />
-          <Button
-            title={liked ? "Liked!" : "Like this"}
-            onPress={handleLikeButton}
-          />
-          <Text>Likes: {likeLength}</Text>
-        </>
-      }
-      contentContainerStyle={{ marginHorizontal: 10 }}
-      data={comments.loveBankById.comments}
-      numColumns={1}
-      keyExtractor={(item) => item._id.toString()}
-      renderItem={({ item }) => {
-        return (
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("MediaContentDetails")}
-          >
-            <MediaContentComments
-              person={item.firstName}
-              text={item.comment}
-              video={item.video}
-              date={item.createdAt}
+            <CommentBox
+              loveBankId={loveBankId}
+              refetch={refetch}
+              firstName={firstName}
             />
-          </TouchableWithoutFeedback>
-        );
-      }}
-    />
+          </>
+        }
+        contentContainerStyle={{
+          marginHorizontal: 10,
+        }}
+        data={comments.loveBankById.comments}
+        numColumns={1}
+        keyExtractor={(item) => item._id.toString()}
+        renderItem={({ item }) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("MediaContentDetails")}
+            >
+              <MediaContentComments
+                person={item.firstName}
+                text={item.comment}
+                video={item.video}
+                date={item.createdAt}
+              />
+            </TouchableWithoutFeedback>
+          );
+        }}
+      />
+      {startVideo && <EnlargeVideo video={video} hide={hideOptions} />}
+    </View>
   );
 }
+const style = StyleSheet.create({
+  heart: {
+    height: 20,
+    width: 20,
+    alignSelf: "center",
+  },
+});

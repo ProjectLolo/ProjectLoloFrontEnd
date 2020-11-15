@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   Image,
   TouchableWithoutFeedback,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import styles from "@styles/styles";
+import adjust from "../../styles/adjust";
 import colors from "@assets/colors";
 import images from "@assets/images";
-
+import fonts from "@assets/fonts";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MediaContentCard(props) {
+  const [titleVid, setTitleVid] = useState("");
+  const [recImage, setRecImage] = useState(null);
+  const [backCol, setBackCol] = useState(colors.black);
+  const [sizeImage, setSizeImage] = useState({
+    width: 0,
+    height: 0,
+    loading: true,
+  });
   const navigation = useNavigation();
   const {
     title,
@@ -23,61 +33,153 @@ export default function MediaContentCard(props) {
     loveBankId,
     likes,
     category,
+    preview,
+    firstName,
   } = props;
-  console.log(category);
+  console.log(video);
 
-  console.log("loveBankId");
+  useEffect(() => {
+    if (category === "share") {
+      setTitleVid("Share Something");
+      setRecImage(images.RecShare);
+      setBackCol(colors.teal);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    if (preview) {
+      setSizeImage({ ...setSizeImage, loading: true });
+      Image.getSize(
+        preview,
+        (width, height) => {
+          setSizeImage({ width: width, height: height, loading: false });
+        },
+        (error) => {
+          setSizeImage({ ...sizeImage, loading: false });
+          console.log("Size Image ERROR:", error);
+        }
+      );
+    }
+  }, [preview]);
+
+  console.log("sizeImage", sizeImage);
+
+  const width = sizeImage.width > sizeImage.height ? 180 : 90;
+  const height = sizeImage.height > sizeImage.width ? 183.75 : 120;
 
   return (
     <TouchableWithoutFeedback
       onPress={() =>
         navigation.navigate("MediaContentDetails", {
-          title,
-          person,
-          topColor,
-          bottomColor,
-          video,
+          backCol,
+          firstName,
+          titleVid,
           loveBankId,
+          video,
+          preview,
+          recImage,
+          likes,
         })
       }
     >
       <View
         style={[
-          styles.cardContainer,
-          { borderRadius: 20, width: 180, height: 120, marginTop: 30 },
+          {
+            marginHorizontal: "2.5%",
+            borderRadius: 20,
+            width: 180,
+            height: 240,
+            marginTop: "5%",
+            paddingHorizontal: "5%",
+            paddingVertical: "5%",
+            justifyContent: "center",
+          },
         ]}
       >
         <View
           style={{
-            backgroundColor: colors[bottomColor],
-            justifyContent: "center",
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            padding: 5,
+            backgroundColor: colors.black,
+            width: 170,
+            height: 225,
+            alignSelf: "center",
+            justifyContent: "flex-start",
+            borderRadius: 20,
+            // marginBottom: sizeImage.width > sizeImage.height ? "25%" : 0,
+            // padding: 5,
           }}
         >
-          <Image style={styles.cardImage} source={video} />
-        </View>
-        <View
-          style={{
-            backgroundColor: colors[topColor],
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            height: 35,
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={[styles.cardTitle, { paddingHorizontal: 5 }]}
-            adjustsFontSizeToFit={true}
-            numberOfLines={1}
+          {sizeImage.loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <Image
+              style={[
+                {
+                  resizeMode: "contain",
+                  alignSelf: "center",
+                  width: 170,
+                  height: 192,
+                },
+              ]}
+              source={{ uri: preview }}
+            />
+          )}
+          <View
+            style={{
+              borderBottomLeftRadius: 20,
+              borderBottomRightRadius: 20,
+              width: "100%",
+              height: "15%",
+              justifyContent: "center",
+              flexDirection: "row",
+            }}
           >
-            {title} by {person}
-          </Text>
-          <Text style={[styles.cardTitle, { paddingHorizontal: 5 }]}>
-            <Image source={images.heart} style={style.heart} />
-            {likes}
-          </Text>
+            <Image
+              style={{
+                width: "100%",
+                height: "100%",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                position: "absolute",
+              }}
+              source={recImage}
+            />
+            <View
+              style={{
+                width: "60%",
+                marginRight: "5%",
+                marginLeft: "10%",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={[
+                  {
+                    width: "100%",
+                    color: "white",
+                    fontFamily: fonts.bold,
+                    textAlign: "center",
+                    fontSize: adjust(16),
+                  },
+                ]}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                {titleVid} by {firstName}
+              </Text>
+            </View>
+            <Image source={images.star} style={style.heart} />
+            <Text
+              style={[
+                styles.cardTitle,
+                {
+                  marginLeft: "5%",
+                  marginRight: "10%",
+                },
+              ]}
+            >
+              {likes}
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -88,5 +190,6 @@ const style = StyleSheet.create({
   heart: {
     height: 20,
     width: 20,
+    alignSelf: "center",
   },
 });

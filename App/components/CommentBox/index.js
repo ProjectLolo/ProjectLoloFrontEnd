@@ -14,7 +14,7 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import images from "@assets/images";
 
-export default function CommentBox({ loveBankId, refetch }) {
+export default function CommentBox({ loveBankId, refetch, firstName }) {
   const [variables, setVariables] = useState({
     loveBankId: loveBankId,
     comment: "",
@@ -42,7 +42,7 @@ export default function CommentBox({ loveBankId, refetch }) {
       style={{
         backgroundColor: colors.ltPurple,
         borderRadius: 25,
-        marginBottom: 10,
+        marginBottom: "5%",
       }}
     >
       <View
@@ -61,9 +61,7 @@ export default function CommentBox({ loveBankId, refetch }) {
             fontSize: 16,
           }}
         >
-          {!writeComment
-            ? "Want to leave a message?"
-            : `NameOfPersonWhoIsLoggedIn`}
+          {!writeComment ? "Want to leave a message?" : firstName}
         </Text>
       </View>
       {!writeComment ? (

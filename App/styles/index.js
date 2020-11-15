@@ -113,12 +113,12 @@ export default StyleSheet.create({
   },
   cardImage: {
     resizeMode: "contain",
-    width: 100,
-    height: 100,
+    // width: 100,
+    // height: 100,
     alignSelf: "center",
   },
   cardTitle: {
-    textAlign: "center",
+    alignSelf: "center",
     color: "white",
     fontFamily: fonts.bold,
     fontSize: adjust(16),
