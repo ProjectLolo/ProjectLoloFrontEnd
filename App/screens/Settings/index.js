@@ -30,21 +30,19 @@ export default function Settings({ route, navigation }) {
   const { signOut } = useContext(AuthContext);
 
   const profileInfo = {
-
-    firstName: data && data.findUserById.firstName,
-    lastName: data && data.findUserById.lastName,
+    firstName: "",
+    lastName: "",
     nickName: null,
-    email: data && data.findUserById.email,
+    email: "",
     password: "",
     profilePic: "",
 
-//     firstName: "Atieh",
-//     lastName: "ha",
-//     nickName: null,
-//     email: "test1@email.com",
-//     password: "1234",
-//     profilePic: "dff",
-
+    //     firstName: "Atieh",
+    //     lastName: "ha",
+    //     nickName: null,
+    //     email: "test1@email.com",
+    //     password: "1234",
+    //     profilePic: "dff",
   };
 
   const initState = {
@@ -62,22 +60,22 @@ export default function Settings({ route, navigation }) {
   const [changeInfo, setChangeInfo] = useState(false);
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
 
-
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
     },
   });
   console.log("I want userId", data);
+  console.log("route.params.activeUser", route.params.activeUser);
 
   useEffect(() => {
     refetch();
     setVariables({
-      firstName: data.findUserById.firstName,
-      lastName: data.findUserById.lastName,
-      nickName: data.findUserById.nickName,
-      email: data.findUserById.email,
-      profilePic: data.findUserById.profilePic,
+      firstName: data && data.findUserById.firstName,
+      lastName: data && data.findUserById.lastName,
+      nickName: data && data.findUserById.nickName,
+      email: data && data.findUserById.email,
+      profilePic: data && data.findUserById.profilePic,
       password: "",
       passwordControl: "",
     });
@@ -87,11 +85,11 @@ export default function Settings({ route, navigation }) {
     onError: (error) =>
       //TODO: give proper error message , now just giving the user the error from graphQL
       error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
-    // onCompleted({ submitSettings }) {
-    //   if (submitSettings.token) {
-    //     signUp(signup.token);
-    //   }
-    // },
+    onCompleted({ submitSettings }) {
+      if (submitSettings.token) {
+        signUp(signup.token);
+      }
+    },
   });
 
   function submitForm(e) {

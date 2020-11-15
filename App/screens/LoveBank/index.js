@@ -20,6 +20,7 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
+  console.log("data", data);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
@@ -50,6 +51,7 @@ export default function LoveBank({ route, navigation }) {
                 video={images.videoCameraPurple}
                 loveBankId={item._id}
                 likes={item.likes.length}
+                category={item.category}
               />
             </TouchableWithoutFeedback>
           );
