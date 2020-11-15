@@ -45,7 +45,7 @@ export default function Settings({ route, navigation }) {
 
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
-  const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
+  const [message, setMessage] = useState({ text: "", color: "" });
 
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
@@ -69,11 +69,19 @@ export default function Settings({ route, navigation }) {
   // console.log("variables", variables);
 
   const [submitSettings, { error }] = useMutation(SETTINGS, {
-    onError: (error) => console.log("SETTINGS ERROR: ", error.graphQLErrors),
+    onError: (error) => {
+      console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
+      if (error.graphQLErrors[0].message === "Please fill the form") {
+        setMessage({
+          text: "To submit changes, please add password",
+          color: "orange",
+        });
+      }
+    },
     onCompleted(data) {
       setChangeInfo(false);
       // setVariables(...variables, {password: "", passwordControl: ""})
-      setSuccessMessage({ text: "SUCCESS!!!", color: "teal" });
+      setMessage({ text: "SUCCESS!!!", color: "teal" });
       console.log("SUCCESSFULLY UPDATED INFO", data);
     },
   });
@@ -93,23 +101,23 @@ export default function Settings({ route, navigation }) {
   }
 
   function showMessage() {
-    if (successMessage.text !== "" && successMessage.color !== "") {
+    if (message.text !== "" && message.color !== "") {
       setTimeout(() => {
-        setSuccessMessage({ text: "", color: "" });
+        setMessage({ text: "", color: "" });
       }, 2000);
       return (
-        <View>
+        <View style={{ marginBottom: "5%", marginTop: "-5%" }}>
           <Text
             style={[
               styles.cardText,
               {
-                color: colors[successMessage.color],
+                color: colors[message.color],
                 fontFamily: fonts.semiBold,
                 paddingVertical: 15,
               },
             ]}
           >
-            {successMessage.text}
+            {message.text}
           </Text>
         </View>
       );
@@ -419,26 +427,16 @@ export default function Settings({ route, navigation }) {
                   //   passwordControl: initState.passwordControl,
                   // });
                 } else {
-                  setSuccessMessage({
+                  setMessage({
                     text: "PASSWORDS DON'T MATCH",
                     color: "orange",
                   });
                 }
               }}
             >
-              <Text
-                style={[
-                  styles.cardText,
-                  {
-                    color: colors.dkPink,
-                    fontFamily: fonts.semiBold,
-                    marginTop: 20,
-                    marginBottom: 20,
-                  },
-                ]}
-              >
-                Submit changes
-              </Text>
+              <View style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Submit changes</Text>
+              </View>
             </TouchableWithoutFeedback>
           </View>
         )}
@@ -456,8 +454,8 @@ export default function Settings({ route, navigation }) {
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: 20,
-                marginBottom: 20,
+                marginTop: "10%",
+                marginBottom: "15%",
               },
             ]}
           >
