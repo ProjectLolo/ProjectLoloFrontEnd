@@ -13,6 +13,7 @@ export default function LoveBank({ route, navigation }) {
   //hardcoded kidId, not sure atm where to get it from
   const isFocused = useIsFocused();
   const [loveBanks, setLoveBanks] = useState([]);
+  const { firstName } = route.params;
 
   const { data, refetch } = useQuery(GET_LOVEBANKS, {
     variables: {
@@ -20,7 +21,7 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
-  console.log("data", data);
+  console.log("ROUTE PARAMS", route.params);
   useEffect(() => {
     refetch();
     setLoveBanks(data);
@@ -48,10 +49,12 @@ export default function LoveBank({ route, navigation }) {
                 person={item.userId}
                 topColor="pink"
                 bottomColor="purple"
-                video={images.videoCameraPurple}
                 loveBankId={item._id}
                 likes={item.likes.length}
                 category={item.category}
+                preview={item.preview}
+                video={item.url}
+                firstName={firstName}
               />
             </TouchableWithoutFeedback>
           );

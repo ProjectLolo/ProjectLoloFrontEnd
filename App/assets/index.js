@@ -30,13 +30,13 @@ const images = {
   Activate: require("./images/05ACTIVATE.png"),
   Memory: require("./images/06MEMORY.png"),
   Fun: require("./images/07FUN.png"),
-  Rec1: require("./images/Rectangle1.png"),
-  Rec2: require("./images/Rectangle2.png"),
-  Rec3: require("./images/Rectangle3.png"),
-  Rec4: require("./images/Rectangle4.png"),
-  Rec5: require("./images/Rectangle5.png"),
-  Rec6: require("./images/Rectangle6.png"),
-  Rec7: require("./images/Rectangle7.png"),
+  RecRead: require("./images/Rectangle1.png"),
+  RecSing: require("./images/Rectangle2.png"),
+  RecActivate: require("./images/Rectangle3.png"),
+  RecTeach: require("./images/Rectangle4.png"),
+  RecMemory: require("./images/Rectangle5.png"),
+  RecShare: require("./images/Rectangle6.png"),
+  RecFun: require("./images/Rectangle7.png"),
 };
 
 export default images;

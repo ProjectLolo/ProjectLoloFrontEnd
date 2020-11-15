@@ -6,11 +6,13 @@ import {
   Image,
   FlatList,
   Button,
+  StyleSheet,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import MediaContentComments from "../../components/MediaContentComments";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
+import adjust from "../../styles/adjust";
 import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -26,14 +28,16 @@ export default function MediaContentDetails({ navigation, route }) {
   const [likeLength, setLikeLength] = useState(0);
   const isFocused = useIsFocused();
   const {
-    title,
-    person,
-    topColor,
-    bottomColor,
-    video,
+    backCol,
+    firstName,
+    titleVid,
     loveBankId,
+    preview,
+    video,
     activeKid,
     activeUser,
+    recImage,
+    likes,
   } = route.params;
 
   const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
@@ -90,38 +94,85 @@ export default function MediaContentDetails({ navigation, route }) {
         <>
           <NavHome />
           <View
-            style={[
-              styles.cardContainer,
-              { marginTop: 0, marginBottom: 10, marginHorizontal: 0 },
-            ]}
+            style={{
+              backgroundColor: backCol,
+              width: 170,
+              height: 225,
+              alignSelf: "center",
+              justifyContent: "flex-start",
+              borderRadius: 20,
+              // marginBottom: sizeImage.width > sizeImage.height ? "25%" : 0,
+              // padding: 5,
+            }}
           >
+            <Image
+              style={[
+                {
+                  resizeMode: "contain",
+                  alignSelf: "center",
+                  width: 170,
+                  height: 192,
+                },
+              ]}
+              source={{ uri: preview }}
+            />
+
             <View
               style={{
-                backgroundColor: colors[topColor],
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                height: 35,
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[styles.cardTitle, { paddingHorizontal: 5 }]}
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-              >
-                {title} by {person}
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: colors[bottomColor],
-                justifyContent: "center",
                 borderBottomLeftRadius: 20,
                 borderBottomRightRadius: 20,
-                padding: 50,
+                width: "100%",
+                height: "15%",
+                justifyContent: "center",
+                flexDirection: "row",
               }}
             >
-              <Image style={styles.cardImage} source={video} />
+              <Image
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderBottomLeftRadius: 20,
+                  borderBottomRightRadius: 20,
+                  position: "absolute",
+                }}
+                source={recImage}
+              />
+              <View
+                style={{
+                  width: "60%",
+                  marginRight: "5%",
+                  marginLeft: "10%",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={[
+                    {
+                      width: "100%",
+                      color: "white",
+                      fontFamily: fonts.bold,
+                      textAlign: "center",
+                      fontSize: adjust(16),
+                    },
+                  ]}
+                  adjustsFontSizeToFit={true}
+                  numberOfLines={2}
+                >
+                  {titleVid} by {firstName}
+                </Text>
+              </View>
+              <Image source={images.star} style={style.heart} />
+              <Text
+                style={[
+                  styles.cardTitle,
+                  {
+                    marginLeft: "5%",
+                    marginRight: "10%",
+                  },
+                ]}
+              >
+                {likes}
+              </Text>
             </View>
           </View>
           <CommentBox loveBankId={loveBankId} refetch={refetch} />
@@ -153,3 +204,10 @@ export default function MediaContentDetails({ navigation, route }) {
     />
   );
 }
+const style = StyleSheet.create({
+  heart: {
+    height: 20,
+    width: 20,
+    alignSelf: "center",
+  },
+});
