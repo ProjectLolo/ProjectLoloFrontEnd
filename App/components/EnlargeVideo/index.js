@@ -34,6 +34,7 @@ export default function EnlargeVideo({ video, hide }) {
         isMuted={false}
         shouldPlay={true}
         resizeMode="contain"
+        useNativeControls
         style={{ alignSelf: "center", width: "50%", height: "50%" }}
       />
     </View>

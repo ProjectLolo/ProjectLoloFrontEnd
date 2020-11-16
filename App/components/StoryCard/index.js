@@ -6,21 +6,23 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ActivityCard(props) {
   const navigation = useNavigation();
-  const { story } = props;
+  const { item } = props;
+  console.log("DEMPAGES",item.pages)
+  // Need to filter pages by story id then pass to Story component
   return (
-    // <View style={[styles.cardContainer]}>
-    //   <TouchableWithoutFeedback onPress={() => navigation.navigate("Story", {pages:story.pages})}>
-    //     {/* <Image
-    //       style={{
-    //         width: Dimensions.get("window").width * 0.405,
-    //         height: Dimensions.get("window").width * 0.405,
-    //         borderRadius: 25,
-    //       }}
-    //       source={image}
-    //     /> */}
-    //     <Text>{story.title}</Text>
-    //   </TouchableWithoutFeedback>
-    // </View>
-    <Text>hi</Text>
+    <View style={[styles.cardContainer]}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Story", {pages:item.pages})}>
+        {/* <Image
+          style={{
+            width: Dimensions.get("window").width * 0.405,
+            height: Dimensions.get("window").width * 0.405,
+            borderRadius: 25,
+          }}
+          source={image}
+        /> */}
+        <Text>{item.title}</Text>
+      </TouchableWithoutFeedback>
+    </View>
+
   );
 }
