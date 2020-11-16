@@ -23,7 +23,8 @@ export default function Login({ navigation }) {
   const { signIn, signUp } = useContext(AuthContext);
 
   const [login, { error }] = useMutation(LOGIN, {
-    onError: (error) => console.log("hi", error.graphQLErrors),
+    onError: (error) =>
+      error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ login }) {
       if (login.error) {
         set_errorState(<Alert variant="danger">{login.error}</Alert>);
