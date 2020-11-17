@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, Query } from "@apollo/client";
 
 import styles from "@styles/styles"; //have to changeit to @styles/styles
 import images from "@assets/images";
@@ -18,48 +18,27 @@ import colors from "@assets/colors";
 import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
-import {
-  GET_ALL_KIDS,
-  GET_KIDS_THAT_BELONGS_TO_USER,
-} from "../../../graphql/queries";
+import { GET_ALL_KIDS } from "../../../graphql/queries";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function KidCircles({ route, navigation }) {
   const isFocused = useIsFocused();
-  const [fetchedData, setFetchedData] = useState(data);
-  const [fetchedFamilyUserData, setFetchedFamilyUserData] = useState(
-    kidCirclesData
-  );
-  const { data, refetch } = useQuery(GET_ALL_KIDS, {
+  const [fetchedData, setFetchedData] = useState();
+
+  const { data, refetch, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
     variables: {
       userId: route.params.activeUser,
     },
+    onCompleted(fetchedData) {},
   });
 
-  const { kidCirclesData, refetch: refetchUser } = useQuery(
-    GET_KIDS_THAT_BELONGS_TO_USER,
-    {
-      variables: {
-        userId: route.params.activeUser,
-      },
-      onError: (error) => console.log("hi", error.graphQLErrors),
-      onCompleted(kidCirclesData) {
-        console.log("teeesst", kidCirclesData.findKidBelongsToMember);
-        setFetchedFamilyUserData(kidCirclesData.findKidBelongsToMember);
-      },
-    }
-  );
-
   const userName = route.params.firstName;
-  // TODO: some how combine the two queries we get or display them in two flatlits components
-  // const combinedDAta = [...fetchedData, ...fetchedFamilyUserData];
 
   useEffect(() => {
     refetch();
-    refetchUser();
-    setFetchedData(data);
-    // setFetchedFamilyUserData(kidCirclesData);
-  }, [refetch, data, kidCirclesData, isFocused]);
+
+    setFetchedData(data.findAllKids);
+  }, [refetch, data, isFocused]);
 
   return (
     <View
@@ -104,7 +83,7 @@ export default function KidCircles({ route, navigation }) {
           width: "90%",
           paddingTop: 30,
         }}
-        data={fetchedData && fetchedData.findAllKids}
+        data={fetchedData}
         numColumns={1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
