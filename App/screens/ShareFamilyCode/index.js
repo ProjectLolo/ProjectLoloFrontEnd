@@ -50,10 +50,7 @@ export default function ShareFamilyCode({ route, navigation }) {
         onPress={() => navigation.navigate("Recommended")}
       >
         <View
-          style={[
-            styles.loginButton,
-            { marginBottom: "10%", marginTop: "50%" },
-          ]}
+          style={[styles.loginButton, { marginBottom: "5%", marginTop: "0%" }]}
         >
           <Text style={styles.loginButtonText}>CONTINUE</Text>
         </View>

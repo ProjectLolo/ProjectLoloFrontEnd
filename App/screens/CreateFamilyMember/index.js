@@ -43,7 +43,7 @@ export default function CreateFamilyMember({ route, navigation }) {
       <NavHome />
 
       <Text
-        style={[styles.title, { marginTop: "5%" }]}
+        style={[styles.title, { marginTop: "0%" }]}
         adjustsFontSizeToFit={true}
         numberOfLines={1}
       >
@@ -61,7 +61,7 @@ export default function CreateFamilyMember({ route, navigation }) {
           width: "90%",
           alignSelf: "center",
           marginTop: "20%",
-          marginBottom: "10%",
+          marginBottom: "0%",
         }}
         onValueChange={(itemValue, itemIndex) =>
           setVariables({ ...variables, relation: itemValue })
