@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
 import styles from "@styles/styles";
-import style from "./style";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { FIND_KID_BY_CODE } from "../../../graphql/queries";
 import NavHome from "../../components/NavHome";
 import colors from "@assets/colors";
@@ -58,7 +57,7 @@ export default function JoinKidCircles({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "space-between" }}>
       <NavHome />
-      <View style={{ marginBottom: "65%" }}>
+      <View>
         <View style={{ marginBottom: "25%" }}>
           <Text
             style={styles.title}
@@ -90,7 +89,9 @@ export default function JoinKidCircles({ navigation }) {
         </View>
       </View>
       <TouchableWithoutFeedback onPress={submitForm}>
-        <View style={[styles.loginButton, { marginBottom: "10%" }]}>
+        <View
+          style={[styles.loginButton, { marginBottom: "20%", marginTop: "0%" }]}
+        >
           <Text style={styles.loginButtonText}>CONFIRM</Text>
         </View>
       </TouchableWithoutFeedback>
