@@ -8,6 +8,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import StoryPage from "../../../../components/StoryPage";
 
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 export default function VideoRecording({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -16,7 +17,6 @@ export default function VideoRecording({ route, navigation }) {
   const [recording, setRecording] = useState(false);
   const [video, setVideo] = useState(false);
 
-  console.log("DEEZZPAGES", route.params.pages)
   // asks permission from used to use camera
   useEffect(() => {
     (async () => {
@@ -40,8 +40,9 @@ export default function VideoRecording({ route, navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Camera
-        style={{ flex: 1, width: screenWidth, height: screenWidth * 1.3 }}
+        style={{ flex: 1, width: screenWidth, height: screenHeight * 2/3 }}
         type={type}
+        ratio={'4:3'}
         ref={(ref) => {
           setCameraRef(ref);
         }}
