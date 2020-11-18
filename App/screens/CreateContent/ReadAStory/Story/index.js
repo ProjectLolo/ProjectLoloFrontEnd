@@ -6,10 +6,11 @@ import { Camera } from "expo-camera";
 import { Video } from "expo-av";
 import * as Permissions from "expo-permissions";
 import { MaterialIcons } from "@expo/vector-icons";
+import StoryPage from "../../../../components/StoryPage";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function VideoRecording({ navigation }) {
+export default function VideoRecording({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -18,16 +19,16 @@ export default function VideoRecording({ navigation }) {
 
   // asks permission from used to use camera
   useEffect(() => {
-    // (async () => {
-    //   const { status } = await Camera.requestPermissionsAsync();
-    //   setHasPermission(status === "granted");
-    // })
     (async () => {
-      const { status } = await Permissions.askAsync(
-        Permissions.AUDIO_RECORDING
-      );
+      const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
-    })();
+    })()
+    // (async () => {
+    //   const { status } = await Permissions.askAsync(
+    //     Permissions.AUDIO_RECORDING
+    //   );
+    //   setHasPermission(status === "granted");
+    // })();
   }, []);
 
   if (hasPermission === null) {
@@ -171,6 +172,7 @@ export default function VideoRecording({ navigation }) {
           </View>
         </View>
       </Camera>
+      <StoryPage pages={route.params.pages} />
     </View>
   );
 }

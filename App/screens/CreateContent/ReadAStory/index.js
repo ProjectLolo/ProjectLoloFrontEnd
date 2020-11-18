@@ -9,7 +9,7 @@ import {
   Platform,
   FlatList
 } from "react-native";
-import ShareCard from "../../../components/StoryCard";
+import StoryCard from "../../../components/StoryCard";
 
 
 export default function ShareSomething({ navigation }) {
@@ -50,9 +50,9 @@ export default function ShareSomething({ navigation }) {
           }}
           data={stories}
           numColumns={2}
-          keyExtractor={(story) => story.id}
-          renderStory={({ story }) => {
-            return <StoryCard story={story} />;
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return <StoryCard item={item} />;
           }}
         />
     </View>
