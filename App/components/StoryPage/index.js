@@ -5,23 +5,26 @@ import {
   Text,
   Button,
   TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+} from "react-native";
 
 export default function StoryPage(props) {
-  // const pages = [
-  //   {
-  //     id: 1,
-  //     content: "this is page 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     content: "this is page 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     content: "this is page 3",
-  //   },
-  // ];
+  
+  // const {pages} = props
+  
+  const pages = [
+    {
+      id: 1,
+      content: "this is page 1",
+    },
+    {
+      id: 2,
+      content: "this is page 2",
+    },
+    {
+      id: 3,
+      content: "this is page 3",
+    },
+  ];
 
   const i = 0
 
@@ -32,8 +35,14 @@ export default function StoryPage(props) {
   {i=i+1;}
   }
 
+  function next(){
+    console.log("next")
+  }
+
+  console.log("pages content", pages.content)
   return (
-    <View>
+    
+    <View style={{height: 400}}>
       <View>
         {/* <Image source={page.icon} /> */}
       </View>
@@ -43,7 +52,7 @@ export default function StoryPage(props) {
             alignSelf: "center",
           }}
         >
-          <Text>{pages.content[i]}</Text>
+          <Text>{pages.content}</Text>
           <Button title="next page" onPress={next()}></Button>
         </FlatList>
       </TouchableWithoutFeedback>

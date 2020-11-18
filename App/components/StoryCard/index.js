@@ -23,6 +23,5 @@ export default function ActivityCard(props) {
         <Text>{item.title}</Text>
       </TouchableWithoutFeedback>
     </View>
-
   );
 }
