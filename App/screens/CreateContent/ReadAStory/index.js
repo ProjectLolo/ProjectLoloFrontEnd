@@ -15,7 +15,7 @@ import StoryCard from "../../../components/StoryCard";
 export default function ShareSomething({ navigation }) {
   const [stories, setStories] = useState([])
 
-  const storiesURL = "http://192.168.42.37:4000";
+  const storiesURL = "http://192.168.42.245:4000";
 
   async function fetchAllStories() {
     try {

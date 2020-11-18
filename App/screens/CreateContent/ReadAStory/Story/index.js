@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
-import { Video } from "expo-av";
 import * as Permissions from "expo-permissions";
 import { MaterialIcons } from "@expo/vector-icons";
 import StoryPage from "../../../../components/StoryPage";
@@ -17,6 +16,7 @@ export default function VideoRecording({ route, navigation }) {
   const [recording, setRecording] = useState(false);
   const [video, setVideo] = useState(false);
 
+  console.log("DEEZZPAGES", route.params.pages)
   // asks permission from used to use camera
   useEffect(() => {
     (async () => {
@@ -83,39 +83,6 @@ export default function VideoRecording({ route, navigation }) {
                 color="white"
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={{ alignSelf: "center" }}
-              onPress={async () => {
-                if (cameraRef) {
-                  let photo = await cameraRef.takePictureAsync();
-                  console.log("photo", photo);
-                }
-              }}
-            >
-              <View
-                style={{
-                  borderWidth: 2,
-                  borderRadius: 25,
-                  borderColor: "white",
-                  height: 50,
-                  width: 50,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    borderWidth: 2,
-                    borderRadius: 25,
-                    borderColor: "white",
-                    height: 40,
-                    width: 40,
-                    backgroundColor: "white",
-                  }}
-                ></View>
-              </View>
-            </TouchableOpacity> */}
             <TouchableOpacity
               style={{ alignSelf: "center" }}
               onPress={async () => {
@@ -163,14 +130,12 @@ export default function VideoRecording({ route, navigation }) {
                       onPress={() => navigation.navigate("MessageSent")}
                     />
                   </View>
-                ) : // <Video
-                //   source={{ uri: video }}
-                //   shouldPlay
-                //   style={{ width: 600, height: 800 }}
-                // ></Video>
+                ) :
                 null}
           </View>
+          
         </View>
+        
       </Camera>
       <StoryPage pages={route.params.pages} />
     </View>
