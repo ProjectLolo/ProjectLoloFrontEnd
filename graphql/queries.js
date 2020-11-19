@@ -11,7 +11,10 @@ export const GET_LOVEBANKS = gql`
       type
       category
       kidId
-      userId
+      userId {
+        id
+        firstName
+      }
       likes {
         userId
       }

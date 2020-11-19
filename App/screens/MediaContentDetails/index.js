@@ -42,6 +42,8 @@ export default function MediaContentDetails({ navigation, route }) {
     likes,
   } = route.params;
 
+  console.log(route.params);
+
   const { data, refetch } = useQuery(GET_COMMENTS_AND_LIKES, {
     variables: {
       _id: loveBankId,
@@ -49,7 +51,7 @@ export default function MediaContentDetails({ navigation, route }) {
     },
     onCompleted(data) {
       const hasLike = data.loveBankById.likes.some(
-        (item) => item.userId === activeUser
+        (item) => item.userId.userId === activeUser
       );
       const length = data.loveBankById.likes.length;
       setLikeLength(length);
