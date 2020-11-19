@@ -46,7 +46,7 @@ export default function LoveBank({ route, navigation }) {
             >
               <MediaContentCard
                 title={item.title}
-                person={item.userId}
+                person={item.userId._id}
                 topColor="pink"
                 bottomColor="purple"
                 loveBankId={item._id}
@@ -54,7 +54,7 @@ export default function LoveBank({ route, navigation }) {
                 category={item.category}
                 preview={item.preview}
                 video={item.url}
-                firstName={firstName}
+                firstName={item.userId.firstName}
               />
             </TouchableWithoutFeedback>
           );
