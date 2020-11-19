@@ -11,7 +11,11 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.atieh.ProjectLoloFron"
+      "bundleIdentifier": "com.atieh.ProjectLoloFron",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "This app uses your library to upload photo's and video's",
+        "NSCameraUsageDescription": "This app uses the camera to make video's"
+      }
     },
     "android": {
       "adaptiveIcon": {
