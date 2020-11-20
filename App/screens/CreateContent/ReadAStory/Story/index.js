@@ -18,18 +18,20 @@ export default function VideoRecording({ route, navigation }) {
   const [recording, setRecording] = useState(false);
   const [video, setVideo] = useState(false);
 
+  console.log("video", video)
+
   // asks permission from used to use camera
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
-    })()
-    // (async () => {
-    //   const { status } = await Permissions.askAsync(
-    //     Permissions.AUDIO_RECORDING
-    //   );
-    //   setHasPermission(status === "granted");
-    // })();
+    })();
+    (async () => {
+      const { status } = await Permissions.askAsync(
+        Permissions.AUDIO_RECORDING
+      );
+      setHasPermission(status === "granted");
+    })();
   }, []);
 
   if (hasPermission === null) {
@@ -39,13 +41,12 @@ export default function VideoRecording({ route, navigation }) {
     return <Text>No access to camera</Text>;
   }
 
- 
   return (
     <View style={{ flex: 1 }}>
       <Camera
-        style={{ flex: 1, width: screenWidth, height: screenHeight * 2/3 }}
+        style={{ flex: 1, width: screenWidth, height: (screenHeight * 2) / 3 }}
         type={type}
-        ratio={'4:3'}
+        ratio={"4:3"}
         ref={(ref) => {
           setCameraRef(ref);
         }}
@@ -126,22 +127,23 @@ export default function VideoRecording({ route, navigation }) {
               </View>
             </TouchableOpacity>
             {video ? (
-                  <View>
-                    <MaterialIcons
-                      name="send"
-                      size={40}
-                      color="white"
-                      onPress={() => navigation.navigate("MessageSent")}
-                    />
-                  </View>
-                ) :
-                null}
+              <TouchableOpacity>
+                <View>
+                  <MaterialIcons
+                    name="send"
+                    size={40}
+                    color="white"
+                    onPress={() =>
+                      navigation.navigate("VideoPreview", { uri: video })
+                    }
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : null}
           </View>
-          
         </View>
-        
       </Camera>
-      <StoryPage pages={route.params.pages}/>
+      <StoryPage pages={route.params.pages} />
     </View>
   );
 }
