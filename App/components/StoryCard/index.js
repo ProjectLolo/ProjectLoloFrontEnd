@@ -20,7 +20,7 @@ export default function ActivityCard(props) {
           }}
           source={image}
         /> */}
-        <Text>{item.title}</Text>
+        <Text style={styles.bold}>{item.title}</Text>
       </TouchableWithoutFeedback>
     </View>
   );

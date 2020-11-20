@@ -10,12 +10,13 @@ import {
   FlatList
 } from "react-native";
 import StoryCard from "../../../components/StoryCard";
+import styles from "@styles/styles";
 
 
 export default function ShareSomething({ navigation }) {
   const [stories, setStories] = useState([])
 
-  const storiesURL = "http://192.168.42.14:4000" ;
+  const storiesURL = "http://192.168.42.142:4000" ;
 
   async function fetchAllStories() {
     try {
@@ -39,8 +40,10 @@ export default function ShareSomething({ navigation }) {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
+      
      <FlatList
+          style={styles.text}
           contentContainerStyle={{
             alignSelf: "center",
             flexGrow: 1,
@@ -55,10 +58,11 @@ export default function ShareSomething({ navigation }) {
             return <StoryCard item={item} />;
           }}
         />
+        
     </View>
   );
 }
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
