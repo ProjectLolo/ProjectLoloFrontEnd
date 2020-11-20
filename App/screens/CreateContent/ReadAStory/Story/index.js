@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
+import styles from "@styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as Permissions from "expo-permissions";
@@ -37,6 +38,8 @@ export default function VideoRecording({ route, navigation }) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+ 
   return (
     <View style={{ flex: 1 }}>
       <Camera
@@ -138,7 +141,7 @@ export default function VideoRecording({ route, navigation }) {
         </View>
         
       </Camera>
-      <StoryPage pages={route.params.pages} />
+      <StoryPage pages={route.params.pages}/>
     </View>
   );
 }

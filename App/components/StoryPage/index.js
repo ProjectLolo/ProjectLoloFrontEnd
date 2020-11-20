@@ -1,35 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ScrollView,
   View,
   Text,
   Image,
+  TextInput,
   Dimensions,
 } from "react-native";
+import styles from "@styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import SvgUri from "expo-svg-uri";
 
 const screenHeight = Dimensions.get("window").height;
 
 export default function StoryPage(props) {
   const { pages } = props;
 
+
   const scrollRef = useRef();
   const [i, setI] = useState(0);
 
-  // const pages = [
-  //   {
-  //     id: 1,
-  //     content: "this is page 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     content: "this is page 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     content: "this is page 3",
-  //   },
-  // ];
+  // useEffect(() => {
+  //   scrollRef.current?.scrollTo({
+  //         y : -9999,
+  //         animated : true
+  //     });
+  // }, [])
+  
 
   function next() {
     if (i < pages.length - 1) {
@@ -50,40 +47,49 @@ export default function StoryPage(props) {
   }
   console.log(i);
 
-  console.log("pages content", pages);
+  console.log("pages content", pages[i].image);
   return (
     <View style={{ height: (screenHeight * 1 / 3) }}>
-      {/* <View>
-       {pages[i].image ? <Image style={{width:300, height:300}}source={pages[i].image} />
+            
+       {pages[i].image ? <SvgUri
+      width="200"
+      height="200"
+      source={{
+        uri: pages[i].image
+      }}
+      style={{marginTop:(screenHeight * -1/4 - 30), marginBottom:50, zIndex:999}}
+    />
        :
        null}
-      </View> */}
+    
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={{
           alignSelf: "center",
         }}
       >
-        <Text style={{paddingLeft:40, paddingRight:40, lineHeight: 40 }}>{pages[i].content}</Text>
-        <View style={{flex:1, flexDirection:"row", justifyContent:"space-between"}}>
+      
+        <Text style={[{paddingLeft:40, paddingRight:40, lineHeight: 40 }, styles.bold]}>{pages[i].content}</Text>
+        
+      </ScrollView>
+      <View style={{flexDirection:"row", justifyContent:"space-between"}}>
         {i > 0 ? 
           
           <MaterialIcons
                       name="navigate-before"
-                      size={100}
-                      color="purple"
+                      size={80}
+                      style={styles.purpleText}
                       onPress={previous}
                     />
-         : <MaterialIcons style={{visibility:"hidden"}} />
+         : <MaterialIcons style={{color:"white"}} />
           }
         <MaterialIcons
                       name="navigate-next"
-                      size={100}
-                      color="purple"
+                      size={80}
+                      style={styles.purpleText}
                       onPress={next}
                     />
         </View>
-      </ScrollView>
     </View>
   );
 }
