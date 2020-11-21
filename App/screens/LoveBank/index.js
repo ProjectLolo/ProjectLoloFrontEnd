@@ -19,8 +19,14 @@ export default function LoveBank({ route, navigation }) {
     variables: {
       kidId: route.params.activeKid,
     },
+    onError(error) {
+      console.log("error", error.graphQLErrors);
+    },
+    onCompleted(fetchedData) {
+      console.log("works", fetchedData);
+    },
   });
-
+  console.log("lovebank", loveBanks._id);
   console.log("ROUTE PARAMS", route.params);
   useEffect(() => {
     refetch();
@@ -30,7 +36,9 @@ export default function LoveBank({ route, navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
-      <Text style={styles.titleText}>Welcome to [kid]'s love bank!</Text>
+      <Text style={styles.titleText}>
+        Welcome to {route.params.kidName}'s love bank!
+      </Text>
       <FlatList
         style={{ marginBottom: 10 }}
         contentContainerStyle={{
@@ -46,7 +54,7 @@ export default function LoveBank({ route, navigation }) {
             >
               <MediaContentCard
                 title={item.title}
-                person={item.userId._id}
+                person={item.userId.id}
                 topColor="pink"
                 bottomColor="purple"
                 loveBankId={item._id}
