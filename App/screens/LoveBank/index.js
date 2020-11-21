@@ -26,7 +26,7 @@ export default function LoveBank({ route, navigation }) {
       console.log("works", fetchedData);
     },
   });
-  console.log("lovebank", loveBanks._id);
+
   console.log("ROUTE PARAMS", route.params);
   useEffect(() => {
     refetch();

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import * as firebase from "firebase";
 import {
   View,
+  Alert,
   Text,
   TouchableWithoutFeedback,
   Image,
@@ -10,6 +12,7 @@ import {
 } from "react-native";
 import { Video } from "expo-av";
 import NavHome from "../../components/NavHome";
+import { useNavigation } from "@react-navigation/native";
 import MediaContentComments from "../../components/MediaContentComments";
 import EnlargeVideo from "../../components/EnlargeVideo";
 import styles from "@styles/styles";
@@ -18,7 +21,7 @@ import images from "@assets/colors";
 import fonts from "@assets/fonts";
 import colors from "@assets/colors";
 import { useQuery, useMutation } from "@apollo/client";
-import { CREATE_LIKE } from "../../../graphql/mutations";
+import { CREATE_LIKE, DELETE_LOVEBANK } from "../../../graphql/mutations";
 import { GET_COMMENTS_AND_LIKES } from "../../../graphql/queries";
 import { useIsFocused } from "@react-navigation/native";
 import CommentBox from "../../components/CommentBox";
@@ -35,12 +38,16 @@ export default function MediaContentDetails({ navigation, route }) {
     titleVid,
     loveBankId,
     preview,
+    person,
     video,
     activeKid,
     activeUser,
     recImage,
     likes,
   } = route.params;
+
+  const Navigation = useNavigation();
+  const { goBack } = Navigation;
 
   console.log(route.params);
 
@@ -69,6 +76,30 @@ export default function MediaContentDetails({ navigation, route }) {
     },
   });
 
+  const [deleteLovebank, { data: deletedData }] = useMutation(DELETE_LOVEBANK, {
+    variables: {
+      loveBankId: loveBankId,
+    },
+    onError(error) {
+      console.log("error", error.graphQLErrors);
+    },
+    onCompleted() {
+      console.log("Deleted");
+
+      // Not sure that this is correct videoRef
+      let videoRef = firebase.storage().ref("videos/" + video);
+      videoRef
+        .delete()
+        .then(() => {
+          console.log("the content has been deleted successfully.");
+          // goBack();
+        })
+        .catch((e) => console.log("error on content deletion => ", e));
+
+      goBack();
+    },
+  });
+
   console.log("liked", liked);
 
   // Time constraints prevent me from making a subscription for the comments.
@@ -85,6 +116,25 @@ export default function MediaContentDetails({ navigation, route }) {
       setLikeLength(likeLength + 1);
       giveLike();
     }
+  }
+
+  function handleDeleteButton() {
+    Alert.alert(
+      "Are you sure?",
+      "This cannot be undone",
+      [
+        {
+          text: "Confirm",
+          onPress: () => deleteLovebank(loveBankId),
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   if (!comments) {
@@ -192,6 +242,29 @@ export default function MediaContentDetails({ navigation, route }) {
                 </View>
               </TouchableWithoutFeedback>
             </View>
+
+            {activeUser == person && (
+              <View>
+                <TouchableWithoutFeedback onPress={handleDeleteButton}>
+                  <Text
+                    style={[
+                      {
+                        width: "100%",
+                        color: "black",
+                        fontFamily: fonts.bold,
+                        textAlign: "center",
+                        fontSize: adjust(16),
+                      },
+                    ]}
+                    adjustsFontSizeToFit={true}
+                    numberOfLines={2}
+                  >
+                    Delete
+                  </Text>
+                </TouchableWithoutFeedback>
+              </View>
+            )}
+
             <CommentBox
               loveBankId={loveBankId}
               refetch={refetch}
