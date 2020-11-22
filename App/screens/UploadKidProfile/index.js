@@ -4,7 +4,6 @@ import * as ImagePicker from "expo-image-picker";
 
 import {
   View,
-  Button,
   Image,
   Text,
   TouchableOpacity,
@@ -13,7 +12,6 @@ import {
   Dimensions,
 } from "react-native";
 import styles from "../../styles"; //global styles
-import style from "./style"; //local styles
 import { useMutation } from "@apollo/client";
 import { ADD_KID_PROFILE_IMAGE } from "../../../graphql/mutations";
 import NavHome from "../../components/NavHome";
@@ -79,7 +77,7 @@ export default function UploadKidProfile({ route, navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.3,
     });
 
     console.log(result);

@@ -15,6 +15,7 @@ import { AuthContext } from "../../context/Auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignUp({ navigation }) {
+  const { signIn, signUp } = useContext(AuthContext);
   const [variables, setVariables] = useState({
     firstName: "",
     lastName: "",
@@ -29,7 +30,9 @@ export default function SignUp({ navigation }) {
       //TODO: give proper error message , now just giving the user the error from graphQL
       error.graphQLErrors.map(({ message }, i) => alert(`${message}`)),
     onCompleted({ signup }) {
-      navigation.navigate("UploadUserProfile", { data: signup });
+      console.log("signup.....", signup);
+      signUp(signup.token);
+      // navigation.navigate("UploadUserProfile", { data: signup });
     },
   });
 

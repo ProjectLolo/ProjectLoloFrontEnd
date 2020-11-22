@@ -37,16 +37,28 @@ export default function Settings({ route, navigation }) {
   const [variables, setVariables] = useState({
     firstName: "",
     lastName: "",
-    nickName: "",
     email: "",
     password: "",
     passwordControl: "",
     profilePic: "",
   });
 
+  console.log("param", route.params.activeUser);
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
+    },
+    onError: (error) => {
+      console.log("SETTINGS ERROR: ", error);
+      // if (error.graphQLErrors[0].message === "Please fill the form") {
+      //   setMessage({
+      //     text: "To submit changes, please add password",
+      //     color: "orange",
+      //   });
+      // }
+    },
+    onCompleted(data) {
+      console.log("data", data);
     },
   });
 
@@ -55,7 +67,6 @@ export default function Settings({ route, navigation }) {
     setVariables({
       firstName: data && data.findUserById.firstName,
       lastName: data && data.findUserById.lastName,
-      nickName: "",
       email: data && data.findUserById.email,
       profilePic: data && data.findUserById.profilePic,
       password: "",
@@ -80,6 +91,7 @@ export default function Settings({ route, navigation }) {
       }
     },
     onCompleted(data) {
+      console.log("data", data);
       setChangeInfo(false);
       setMessage({ text: "SUCCESS!!!", color: "teal" });
       setVariables({ ...variables, password: "", passwordControl: "" });
@@ -126,7 +138,7 @@ export default function Settings({ route, navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.3,
     });
 
     console.log(result);
