@@ -11,32 +11,35 @@ import {
 } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
+import tempStories from "./tempStories"
 
 
 export default function ShareSomething({ navigation }) {
   const [stories, setStories] = useState([])
+  
 
-  const storiesURL = "http://192.168.42.142:4000" ;
+  // const storiesURL = "http://localhost:4000" ;
 
-  async function fetchAllStories() {
-    try {
-      const response = await axios.get(`${storiesURL}/story`);
-      const Stories = response.data;
-      setStories(Stories)
+  // async function fetchAllStories() {
+  //   try {
+  //     const response = await axios.get(`${storiesURL}/story`);
+  //     const Stories = response.data;
+  //     setStories(Stories)
       
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.message);
-      } else {
-        console.log(error.message);
-      }
-    }
-  }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.log(error.response.data.message);
+  //     } else {
+  //       console.log(error.message);
+  //     }
+  //   }
+  // }
 
   console.log("Stories", stories);
 
   useEffect(() => {
-    fetchAllStories();
+    setStories(tempStories)
+    // fetchAllStories();
   }, []);
 
   return (
