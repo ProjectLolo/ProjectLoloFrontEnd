@@ -84,7 +84,10 @@ export default function MediaContentDetails({ navigation, route }) {
       console.log("error", error.graphQLErrors);
     },
     onCompleted() {
-      const videoRef = firebase.storage().ref().child(video);
+      const videoRef = firebase
+        .storage()
+        .ref()
+        .child("videos/" + preview);
       videoRef
         .delete()
         .then(() => {
