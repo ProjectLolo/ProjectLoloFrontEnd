@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
-import tempStories from "./tempStories"
+import {tempStories} from "./tempStories"
 
 
 export default function ShareSomething({ navigation }) {
-  const [stories, setStories] = useState([])
+  const [stories, setStories] = useState(tempStories)
   
 
   // const storiesURL = "http://localhost:4000" ;
@@ -35,12 +35,13 @@ export default function ShareSomething({ navigation }) {
   //   }
   // }
 
-  console.log("Stories", stories);
+  
 
   useEffect(() => {
-    setStories(tempStories)
+    // setStories(tempStories)
     // fetchAllStories();
   }, []);
+  console.log("Stories", stories);
 
   return (
     <View style={style.container}>
