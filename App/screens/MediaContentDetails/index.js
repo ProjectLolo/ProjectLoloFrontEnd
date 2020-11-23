@@ -84,19 +84,14 @@ export default function MediaContentDetails({ navigation, route }) {
       console.log("error", error.graphQLErrors);
     },
     onCompleted() {
-      console.log("Deleted");
-
-      // Not sure that this is correct videoRef
-      // let videoRef = firebase.storage().ref("videos/" + video);
-      // videoRef
-      //   .delete()
-      //   .then(() => {
-      //     console.log("the content has been deleted successfully.");
-      //     // goBack();
-      //   })
-      //   .catch((e) => console.log("error on content deletion => ", e));
-
-      goBack();
+      const videoRef = firebase.storage().ref().child(video);
+      videoRef
+        .delete()
+        .then(() => {
+          console.log("The content has been deleted successfully.");
+          goBack();
+        })
+        .catch((e) => console.log("Error on content deletion => ", e));
     },
   });
 
