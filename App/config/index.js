@@ -4,7 +4,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { server } from "@env";
 
 const httpLink = createHttpLink({
-  uri: server || "http://192.168.86.26:5000/graphql",
+
+  uri: server || "http://localhost:5000/graphql",
+
 });
 
 const authLink = setContext(async (_, { headers }) => {

@@ -11,7 +11,10 @@ export const GET_LOVEBANKS = gql`
       type
       category
       kidId
-      userId
+      userId {
+        id
+        firstName
+      }
       likes {
         userId
       }
@@ -65,7 +68,7 @@ export const FIND_KID_BY_CODE = gql`
 export const FIND_USER_BY_ID = gql`
   query findUserById($id: String!) {
     findUserById(id: $id) {
-      id
+      _id
       firstName
       lastName
       email

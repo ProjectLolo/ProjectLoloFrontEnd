@@ -50,7 +50,7 @@ export const SIGNUP = gql`
       firstName
       lastName
       email
-      id
+      _id
       token
     }
   }
@@ -59,11 +59,10 @@ export const SIGNUP = gql`
 export const ADD_USER_PROFILE_IMAGE = gql`
   mutation addUserProfileImage($id: String!, $imageUrl: String!) {
     addUserProfileImage(id: $id, imageUrl: $imageUrl) {
-      id
+      _id
       email
       firstName
       lastName
-      nickName
       profilePic
     }
   }
@@ -175,21 +174,18 @@ export const SETTINGS = gql`
     $firstName: String!
     $lastName: String!
     $profilePic: String!
-    $nickName: String!
   ) {
     setting(
       password: $password
       firstName: $firstName
       lastName: $lastName
       profilePic: $profilePic
-      nickName: $nickName
     ) {
-      id
+      _id
       email
       password
       firstName
       lastName
-      nickName
       profilePic
     }
   }

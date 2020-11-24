@@ -10,37 +10,44 @@ import {
   FlatList
 } from "react-native";
 import StoryCard from "../../../components/StoryCard";
+import styles from "@styles/styles";
+import {tempStories} from "./tempStories"
 
 
 export default function ShareSomething({ navigation }) {
-  const [stories, setStories] = useState([])
+  const [stories, setStories] = useState(tempStories)
+  
 
-  const storiesURL = "http://192.168.42.14:4000" ;
+  // const storiesURL = "http://localhost:4000" ;
 
-  async function fetchAllStories() {
-    try {
-      const response = await axios.get(`${storiesURL}/story`);
-      const Stories = response.data;
-      setStories(Stories)
+  // async function fetchAllStories() {
+  //   try {
+  //     const response = await axios.get(`${storiesURL}/story`);
+  //     const Stories = response.data;
+  //     setStories(Stories)
       
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.message);
-      } else {
-        console.log(error.message);
-      }
-    }
-  }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.log(error.response.data.message);
+  //     } else {
+  //       console.log(error.message);
+  //     }
+  //   }
+  // }
 
-  console.log("Stories", stories);
+  
 
   useEffect(() => {
-    fetchAllStories();
+    // setStories(tempStories)
+    // fetchAllStories();
   }, []);
+  console.log("Stories", stories);
 
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
+      
      <FlatList
+          style={styles.text}
           contentContainerStyle={{
             alignSelf: "center",
             flexGrow: 1,
@@ -55,10 +62,11 @@ export default function ShareSomething({ navigation }) {
             return <StoryCard item={item} />;
           }}
         />
+        
     </View>
   );
 }
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",

@@ -37,7 +37,7 @@ export default function KidCircles({ route, navigation }) {
   useEffect(() => {
     refetch();
 
-  data && setFetchedData(data.findAllKids);
+    data && setFetchedData(data.findAllKids);
   }, [refetch, data, isFocused]);
 
   return (

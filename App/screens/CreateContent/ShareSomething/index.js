@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 import Images from "../../../assets";
-import style from "../../../styles";
+import styles from "../../../styles";
 import * as ImagePicker from "expo-image-picker";
 import NavHome from "../../../components/NavHome";
 
@@ -76,42 +76,42 @@ export default function ShareSomething({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
       <NavHome />
-      <View style={styles.mainContainer}>
-        <Image style={styles.image} source={Images.videoCameraPurple} />
-        <Text style={[style.h2, style.center]}>Share Something</Text>
-        <Text style={style.center}>
-          Share a video from your media files to upload in the love bank
+      <View style={style.mainContainer}>
+        <Image style={style.image} source={Images.videoCameraPurple} />
+        <Text style={[styles.h2, style.center]}>Share Something</Text>
+        <Text style={styles.center}>
+          Share a video (max 2 min) from your media files to upload in the love bank
         </Text>
       </View>
+      <TouchableOpacity
+          onPress={() => navigation.navigate("Suggestions")}
+        >
+          <View style={[styles.loginButton, { marginBottom: "5%" }]}>
+            <Text style={styles.loginButtonText}>Get content suggestions</Text>
+          </View>
+        </TouchableOpacity>
       {/* Icons for record and upload */}
-      <View style={styles.rowContainer}>
+      <View style={style.rowContainer}>
         <TouchableOpacity onPress={takeVideo}>
-          <View style={styles.iconContainer}>
-            <Image style={styles.icon} source={Images.videoCameraPurple} />
+          <View style={style.iconContainer}>
+            <Image style={style.icon} source={Images.videoCameraPurple} />
             <Text>Start recording</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={pickVideo}>
-          <View style={styles.iconContainer}>
-            <Image style={styles.icon} source={Images.upload} />
+          <View style={style.iconContainer}>
+            <Image style={style.icon} source={Images.upload} />
             <Text>Upload video</Text>
           </View>
         </TouchableOpacity>
       </View>
-      {/* navigation */}
-      {/* <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Recommended")}
-        >
-          <Text style={{ textAlign: "center", marginTop: 50 }}>
-            Press here to go to Recommended
-          </Text>
-        </TouchableWithoutFeedback> */}
+      
     </View>
   );
 }
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",

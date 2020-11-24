@@ -5,6 +5,7 @@ import CreateFamilyMember from "../screens/CreateFamilyMember";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
+import UploadUserProfile from "../screens/UploadUserProfile";
 import TakeProfilePicture from "../components/TakeProfilePicture";
 import ShareFamilyCode from "../screens/ShareFamilyCode";
 import JoinKidCircle from "../screens/JoinKidCircle";
@@ -22,14 +23,19 @@ import SingASong from "../screens/CreateContent/SingASong";
 import Teach from "../screens/CreateContent/Teach";
 import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoPreview from "../components/VideoPreview";
+import Suggestions from "../screens/CreateContent/Suggestions";
 
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
 
+  console.log("STATE IN STACKNAV", state);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="KidCircles"
+        initialRouteName={
+          state.screen === "SignUp" ? "UploadUserProfile" : "KidCircles"
+        }
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
@@ -44,6 +50,11 @@ export default function authNavigator({ route, state }) {
         />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
         <Stack.Screen name="UploadKidProfile" component={UploadKidProfile} />
+        <Stack.Screen
+          name="UploadUserProfile"
+          component={UploadUserProfile}
+          initialParams={state}
+        />
         <Stack.Screen
           name="TakeProfilePicture"
           component={TakeProfilePicture}
@@ -77,6 +88,7 @@ export default function authNavigator({ route, state }) {
           component={ShareSomething}
           initialParams={state}
         />
+        <Stack.Screen name="Suggestions" component={Suggestions} />
         <Stack.Screen name="SingASong" component={SingASong} />
         <Stack.Screen name="Teach" component={Teach} />
         <Stack.Screen

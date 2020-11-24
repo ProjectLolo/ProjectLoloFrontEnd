@@ -12,6 +12,7 @@ export default function CombineNavigators() {
   const authContextValue = React.useMemo(
     () => ({
       signIn: async (token) => {
+        console.log("WHAT IS IN THE SINGIN DATA", token);
         const decodedToken = jwtDecode(token);
 
         await AsyncStorage.setItem("userToken", token);
@@ -25,11 +26,14 @@ export default function CombineNavigators() {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
-        console.log("DATA IN SIGNUP", data);
-        const decodedToken = jwtDecode(token);
-        console.log("TOKEN IN SIGNUP", token);
+        console.log("WHAT IS IN THE SIGNUP DATA?", data);
+        const screen = "SignUp";
+        const decodedToken = jwtDecode(data);
         await AsyncStorage.setItem("userToken", data);
-        dispatch({ type: "SIGN_IN", token: { data, decodedToken } });
+        dispatch({
+          type: "SIGN_IN",
+          token: { data, decodedToken, screen },
+        });
       },
       activeUser: async (data) => {
         dispatch({ type: "SET_USER", id: data });
@@ -85,11 +89,13 @@ export default function CombineNavigators() {
             firstName: action.token.decodedToken.name,
           };
         case "SIGN_IN":
+          console.log("SIGNUP action.screen", action);
           return {
             ...prevState,
             userToken: action.token,
             activeUser: action.token.decodedToken.userId,
             firstName: action.token.decodedToken.name,
+            screen: action.token.screen,
           };
         case "SIGN_OUT":
           return {
