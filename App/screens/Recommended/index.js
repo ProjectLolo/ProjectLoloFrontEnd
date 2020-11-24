@@ -95,8 +95,7 @@ export default function Recommended({ navigation }) {
         justifyContent: "space-evenly",
       }}
     >
-
-      <NavHome screen="Recommended"/>
+      <NavHome screen="Recommended" />
       <Text style={[styles.title, { marginTop: 0 }]}>
         {"What do you want to \n share today?"}
       </Text>
