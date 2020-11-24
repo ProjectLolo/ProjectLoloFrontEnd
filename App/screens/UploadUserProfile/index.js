@@ -4,7 +4,6 @@ import * as ImagePicker from "expo-image-picker";
 
 import {
   View,
-  Button,
   Image,
   Text,
   TouchableOpacity,
@@ -28,19 +27,16 @@ export default function UploadUserProfile({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState("");
   const { signIn, signUp } = useContext(AuthContext);
-  console.log("UPLOADUSERPORIFLE");
 
   const [addUserProfileImage, { error }] = useMutation(ADD_USER_PROFILE_IMAGE, {
-    onError: (error) =>
-      console.log("mutation upload user profileImage ", error.graphQLErrors),
-
+    onError: (error) => {
+      console.log("mutation upload user profileImage ", error.graphQLErrors);
+    },
     onCompleted(data) {
-      console.log(route.params.data.token);
-
-      if (route.params.data.token) {
+      if (route.params.userToken.data) {
         //Does this work?
-        signIn(route.params.data.token);
         navigation.navigate("KidCircles");
       }
     },
@@ -62,12 +58,15 @@ export default function UploadUserProfile({ route, navigation }) {
   }, []);
 
   function onSubmitHandler() {
-    addUserProfileImage({
-      variables: {
-        id: route.params.data.id,
-        imageUrl: picture,
-      },
-    });
+    console.log("activeUser?", route.params.activeUser);
+    if (route.params.activeUser) {
+      addUserProfileImage({
+        variables: {
+          id: route.params.activeUser,
+          imageUrl: picture,
+        },
+      });
+    }
   }
 
   function hideOptions() {
@@ -75,9 +74,9 @@ export default function UploadUserProfile({ route, navigation }) {
   }
 
   const handleSkip = () => {
-    if (route.params.data.token) {
+    if (route.params.userToken.data) {
       //Does this work?
-      signIn(route.params.data.token);
+      navigation.navigate("KidCircles");
     }
   };
 
@@ -95,7 +94,7 @@ export default function UploadUserProfile({ route, navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.3,
     });
 
     console.log(result);
@@ -130,6 +129,7 @@ export default function UploadUserProfile({ route, navigation }) {
         setLoading(true);
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        setProgress(progress);
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log("Upload is paused");
@@ -172,7 +172,7 @@ export default function UploadUserProfile({ route, navigation }) {
         numberOfLines={1}
         adjustsFontSizeToFit={true}
       >
-        Welcome {route.params.data.firstName} !
+        Welcome {route.params.firstName} !
       </Text>
 
       <Text
@@ -194,11 +194,14 @@ export default function UploadUserProfile({ route, navigation }) {
       </Text>
 
       {loading ? (
-        <ActivityIndicator
-          style={{ marginBottom: "76.5%" }}
-          size="large"
-          color="#660066"
-        />
+        <>
+          <ActivityIndicator
+            style={{ marginBottom: "76.5%" }}
+            size="large"
+            color={colors.purple}
+          />
+          <Text>{progress}</Text>
+        </>
       ) : (
         <View style={{ marginBottom: "15%" }}>
           <TouchableWithoutFeedback

@@ -5,6 +5,7 @@ import CreateFamilyMember from "../screens/CreateFamilyMember";
 import KidCircles from "../screens/KidCircles";
 import CreateKidCircle from "../screens/CreateKidCircle";
 import UploadKidProfile from "../screens/UploadKidProfile";
+import UploadUserProfile from "../screens/UploadUserProfile";
 import TakeProfilePicture from "../components/TakeProfilePicture";
 import ShareFamilyCode from "../screens/ShareFamilyCode";
 import JoinKidCircle from "../screens/JoinKidCircle";
@@ -27,10 +28,14 @@ import Suggestions from "../screens/CreateContent/Suggestions";
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
 
+  console.log("STATE IN STACKNAV", state);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="KidCircles"
+        initialRouteName={
+          state.screen === "SignUp" ? "UploadUserProfile" : "KidCircles"
+        }
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
@@ -45,6 +50,11 @@ export default function authNavigator({ route, state }) {
         />
         <Stack.Screen name="CreateKidCircle" component={CreateKidCircle} />
         <Stack.Screen name="UploadKidProfile" component={UploadKidProfile} />
+        <Stack.Screen
+          name="UploadUserProfile"
+          component={UploadUserProfile}
+          initialParams={state}
+        />
         <Stack.Screen
           name="TakeProfilePicture"
           component={TakeProfilePicture}
