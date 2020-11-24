@@ -7,6 +7,7 @@ import { Camera } from "expo-camera";
 import * as Permissions from "expo-permissions";
 import { MaterialIcons } from "@expo/vector-icons";
 import StoryPage from "../../../../components/StoryPage";
+import NavHome from "../../../../components/NavHome";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -18,7 +19,7 @@ export default function VideoRecording({ route, navigation }) {
   const [recording, setRecording] = useState(false);
   const [video, setVideo] = useState(false);
 
-  console.log("video", video)
+  console.log("video", video);
 
   // asks permission from used to use camera
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function VideoRecording({ route, navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
+      <NavHome />
       <Camera
         style={{ flex: 1, width: screenWidth, height: (screenHeight * 2) / 3 }}
         type={type}

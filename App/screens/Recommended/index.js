@@ -6,18 +6,9 @@ import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function Recommended({ navigation }) {
   const [showMore, setShowMore] = useState(false);
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-      setShowMore(false);
-    }
-  }, [isFocused]);
 
   const cardContent = [
     {
@@ -78,11 +69,6 @@ export default function Recommended({ navigation }) {
       image: images.Memory,
       nav: "HolidayMemory",
     },
-    {
-      id: 8,
-      image: images.Sing,
-      nav: "TakeVideo",
-    },
   ];
 
   //see more suggestions doesn't bring you to another screen...(library), it just shows more suggestions on the recommended page.
@@ -95,8 +81,7 @@ export default function Recommended({ navigation }) {
         justifyContent: "space-evenly",
       }}
     >
-
-      <NavHome screen="Recommended"/>
+      <NavHome screen="Recommended" />
       <Text style={[styles.title, { marginTop: 0 }]}>
         {"What do you want to \n share today?"}
       </Text>

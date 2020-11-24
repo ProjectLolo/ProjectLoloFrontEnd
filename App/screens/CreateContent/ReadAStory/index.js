@@ -7,16 +7,15 @@ import {
   Image,
   StyleSheet,
   Platform,
-  FlatList
+  FlatList,
 } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
-import {tempStories} from "./tempStories"
-
+import { tempStories } from "./tempStories";
+import NavHome from "../../../components/NavHome";
 
 export default function ShareSomething({ navigation }) {
-  const [stories, setStories] = useState(tempStories)
-  
+  const [stories, setStories] = useState(tempStories);
 
   // const storiesURL = "http://localhost:4000" ;
 
@@ -25,7 +24,7 @@ export default function ShareSomething({ navigation }) {
   //     const response = await axios.get(`${storiesURL}/story`);
   //     const Stories = response.data;
   //     setStories(Stories)
-      
+
   //   } catch (error) {
   //     if (error.response) {
   //       console.log(error.response.data.message);
@@ -35,8 +34,6 @@ export default function ShareSomething({ navigation }) {
   //   }
   // }
 
-  
-
   useEffect(() => {
     // setStories(tempStories)
     // fetchAllStories();
@@ -45,24 +42,23 @@ export default function ShareSomething({ navigation }) {
 
   return (
     <View style={style.container}>
-      
-     <FlatList
-          style={styles.text}
-          contentContainerStyle={{
-            alignSelf: "center",
-            flexGrow: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "90%",
-          }}
-          data={stories}
-          numColumns={2}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            return <StoryCard item={item} />;
-          }}
-        />
-        
+      <NavHome />
+      <FlatList
+        style={styles.text}
+        contentContainerStyle={{
+          alignSelf: "center",
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "90%",
+        }}
+        data={stories}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return <StoryCard item={item} />;
+        }}
+      />
     </View>
   );
 }
