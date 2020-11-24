@@ -17,8 +17,13 @@ export default function ShareSomething({ navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+      const {
+        status: cameraStatus,
+      } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== "granted") {
         alert("Sorry, we need camera roll permissions to make this work!");
+      } else if (cameraStatus !== "granted") {
+        alert("Sorry, we need camera permissions to make this work!");
       }
     })();
   }, []);
@@ -41,13 +46,27 @@ export default function ShareSomething({ navigation }) {
   };
 
   const takeVideo = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      allowsEditing: true,
-      aspect: [3, 4],
-      quality: 1,
-    });
-    console.log(result);
+    let result;
+    if (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 10) {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+        aspect: [3, 4],
+
+        videoMaxDuration: 120,
+        videoExportPreset: ImagePicker.VideoExportPreset.H264_1280x720,
+      });
+      console.log(result);
+    } else {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+        aspect: [3, 4],
+        quality: 0.5,
+        videoMaxDuration: 120,
+      });
+      console.log(result);
+    }
 
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {

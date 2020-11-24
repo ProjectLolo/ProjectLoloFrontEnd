@@ -25,8 +25,7 @@ export default function VideoPreview({ route, navigation }) {
   console.log("AK", route.params.activeKid);
   // Mutation
   const [loveBankEntry, { error }] = useMutation(CREATE_LOVEBANK, {
-    onError: (error) =>
-      console.log("mutation create lovebank content", error.graphQLErrors),
+    onError: (error) => console.log("mutation create lovebank content", error),
     onCompleted(data) {
       console.log("completed", data);
       navigation.navigate("LoveBank");
