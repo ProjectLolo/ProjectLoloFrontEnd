@@ -6,18 +6,9 @@ import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function Recommended({ navigation }) {
   const [showMore, setShowMore] = useState(false);
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-      setShowMore(false);
-    }
-  }, [isFocused]);
 
   const cardContent = [
     {
@@ -77,11 +68,6 @@ export default function Recommended({ navigation }) {
       id: 7,
       image: images.Memory,
       nav: "HolidayMemory",
-    },
-    {
-      id: 8,
-      image: images.Sing,
-      nav: "TakeVideo",
     },
   ];
 
