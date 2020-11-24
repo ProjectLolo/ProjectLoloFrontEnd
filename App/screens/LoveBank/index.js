@@ -54,7 +54,7 @@ export default function LoveBank({ route, navigation }) {
             >
               <MediaContentCard
                 title={item.title}
-                person={item.userId.id}
+                person={item.userId._id}
                 topColor="pink"
                 bottomColor="purple"
                 loveBankId={item._id}
