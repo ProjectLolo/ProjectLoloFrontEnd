@@ -77,6 +77,7 @@ export default function MediaContentCard(props) {
           loveBankId,
           video,
           preview,
+          person,
           recImage,
           likes,
         })

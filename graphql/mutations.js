@@ -130,6 +130,18 @@ export const CREATE_LOVEBANK = gql`
   }
 `;
 
+export const DELETE_LOVEBANK = gql`
+  mutation deleteLoveBank($loveBankId: String!) {
+    deleteLoveBank(loveBankId: $loveBankId) {
+      title
+      url
+      description
+      type
+      category
+    }
+  }
+`;
+
 export const CREATE_COMMENT = gql`
   mutation createComment($loveBankId: String!, $comment: String!) {
     createComment(loveBankId: $loveBankId, comment: $comment) {
