@@ -18,10 +18,8 @@ export default function NavButtons(props) {
     },
     onCompleted(fetchedData) {},
   });
-  console.log("DATA? HERE?", data);
-  console.log("active user id", userId);
-  console.log("KIDNAME", kidName);
 
+  //get the correct kidCircle to get the correct userId (parent) who created it.
   const parent =
     data &&
     data.findAllKids.find((kid) => {
@@ -29,8 +27,6 @@ export default function NavButtons(props) {
         return kid.userId;
       }
     });
-
-  console.log("PARENT ID", parent && parent.userId);
 
   function create() {
     if (screen === "Recommended") {
