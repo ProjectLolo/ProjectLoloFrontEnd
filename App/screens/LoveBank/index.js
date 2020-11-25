@@ -68,7 +68,11 @@ export default function LoveBank({ route, navigation }) {
           );
         }}
       />
-      <NavButtons screen="LoveBank" />
+      <NavButtons
+        screen="LoveBank"
+        userId={route.params.activeUser}
+        kidName={route.params.kidName}
+      />
     </View>
   );
 }

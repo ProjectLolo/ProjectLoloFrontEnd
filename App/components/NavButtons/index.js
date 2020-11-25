@@ -1,17 +1,38 @@
 import React from "react";
 import { View, TouchableWithoutFeedback, Text, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import images from "@assets/images";
 import styles from "@styles/styles";
-
-import { useNavigation } from "@react-navigation/native";
 import colors from "../../assets/colors";
+
+import { useQuery } from "@apollo/client";
+import { GET_ALL_KIDS } from "../../../graphql/queries";
 
 export default function NavButtons(props) {
   const navigation = useNavigation();
-  const { screen } = props;
-  console.log("screen", screen);
+  const { screen, userId, kidName } = props;
 
-  function today() {
+  const { data, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
+    variables: {
+      userId: userId,
+    },
+    onCompleted(fetchedData) {},
+  });
+  console.log("DATA? HERE?", data);
+  console.log("active user id", userId);
+  console.log("KIDNAME", kidName);
+
+  const parent =
+    data &&
+    data.findAllKids.find((kid) => {
+      if (kid.name === kidName) {
+        return kid.userId;
+      }
+    });
+
+  console.log("PARENT ID", parent && parent.userId);
+
+  function create() {
     if (screen === "Recommended") {
       return (
         <TouchableWithoutFeedback>
@@ -69,7 +90,7 @@ export default function NavButtons(props) {
     }
   }
 
-  function create() {
+  function account() {
     if (screen === "Settings") {
       return (
         <TouchableWithoutFeedback>
@@ -95,7 +116,11 @@ export default function NavButtons(props) {
     } else {
       return (
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => {
+            parent && parent.userId === userId
+              ? navigation.navigate("SettingsParent")
+              : navigation.navigate("Settings");
+          }}
         >
           <View style={styles.navBtContainer}>
             <Image style={styles.navBtImage} source={images.monkey} />
@@ -108,9 +133,9 @@ export default function NavButtons(props) {
 
   return (
     <View style={styles.navBtsContainer}>
-      {today()}
-      {loveBank()}
       {create()}
+      {loveBank()}
+      {account()}
     </View>
   );
 }
