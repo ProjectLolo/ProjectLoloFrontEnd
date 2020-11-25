@@ -25,12 +25,12 @@ import {
 } from "@env";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCiEbUxhuYFgdJ2VxQ3haQBAX7Iy8uqRKM",
-  authDomain: "project-lolo.firebaseapp.com",
-  databaseUrl: "https://project-lolo.firebaseio.com/",
-  projectId: "project-lolo",
-  storageBucket: "gs://project-lolo.appspot.com",
-  messagingSenderId: "1019542159442",
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseUrl: databaseUrl,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
 };
 
 
