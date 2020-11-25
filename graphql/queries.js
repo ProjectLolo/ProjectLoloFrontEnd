@@ -12,7 +12,7 @@ export const GET_LOVEBANKS = gql`
       category
       kidId
       userId {
-        id
+        _id
         firstName
       }
       likes {
