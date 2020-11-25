@@ -87,7 +87,7 @@ export default function NavButtons(props) {
   }
 
   function account() {
-    if (screen === "Settings") {
+    if (screen === "Settings" || screen === "SettingsParent") {
       return (
         <TouchableWithoutFeedback>
           <View style={styles.navActiveBtContainer}>

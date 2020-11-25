@@ -21,8 +21,6 @@ export default function SettingsParent({ route, navigation }) {
   const isFocused = useIsFocused();
   const [kidImage, setKidImage] = useState("");
   const [parentImage, setParentImage] = useState("");
-  const [parent, setParent] = useState(false);
-  const [kid, setKid] = useState(false);
   const [parentName, setParentName] = useState("");
   const [kidName, setKidName] = useState("");
 
@@ -88,15 +86,7 @@ export default function SettingsParent({ route, navigation }) {
       <Text style={[styles.title, { marginTop: 0 }]}>
         Please choose the settings you want to go to:
       </Text>
-      <TouchableWithoutFeedback
-        onPressIn={() => {
-          setParent(true);
-        }}
-        onPressOut={() => {
-          setParent(false);
-        }}
-        onPress={() => navigation.navigate("Settings")}
-      >
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <View
             style={{
@@ -123,15 +113,29 @@ export default function SettingsParent({ route, navigation }) {
               source={parentImage ? { uri: parentImage } : images.monkey}
             />
           </View>
-          {parent && (
+
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              width: "48.5%",
+              height: Dimensions.get("window").width * 0.485,
+              alignSelf: "center",
+              justifyContent: "space-evenly",
+              shadowColor: "black",
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.05,
+              shadowRadius: 5,
+              borderRadius: 150,
+            }}
+          >
             <View
               style={{
-                position: "absolute",
-                backgroundColor: "rgba(255, 255, 255, 0.6)",
-                width: "48.5%",
-                height: Dimensions.get("window").width * 0.485,
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                width: "60%",
+                height: "60%",
                 alignSelf: "center",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 shadowColor: "black",
                 shadowOffset: { width: 0, height: 0 },
                 shadowOpacity: 0.05,
@@ -143,25 +147,25 @@ export default function SettingsParent({ route, navigation }) {
                 style={[
                   styles.cardTitle,
                   {
+                    marginTop: "10.5%",
+                    alignSelf: "center",
+                    textAlign: "center",
                     color: colors.dkPink,
                     fontFamily: fonts.semiBold,
                     paddingBottom: 15,
+                    width: "90%",
                   },
                 ]}
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
               >
                 {parentName}
               </Text>
             </View>
-          )}
+          </View>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPressIn={() => {
-          setKid(true);
-        }}
-        onPressOut={() => {
-          setKid(false);
-        }}
         onPress={() => navigation.navigate("SettingsKid")}
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -190,15 +194,29 @@ export default function SettingsParent({ route, navigation }) {
               source={kidImage ? kidImage : images.monkey}
             />
           </View>
-          {kid && (
+
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              width: "48.5%",
+              height: Dimensions.get("window").width * 0.485,
+              alignSelf: "center",
+              justifyContent: "space-evenly",
+              shadowColor: "black",
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.05,
+              shadowRadius: 5,
+              borderRadius: 150,
+            }}
+          >
             <View
               style={{
-                position: "absolute",
-                backgroundColor: "rgba(255, 255, 255, 0.6)",
-                width: "48.5%",
-                height: Dimensions.get("window").width * 0.485,
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                width: "60%",
+                height: "60%",
                 alignSelf: "center",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 shadowColor: "black",
                 shadowOffset: { width: 0, height: 0 },
                 shadowOpacity: 0.05,
@@ -210,19 +228,29 @@ export default function SettingsParent({ route, navigation }) {
                 style={[
                   styles.cardTitle,
                   {
+                    marginTop: "10.5%",
+                    alignSelf: "center",
+                    textAlign: "center",
                     color: colors.dkPink,
                     fontFamily: fonts.semiBold,
                     paddingBottom: 15,
+                    width: "90%",
                   },
                 ]}
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
               >
                 {kidName}
               </Text>
             </View>
-          )}
+          </View>
         </View>
       </TouchableWithoutFeedback>
-      <NavButtons />
+      <NavButtons
+        screen="SettingsParent"
+        userId={route.params.activeUser}
+        kidName={route.params.kidName}
+      />
     </View>
   );
 }
