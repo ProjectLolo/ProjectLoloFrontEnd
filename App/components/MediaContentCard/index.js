@@ -37,8 +37,8 @@ export default function MediaContentCard(props) {
     firstName,
   } = props;
   console.log(video);
-
-  useEffect(() => {
+  console.log("MEDIA CARD PREVIEW", preview)
+  useEffect(() => { 
     if (category === "share") {
       setTitleVid("Share Something");
       setRecImage(images.RecShare);
@@ -53,6 +53,7 @@ export default function MediaContentCard(props) {
         preview,
         (width, height) => {
           setSizeImage({ width: width, height: height, loading: false });
+          console.log("SIZE??????????", sizeImage)
         },
         (error) => {
           setSizeImage({ ...sizeImage, loading: false });

@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Dimensions, Image,  } from "react-native";
 import { Video } from "expo-av";
 
-export default function EnlargeVideo({ video, hide }) {
+export default function EnlargeVideo({ video, hide, type }) {
+
   return (
     <View
       style={{
@@ -27,7 +28,7 @@ export default function EnlargeVideo({ video, hide }) {
         ></View>
       </TouchableWithoutFeedback>
 
-      <Video
+      {type === "video" ? <Video
         source={{ uri: video }}
         rate={1.0}
         volume={1.0}
@@ -36,7 +37,13 @@ export default function EnlargeVideo({ video, hide }) {
         resizeMode="contain"
         useNativeControls
         style={{ alignSelf: "center", width: "50%", height: "50%" }}
+      /> : 
+      <Image
+        source={{ uri: video }}
+        resizeMode="contain"
+        style={{ alignSelf: "center", width: Dimensions.get("window").width * 0.6, height: Dimensions.get("window").height * 0.8 }}
       />
+      }
     </View>
   );
 }
