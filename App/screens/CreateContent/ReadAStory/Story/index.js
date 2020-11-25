@@ -44,7 +44,7 @@ export default function VideoRecording({ route, navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <NavHome />
+      {/* <NavHome /> */}
       <Camera
         style={{ flex: 1, width: screenWidth, height: (screenHeight * 2) / 3 }}
         type={type}
