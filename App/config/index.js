@@ -5,7 +5,7 @@ import { server } from "@env";
 
 const httpLink = createHttpLink({
 
-  uri: server || "http://localhost:5000/graphql",
+  uri: server || "http://192.168.86.37:5000/graphql",
 
 });
 

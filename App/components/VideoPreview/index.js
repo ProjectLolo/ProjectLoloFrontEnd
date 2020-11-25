@@ -41,7 +41,7 @@ export default function VideoPreview({ route, navigation }) {
         url: video,
         preview: route.params.uri,
         description: "this is a video",
-        type: "video",
+        type: route.params.type,
         category: "share",
         kidId: route.params.activeKid,
       },
@@ -50,6 +50,7 @@ export default function VideoPreview({ route, navigation }) {
 
   // Upload Video
   useEffect(() => {
+    console.log("ASDASDADSADADASDASD", route.params.uri)
     uploadVideo(route.params.uri);
   }, [route.params.uri]);
 
@@ -99,21 +100,28 @@ export default function VideoPreview({ route, navigation }) {
       }
     );
   };
-
+  console.log("PREVIEW????????", route.params.uri)
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        <Text style={[style.h2, style.center]}>Your recording is ready!</Text>
-        <Text style={style.center}>Replay your recording here</Text>
-        <Video
+        <Text style={[style.h2, style.center]}>Your {route.params.type === "video" ? "recording" : "picture"} is ready!</Text>
+        <Text style={style.center}>{route.params.type === "video" ? "Replay your recording here!" : "Checkout the picture you made!"}</Text>
+        {route.params.type === "video" ? <Video
           source={{ uri: route.params.uri }}
           rate={1.0}
           volume={1.0}
           isMuted={false}
           resizeMode="cover"
           useNativeControls
-          style={{ width: 300, height: 300 }}
-        />
+          style={{ width: 300, height: 400 }}
+        /> : 
+        <Image
+        style={{ width: 400, height: 300 }}
+        source={{
+          uri: route.params.uri,
+        }}
+      />
+        }
       </View>
       {/* Icons for record and upload */}
       <View style={styles.rowContainer}>
