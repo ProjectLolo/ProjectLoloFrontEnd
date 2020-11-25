@@ -14,6 +14,7 @@ import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
 import SettingsParent from "../screens/SettingsParent";
 import SettingsKid from "../screens/SettingsKid";
+import SettingsSuggestions from "../screens/SettingsSuggestions";
 import MediaContentDetails from "../screens/MediaContentDetails";
 import Activate from "../screens/CreateContent/Activate";
 import FunAnimals from "../screens/CreateContent/FunAnimals";
@@ -86,6 +87,11 @@ export default function authNavigator({ route, state }) {
         <Stack.Screen
           name="SettingsKid"
           component={SettingsKid}
+          initialParams={state}
+        />
+        <Stack.Screen
+          name="SettingsSuggestions"
+          component={SettingsSuggestions}
           initialParams={state}
         />
         <Stack.Screen

@@ -56,7 +56,10 @@ export default function SettingsParent({ route, navigation }) {
   useEffect(() => {
     refetch();
 
-    if (data && query2) {
+    if (
+      data &&
+      query2.client.cache.data.data[`User:${route.params.activeUser}`]
+    ) {
       const kid = data.findAllKids.find((kid) => {
         if (kid.name === route.params.kidName) {
           return true;
@@ -68,6 +71,9 @@ export default function SettingsParent({ route, navigation }) {
       setParentImage(
         query2.client.cache.data.data[`User:${route.params.activeUser}`]
           .profilePic
+          ? query2.client.cache.data.data[`User:${route.params.activeUser}`]
+              .profilePic
+          : ""
       );
       setParentName(
         query2.client.cache.data.data[`User:${route.params.activeUser}`]
@@ -91,8 +97,8 @@ export default function SettingsParent({ route, navigation }) {
           <View
             style={{
               backgroundColor: "white",
-              width: "48%",
-              height: Dimensions.get("window").width * 0.48,
+              width: "48.5%",
+              height: Dimensions.get("window").width * 0.485,
               alignSelf: "center",
               justifyContent: "space-evenly",
               shadowColor: "black",
@@ -105,9 +111,9 @@ export default function SettingsParent({ route, navigation }) {
             <Image
               style={{
                 borderRadius: 150,
-                resizeMode: !parentImage ? "contain" : "",
-                width: parentImage ? 200 : "90%",
-                height: parentImage ? 200 : "100%",
+                resizeMode: parentImage ? "cover" : "contain",
+                width: parentImage ? "100%" : "90%",
+                height: parentImage ? "100%" : "90%",
                 alignSelf: "center",
               }}
               source={parentImage ? { uri: parentImage } : images.monkey}
@@ -185,10 +191,9 @@ export default function SettingsParent({ route, navigation }) {
           >
             <Image
               style={{
-                borderRadius: 150,
-                resizeMode: !kidImage ? "contain" : "",
-                width: kidImage ? 200 : "90%",
-                height: kidImage ? 200 : "100%",
+                resizeMode: kidImage ? "cover" : "contain",
+                width: kidImage ? "100%" : "90%",
+                height: kidImage ? "100%" : "90%",
                 alignSelf: "center",
               }}
               source={kidImage ? kidImage : images.monkey}

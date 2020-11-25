@@ -229,6 +229,7 @@ export default function Settings({ route, navigation }) {
                 shadowRadius: 5,
                 height: Dimensions.get("window").width * 0.5,
                 borderRadius: 100,
+                marginTop: "5%",
               }}
             >
               <Image
@@ -522,6 +523,24 @@ export default function Settings({ route, navigation }) {
           pickPhoto={pickPhoto}
         />
       )}
+      <TouchableWithoutFeedback
+        onPress={() => navigation.navigate("SettingsSuggestions")}
+      >
+        <View
+          style={[
+            styles.loginButton,
+            {
+              position: "absolute",
+              transform: [{ rotate: "-90deg" }],
+              right: "-20%",
+              top: "17.5%",
+              width: "50%",
+            },
+          ]}
+        >
+          <Text style={styles.loginButtonText}>Any suggestions?</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
