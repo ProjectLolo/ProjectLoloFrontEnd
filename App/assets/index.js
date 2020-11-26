@@ -2,6 +2,7 @@ const images = {
   peekabondLogo: require("./images/peekabooLogo.png"),
   peekabondLogo2: require("./images/peekabooLogo2.png"),
   peekabondMonkey: require("./images/peekabooMonkeys.png"),
+  camera: require("./images/camera.png"),
   chat: require("./images/chat.png"),
   facebook: require("./images/facebook.png"),
   leftArrow: require("./images/left-arrow.png"),

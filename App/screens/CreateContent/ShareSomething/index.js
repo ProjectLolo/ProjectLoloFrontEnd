@@ -30,10 +30,10 @@ export default function ShareSomething({ navigation }) {
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.5,
     });
 
     console.log(result);
@@ -71,9 +71,26 @@ export default function ShareSomething({ navigation }) {
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
         uri: result.uri,
+        type: "video"
       });
     }
   };
+
+  const takeImage = async () => {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.2,
+      });
+      if (!result.cancelled) {
+        navigation.navigate("VideoPreview", {
+          uri: result.uri,
+          type: "picture"
+        });
+      }
+    }
+  
 
   return (
     <View style={style.container}>
@@ -82,7 +99,7 @@ export default function ShareSomething({ navigation }) {
         <Image style={style.image} source={Images.videoCameraPurple} />
         <Text style={[styles.h2, style.center]}>Share Something</Text>
         <Text style={styles.center}>
-          Share a video (max 2 min) from your media files to upload in the love bank
+          Share a picture or a video (max 2 min) from your media files to upload in the love bank
         </Text>
       </View>
       <TouchableOpacity
@@ -100,12 +117,19 @@ export default function ShareSomething({ navigation }) {
             <Text>Start recording</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={takeImage}>
+          <View style={style.iconContainer}>
+            <Image style={style.icon} source={Images.camera} />
+            <Text>Take picture</Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={pickVideo}>
           <View style={style.iconContainer}>
             <Image style={style.icon} source={Images.upload} />
-            <Text>Upload video</Text>
+            <Text>Upload</Text>
           </View>
         </TouchableOpacity>
+
       </View>
       
     </View>

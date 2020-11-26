@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedbackBase,
 } from "react-native";
 import { Video } from "expo-av";
+
 import NavHome from "../../components/NavHome";
 import { useNavigation } from "@react-navigation/native";
 import MediaContentComments from "../../components/MediaContentComments";
@@ -32,8 +33,10 @@ export default function MediaContentDetails({ navigation, route }) {
   const [likeLength, setLikeLength] = useState(0);
   const [startVideo, setStartVideo] = useState(false);
   const isFocused = useIsFocused();
+
   const {
     backCol,
+    type,
     firstName,
     titleVid,
     loveBankId,
@@ -45,7 +48,7 @@ export default function MediaContentDetails({ navigation, route }) {
     recImage,
     likes,
   } = route.params;
-
+  
   const Navigation = useNavigation();
   const { goBack } = Navigation;
 
@@ -291,7 +294,7 @@ export default function MediaContentDetails({ navigation, route }) {
           );
         }}
       />
-      {startVideo && <EnlargeVideo video={video} hide={hideOptions} />}
+      {startVideo && <EnlargeVideo video={video} type={type} hide={hideOptions} />}
     </View>
   );
 }

@@ -33,6 +33,7 @@ const firebaseConfig = {
   messagingSenderId: messagingSenderId,
 };
 
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
