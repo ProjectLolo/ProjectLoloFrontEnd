@@ -15,15 +15,14 @@ import { AuthContext } from "../../context/Auth";
 import images from "@assets/images";
 
 export default function KidCircleCard(props) {
-  const { activeKid, kidName:kName } = useContext(AuthContext);
+  const { activeKid, kidName: kName } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
-  console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();
     activeKid(id);
-    kName(kidName)
+    kName(kidName);
 
     navigation.navigate("Recommended", { id, kidName });
   }

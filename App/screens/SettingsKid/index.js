@@ -18,8 +18,9 @@ import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
-import { useQuery } from "@apollo/client";
-import { GET_ALL_KIDS } from "../../../graphql/queries";
+import { useQuery, useMutation } from "@apollo/client";
+import { FIND_KID_BY_ID } from "../../../graphql/queries";
+import { UPDATE_KID_PROFILE } from "../../../graphql/mutations";
 import { useIsFocused } from "@react-navigation/native";
 
 import adjust from "../../styles/adjust";
@@ -54,54 +55,50 @@ export default function SettingsKid({ route, navigation }) {
     }
   }, [result]);
 
-  const { data, refetch, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
+  const { data, refetch, loading: dataLoading } = useQuery(FIND_KID_BY_ID, {
     variables: {
-      userId: route.params.activeUser,
+      kidId: route.params.activeKid,
     },
     onCompleted(fetchedData) {},
   });
-  console.log(kidInfo);
+  console.log("kidInfo", kidInfo);
 
   console.log("data", data);
   useEffect(() => {
+    refetch();
     data &&
-      data.findAllKids.find((kid) => {
-        if (kid._id === route.params.activeKid) {
-          setKidInfo({
-            ...kidInfo,
-            birthdate: kid.birthdate,
-            name: kid.name,
-            nickName: kid.nickName,
-            profilePic: kid.profileImageUrl,
-          });
-        }
+      setKidInfo({
+        ...kidInfo,
+        birthdate: data.findKidById.birthdate,
+        name: data.findKidById.name,
+        nickName: data.findKidById.nickName,
+        profilePic: data.findKidById.profileImageUrl
+          ? data.findKidById.profileImageUrl
+          : null,
       });
-  }, [data, refetch, isFocused]);
+  }, [data, refetch, isFocused, updateKid]);
 
-  //   const [submitKidSettings, { error }] = useMutation(SETTINGS, {
-  //     onError: (error) => {
-  //       console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
-  //       if (error.graphQLErrors[0].message === "Please fill the form") {
-  //         setMessage({
-  //           text: "To submit changes, please add password",
-  //           color: "orange",
-  //         });
-  //       }
-  //     },
-  //     onCompleted(data) {
-  //       console.log("data", data);
-  //       setChangeInfo(false);
-  //       setMessage({ text: "SUCCESS!!!", color: "teal" });
-  //       setVariables({ ...variables, password: "", passwordControl: "" });
-  //     },
-  //   });
+  const [updateKid, { updateerror }] = useMutation(UPDATE_KID_PROFILE, {
+    onError: (error) => console.log("mutation update kid", error.graphQLErrors),
+    onCompleted(data) {
+      console.log("updatekid completed", data);
+      setMessage({ text: "Submitted!!!", color: "teal" });
+    },
+  });
 
   function submitForm(e) {
     e.preventDefault();
+    setChangeInfo(false);
 
-    setMessage({ text: "Submitted!!!", color: "teal" });
-    // submitKidSettings({ kidInfo });
-    //This mutation needs to be made still.
+    updateKid({
+      variables: {
+        id: route.params.activeKid,
+        name: kidInfo.name,
+        nickName: kidInfo.nickName,
+        birthdate: kidInfo.birthdate,
+        profileImageUrl: kidInfo.profilePic,
+      },
+    });
   }
 
   function hideOptions() {
@@ -114,7 +111,7 @@ export default function SettingsKid({ route, navigation }) {
         setMessage({ text: "", color: "" });
       }, 2000);
       return (
-        <View style={{ marginBottom: "5%", marginTop: "-5%" }}>
+        <View style={{ marginBottom: "5%", marginTop: "5%" }}>
           <Text
             style={[
               styles.cardText,
@@ -218,19 +215,8 @@ export default function SettingsKid({ route, navigation }) {
       <NavHome />
 
       <ScrollView>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator
-              style={{ marginBottom: "76.5%" }}
-              size="large"
-              color="#660066"
-            />
-          ) : (
+        {!changeInfo ? (
+          <View>
             <View
               style={{
                 backgroundColor: "white",
@@ -264,30 +250,7 @@ export default function SettingsKid({ route, navigation }) {
                 }
               />
             </View>
-          )}
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          <Text
-            style={[
-              styles.cardText,
-              {
-                color: colors.dkPink,
-                fontFamily: fonts.semiBold,
-                paddingTop: 15,
-              },
-            ]}
-          >
-            Change Profile Picture
-          </Text>
-        </TouchableWithoutFeedback>
 
-        {!changeInfo ? (
-          <View>
             <Text
               style={[
                 styles.inputLabel,
@@ -377,12 +340,66 @@ export default function SettingsKid({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {`${kidInfo.birthdate.split("T")[0].split("-")[2]} - ${
-                  kidInfo.birthdate.split("T")[0].split("-")[1]
-                } - ${kidInfo.birthdate.split("T")[0].split("-")[0]} `}
+                {moment(kidInfo.birthdate).format("DD-MM-YYYY")}
               </Text>
             </View>
-            <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
+          </View>
+        ) : (
+          <View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
+              {loading ? (
+                <ActivityIndicator
+                  style={{ marginTop: "20%", marginBottom: "25%" }}
+                  size="large"
+                  color={colors.purple}
+                />
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "50%",
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    shadowColor: "black",
+                    shadowOffset: { width: 0, height: 0 },
+                    shadowOpacity: 0.05,
+                    shadowRadius: 5,
+                    height: Dimensions.get("window").width * 0.5,
+                    borderRadius: 100,
+                    marginTop: "5%",
+                  }}
+                >
+                  <Image
+                    style={
+                      kidInfo.profilePic
+                        ? {
+                            borderRadius: 150,
+                            width: 210,
+                            height: 210,
+                            alignSelf: "center",
+                          }
+                        : styles.cardImage
+                    }
+                    source={
+                      kidInfo.profilePic
+                        ? { uri: kidInfo.profilePic }
+                        : images.monkey
+                    }
+                  />
+                </View>
+              )}
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
               <Text
                 style={[
                   styles.cardText,
@@ -393,12 +410,9 @@ export default function SettingsKid({ route, navigation }) {
                   },
                 ]}
               >
-                Change information
+                Change Profile Picture
               </Text>
             </TouchableWithoutFeedback>
-          </View>
-        ) : (
-          <View>
             <Text style={styles.inputLabel}>Name</Text>
             <TextInput
               style={styles.inputBox}
@@ -484,45 +498,59 @@ export default function SettingsKid({ route, navigation }) {
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
+
+            <TouchableWithoutFeedback
+              onPress={(e) => {
+                submitForm(e);
+              }}
+            >
+              <View style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Submit changes</Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setKidInfo(kidInfo);
+                setChangeInfo(false);
+              }}
+            >
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    color: colors.dkPink,
+                    fontFamily: fonts.semiBold,
+                    marginTop: "5%",
+                    marginBottom: "5%",
+                  },
+                ]}
+              >
+                Go back
+              </Text>
+            </TouchableWithoutFeedback>
           </View>
         )}
       </ScrollView>
 
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={(e) => {
-            submitForm(e);
-          }}
-        >
-          <View style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Submit changes</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setKidInfo(kidInfo);
-            setChangeInfo(false);
-          }}
-        >
+      {!changeInfo && !message.text ? (
+        <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
           <Text
             style={[
               styles.cardText,
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: "5%",
-                marginBottom: "5%",
+                paddingTop: 15,
               },
             ]}
           >
-            Go back
+            Change information
           </Text>
         </TouchableWithoutFeedback>
+      ) : (
+        showMessage()
       )}
-
       {!changeInfo && (
         <TouchableWithoutFeedback onPress={() => signOut()}>
           <Text
@@ -540,8 +568,6 @@ export default function SettingsKid({ route, navigation }) {
           </Text>
         </TouchableWithoutFeedback>
       )}
-
-      {showMessage()}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}
@@ -550,7 +576,7 @@ export default function SettingsKid({ route, navigation }) {
         />
       )}
 
-      <NavButtons screen="Settings" />
+      {!changeInfo && <NavButtons screen="Settings" />}
     </View>
   );
 }

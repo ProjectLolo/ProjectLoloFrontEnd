@@ -87,7 +87,7 @@ export const UPDATE_KID_PROFILE = gql`
     $name: String!
     $nickName: String!
     $birthdate: String!
-    $profileImageUrl: String!
+    $profileImageUrl: String
   ) {
     updateKidProfile(
       id: $id

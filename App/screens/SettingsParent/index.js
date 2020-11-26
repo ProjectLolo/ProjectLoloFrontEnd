@@ -65,9 +65,9 @@ export default function SettingsParent({ route, navigation }) {
           return true;
         }
       });
-      setKidImage(kid.profileImageUrl);
-      setKidName(kid.name);
 
+      setKidImage(kid && kid.profileImageUrl && kid.profileImageUrl);
+      setKidName(kid && kid.name);
       setParentImage(
         query2.client.cache.data.data[`User:${route.params.activeUser}`]
           .profilePic
@@ -89,7 +89,7 @@ export default function SettingsParent({ route, navigation }) {
       }}
     >
       <NavHome />
-      <Text style={[styles.title, { marginTop: 0 }]}>
+      <Text style={[styles.title, { marginTop: 0, marginBottom: 0 }]}>
         Please choose the settings you want to go to:
       </Text>
       <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
@@ -190,12 +190,13 @@ export default function SettingsParent({ route, navigation }) {
           >
             <Image
               style={{
+                borderRadius: 150,
                 resizeMode: kidImage ? "cover" : "contain",
                 width: kidImage ? "100%" : "90%",
                 height: kidImage ? "100%" : "90%",
                 alignSelf: "center",
               }}
-              source={kidImage ? kidImage : images.monkey}
+              source={kidImage ? { uri: kidImage } : images.monkey}
             />
           </View>
 
