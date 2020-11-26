@@ -203,7 +203,7 @@ export default function Settings({ route, navigation }) {
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
 
-      <ScrollView>
+      <ScrollView style={{ marginBottom: changeInfo ? "5%" : 0 }}>
         <TouchableWithoutFeedback
           onPress={() => {
             setChangeProfilePicture(true);
@@ -364,20 +364,6 @@ export default function Settings({ route, navigation }) {
                 {variables.email}
               </Text>
             </View>
-            <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
-              <Text
-                style={[
-                  styles.cardText,
-                  {
-                    color: colors.dkPink,
-                    fontFamily: fonts.semiBold,
-                    paddingTop: 15,
-                  },
-                ]}
-              >
-                Change information
-              </Text>
-            </TouchableWithoutFeedback>
           </View>
         ) : (
           <View>
@@ -450,48 +436,61 @@ export default function Settings({ route, navigation }) {
               }}
               value={variables.passwordControl}
             />
+
+            <TouchableWithoutFeedback
+              onPress={(e) => {
+                if (variables.password === variables.passwordControl) {
+                  submitForm(e);
+                } else {
+                  setMessage({
+                    text: "PASSWORDS DON'T MATCH",
+                    color: "orange",
+                  });
+                }
+              }}
+            >
+              <View style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Submit changes</Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setVariables(variables);
+                setChangeInfo(false);
+              }}
+            >
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    color: colors.dkPink,
+                    fontFamily: fonts.semiBold,
+                    marginTop: screen !== "single" ? "5%" : "10%",
+                    marginBottom: screen !== "single" ? "5%" : "15%",
+                  },
+                ]}
+              >
+                Go back
+              </Text>
+            </TouchableWithoutFeedback>
           </View>
         )}
       </ScrollView>
 
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={(e) => {
-            if (variables.password === variables.passwordControl) {
-              submitForm(e);
-            } else {
-              setMessage({
-                text: "PASSWORDS DON'T MATCH",
-                color: "orange",
-              });
-            }
-          }}
-        >
-          <View style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Submit changes</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setVariables(variables);
-            setChangeInfo(false);
-          }}
-        >
+      {!changeInfo && (
+        <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
           <Text
             style={[
               styles.cardText,
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: screen !== "single" ? "5%" : "10%",
-                marginBottom: screen !== "single" ? "5%" : "15%",
+                paddingTop: 15,
               },
             ]}
           >
-            Go back
+            Change information
           </Text>
         </TouchableWithoutFeedback>
       )}
@@ -515,7 +514,7 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {screen !== "single" && <NavButtons screen="Settings" />}
+      {screen !== "single" && !changeInfo && <NavButtons screen="Settings" />}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}
