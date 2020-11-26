@@ -79,9 +79,7 @@ export default function Login({ navigation }) {
           </TouchableWithoutFeedback>
         )}
 
-        <TouchableWithoutFeedback
-          onPress={submitForm} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
-        >
+        <TouchableWithoutFeedback onPress={submitForm}>
           <View style={styles.loginButton}>
             <Text style={styles.loginButtonText}>LOGIN</Text>
           </View>

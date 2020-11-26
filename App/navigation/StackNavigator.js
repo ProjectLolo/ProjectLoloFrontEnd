@@ -12,6 +12,9 @@ import JoinKidCircle from "../screens/JoinKidCircle";
 import Recommended from "../screens/Recommended";
 import LoveBank from "../screens/LoveBank";
 import Settings from "../screens/Settings";
+import SettingsParent from "../screens/SettingsParent";
+import SettingsKid from "../screens/SettingsKid";
+import SettingsSuggestions from "../screens/SettingsSuggestions";
 import MediaContentDetails from "../screens/MediaContentDetails";
 import Activate from "../screens/CreateContent/Activate";
 import FunAnimals from "../screens/CreateContent/FunAnimals";
@@ -61,7 +64,11 @@ export default function authNavigator({ route, state }) {
         />
         <Stack.Screen name="ShareFamilyCode" component={ShareFamilyCode} />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
-        <Stack.Screen name="Recommended" component={Recommended} />
+        <Stack.Screen
+          name="Recommended"
+          component={Recommended}
+          initialParams={state}
+        />
         <Stack.Screen
           name="LoveBank"
           component={LoveBank}
@@ -72,7 +79,21 @@ export default function authNavigator({ route, state }) {
           component={Settings}
           initialParams={state}
         />
-
+        <Stack.Screen
+          name="SettingsParent"
+          component={SettingsParent}
+          initialParams={state}
+        />
+        <Stack.Screen
+          name="SettingsKid"
+          component={SettingsKid}
+          initialParams={state}
+        />
+        <Stack.Screen
+          name="SettingsSuggestions"
+          component={SettingsSuggestions}
+          initialParams={state}
+        />
         <Stack.Screen
           name="MediaContentDetails"
           component={MediaContentDetails}

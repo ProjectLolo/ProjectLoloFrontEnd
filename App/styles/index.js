@@ -153,6 +153,7 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.1,
     shadowRadius: 50,
+    alignSelf: "center",
   },
   navBtContainer: { padding: 5 },
   navBtImage: {
