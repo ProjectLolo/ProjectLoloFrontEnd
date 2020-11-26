@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import { View, Text, TouchableOpacity, Dimensions, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "@styles/styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,7 +53,6 @@ export default function VideoRecording({ route }) {
 
   return (
     <View style={{ flex: 1 }}>
-
       {/* <NavHome /> */}
       <Camera
         style={{ flex: 1, width: screenWidth, height: (screenHeight * 2) / 3 }}
@@ -57,14 +63,13 @@ export default function VideoRecording({ route }) {
         }}
       >
         <SafeAreaView style={style.droidSafeArea}>
-        <MaterialIcons
-                    name="navigate-before"
-                    size={60}
-                    color="white"
-                    onPress={() =>
-                      navigation.goBack(null)
-                    }
-                  />
+          <MaterialIcons
+            color='white'
+            name="navigate-before"
+            size={60}
+            
+            onPress={() => navigation.goBack(null)}
+          />
         </SafeAreaView>
         <View
           style={{
@@ -163,8 +168,8 @@ export default function VideoRecording({ route }) {
   );
 }
 const style = StyleSheet.create({
-    droidSafeArea: {
-        flex: 1,
-        paddingTop: Platform.OS === 'android' ? 25 : 0
-    }
-  })
+  droidSafeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? 25 : 0,
+  },
+});
