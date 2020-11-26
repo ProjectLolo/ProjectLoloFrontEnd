@@ -51,7 +51,7 @@ export default function SettingsSuggestions() {
       {message.text !== "" ? (
         showMessage()
       ) : (
-        <Text style={[styles.title, { marginTop: "10%" }]}>
+        <Text style={[styles.title, { marginTop: 0 }]}>
           Do you have a suggestion or just a question? Enter your message below:
         </Text>
       )}
