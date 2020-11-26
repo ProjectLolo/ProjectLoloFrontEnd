@@ -331,7 +331,7 @@ export default function SettingsKid({ route, navigation }) {
         />
       )}
 
-      <NavButtons />
+      <NavButtons screen="Settings" />
     </View>
   );
 }
