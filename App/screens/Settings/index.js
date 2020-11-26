@@ -204,76 +204,49 @@ export default function Settings({ route, navigation }) {
       <NavHome />
 
       <ScrollView style={{ marginBottom: changeInfo ? "5%" : 0 }}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator
-              style={{ marginBottom: "76.5%" }}
-              size="large"
-              color="#660066"
-            />
-          ) : (
-            <View
-              style={{
-                backgroundColor: "white",
-                width: "50%",
-                alignSelf: "center",
-                justifyContent: "space-evenly",
-                shadowColor: "black",
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.05,
-                shadowRadius: 5,
-                height: Dimensions.get("window").width * 0.5,
-                borderRadius: 100,
-                marginTop: "5%",
-              }}
-            >
-              <Image
-                style={
-                  variables.profilePic
-                    ? {
-                        borderRadius: 150,
-                        width: 210,
-                        height: 210,
-                        alignSelf: "center",
-                      }
-                    : styles.cardImage
-                }
-                source={
-                  variables.profilePic
-                    ? { uri: variables.profilePic }
-                    : images.monkey
-                }
-              />
-            </View>
-          )}
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          <Text
-            style={[
-              styles.cardText,
-              {
-                color: colors.dkPink,
-                fontFamily: fonts.semiBold,
-                paddingTop: 15,
-              },
-            ]}
-          >
-            Change Profile Picture
-          </Text>
-        </TouchableWithoutFeedback>
-
         {!changeInfo ? (
           <View>
+            {loading ? (
+              <ActivityIndicator
+                style={{ marginBottom: "76.5%" }}
+                size="large"
+                color="#660066"
+              />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: "white",
+                  width: "50%",
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                  shadowColor: "black",
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.05,
+                  shadowRadius: 5,
+                  height: Dimensions.get("window").width * 0.5,
+                  borderRadius: 100,
+                  marginTop: "5%",
+                }}
+              >
+                <Image
+                  style={
+                    variables.profilePic
+                      ? {
+                          borderRadius: 150,
+                          width: 210,
+                          height: 210,
+                          alignSelf: "center",
+                        }
+                      : styles.cardImage
+                  }
+                  source={
+                    variables.profilePic
+                      ? { uri: variables.profilePic }
+                      : images.monkey
+                  }
+                />
+              </View>
+            )}
             <Text
               style={[
                 styles.inputLabel,
@@ -367,6 +340,73 @@ export default function Settings({ route, navigation }) {
           </View>
         ) : (
           <View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
+              {loading ? (
+                <ActivityIndicator
+                  style={{ marginBottom: "76.5%" }}
+                  size="large"
+                  color="#660066"
+                />
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "50%",
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    shadowColor: "black",
+                    shadowOffset: { width: 0, height: 0 },
+                    shadowOpacity: 0.05,
+                    shadowRadius: 5,
+                    height: Dimensions.get("window").width * 0.5,
+                    borderRadius: 100,
+                    marginTop: "5%",
+                  }}
+                >
+                  <Image
+                    style={
+                      variables.profilePic
+                        ? {
+                            borderRadius: 150,
+                            width: 210,
+                            height: 210,
+                            alignSelf: "center",
+                          }
+                        : styles.cardImage
+                    }
+                    source={
+                      variables.profilePic
+                        ? { uri: variables.profilePic }
+                        : images.monkey
+                    }
+                  />
+                </View>
+              )}
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    color: colors.dkPink,
+                    fontFamily: fonts.semiBold,
+                    paddingTop: 15,
+                  },
+                ]}
+              >
+                Change Profile Picture
+              </Text>
+            </TouchableWithoutFeedback>
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
               First name
             </Text>
