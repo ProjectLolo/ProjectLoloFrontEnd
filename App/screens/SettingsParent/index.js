@@ -123,7 +123,6 @@ export default function SettingsParent({ route, navigation }) {
           <View
             style={{
               position: "absolute",
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
               width: "48.5%",
               height: Dimensions.get("window").width * 0.485,
               alignSelf: "center",
@@ -137,7 +136,7 @@ export default function SettingsParent({ route, navigation }) {
           >
             <View
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                backgroundColor: "rgba(255, 255, 255, 0.75)",
                 width: "60%",
                 height: "60%",
                 alignSelf: "center",
@@ -203,7 +202,6 @@ export default function SettingsParent({ route, navigation }) {
           <View
             style={{
               position: "absolute",
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
               width: "48.5%",
               height: Dimensions.get("window").width * 0.485,
               alignSelf: "center",
@@ -217,7 +215,7 @@ export default function SettingsParent({ route, navigation }) {
           >
             <View
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                backgroundColor: "rgba(255, 255, 255, 0.75)",
                 width: "60%",
                 height: "60%",
                 alignSelf: "center",
