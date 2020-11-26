@@ -28,7 +28,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const isFocused = useIsFocused();
-  const { result, screen } = route.params;
+  const { result, screen, kidData } = route.params;
   const { signOut } = useContext(AuthContext);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
@@ -43,7 +43,6 @@ export default function Settings({ route, navigation }) {
     profilePic: "",
   });
 
-  console.log("param", route.params.activeUser);
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
@@ -554,7 +553,9 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {screen !== "single" && !changeInfo && <NavButtons screen="Settings" />}
+      {screen !== "single" && !changeInfo && (
+        <NavButtons screen="Settings" kidData={kidData} />
+      )}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}

@@ -1,32 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, TouchableWithoutFeedback, Text, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import images from "@assets/images";
 import styles from "@styles/styles";
 import colors from "../../assets/colors";
 
-import { useQuery } from "@apollo/client";
-import { GET_ALL_KIDS } from "../../../graphql/queries";
-
 export default function NavButtons(props) {
+  // const isFocused = useIsFocused();
+  const [parent, setParent] = useState("");
   const navigation = useNavigation();
-  const { screen, userId, kidName } = props;
+  const { screen, userId, kidName, kidData } = props;
 
-  const { data, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
-    variables: {
-      userId: userId,
-    },
-    onCompleted(fetchedData) {},
-  });
-
-  //get the correct kidCircle to get the correct userId (parent) who created it.
-  const parent =
-    data &&
-    data.findAllKids.find((kid) => {
-      if (kid.name === kidName) {
-        return kid.userId;
-      }
-    });
+  useEffect(() => {
+    kidData &&
+      kidData.findAllKids.find((kid) => {
+        if (kid.name === kidName) {
+          setParent(kid.userId);
+        }
+      });
+  }, [kidData]);
 
   function create() {
     if (screen === "Recommended") {
@@ -75,7 +67,7 @@ export default function NavButtons(props) {
     } else {
       return (
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("LoveBank")}
+          onPress={() => navigation.navigate("LoveBank", { kidData })}
         >
           <View style={styles.navBtContainer}>
             <Image style={styles.navBtImage} source={images.photography} />
@@ -113,9 +105,9 @@ export default function NavButtons(props) {
       return (
         <TouchableWithoutFeedback
           onPress={() => {
-            parent && parent.userId === userId
-              ? navigation.navigate("SettingsParent")
-              : navigation.navigate("Settings");
+            parent && parent === userId
+              ? navigation.navigate("SettingsParent", { kidData })
+              : navigation.navigate("Settings", { kidData });
           }}
         >
           <View style={styles.navBtContainer}>

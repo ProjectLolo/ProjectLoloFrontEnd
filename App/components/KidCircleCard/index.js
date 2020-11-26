@@ -36,7 +36,7 @@ export default function KidCircleCard(props) {
         onPress={() =>
           /*This should bring user to the correct Recommended page, for now passing the kids name in param*/ navigation.navigate(
             "Recommended",
-            { _id, kidName }
+            { id, kidName }
           )
         }
       >

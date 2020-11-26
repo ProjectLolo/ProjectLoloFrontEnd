@@ -15,7 +15,7 @@ import fonts from "@assets/fonts";
 
 import { GET_ALL_KIDS, FIND_USER_BY_ID } from "../../../graphql/queries";
 import { useIsFocused } from "@react-navigation/native";
-import { useQuery, Query } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 export default function SettingsParent({ route, navigation }) {
   const isFocused = useIsFocused();
@@ -92,7 +92,11 @@ export default function SettingsParent({ route, navigation }) {
       <Text style={[styles.title, { marginTop: 0, marginBottom: 0 }]}>
         Please choose the settings you want to go to:
       </Text>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("Settings")}>
+      <TouchableWithoutFeedback
+        onPress={() =>
+          navigation.navigate("Settings", { kidData: route.params.kidData })
+        }
+      >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <View
             style={{
@@ -171,7 +175,9 @@ export default function SettingsParent({ route, navigation }) {
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("SettingsKid")}
+        onPress={() =>
+          navigation.navigate("SettingsKid", { kidData: route.params.kidData })
+        }
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <View
@@ -254,6 +260,7 @@ export default function SettingsParent({ route, navigation }) {
         screen="SettingsParent"
         userId={route.params.activeUser}
         kidName={route.params.kidName}
+        kidData={route.params.kidData}
       />
     </View>
   );

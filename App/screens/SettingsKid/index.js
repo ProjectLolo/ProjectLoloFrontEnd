@@ -45,9 +45,8 @@ export default function SettingsKid({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const isFocused = useIsFocused();
-  console.log("what is in route.params", route.params);
-  const { result } = route.params;
-  console.log("result", result);
+  const { result, kidData } = route.params;
+  console.log("PARAMSSSSS", route.params);
 
   useEffect(() => {
     if (result && result.uri) {
@@ -61,9 +60,10 @@ export default function SettingsKid({ route, navigation }) {
     },
     onCompleted(fetchedData) {},
   });
-  console.log("kidInfo", kidInfo);
 
   console.log("data", data);
+  console.log("params", route.params.activeKid);
+
   useEffect(() => {
     refetch();
     data &&
@@ -151,8 +151,6 @@ export default function SettingsKid({ route, navigation }) {
       aspect: [3, 4],
       quality: 0.3,
     });
-
-    console.log("result", result);
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
@@ -576,7 +574,7 @@ export default function SettingsKid({ route, navigation }) {
         />
       )}
 
-      {!changeInfo && <NavButtons screen="Settings" />}
+      {!changeInfo && <NavButtons screen="Settings" kidData={kidData} />}
     </View>
   );
 }
