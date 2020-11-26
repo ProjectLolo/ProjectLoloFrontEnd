@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
+import { useMutation } from "@apollo/client";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
+import { SUGGESTION } from "../../../graphql/mutations"
 
 export default function SettingsSuggestions() {
   const [userMessage, setUserMessage] = useState("");
   const [message, setMessage] = useState({ text: "", color: "" });
 
+  const[sendSuggestion, { data }] = useMutation(SUGGESTION, {
+    variables: {
+      suggestion: userMessage,
+    },
+    onError: (error) => {
+      console.log("SUGGESTION ERROR: ", error);
+    },
+    onCompleted(data) {
+      console.log("data", data);
+    },
+  });
+
   function submitForm(e) {
     e.preventDefault();
 
     console.log("message", userMessage);
+    sendSuggestion()
     //create query to send message to backend/nodemailer
     //onSuccess setMessage({ text: "Success! Thank you for your message.", color: "dkTeal" }), onError setMessage({text: errorMessage, color: "dkPink"})
     setMessage({
