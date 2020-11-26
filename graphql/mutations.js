@@ -160,7 +160,9 @@ export const ADD_MEMBER = gql`
   ) {
     addMember(kidId: $kidId, relation: $relation, notification: $notification) {
       _id
-      userId
+      userId {
+        _id
+      }
       relation
       notification
       kid {

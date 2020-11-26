@@ -26,9 +26,6 @@ export default function KidCircles({ route, navigation }) {
   const [fetchedData, setFetchedData] = useState();
 
   const { data, refetch, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
-    variables: {
-      userId: route.params.activeUser,
-    },
     onCompleted(fetchedData) {},
   });
 

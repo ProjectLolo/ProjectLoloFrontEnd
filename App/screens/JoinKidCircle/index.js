@@ -12,10 +12,12 @@ export default function JoinKidCircles({ navigation }) {
   const [successMessage, setSuccessMessage] = useState({ text: "", color: "" });
 
   const [findKidByCode, { error }] = useLazyQuery(FIND_KID_BY_CODE, {
-    onError: (error) =>
-      error.graphQLErrors.map(({ message }, i) =>
-        setSuccessMessage({ text: message, color: "dkPink" })
-      ),
+    onError: (error) => {
+      error.graphQLErrors.map(({ message }, i) => {
+        console.log("message", message);
+        setSuccessMessage({ text: message, color: "dkPink" });
+      });
+    },
     onCompleted: (data) => {
       console.log("result", data);
       navigation.navigate("CreateFamilyMember", {

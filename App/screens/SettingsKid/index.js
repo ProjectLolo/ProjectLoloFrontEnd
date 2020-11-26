@@ -46,7 +46,6 @@ export default function SettingsKid({ route, navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const isFocused = useIsFocused();
   const { result, kidData } = route.params;
-  console.log("PARAMSSSSS", route.params);
 
   useEffect(() => {
     if (result && result.uri) {
@@ -61,8 +60,8 @@ export default function SettingsKid({ route, navigation }) {
     onCompleted(fetchedData) {},
   });
 
-  console.log("data", data);
-  console.log("params", route.params.activeKid);
+  console.log("WHAT IS IN DATA", data && data);
+  console.log("FAMILY MEMBERS?", data && data.findKidById.familyMembers);
 
   useEffect(() => {
     refetch();
