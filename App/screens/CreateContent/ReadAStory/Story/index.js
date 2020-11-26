@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, SafeAreaView, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import styles from "@styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
@@ -12,13 +13,14 @@ import NavHome from "../../../../components/NavHome";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-export default function VideoRecording({ route, navigation }) {
+export default function VideoRecording({ route }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [recording, setRecording] = useState(false);
   const [video, setVideo] = useState(false);
-
+  const navigation = useNavigation();
+  const { goBack } = navigation;
   console.log("video", video);
 
   // asks permission from used to use camera
@@ -44,6 +46,7 @@ export default function VideoRecording({ route, navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
+
       {/* <NavHome /> */}
       <Camera
         style={{ flex: 1, width: screenWidth, height: (screenHeight * 2) / 3 }}
@@ -53,6 +56,16 @@ export default function VideoRecording({ route, navigation }) {
           setCameraRef(ref);
         }}
       >
+        <SafeAreaView style={style.droidSafeArea}>
+        <MaterialIcons
+                    name="navigate-before"
+                    size={60}
+                    color="white"
+                    onPress={() =>
+                      navigation.goBack(null)
+                    }
+                  />
+        </SafeAreaView>
         <View
           style={{
             flex: 1,
@@ -149,3 +162,9 @@ export default function VideoRecording({ route, navigation }) {
     </View>
   );
 }
+const style = StyleSheet.create({
+    droidSafeArea: {
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? 25 : 0
+    }
+  })
