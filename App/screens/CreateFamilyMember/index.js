@@ -11,12 +11,12 @@ import fonts from "@assets/fonts";
 
 export default function CreateFamilyMember({ route, navigation }) {
   const [variables, setVariables] = useState({
-    relation: "",
+    relation: "Father",
     notification: "1",
     kidId: route.params.data._id,
   });
 
-  console.log(variables);
+  console.log("variables", variables);
   const [selectedValueRelation, setSelectedValueRelation] = useState("Father");
   //   const [selectedValueNotification, setSelectedValueNotification] = useState(
   //     "1"

@@ -1,106 +1,107 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
-import { AuthContext } from "../../context/Auth";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { MaterialIcons } from "@expo/vector-icons";
+import moment from "moment";
 import {
   View,
   Text,
   TouchableWithoutFeedback,
-  Image,
-  Dimensions,
-  TextInput,
   ScrollView,
+  Dimensions,
+  Image,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
-import images from "@assets/images";
-import styles from "@styles/styles";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
-import colors from "@assets/colors";
-import fonts from "@assets/fonts";
-import adjust from "../../styles/adjust";
 
-import { useMutation, useQuery } from "@apollo/client";
-import { SETTINGS } from "../../../graphql/mutations";
-import { FIND_USER_BY_ID } from "../../../graphql/queries";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_KIDS } from "../../../graphql/queries";
 import { useIsFocused } from "@react-navigation/native";
 
-export default function Settings({ route, navigation }) {
-  const isFocused = useIsFocused();
-  const { result, screen } = route.params;
+import adjust from "../../styles/adjust";
+import styles from "@styles/styles";
+import images from "@assets/images";
+import colors from "@assets/colors";
+import fonts from "@assets/fonts";
+
+import { AuthContext } from "../../context/Auth";
+
+export default function SettingsKid({ route, navigation }) {
   const { signOut } = useContext(AuthContext);
+  const [kidInfo, setKidInfo] = useState({
+    birthdate: "",
+    name: "",
+    nickName: "",
+    profilePic: "",
+  });
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [message, setMessage] = useState({ text: "", color: "" });
   const [loading, setLoading] = useState(false);
-  const [variables, setVariables] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    passwordControl: "",
-    profilePic: "",
-  });
-
-  console.log("param", route.params.activeUser);
-  const { data, refetch } = useQuery(FIND_USER_BY_ID, {
-    variables: {
-      id: route.params.activeUser,
-    },
-    onError: (error) => {
-      console.log("SETTINGS ERROR: ", error);
-      // if (error.graphQLErrors[0].message === "Please fill the form") {
-      //   setMessage({
-      //     text: "To submit changes, please add password",
-      //     color: "orange",
-      //   });
-      // }
-    },
-    onCompleted(data) {
-      console.log("data", data);
-    },
-  });
-
-  useEffect(() => {
-    refetch();
-    setVariables({
-      firstName: data && data.findUserById.firstName,
-      lastName: data && data.findUserById.lastName,
-      email: data && data.findUserById.email,
-      profilePic: data && data.findUserById.profilePic,
-      password: "",
-      passwordControl: "",
-    });
-  }, [data, isFocused]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const isFocused = useIsFocused();
+  console.log("what is in route.params", route.params);
+  const { result } = route.params;
+  console.log("result", result);
 
   useEffect(() => {
     if (result && result.uri) {
-      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+      uploadImage(result.uri, `Image_${route.params.activeKid}`);
     }
   }, [result]);
 
-  const [submitSettings, { error }] = useMutation(SETTINGS, {
-    onError: (error) => {
-      console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
-      if (error.graphQLErrors[0].message === "Please fill the form") {
-        setMessage({
-          text: "To submit changes, please add password",
-          color: "orange",
-        });
-      }
+  const { data, refetch, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
+    variables: {
+      userId: route.params.activeUser,
     },
-    onCompleted(data) {
-      console.log("data", data);
-      setChangeInfo(false);
-      setMessage({ text: "SUCCESS!!!", color: "teal" });
-      setVariables({ ...variables, password: "", passwordControl: "" });
-    },
+    onCompleted(fetchedData) {},
   });
+  console.log(kidInfo);
+
+  console.log("data", data);
+  useEffect(() => {
+    data &&
+      data.findAllKids.find((kid) => {
+        if (kid._id === route.params.activeKid) {
+          setKidInfo({
+            ...kidInfo,
+            birthdate: kid.birthdate,
+            name: kid.name,
+            nickName: kid.nickName,
+            profilePic: kid.profileImageUrl,
+          });
+        }
+      });
+  }, [data, refetch, isFocused]);
+
+  //   const [submitKidSettings, { error }] = useMutation(SETTINGS, {
+  //     onError: (error) => {
+  //       console.log("SETTINGS ERROR: ", error.graphQLErrors[0].message);
+  //       if (error.graphQLErrors[0].message === "Please fill the form") {
+  //         setMessage({
+  //           text: "To submit changes, please add password",
+  //           color: "orange",
+  //         });
+  //       }
+  //     },
+  //     onCompleted(data) {
+  //       console.log("data", data);
+  //       setChangeInfo(false);
+  //       setMessage({ text: "SUCCESS!!!", color: "teal" });
+  //       setVariables({ ...variables, password: "", passwordControl: "" });
+  //     },
+  //   });
 
   function submitForm(e) {
     e.preventDefault();
-    submitSettings({ variables });
+
+    setMessage({ text: "Submitted!!!", color: "teal" });
+    // submitKidSettings({ kidInfo });
+    //This mutation needs to be made still.
   }
 
   function hideOptions() {
@@ -131,6 +132,19 @@ export default function Settings({ route, navigation }) {
     }
   }
 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    hideDatePicker();
+    setKidInfo({ ...kidInfo, birthdate: date });
+  };
+
   //Choose picture from device
   const pickPhoto = async () => {
     setChangeProfilePicture(false);
@@ -141,11 +155,11 @@ export default function Settings({ route, navigation }) {
       quality: 0.3,
     });
 
-    console.log(result);
+    console.log("result", result);
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
-      uploadImage(result.uri, `Image_${route.params.activeUser}`);
+      uploadImage(result.uri, `Image_${route.params.activeKid}`);
     }
   };
 
@@ -157,7 +171,7 @@ export default function Settings({ route, navigation }) {
     const ref = firebase
       .storage()
       .ref()
-      .child("userProfileImages/" + imageName);
+      .child("kidProfileImages/" + imageName);
     const uploadTask = ref.put(blob);
 
     // Register three observers:
@@ -192,7 +206,7 @@ export default function Settings({ route, navigation }) {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log("File available at", downloadURL);
-          setVariables({ ...variables, profilePic: downloadURL });
+          setKidInfo({ ...kidInfo, profilePic: downloadURL });
           setLoading(false);
         });
       }
@@ -200,7 +214,7 @@ export default function Settings({ route, navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "space-evenly" }}>
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
       <NavHome />
 
       <ScrollView>
@@ -234,7 +248,7 @@ export default function Settings({ route, navigation }) {
             >
               <Image
                 style={
-                  variables.profilePic
+                  kidInfo.profilePic
                     ? {
                         borderRadius: 150,
                         width: 210,
@@ -244,8 +258,8 @@ export default function Settings({ route, navigation }) {
                     : styles.cardImage
                 }
                 source={
-                  variables.profilePic
-                    ? { uri: variables.profilePic }
+                  kidInfo.profilePic
+                    ? { uri: kidInfo.profilePic }
                     : images.monkey
                 }
               />
@@ -301,10 +315,11 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {`${variables.firstName} ${variables.lastName}`}
+                {kidInfo.name}
               </Text>
             </View>
-            {/* <Text
+
+            <Text
               style={[
                 styles.inputLabel,
                 { color: colors.purple, paddingTop: 0 },
@@ -331,16 +346,17 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {variables.nickName ? variables.nickName : "-"}
+                {kidInfo.nickName}
               </Text>
-            </View> */}
+            </View>
+
             <Text
               style={[
                 styles.inputLabel,
                 { color: colors.purple, paddingTop: 0 },
               ]}
             >
-              Email
+              Birthday
             </Text>
             <View
               style={{
@@ -361,7 +377,9 @@ export default function Settings({ route, navigation }) {
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
               >
-                {variables.email}
+                {`${kidInfo.birthdate.split("T")[0].split("-")[2]} - ${
+                  kidInfo.birthdate.split("T")[0].split("-")[1]
+                } - ${kidInfo.birthdate.split("T")[0].split("-")[0]} `}
               </Text>
             </View>
             <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
@@ -381,74 +399,90 @@ export default function Settings({ route, navigation }) {
           </View>
         ) : (
           <View>
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              First name
-            </Text>
+            <Text style={styles.inputLabel}>Name</Text>
             <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder={"Enter first name..."}
-              placeholderTextColor="grey"
+              style={styles.inputBox}
+              placeholder="Kid's name"
+              value={kidInfo.name}
+              onChangeText={(text) => setKidInfo({ ...kidInfo, name: text })}
+            />
+
+            <Text style={styles.inputLabel}>Nickname</Text>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Nickname"
+              maxLength={20}
+              value={kidInfo.nickName}
               onChangeText={(text) =>
-                setVariables({ ...variables, firstName: text })
+                setKidInfo({ ...kidInfo, nickName: text })
               }
-              value={variables.firstName}
             />
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              Last name
-            </Text>
-            <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder="Enter last name..."
-              placeholderTextColor="grey"
-              onChangeText={(text) =>
-                setVariables({ ...variables, lastName: text })
+
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View
+                style={{
+                  marginLeft: "5%",
+                  paddingBottom: 5,
+                  paddingTop: "5%",
+                  width: "66.5%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: fonts.regular,
+                    paddingBottom: 23,
+                    color: colors.purple,
+                  }}
+                >
+                  Date of birth
+                </Text>
+                <TouchableWithoutFeedback onPress={() => showDatePicker()}>
+                  <View
+                    style={[
+                      styles.inputBox,
+                      { width: "100%", justifyContent: "center" },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: fonts.regular,
+                        color: colors.grey,
+                        fontSize: adjust(16),
+                        opacity: kidInfo.birthdate ? 1 : 0.5,
+                        textAlign: "center",
+                      }}
+                    >
+                      {kidInfo.birthdate
+                        ? moment(kidInfo.birthdate).format("DD-MM-YYYY")
+                        : "DD/MM/YYYY"}
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+              <MaterialIcons
+                style={{
+                  alignSelf: "flex-end",
+                  paddingBottom: 13,
+                  paddingRight: "8%",
+                }}
+                name={"date-range"}
+                size={50}
+                color={colors.dkPink}
+                onPress={() => {
+                  showDatePicker();
+                }}
+              />
+            </View>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              date={
+                kidInfo.birthdate ? new Date(kidInfo.birthdate) : new Date()
               }
-              value={variables.lastName}
-            />
-            {/* <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              Nickname
-            </Text>
-            <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder="Enter nickname..."
-              placeholderTextColor="grey"
-              onChangeText={(text) =>
-                setVariables({ ...variables, nickName: text })
-              }
-              value={variables.nickName}
-            /> */}
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              Email
-            </Text>
-            <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder="Enter email..."
-              placeholderTextColor="grey"
-              value={variables.email}
-            />
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              Password
-            </Text>
-            <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder="Enter new password..."
-              placeholderTextColor="grey"
-              onChangeText={(text) => {
-                setVariables({ ...variables, password: text });
-              }}
-              value={variables.password}
-            />
-            <Text style={[styles.inputLabel, { color: colors.purple }]}>
-              Password (control)
-            </Text>
-            <TextInput
-              style={[styles.inputBox, { backgroundColor: colors.white }]}
-              placeholder="Enter new password again..."
-              placeholderTextColor="grey"
-              onChangeText={(text) => {
-                setVariables({ ...variables, passwordControl: text });
-              }}
-              value={variables.passwordControl}
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
             />
           </View>
         )}
@@ -457,14 +491,7 @@ export default function Settings({ route, navigation }) {
       {changeInfo && (
         <TouchableWithoutFeedback
           onPress={(e) => {
-            if (variables.password === variables.passwordControl) {
-              submitForm(e);
-            } else {
-              setMessage({
-                text: "PASSWORDS DON'T MATCH",
-                color: "orange",
-              });
-            }
+            submitForm(e);
           }}
         >
           <View style={styles.loginButton}>
@@ -476,7 +503,7 @@ export default function Settings({ route, navigation }) {
       {changeInfo && (
         <TouchableWithoutFeedback
           onPress={() => {
-            setVariables(variables);
+            setKidInfo(kidInfo);
             setChangeInfo(false);
           }}
         >
@@ -486,8 +513,8 @@ export default function Settings({ route, navigation }) {
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: screen !== "single" ? "5%" : "10%",
-                marginBottom: screen !== "single" ? "5%" : "15%",
+                marginTop: "5%",
+                marginBottom: "5%",
               },
             ]}
           >
@@ -505,7 +532,7 @@ export default function Settings({ route, navigation }) {
                 color: colors.ltPurple,
                 fontFamily: fonts.semiBold,
                 marginTop: 20,
-                marginBottom: screen !== "single" ? 20 : "20%",
+                marginBottom: 20,
               },
             ]}
           >
@@ -515,32 +542,15 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {screen !== "single" && <NavButtons screen="Settings" />}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}
-          nav="Settings"
+          nav="SettingsKid"
           pickPhoto={pickPhoto}
         />
       )}
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("SettingsSuggestions")}
-      >
-        <View
-          style={[
-            styles.loginButton,
-            {
-              position: "absolute",
-              transform: [{ rotate: "-90deg" }],
-              right: "-20%",
-              top: "17.5%",
-              width: "50%",
-            },
-          ]}
-        >
-          <Text style={styles.loginButtonText}>Any suggestions?</Text>
-        </View>
-      </TouchableWithoutFeedback>
+
+      <NavButtons screen="Settings" />
     </View>
   );
 }

@@ -55,7 +55,72 @@ export const tempStories =[
           "storyId":2, 
           "createdAt":"2020-11-19T12:40:38.569Z", 
           "updatedAt":"2020-11-19T12:40:38.569Z"}],
-      }
+    }, 
+    { "id": 3,
+      "title":"Baby goes to bed", 
+      "createdAt":"2020-11-19T12:40:38.534Z", 
+      "updatedAt":"2020-11-19T12:40:38.534Z", 
+      "categoryId":1, 
+      "pages": [
+        {
+          "id": 8,
+          "content":"This is a bedtime story, read to you by [ name sender ] \n        [ Name sender ] would rather be close to [ name child] , \n        but this way [ name sender ]  can still read to [ name child ]  while being apart and that is great, \n        [ Add “jaaaaaj” sound when flipping page ]",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie1_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":2,
+          "content": "This is a bottle of milk,\n        yummy! So nice!\n        [ Name child ]  drinks the bottle until it’s empty\n        [ add drinking sound “glu glu glu” when flipping page]  ",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie2_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":3,
+          "content": "This is [ Name child ] in a pram,\n        [ Name child ]  loves going for walks outside\n        Can you hear the birds whistle?\n        [ add bird sound/whistle when flipping page]  ",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie3_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":4,
+          "content": "This is one of my favourite toys,\n        [ Name child ]  can play with it and watch the stars,\n        they are twinkling in the sky\n        [ add twinkle sound “twinkly twinkly twinkly” when flipping page]  ",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie4_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":5,
+          "content": "After a long day [ Name child ]  goes to bath,\n        It’s fun to play with the bubbles and splash with the water\n        [ add bubble sound “blub blub blub” when flipping page ]  ",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie5_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":6,
+          "content": "Now [ Name child ]  is clean and can go to bed,\n        the bedtime story is almost finished,\n        [ add shhhhhhh sound when flipping page]  ",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie6_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+        {
+          "id":7,
+          "content": "Close your eyes sweet [ Name child ]  and dream beautiful dreams,\n        know you are safe and know that you’re loved",
+          "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie7_Tekengebied%201.png?raw=true",
+          "storyId":3, 
+          "createdAt":"2020-11-19T12:40:38.569Z", 
+          "updatedAt":"2020-11-19T12:40:38.569Z",
+        },
+          
+      ]
+    }
     
 ]
     

@@ -7,8 +7,9 @@ import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
 
-export default function Recommended({ navigation }) {
+export default function Recommended({ route, navigation }) {
   const [showMore, setShowMore] = useState(false);
+  console.log("ROUTE PARAMS IN REC", route.params);
 
   const cardContent = [
     {
@@ -132,7 +133,11 @@ export default function Recommended({ navigation }) {
         </TouchableWithoutFeedback>
       )}
 
-      <NavButtons screen="Recommended" />
+      <NavButtons
+        screen="Recommended"
+        userId={route.params.activeUser}
+        kidName={route.params.kidName}
+      />
     </View>
   );
 }
