@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Share, View, Text, TouchableWithoutFeedback } from "react-native";
 import styles from "@styles/styles";
 import NavHome from "../../components/NavHome";
 import colors from "../../assets/colors";
+import { AuthContext } from "../../context/Auth";
 
 export default function ShareFamilyCode({ route, navigation }) {
+  const { kidId, kidName } = route.params;
+  const { activeKid, kidName: kName } = useContext(AuthContext);
+
   const onShare = async () => {
     try {
       const result = await Share.share({
         message: `Hi!! Use this code to join my family circle ${route.params.familyCode}`,
       });
-      console.log("Nazneen result:", result);
+      console.log("onShare result:", result);
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
@@ -47,7 +51,12 @@ export default function ShareFamilyCode({ route, navigation }) {
       </View>
 
       <TouchableWithoutFeedback
-        onPress={() => navigation.navigate("Recommended")}
+        onPress={() => {
+          activeKid(kidId);
+          kName(kidName).then(
+            navigation.navigate("Recommended", { kidId, kidName })
+          );
+        }}
       >
         <View
           style={[styles.loginButton, { marginBottom: "5%", marginTop: "0%" }]}

@@ -87,7 +87,7 @@ export const UPDATE_KID_PROFILE = gql`
     $name: String!
     $nickName: String!
     $birthdate: String!
-    $profileImageUrl: String!
+    $profileImageUrl: String
   ) {
     updateKidProfile(
       id: $id
@@ -160,7 +160,9 @@ export const ADD_MEMBER = gql`
   ) {
     addMember(kidId: $kidId, relation: $relation, notification: $notification) {
       _id
-      userId
+      userId {
+        _id
+      }
       relation
       notification
       kid {
@@ -202,3 +204,9 @@ export const SETTINGS = gql`
     }
   }
 `;
+
+export const SUGGESTION = gql`
+  mutation suggestion($suggestion: String!) {
+    suggestion(suggestion: $suggestion)
+  }
+`

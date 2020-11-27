@@ -62,7 +62,11 @@ export default function authNavigator({ route, state }) {
           name="TakeProfilePicture"
           component={TakeProfilePicture}
         />
-        <Stack.Screen name="ShareFamilyCode" component={ShareFamilyCode} />
+        <Stack.Screen
+          name="ShareFamilyCode"
+          component={ShareFamilyCode}
+          initialParams={state}
+        />
         <Stack.Screen name="JoinKidCircle" component={JoinKidCircle} />
         <Stack.Screen
           name="Recommended"

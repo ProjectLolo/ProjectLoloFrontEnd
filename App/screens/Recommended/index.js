@@ -6,6 +6,7 @@ import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
+
 import {
   read,
   teach,
@@ -15,9 +16,27 @@ import {
   memory,
 } from "../CreateContent/tempStories";
 
+import { useQuery } from "@apollo/client";
+import { GET_ALL_KIDS } from "../../../graphql/queries";
+import { useIsFocused } from "@react-navigation/native";
+
+
 export default function Recommended({ route, navigation }) {
+  const isFocused = useIsFocused();
   const [showMore, setShowMore] = useState(false);
-  console.log("ROUTE PARAMS IN REC", route.params);
+  const [kidData, setKidData] = useState("");
+
+  const { data, refetch, loading: dataLoading } = useQuery(GET_ALL_KIDS, {
+    variables: {
+      userId: route.params.activeUser,
+    },
+    onCompleted(fetchedData) {},
+  });
+
+  useEffect(() => {
+    refetch();
+    data && setKidData(data);
+  }, [data, isFocused, refetch]);
 
   const cardContent = [
     {
@@ -91,9 +110,6 @@ export default function Recommended({ route, navigation }) {
     },
   ];
 
-  //see more suggestions doesn't bring you to another screen...(library), it just shows more suggestions on the recommended page.
-  //ternary style. useState.
-
   return (
     <View
       style={{
@@ -166,6 +182,7 @@ export default function Recommended({ route, navigation }) {
         screen="Recommended"
         userId={route.params.activeUser}
         kidName={route.params.kidName}
+        kidData={kidData}
       />
     </View>
   );
