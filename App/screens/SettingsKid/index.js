@@ -14,6 +14,7 @@ import {
   ActivityIndicator,
   TextInput,
   Alert,
+  Share,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
@@ -215,6 +216,27 @@ export default function SettingsKid({ route, navigation }) {
     console.log("Delete familyMember with this id", id);
   };
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Hi!! Use this code to join my family circle ${data.findKidById.code}`,
+      });
+      console.log("onShare result:", result);
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      //alert(error.message);
+      console.log("Sharing familycode failed with error:", error.message);
+    }
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "space-between" }}>
       <NavHome />
@@ -254,6 +276,28 @@ export default function SettingsKid({ route, navigation }) {
                     : images.monkey
                 }
               />
+            </View>
+
+            <View>
+              <TouchableWithoutFeedback onPress={onShare}>
+                <View
+                  style={[
+                    styles.loginButton,
+                    {
+                      marginTop: "10%",
+                      width: "80%",
+                      alignSelf: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.loginButtonText}>
+                    SHARE FAMILY CODE:{"    "}
+                    <Text style={{ color: colors.dkPink }}>
+                      {data && data.findKidById.code}
+                    </Text>
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
 
             <Text
@@ -359,6 +403,7 @@ export default function SettingsKid({ route, navigation }) {
                 flexDirection: "row",
                 flexWrap: "wrap",
                 justifyContent: "space-evenly",
+                justifyContent: "flex-start",
               }}
             >
               {data &&
