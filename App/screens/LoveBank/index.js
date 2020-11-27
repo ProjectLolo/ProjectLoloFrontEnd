@@ -5,7 +5,6 @@ import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
 import MediaContentCard from "../../components/MediaContentCard";
 import styles from "@styles/styles";
-import images from "@assets/images";
 import { useIsFocused } from "@react-navigation/native";
 import { GET_LOVEBANKS } from "../../../graphql/queries";
 
@@ -13,7 +12,7 @@ export default function LoveBank({ route, navigation }) {
   //hardcoded kidId, not sure atm where to get it from
   const isFocused = useIsFocused();
   const [loveBanks, setLoveBanks] = useState([]);
-  const { firstName } = route.params;
+  const { kidData } = route.params;
 
   const { data, refetch } = useQuery(GET_LOVEBANKS, {
     variables: {
@@ -73,6 +72,7 @@ export default function LoveBank({ route, navigation }) {
         screen="LoveBank"
         userId={route.params.activeUser}
         kidName={route.params.kidName}
+        kidData={kidData}
       />
     </View>
   );

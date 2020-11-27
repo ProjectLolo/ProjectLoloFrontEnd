@@ -16,8 +16,8 @@ export default function CreateFamilyMember({ route, navigation }) {
     kidId: route.params.data._id,
   });
 
-  console.log("variables", variables);
-  const [selectedValueRelation, setSelectedValueRelation] = useState("Father");
+  // console.log("variables", variables);
+  // const [selectedValueRelation, setSelectedValueRelation] = useState("Father");
   //   const [selectedValueNotification, setSelectedValueNotification] = useState(
   //     "1"
   //   );
@@ -104,6 +104,16 @@ export default function CreateFamilyMember({ route, navigation }) {
           color={variables.relation === "Guardian" && colors.dkPink}
           label="Guardian"
           value="Guardian"
+        />
+        <Picker.Item
+          color={variables.relation === "Brother" && colors.dkPink}
+          label="Brother"
+          value="Brother"
+        />
+        <Picker.Item
+          color={variables.relation === "Sister" && colors.dkPink}
+          label="Sister"
+          value="Sister"
         />
       </Picker>
 

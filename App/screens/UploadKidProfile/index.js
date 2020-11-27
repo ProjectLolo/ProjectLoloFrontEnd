@@ -60,7 +60,11 @@ export default function UploadKidProfile({ route, navigation }) {
       },
     });
 
-    navigation.navigate("ShareFamilyCode", { familyCode: code });
+    navigation.navigate("ShareFamilyCode", {
+      kidId: kidId,
+      kidName: name,
+      familyCode: code,
+    });
   }
 
   //using camera
@@ -79,8 +83,6 @@ export default function UploadKidProfile({ route, navigation }) {
       aspect: [3, 4],
       quality: 0.3,
     });
-
-    console.log(result);
 
     if (!result.cancelled) {
       console.log("pickPhoto result.uri", result);
@@ -154,6 +156,8 @@ export default function UploadKidProfile({ route, navigation }) {
 
     //for now I just navigate to recommended
     navigation.navigate("ShareFamilyCode", {
+      kidId: kidId,
+      kidName: name,
       familyCode: code,
     });
   };

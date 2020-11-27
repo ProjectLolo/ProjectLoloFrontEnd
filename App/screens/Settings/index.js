@@ -28,7 +28,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function Settings({ route, navigation }) {
   const isFocused = useIsFocused();
-  const { result, screen } = route.params;
+  const { result, screen, kidData } = route.params;
   const { signOut } = useContext(AuthContext);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
@@ -43,7 +43,6 @@ export default function Settings({ route, navigation }) {
     profilePic: "",
   });
 
-  console.log("param", route.params.activeUser);
   const { data, refetch } = useQuery(FIND_USER_BY_ID, {
     variables: {
       id: route.params.activeUser,
@@ -203,77 +202,50 @@ export default function Settings({ route, navigation }) {
     <View style={{ flex: 1, justifyContent: "space-evenly" }}>
       <NavHome />
 
-      <ScrollView>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator
-              style={{ marginBottom: "76.5%" }}
-              size="large"
-              color="#660066"
-            />
-          ) : (
-            <View
-              style={{
-                backgroundColor: "white",
-                width: "50%",
-                alignSelf: "center",
-                justifyContent: "space-evenly",
-                shadowColor: "black",
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.05,
-                shadowRadius: 5,
-                height: Dimensions.get("window").width * 0.5,
-                borderRadius: 100,
-                marginTop: "5%",
-              }}
-            >
-              <Image
-                style={
-                  variables.profilePic
-                    ? {
-                        borderRadius: 150,
-                        width: 210,
-                        height: 210,
-                        alignSelf: "center",
-                      }
-                    : styles.cardImage
-                }
-                source={
-                  variables.profilePic
-                    ? { uri: variables.profilePic }
-                    : images.monkey
-                }
-              />
-            </View>
-          )}
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setChangeProfilePicture(true);
-            setChangeInfo(true);
-          }}
-        >
-          <Text
-            style={[
-              styles.cardText,
-              {
-                color: colors.dkPink,
-                fontFamily: fonts.semiBold,
-                paddingTop: 15,
-              },
-            ]}
-          >
-            Change Profile Picture
-          </Text>
-        </TouchableWithoutFeedback>
-
+      <ScrollView style={{ marginBottom: changeInfo ? "5%" : 0 }}>
         {!changeInfo ? (
           <View>
+            {loading ? (
+              <ActivityIndicator
+                style={{ marginBottom: "76.5%" }}
+                size="large"
+                color="#660066"
+              />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: "white",
+                  width: "50%",
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                  shadowColor: "black",
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.05,
+                  shadowRadius: 5,
+                  height: Dimensions.get("window").width * 0.5,
+                  borderRadius: 100,
+                  marginTop: "5%",
+                }}
+              >
+                <Image
+                  style={
+                    variables.profilePic
+                      ? {
+                          borderRadius: 150,
+                          width: 210,
+                          height: 210,
+                          alignSelf: "center",
+                        }
+                      : styles.cardImage
+                  }
+                  source={
+                    variables.profilePic
+                      ? { uri: variables.profilePic }
+                      : images.monkey
+                  }
+                />
+              </View>
+            )}
             <Text
               style={[
                 styles.inputLabel,
@@ -364,7 +336,63 @@ export default function Settings({ route, navigation }) {
                 {variables.email}
               </Text>
             </View>
-            <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
+          </View>
+        ) : (
+          <View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
+              {loading ? (
+                <ActivityIndicator
+                  style={{ marginBottom: "76.5%" }}
+                  size="large"
+                  color="#660066"
+                />
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "50%",
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    shadowColor: "black",
+                    shadowOffset: { width: 0, height: 0 },
+                    shadowOpacity: 0.05,
+                    shadowRadius: 5,
+                    height: Dimensions.get("window").width * 0.5,
+                    borderRadius: 100,
+                    marginTop: "5%",
+                  }}
+                >
+                  <Image
+                    style={
+                      variables.profilePic
+                        ? {
+                            borderRadius: 150,
+                            width: 210,
+                            height: 210,
+                            alignSelf: "center",
+                          }
+                        : styles.cardImage
+                    }
+                    source={
+                      variables.profilePic
+                        ? { uri: variables.profilePic }
+                        : images.monkey
+                    }
+                  />
+                </View>
+              )}
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setChangeProfilePicture(true);
+                setChangeInfo(true);
+              }}
+            >
               <Text
                 style={[
                   styles.cardText,
@@ -375,12 +403,9 @@ export default function Settings({ route, navigation }) {
                   },
                 ]}
               >
-                Change information
+                Change Profile Picture
               </Text>
             </TouchableWithoutFeedback>
-          </View>
-        ) : (
-          <View>
             <Text style={[styles.inputLabel, { color: colors.purple }]}>
               First name
             </Text>
@@ -450,48 +475,61 @@ export default function Settings({ route, navigation }) {
               }}
               value={variables.passwordControl}
             />
+
+            <TouchableWithoutFeedback
+              onPress={(e) => {
+                if (variables.password === variables.passwordControl) {
+                  submitForm(e);
+                } else {
+                  setMessage({
+                    text: "PASSWORDS DON'T MATCH",
+                    color: "orange",
+                  });
+                }
+              }}
+            >
+              <View style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Submit changes</Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setVariables(variables);
+                setChangeInfo(false);
+              }}
+            >
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    color: colors.dkPink,
+                    fontFamily: fonts.semiBold,
+                    marginTop: screen !== "single" ? "5%" : "10%",
+                    marginBottom: screen !== "single" ? "5%" : "15%",
+                  },
+                ]}
+              >
+                Go back
+              </Text>
+            </TouchableWithoutFeedback>
           </View>
         )}
       </ScrollView>
 
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={(e) => {
-            if (variables.password === variables.passwordControl) {
-              submitForm(e);
-            } else {
-              setMessage({
-                text: "PASSWORDS DON'T MATCH",
-                color: "orange",
-              });
-            }
-          }}
-        >
-          <View style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Submit changes</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-
-      {changeInfo && (
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setVariables(variables);
-            setChangeInfo(false);
-          }}
-        >
+      {!changeInfo && (
+        <TouchableWithoutFeedback onPress={() => setChangeInfo(true)}>
           <Text
             style={[
               styles.cardText,
               {
                 color: colors.dkPink,
                 fontFamily: fonts.semiBold,
-                marginTop: screen !== "single" ? "5%" : "10%",
-                marginBottom: screen !== "single" ? "5%" : "15%",
+                paddingTop: 15,
               },
             ]}
           >
-            Go back
+            Change information
           </Text>
         </TouchableWithoutFeedback>
       )}
@@ -515,7 +553,9 @@ export default function Settings({ route, navigation }) {
       )}
 
       {showMessage()}
-      {screen !== "single" && <NavButtons screen="Settings" />}
+      {screen !== "single" && !changeInfo && (
+        <NavButtons screen="Settings" kidData={kidData} />
+      )}
       {changeProfilePicture && (
         <ChangeProfilePicture
           hide={hideOptions}

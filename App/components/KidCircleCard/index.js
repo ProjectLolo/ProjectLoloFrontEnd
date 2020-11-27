@@ -15,15 +15,14 @@ import { AuthContext } from "../../context/Auth";
 import images from "@assets/images";
 
 export default function KidCircleCard(props) {
-  const { activeKid, kidName:kName } = useContext(AuthContext);
+  const { activeKid, kidName: kName } = useContext(AuthContext);
   const navigation = useNavigation();
   const { id, kidName, kidImage } = props;
-  console.log("kidImage", kidImage);
 
   function handlePress(e) {
     e.preventDefault();
     activeKid(id);
-    kName(kidName)
+    kName(kidName);
 
     navigation.navigate("Recommended", { id, kidName });
   }
@@ -37,7 +36,7 @@ export default function KidCircleCard(props) {
         onPress={() =>
           /*This should bring user to the correct Recommended page, for now passing the kids name in param*/ navigation.navigate(
             "Recommended",
-            { _id, kidName }
+            { id, kidName }
           )
         }
       >

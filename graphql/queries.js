@@ -23,8 +23,8 @@ export const GET_LOVEBANKS = gql`
 `;
 
 export const GET_ALL_KIDS = gql`
-  query findAllKids($userId: String!) {
-    findAllKids(userId: $userId) {
+  query findAllKids {
+    findAllKids {
       _id
       name
       nickName
@@ -61,6 +61,27 @@ export const FIND_KID_BY_CODE = gql`
       birthdate
       profileImageUrl
       userId
+    }
+  }
+`;
+
+export const FIND_KID_BY_ID = gql`
+  query findKidById($kidId: String!) {
+    findKidById(kidId: $kidId) {
+      _id
+      name
+      nickName
+      birthdate
+      profileImageUrl
+      userId
+      code
+      familyMembers {
+        _id
+        userId {
+          firstName
+        }
+        relation
+      }
     }
   }
 `;
