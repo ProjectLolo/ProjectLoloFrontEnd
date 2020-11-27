@@ -17,8 +17,8 @@ import SettingsKid from "../screens/SettingsKid";
 import SettingsSuggestions from "../screens/SettingsSuggestions";
 import MediaContentDetails from "../screens/MediaContentDetails";
 import Activate from "../screens/CreateContent/Activate";
-import FunAnimals from "../screens/CreateContent/FunAnimals";
-import HolidayMemory from "../screens/CreateContent/HolidayMemory";
+import Fun from "../screens/CreateContent/Fun";
+import Memory from "../screens/CreateContent/Memory";
 import ReadAStory from "../screens/CreateContent/ReadAStory";
 import Story from "../screens/CreateContent/ReadAStory/Story";
 import ShareSomething from "../screens/CreateContent/ShareSomething";
@@ -100,8 +100,8 @@ export default function authNavigator({ route, state }) {
           initialParams={state}
         />
         <Stack.Screen name="Activate" component={Activate} />
-        <Stack.Screen name="FunAnimals" component={FunAnimals} />
-        <Stack.Screen name="HolidayMemory" component={HolidayMemory} />
+        <Stack.Screen name="Fun" component={Fun} />
+        <Stack.Screen name="Memory" component={Memory} />
         <Stack.Screen name="ReadAStory" component={ReadAStory} />
         <Stack.Screen name="Story" component={Story} />
         <Stack.Screen

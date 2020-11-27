@@ -11,7 +11,7 @@ import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
 
-export default function Teach({ route, navigation }) {
+export default function Memory({ route, navigation }) {
   const [stories, setStories] = useState(route.params.stories);
   const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
 

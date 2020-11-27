@@ -6,6 +6,14 @@ import images from "@assets/images";
 import ActivityCard from "../../components/ActivityCard";
 import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
+import {
+  read,
+  teach,
+  sing,
+  activate,
+  fun,
+  memory,
+} from "../CreateContent/tempStories";
 
 export default function Recommended({ route, navigation }) {
   const [showMore, setShowMore] = useState(false);
@@ -16,21 +24,25 @@ export default function Recommended({ route, navigation }) {
       id: 1,
       image: images.Share,
       nav: "ShareSomething",
+      stories: "",
     },
     {
       id: 2,
       image: images.Read,
       nav: "ReadAStory",
+      stories: read,
     },
     {
       id: 3,
       image: images.Teach,
       nav: "Teach",
+      stories: teach,
     },
     {
       id: 4,
       image: images.Sing,
       nav: "SingASong",
+      stories: sing,
     },
   ];
 
@@ -39,36 +51,43 @@ export default function Recommended({ route, navigation }) {
       id: 1,
       image: images.Share,
       nav: "ShareSomething",
+      stories: "",
     },
     {
       id: 2,
       image: images.Read,
       nav: "ReadAStory",
+      stories: read,
     },
     {
       id: 3,
       image: images.Teach,
       nav: "Teach",
+      stories: teach,
     },
     {
       id: 4,
       image: images.Sing,
       nav: "SingASong",
+      stories: sing,
     },
     {
       id: 5,
       image: images.Activate,
       nav: "Activate",
+      stories: activate,
     },
     {
       id: 6,
       image: images.Fun,
-      nav: "FunAnimals",
+      nav: "Fun",
+      stories: fun,
     },
     {
       id: 7,
       image: images.Memory,
-      nav: "HolidayMemory",
+      nav: "Memory",
+      stories: memory,
     },
   ];
 
@@ -99,7 +118,13 @@ export default function Recommended({ route, navigation }) {
           numColumns={2}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
-            return <ActivityCard image={item.image} nav={item.nav} />;
+            return (
+              <ActivityCard
+                image={item.image}
+                nav={item.nav}
+                stories={item.stories}
+              />
+            );
           }}
         />
       ) : (
@@ -117,7 +142,11 @@ export default function Recommended({ route, navigation }) {
           renderItem={({ item }) => {
             return (
               <TouchableWithoutFeedback>
-                <ActivityCard image={item.image} nav={item.nav} />
+                <ActivityCard
+                  image={item.image}
+                  nav={item.nav}
+                  stories={item.stories}
+                />
               </TouchableWithoutFeedback>
             );
           }}

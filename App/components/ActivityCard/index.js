@@ -9,21 +9,20 @@ import { useNavigation } from "@react-navigation/native";
 export default function ActivityCard(props) {
   const [working, setWorking] = useState(true);
   const navigation = useNavigation();
-  const { image, nav } = props;
+  const { image, nav, stories } = props;
   return (
     <View style={styles.cardContainer}>
       <TouchableWithoutFeedback
-        onPress={() => {
-          (nav === "ShareSomething" || nav === "ReadAStory") &&
-            navigation.navigate(nav);
+        onPress={() => { nav !== "SingASong" &&
+          navigation.navigate(nav, {nav: nav, stories: stories});
         }}
         onPressIn={() => {
-          nav === "ShareSomething" || nav === "ReadAStory"
+          nav !== "SingASong"
             ? null
             : setWorking(false);
         }}
         onPressOut={() => {
-          nav === "ShareSomething" || nav === "ReadAStory"
+          nav !== "SingASong"
             ? null
             : setWorking(true);
         }}
