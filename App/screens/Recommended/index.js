@@ -8,6 +8,7 @@ import NavButtons from "../../components/NavButtons";
 import NavHome from "../../components/NavHome";
 
 import {
+  share,
   read,
   teach,
   sing,
@@ -43,7 +44,7 @@ export default function Recommended({ route, navigation }) {
       id: 1,
       image: images.Share,
       nav: "ShareSomething",
-      stories: "",
+      stories: share,
     },
     {
       id: 2,
@@ -70,7 +71,7 @@ export default function Recommended({ route, navigation }) {
       id: 1,
       image: images.Share,
       nav: "ShareSomething",
-      stories: "",
+      stories: share,
     },
     {
       id: 2,
