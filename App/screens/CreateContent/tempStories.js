@@ -3,7 +3,7 @@ export const tempStories =[
       "title":"Animal Sounds",
       "createdAt":"2020-11-19T12:40:38.534Z",
       "updatedAt":"2020-11-19T12:40:38.534Z",
-      "categoryId":1,
+      "categoryId":3,
       "pages": [
         { "id":1,
         "content":"Hi [ name child], this is [ name sender ] and today I’m going to teach you about animals and what sounds they make. \n        I’d rather be with you today so we can practice together, but this way you get practice them and tell me about your favourite animal sound next time we chat! \n        Here comes the first one: \n        “assignment: record yourself pretending to be a monkey. Make huhuhuhu sounds” \n        Can you guess which one I did? \n        Great job [ name child]! That was a monkey!",
@@ -35,7 +35,7 @@ export const tempStories =[
       "title":"Nickname", 
       "createdAt":"2020-11-19T12:40:38.534Z", 
       "updatedAt":"2020-11-19T12:40:38.534Z", 
-      "categoryId":2, 
+      "categoryId":6, 
       "pages": [
         { "id":5,
         "content":"Hi [ name child], this is [ name sender ] and today I’m going to come up with a cool nickname. \n        I’d rather be with you today so we can come up with fun names together, but this way you can think about the names I came up with and let me know which one you like best next time we chat! Here comes the first one: \n        “assignment: record yourself pretending to be a pig/babe” \n        Can you guess which one I did? \n        Great job [ name child]! That was a babe! Do you like babe as a nickname for me?", 
@@ -60,10 +60,10 @@ export const tempStories =[
       "title":"Baby goes to bed", 
       "createdAt":"2020-11-19T12:40:38.534Z", 
       "updatedAt":"2020-11-19T12:40:38.534Z", 
-      "categoryId":1, 
+      "categoryId":2, 
       "pages": [
         {
-          "id": 8,
+          "id": 1,
           "content":"This is a bedtime story, read to you by [ name sender ] \n        [ Name sender ] would rather be close to [ name child] , \n        but this way [ name sender ]  can still read to [ name child ]  while being apart and that is great, \n        [ Add “jaaaaaj” sound when flipping page ]",
           "image":"https://github.com/ProjectLolo/ProjectLoLoStories/blob/development/App/assets/images/Illustratie1_Tekengebied%201.png?raw=true",
           "storyId":3, 
@@ -118,9 +118,61 @@ export const tempStories =[
           "createdAt":"2020-11-19T12:40:38.569Z", 
           "updatedAt":"2020-11-19T12:40:38.569Z",
         },
-          
+    
       ]
+    },
+    { "id": 4,
+      "title":"Itsy Bitsy Spider", 
+      "createdAt":"2020-11-19T12:40:38.534Z", 
+      "updatedAt":"2020-11-19T12:40:38.534Z", 
+      "categoryId":4, 
+      "pages": [{
+        "id":1,
+        "content": "The itsy-bitsy spider\n        Climbed up the water spout\n        Down came the rain\n        And washed the spider out\n        Out came the sun\n        And dried up all the rain\n        And the itsy-bitsy spider\n        Climbed up the spout again",
+        "image":"",
+        "storyId":4, 
+        "createdAt":"2020-11-19T12:40:38.569Z", 
+        "updatedAt":"2020-11-19T12:40:38.569Z",
+      }
+      ]
+    },
+    { "id": 5,
+      "title":"Brush wash and comb", 
+      "createdAt":"2020-11-19T12:40:38.534Z", 
+      "updatedAt":"2020-11-19T12:40:38.534Z", 
+      "categoryId":5, 
+      "pages": [{
+        "id":1,
+        "content": "How to Brush teeth / how to wash hands (on staying alive song?) / Comb hair / Tying shoelaces ??",
+        "image":"https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.017brushteeth.svg",
+        "storyId":5, 
+        "createdAt":"2020-11-19T12:40:38.569Z", 
+        "updatedAt":"2020-11-19T12:40:38.569Z",
+      }
+      ]
+    },
+    { "id": 6,
+    "title":"Professions", 
+    "createdAt":"2020-11-19T12:40:38.534Z", 
+    "updatedAt":"2020-11-19T12:40:38.534Z", 
+    "categoryId":7, 
+    "pages": [{
+      "id":1,
+      "content": "What did you want to become when you were [name kid]'s age?",
+      "image":"https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.011JobsFirefighter.svg",
+      "storyId":6, 
+      "createdAt":"2020-11-19T12:40:38.569Z", 
+      "updatedAt":"2020-11-19T12:40:38.569Z",
     }
+    ]
+  },
+          
     
 ]
     
+export const read = tempStories.filter(story => story.categoryId == 2)
+export const teach = tempStories.filter(story => story.categoryId == 3)
+export const sing = tempStories.filter(story => story.categoryId == 4)
+export const activate = tempStories.filter(story => story.categoryId == 5)
+export const fun = tempStories.filter(story => story.categoryId == 6)
+export const memory = tempStories.filter(story => story.categoryId == 7)

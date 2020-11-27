@@ -7,89 +7,11 @@ import StoryCard from "../../../components/StoryCard";
 import NavButtons from "../../../components/NavButtons";
 import NavHome from "../../../components/NavHome";
 import { useIsFocused } from "@react-navigation/native";
-import {tempStories} from "../../CreateContent/ReadAStory/tempStories"
+import {tempStories} from "../tempStories"
 
 export default function Recommended({ navigation }) {
 
     const [stories, setStories] = useState(tempStories);
-  //   const [showMore, setShowMore] = useState(false);
-
-  //   const isFocused = useIsFocused();
-
-  //   useEffect(() => {
-  //     if (isFocused) {
-  //       setShowMore(false);
-  //     }
-  //   }, [isFocused]);
-
-  //   const cardContent = [
-  //     {
-  //       id: 1,
-  //       image: images.Share,
-  //       nav: "ShareSomething",
-  //     },
-  //     {
-  //       id: 2,
-  //       image: images.Read,
-  //       nav: "ReadAStory",
-  //     },
-  //     {
-  //       id: 3,
-  //       image: images.Teach,
-  //       nav: "Teach",
-  //     },
-  //     {
-  //       id: 4,
-  //       image: images.Sing,
-  //       nav: "SingASong",
-  //     },
-  //   ];
-
-  //   const cardContent2 = [
-  //     {
-  //       id: 1,
-  //       image: images.Share,
-  //       nav: "ShareSomething",
-  //     },
-  //     {
-  //       id: 2,
-  //       image: images.Read,
-  //       nav: "ReadAStory",
-  //     },
-  //     {
-  //       id: 3,
-  //       image: images.Teach,
-  //       nav: "Teach",
-  //     },
-  //     {
-  //       id: 4,
-  //       image: images.Sing,
-  //       nav: "SingASong",
-  //     },
-  //     {
-  //       id: 5,
-  //       image: images.Activate,
-  //       nav: "Activate",
-  //     },
-  //     {
-  //       id: 6,
-  //       image: images.Fun,
-  //       nav: "FunAnimals",
-  //     },
-  //     {
-  //       id: 7,
-  //       image: images.Memory,
-  //       nav: "HolidayMemory",
-  //     },
-  //     {
-  //       id: 8,
-  //       image: images.Sing,
-  //       nav: "TakeVideo",
-  //     },
-  //   ];
-
-  //see more suggestions doesn't bring you to another screen...(library), it just shows more suggestions on the recommended page.
-  //ternary style. useState.
 
   return (
     <View

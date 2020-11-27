@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Platform,
+  TouchableWithoutFeedback,
   FlatList,
 } from "react-native";
+// import NavButtons from "../../../components/NavButtons";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
-import { tempStories } from "./tempStories";
 import NavHome from "../../../components/NavHome";
 
-export default function ShareSomething({ navigation }) {
-  const [stories, setStories] = useState(tempStories);
-
+export default function ReadAStory({ route, navigation }) {
+  const [stories, setStories] = useState(route.params.stories);
+  const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
   // const storiesURL = "http://localhost:4000" ;
 
   // async function fetchAllStories() {
@@ -41,10 +38,16 @@ export default function ShareSomething({ navigation }) {
   console.log("Stories", stories);
 
   return (
-    <View style={style.container}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-evenly",
+      }}
+    >
       <NavHome />
+      <Text style={[styles.title, { marginTop: 0 }]}>{title}</Text>
       <FlatList
-        style={styles.text}
+        style={{ marginBottom: 40, marginTop: "-5%" }}
         contentContainerStyle={{
           alignSelf: "center",
           flexGrow: 1,
@@ -56,40 +59,18 @@ export default function ShareSomething({ navigation }) {
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          return <StoryCard item={item} />;
+          return (
+            <TouchableWithoutFeedback>
+              <StoryCard item={item} />
+            </TouchableWithoutFeedback>
+          );
         }}
       />
+      {/* <NavButtons
+        screen="Recommended"
+        userId={route.params.activeUser}
+        kidName={route.params.kidName}
+      /> */}
     </View>
   );
 }
-const style = StyleSheet.create({
-  iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-  icon: {
-    width: 60,
-    height: 60,
-  },
-  image: {
-    width: 240,
-    height: 240,
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  mainContainer: {
-    width: 300,
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  rowContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-});
