@@ -204,3 +204,9 @@ export const SETTINGS = gql`
     }
   }
 `;
+
+export const SUGGESTION = gql`
+  mutation suggestion($suggestion: String!) {
+    suggestion(suggestion: $suggestion)
+  }
+`
