@@ -13,9 +13,12 @@ import {
   Image,
   ActivityIndicator,
   TextInput,
+  Alert,
 } from "react-native";
 import NavHome from "../../components/NavHome";
 import NavButtons from "../../components/NavButtons";
+import FamilyMembers from "./FamilyMembers";
+import ChangeFamilyMembers from "./ChangeFamilyMembers";
 import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -207,6 +210,11 @@ export default function SettingsKid({ route, navigation }) {
     );
   };
 
+  const deleteMember = (id) => {
+    Alert.alert("Are you sure? \n *Still needs to be implemented*");
+    console.log("Delete familyMember with this id", id);
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "space-between" }}>
       <NavHome />
@@ -238,7 +246,7 @@ export default function SettingsKid({ route, navigation }) {
                         height: 210,
                         alignSelf: "center",
                       }
-                    : styles.cardImage
+                    : [styles.cardImage, { width: "80%" }]
                 }
                 source={
                   kidInfo.profilePic
@@ -340,6 +348,29 @@ export default function SettingsKid({ route, navigation }) {
                 {moment(kidInfo.birthdate).format("DD-MM-YYYY")}
               </Text>
             </View>
+
+            <Text
+              style={[styles.title, { marginTop: "3%", textAlign: "left" }]}
+            >
+              Family Members
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
+            >
+              {data &&
+                data.findKidById.familyMembers.map((member) => {
+                  return (
+                    <FamilyMembers
+                      relation={member.relation}
+                      name={member.userId.firstName}
+                    />
+                  );
+                })}
+            </View>
           </View>
         ) : (
           <View>
@@ -380,7 +411,7 @@ export default function SettingsKid({ route, navigation }) {
                             height: 210,
                             alignSelf: "center",
                           }
-                        : styles.cardImage
+                        : [styles.cardImage, { width: "80%" }]
                     }
                     source={
                       kidInfo.profilePic
@@ -495,6 +526,25 @@ export default function SettingsKid({ route, navigation }) {
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
+
+            <Text
+              style={[styles.title, { marginTop: "10%", textAlign: "left" }]}
+            >
+              Family Members
+            </Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+              {data &&
+                data.findKidById.familyMembers.map((member) => {
+                  return (
+                    <ChangeFamilyMembers
+                      relation={member.relation}
+                      name={member.userId.firstName}
+                      id={member._id}
+                      deleteMember={deleteMember}
+                    />
+                  );
+                })}
+            </View>
 
             <TouchableWithoutFeedback
               onPress={(e) => {
