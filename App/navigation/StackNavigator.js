@@ -26,7 +26,7 @@ import SingASong from "../screens/CreateContent/SingASong";
 import Teach from "../screens/CreateContent/Teach";
 import MessageSent from "../screens/CreateContent/MessageSent";
 import VideoPreview from "../components/VideoPreview";
-import Suggestions from "../screens/CreateContent/Suggestions";
+import Share from "../screens/CreateContent/Share";
 
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
@@ -113,7 +113,7 @@ export default function authNavigator({ route, state }) {
           component={ShareSomething}
           initialParams={state}
         />
-        <Stack.Screen name="Suggestions" component={Suggestions} />
+        <Stack.Screen name="Share" component={Share} />
         <Stack.Screen name="SingASong" component={SingASong} />
         <Stack.Screen name="Teach" component={Teach} />
         <Stack.Screen

@@ -13,7 +13,7 @@ import styles from "../../../styles";
 import * as ImagePicker from "expo-image-picker";
 import NavHome from "../../../components/NavHome";
 
-export default function ShareSomething({ navigation }) {
+export default function ShareSomething({ route, navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -103,7 +103,7 @@ export default function ShareSomething({ navigation }) {
         </Text>
       </View>
       <TouchableOpacity
-          onPress={() => navigation.navigate("Suggestions")}
+          onPress={() => navigation.navigate("Share", {stories: route.params.stories})}
         >
           <View style={[styles.loginButton, { marginBottom: "5%" }]}>
             <Text style={styles.loginButtonText}>Get content suggestions</Text>
