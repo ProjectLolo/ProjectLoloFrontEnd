@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   Dimensions,
+  Alert,
 } from "react-native";
 
 import { useQuery, Query } from "@apollo/client";
@@ -36,6 +37,13 @@ export default function KidCircles({ route, navigation }) {
 
     data && setFetchedData(data.findAllKids);
   }, [refetch, data, isFocused]);
+
+  const deleteCircle = (circleId) => {
+    Alert.alert(
+      `Are you sure? \n *Still needs to be implemented* \n KidCircleId = ${circleId}`
+    );
+    console.log("Delete circle with this id", circleId);
+  };
 
   return (
     <View
@@ -90,6 +98,7 @@ export default function KidCircles({ route, navigation }) {
                 id={item._id}
                 kidImage={item.profileImageUrl}
                 kidName={item.name}
+                deleteCircle={deleteCircle}
               />
             </TouchableWithoutFeedback>
           );

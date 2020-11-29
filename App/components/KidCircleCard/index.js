@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
   Dimensions,
   Image,
   TouchableWithoutFeedback,
-  ActivityIndicator,
 } from "react-native";
+import adjust from "../../styles/adjust";
 import styles from "@styles/styles";
 import colors from "@assets/colors";
 import fonts from "@assets/fonts";
@@ -17,7 +17,7 @@ import images from "@assets/images";
 export default function KidCircleCard(props) {
   const { activeKid, kidName: kName } = useContext(AuthContext);
   const navigation = useNavigation();
-  const { id, kidName, kidImage } = props;
+  const { id, kidName, kidImage, deleteCircle } = props;
 
   function handlePress(e) {
     e.preventDefault();
@@ -30,6 +30,8 @@ export default function KidCircleCard(props) {
     <View
       style={{
         marginBottom: "20%",
+
+        justifyContent: "center",
       }}
     >
       <TouchableWithoutFeedback
@@ -94,27 +96,49 @@ export default function KidCircleCard(props) {
           />
         </View>
       </TouchableWithoutFeedback>
-      {/* 
-      <Image
-        style={[
-          styles.cardImage,
-          {
-            backgroundColor: "blue",
-            width: "90%",
-            height: "90%",
-            borderRadius: 100,
-          },
-        ]}
-        source={kidImage}
-      />
-      <Text
-        style={[
-          styles.cardTitle,
-          { color: colors.dkPink, backgroundColor: "yellow" },
-        ]}
+
+      <TouchableWithoutFeedback
+        onPress={() => {
+          deleteCircle(id);
+        }}
       >
-        {kidName}
-      </Text> */}
+        <View
+          style={{
+            backgroundColor: "white",
+            width: "16.5%",
+            height: Dimensions.get("window").width * 0.15,
+            justifyContent: "center",
+            alignSelf: "center",
+            padding: 5,
+            borderRadius: "50%",
+            shadowColor: "black",
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.1,
+            shadowRadius: 50,
+            marginTop: "5%",
+          }}
+        >
+          <View
+            style={{
+              width: "80%",
+              height: "80%",
+              alignSelf: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: colors.purple,
+                fontFamily: fonts.bold,
+                fontSize: adjust(16),
+              }}
+            >
+              X
+            </Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
