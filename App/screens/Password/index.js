@@ -6,27 +6,64 @@ import {
   Keyboard,
   Text,
   Image,
+  Alert
 } from "react-native";
+import { useMutation } from "@apollo/client";
 import styles from "@styles/styles";
 import images from "@assets/images";
 import colors from "../../assets/colors";
 import adjust from "../../styles/adjust";
 import NavHome from "../../components/NavHome";
+import { RESET_PASSWORD } from "../../../graphql/mutations"
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
+  const [resetPassword, { data }] = useMutation(RESET_PASSWORD, {
+    onCompleted(data) {
+      console.log(data)
+      if(data.forgotPassword == "false")
+      {Alert.alert(
+        'Something went wrong',
+        `User with this email not found!`,
+        [
+          {text: "Cancel",
+        onPress: () => console.log("Canceled"),
+        style: 'cancel',
+        }
+        ]
+  
+      )} else if(data.forgotPassword == "true") {
+        Alert.alert(
+          'Succes!',
+          `Check your email for your new password!`,
+          [
+            {text: "Continue",
+          onPress: () => navigation.navigate("Welcome"),
+          style: 'Continue',
+          }
+          ]
+    
+        )
+      }
+    },
+   
+  });
+
+
   function togglePassword() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
   }
 
-  function loginUser() {
-    setEmail("");
-    setPassword("");
-    console.log("email", email);
-    console.log("password", password);
+  function reset() {
+    resetPassword({
+      variables: {
+        email: email
+      }
+    })
+
   }
 
   return (
@@ -59,7 +96,7 @@ export default function Login({ navigation }) {
         />
 
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Welcome")} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
+          onPress={reset} //onPress should dispatch info to backend, to get Token in Redux. Then App.js should switch to the other StackNavigator.
         >
           <View style={[styles.loginButton, { marginTop: "15%" }]}>
             <Text style={styles.loginButtonText}>SUBMIT</Text>

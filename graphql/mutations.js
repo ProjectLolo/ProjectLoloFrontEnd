@@ -221,3 +221,9 @@ mutation deleteMember($_id: String!) {
   deleteMember(_id: $_id)
 }
 `
+
+export const RESET_PASSWORD = gql`
+mutation forgotPassword($email: String!) {
+  forgotPassword(email: $email)
+}
+`
