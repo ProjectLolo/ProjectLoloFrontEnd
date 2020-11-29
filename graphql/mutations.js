@@ -210,3 +210,8 @@ export const SUGGESTION = gql`
     suggestion(suggestion: $suggestion)
   }
 `
+export const DELETE_KID = gql`
+mutation deleteKid($kidId: String!) {
+  deleteKid(kidId: $kidId)
+}
+`

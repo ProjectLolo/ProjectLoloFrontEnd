@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 
-import { useQuery, Query } from "@apollo/client";
+import { useQuery, Query, useMutation } from "@apollo/client";
 
 import styles from "@styles/styles"; //have to changeit to @styles/styles
 import images from "@assets/images";
@@ -20,6 +20,8 @@ import fonts from "@assets/fonts";
 import adjust from "../../styles/adjust";
 
 import { GET_ALL_KIDS } from "../../../graphql/queries";
+import { DELETE_KID } from "../../../graphql/mutations"
+
 import { useIsFocused } from "@react-navigation/native";
 
 export default function KidCircles({ route, navigation }) {
@@ -30,19 +32,38 @@ export default function KidCircles({ route, navigation }) {
     onCompleted(fetchedData) {},
   });
 
+  const [deleteKid, { data: deleteData }] = useMutation(DELETE_KID, {
+    onCompleted(deleteData) {},
+  });
+
   const userName = route.params.firstName;
 
   useEffect(() => {
     refetch();
 
     data && setFetchedData(data.findAllKids);
-  }, [refetch, data, isFocused]);
+  }, [refetch, data, isFocused, deleteData]);
 
   const deleteCircle = (circleId) => {
     Alert.alert(
-      `Are you sure? \n *Still needs to be implemented* \n KidCircleId = ${circleId}`
-    );
-    console.log("Delete circle with this id", circleId);
+      'Are you sure you want to delete this kid?',
+      `If you are sure, press "Confirm"`,
+      [
+        {text: "Cancel",
+      onPress: () => console.log("Canceled"),
+      style: 'cancel',
+    },
+    {
+      text: 'Confirm', onPress: () => {
+        deleteKid({
+          variables: {
+            kidId: circleId
+          }
+        })
+      }    }
+      ]
+
+    )
   };
 
   return (
