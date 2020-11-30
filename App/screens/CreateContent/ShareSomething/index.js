@@ -71,26 +71,25 @@ export default function ShareSomething({ route, navigation }) {
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
         uri: result.uri,
-        type: "video"
+        type: "video",
       });
     }
   };
 
   const takeImage = async () => {
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 0.2,
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.2,
+    });
+    if (!result.cancelled) {
+      navigation.navigate("VideoPreview", {
+        uri: result.uri,
+        type: "picture",
       });
-      if (!result.cancelled) {
-        navigation.navigate("VideoPreview", {
-          uri: result.uri,
-          type: "picture"
-        });
-      }
     }
-  
+  };
 
   return (
     <View style={style.container}>
@@ -99,16 +98,19 @@ export default function ShareSomething({ route, navigation }) {
         <Image style={style.image} source={Images.videoCameraPurple} />
         <Text style={[styles.h2, style.center]}>Share Something</Text>
         <Text style={styles.center}>
-          Share a picture or a video (max 2 min) from your media files to upload in the love bank
+          Share a picture or a video (max 2 min) from your media files to upload
+          in the love bank
         </Text>
       </View>
       <TouchableOpacity
-          onPress={() => navigation.navigate("Share", {stories: route.params.stories})}
-        >
-          <View style={[styles.loginButton, { marginBottom: "5%" }]}>
-            <Text style={styles.loginButtonText}>Get content suggestions</Text>
-          </View>
-        </TouchableOpacity>
+        onPress={() =>
+          navigation.navigate("Share", { stories: route.params.stories })
+        }
+      >
+        <View style={[styles.loginButton, { marginBottom: "5%" }]}>
+          <Text style={styles.loginButtonText}>Get content suggestions</Text>
+        </View>
+      </TouchableOpacity>
       {/* Icons for record and upload */}
       <View style={style.rowContainer}>
         <TouchableOpacity onPress={takeVideo}>
@@ -129,9 +131,7 @@ export default function ShareSomething({ route, navigation }) {
             <Text>Upload</Text>
           </View>
         </TouchableOpacity>
-
       </View>
-      
     </View>
   );
 }
