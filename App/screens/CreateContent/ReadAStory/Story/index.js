@@ -113,7 +113,7 @@ export default function VideoRecording({ route }) {
               onPress={async () => {
                 if (!recording) {
                   setRecording(true);
-                  let video = await cameraRef.recordAsync();
+                  let video = await cameraRef.recordAsync({maxDuration: 120});
                   console.log("video", video);
                   setVideo(video.uri);
                 } else {
