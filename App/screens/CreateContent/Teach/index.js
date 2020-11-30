@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 // import NavButtons from "../../../components/NavButtons";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
+import { teach } from "../tempStories.js";
 
 export default function Teach({ route, navigation }) {
-  const [stories, setStories] = useState(route.params.stories);
-  const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
+  // const [stories, setStories] = useState(route.params.stories);
+  const title = route.params.nav.replace(/([A-Z])/g, " $1").trim();
 
-  console.log("Stories", stories);
+  // console.log("Stories", stories);
 
   return (
     <View
@@ -35,7 +31,7 @@ export default function Teach({ route, navigation }) {
           alignItems: "center",
           width: "90%",
         }}
-        data={stories}
+        data={teach}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
