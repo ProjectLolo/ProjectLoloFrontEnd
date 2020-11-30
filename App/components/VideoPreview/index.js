@@ -35,7 +35,7 @@ export default function VideoPreview({ route, navigation }) {
   console.log("video", video);
 
   function handleSend() {
-    loveBankEntry({
+        loveBankEntry({
       variables: {
         title: "a video",
         url: video,

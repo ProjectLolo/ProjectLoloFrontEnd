@@ -29,6 +29,7 @@ export default function ShareSomething({ route, navigation }) {
   }, []);
 
   const pickVideo = async () => {
+    console.log("picker")
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -36,11 +37,13 @@ export default function ShareSomething({ route, navigation }) {
       quality: 0.5,
     });
 
-    console.log(result);
-
+    console.log("result0", result);
+    
     if (!result.cancelled) {
+      console.log("result0", result);
       navigation.navigate("VideoPreview", {
         uri: result.uri,
+        type: result.type === "image" ? "picture" : "video"
       });
     }
   };
