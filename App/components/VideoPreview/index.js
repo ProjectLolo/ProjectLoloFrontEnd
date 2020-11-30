@@ -35,16 +35,7 @@ export default function VideoPreview({ route, navigation }) {
   console.log("video", video);
 
   function handleSend() {
-    console.log("variables??????", {variables: {
-        title: "a video",
-        url: video,
-        preview: route.params.uri,
-        description: "this is a video",
-        type: route.params.type,
-        category: "share",
-        kidId: route.params.activeKid,
-      },})
-    loveBankEntry({
+        loveBankEntry({
       variables: {
         title: "a video",
         url: video,
