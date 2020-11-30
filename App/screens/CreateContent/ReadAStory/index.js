@@ -5,9 +5,9 @@ import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
-import { read } from "../tempStories.js";
 
 export default function ReadAStory({ route, navigation }) {
+  const [stories, setStories] = useState(route.params.stories);
   const title = route.params.nav.replace(/([A-Z])/g, " $1").trim();
   // const storiesURL = "http://localhost:4000" ;
 
@@ -30,7 +30,7 @@ export default function ReadAStory({ route, navigation }) {
     // setStories(tempStories)
     // fetchAllStories();
   }, []);
-  // console.log("Stories", stories);
+  console.log("Stories", stories);
 
   return (
     <View
@@ -50,7 +50,7 @@ export default function ReadAStory({ route, navigation }) {
           alignItems: "center",
           width: "90%",
         }}
-        data={read}
+        data={stories}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {

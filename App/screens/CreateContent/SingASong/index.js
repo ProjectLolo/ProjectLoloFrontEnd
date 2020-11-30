@@ -5,9 +5,9 @@ import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
-import { sing } from "../tempStories.js";
 
 export default function ShareSomething({ route, navigation }) {
+  const [stories, setStories] = useState(route.params.stories);
   const title = route.params.nav.replace(/([A-Z])/g, " $1").trim();
 
   return (
@@ -28,7 +28,7 @@ export default function ShareSomething({ route, navigation }) {
           alignItems: "center",
           width: "90%",
         }}
-        data={sing}
+        data={stories}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
