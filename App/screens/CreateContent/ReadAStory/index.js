@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 // import NavButtons from "../../../components/NavButtons";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
@@ -13,7 +8,7 @@ import NavHome from "../../../components/NavHome";
 
 export default function ReadAStory({ route, navigation }) {
   const [stories, setStories] = useState(route.params.stories);
-  const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
+  const title = route.params.nav.replace(/([A-Z])/g, " $1").trim();
   // const storiesURL = "http://localhost:4000" ;
 
   // async function fetchAllStories() {

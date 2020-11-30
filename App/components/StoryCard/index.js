@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function ActivityCard(props) {
   const navigation = useNavigation();
   const { item } = props;
-  console.log("DEMPAGES", item.pages);
+  // console.log("DEMPAGES", item.pages);
   // Need to filter pages by story id then pass to Story component
   return (
     <View style={[styles.cardContainer, styles.ltPurple, style.card]}>
@@ -38,12 +38,12 @@ const style = StyleSheet.create({
     width: Dimensions.get("window").width * 0.405,
     height: Dimensions.get("window").width * 0.405,
     borderRadius: 25,
-    textAlign: "center"
+    textAlign: "center",
   },
   image: {
     width: Dimensions.get("window").width * 0.305,
     height: Dimensions.get("window").width * 0.305,
     borderRadius: 25,
-    paddingTop: 5
-  }
-})
+    paddingTop: 5,
+  },
+});

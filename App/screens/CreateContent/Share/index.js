@@ -5,14 +5,12 @@ import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
-import { tempStories } from "../tempStories.js";
 
 export default function Share({ route, navigation }) {
   const [stories, setStories] = useState(route.params.stories);
   // const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
 
   console.log("Stories", stories);
-  console.log("params", route.params);
 
   return (
     <View
@@ -32,7 +30,7 @@ export default function Share({ route, navigation }) {
           alignItems: "center",
           width: "90%",
         }}
-        data={tempStories}
+        data={stories}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
