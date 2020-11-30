@@ -24,7 +24,7 @@ import ChangeProfilePicture from "../../components/ChangeProfilePicture";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { FIND_KID_BY_ID } from "../../../graphql/queries";
-import { UPDATE_KID_PROFILE } from "../../../graphql/mutations";
+import { UPDATE_KID_PROFILE, DELETE_MEMBER } from "../../../graphql/mutations";
 import { useIsFocused } from "@react-navigation/native";
 
 import adjust from "../../styles/adjust";
@@ -87,6 +87,10 @@ export default function SettingsKid({ route, navigation }) {
       console.log("updatekid completed", data);
       setMessage({ text: "Submitted!!!", color: "teal" });
     },
+  });
+
+  const [deleteFamilyMember, { data: deleteData }] = useMutation(DELETE_MEMBER, {
+    onCompleted(deleteData) {},
   });
 
   function submitForm(e) {
@@ -212,8 +216,25 @@ export default function SettingsKid({ route, navigation }) {
   };
 
   const deleteMember = (id) => {
-    Alert.alert("Are you sure? \n *Still needs to be implemented*");
-    console.log("Delete familyMember with this id", id);
+    Alert.alert(
+      'Are you sure you want to delete this familymember?',
+      `If you are sure, press "Confirm"`,
+      [
+        {text: "Cancel",
+      onPress: () => console.log("Canceled"),
+      style: 'cancel',
+    },
+    {
+      text: 'Confirm', onPress: () => {
+        deleteFamilyMember({
+          variables: {
+            _id: id
+          }
+        })
+      }    }
+      ]
+
+    )
   };
 
   const onShare = async () => {

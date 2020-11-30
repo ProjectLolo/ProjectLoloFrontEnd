@@ -215,3 +215,9 @@ mutation deleteKid($kidId: String!) {
   deleteKid(kidId: $kidId)
 }
 `
+
+export const DELETE_MEMBER = gql`
+mutation deleteMember($_id: String!) {
+  deleteMember(_id: $_id)
+}
+`

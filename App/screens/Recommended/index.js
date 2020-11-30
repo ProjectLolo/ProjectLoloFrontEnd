@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 import styles from "@styles/styles";
 import images from "@assets/images";
@@ -38,6 +37,7 @@ export default function Recommended({ route, navigation }) {
     refetch();
     data && setKidData(data);
   }, [data, isFocused, refetch]);
+
 
   const cardContent = [
     {
