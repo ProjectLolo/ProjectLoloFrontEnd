@@ -13,18 +13,8 @@ export default function ActivityCard(props) {
   return (
     <View style={styles.cardContainer}>
       <TouchableWithoutFeedback
-        onPress={() => { nav !== "SingASong" &&
-          navigation.navigate(nav, {nav: nav, stories: stories});
-        }}
-        onPressIn={() => {
-          nav !== "SingASong"
-            ? null
-            : setWorking(false);
-        }}
-        onPressOut={() => {
-          nav !== "SingASong"
-            ? null
-            : setWorking(true);
+        onPress={() => {
+          navigation.navigate(nav, { nav: nav, stories: stories });
         }}
       >
         <Image

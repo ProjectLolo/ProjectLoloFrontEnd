@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 // import NavButtons from "../../../components/NavButtons";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
 import NavHome from "../../../components/NavHome";
+import { sing } from "../tempStories.js";
 
 export default function ShareSomething({ route, navigation }) {
-  const [stories, setStories] = useState(route.params.stories);
-  const title = route.params.nav.replace(/([A-Z])/g, ' $1').trim()
-
-  console.log("Stories", stories);
+  const title = route.params.nav.replace(/([A-Z])/g, " $1").trim();
 
   return (
     <View
@@ -35,7 +28,7 @@ export default function ShareSomething({ route, navigation }) {
           alignItems: "center",
           width: "90%",
         }}
-        data={stories}
+        data={sing}
         numColumns={2}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
