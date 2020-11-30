@@ -1,3 +1,5 @@
+import images from "@assets/images";
+
 export const tempStories = [
   //1. Share Something
   {
@@ -584,7 +586,7 @@ export const tempStories = [
         content:
           "The itsy-bitsy spider \nClimbed up the water spout \n Down came the rain \n And washed the spider out \n Out came the sun \n And dried up all the rain \n And the itsy-bitsy spider \n Climbed up the spout again",
         image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.055_Song.svg",
+          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/59c7051f8c765152a926900dead94fd5eb1cbd7a/App/assets/images/spider.svg.svg",
         storyId: 1,
         createdAt: "2020-11-19T12:40:38.569Z",
         updatedAt: "2020-11-19T12:40:38.569Z",
@@ -603,7 +605,7 @@ export const tempStories = [
         content:
           "Twinkle, twinkle, little star \n How I wonder what you are \n Up above the world so high \n Like a diamond in the sky \n Twinkle, twinkle little star \n How I wonder what you are",
         image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.055_Song.svg",
+          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/702bd55aaf70c698940169bc67a13a1433ea7263/App/assets/images/star.svg",
         storyId: 1,
         createdAt: "2020-11-19T12:40:38.569Z",
         updatedAt: "2020-11-19T12:40:38.569Z",
