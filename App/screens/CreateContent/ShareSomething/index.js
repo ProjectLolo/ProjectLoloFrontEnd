@@ -37,7 +37,6 @@ export default function ShareSomething({ route, navigation }) {
       quality: 0.5,
     });
 
-    console.log("result0", result);
     
     if (!result.cancelled) {
       console.log("result0", result);
@@ -59,10 +58,10 @@ export default function ShareSomething({ route, navigation }) {
       });
 
     
-
+      await FileSystem.copyAsync({from: result.uri, to: `${result.uri}.mp4`});
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
-        uri: result.uri,
+        uri: `${result.uri}.mp4`,
         type: "video"
       });
     }
