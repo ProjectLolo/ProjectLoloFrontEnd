@@ -64,10 +64,9 @@ export default function VideoRecording({ route }) {
       >
         <SafeAreaView style={style.droidSafeArea}>
           <MaterialIcons
-            color='white'
+            color="white"
             name="navigate-before"
             size={60}
-            
             onPress={() => navigation.goBack(null)}
           />
         </SafeAreaView>
@@ -113,7 +112,7 @@ export default function VideoRecording({ route }) {
               onPress={async () => {
                 if (!recording) {
                   setRecording(true);
-                  let video = await cameraRef.recordAsync({maxDuration: 120});
+                  let video = await cameraRef.recordAsync({ maxDuration: 120 });
                   console.log("video", video);
                   setVideo(video.uri);
                 } else {
@@ -154,7 +153,10 @@ export default function VideoRecording({ route }) {
                     size={40}
                     color="white"
                     onPress={() =>
-                      navigation.navigate("VideoPreview", { uri: video })
+                      navigation.navigate("VideoPreview", {
+                        uri: video,
+                        type: "video",
+                      })
                     }
                   />
                 </View>
