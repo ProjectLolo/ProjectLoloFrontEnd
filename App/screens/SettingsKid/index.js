@@ -89,9 +89,14 @@ export default function SettingsKid({ route, navigation }) {
     },
   });
 
-  const [deleteFamilyMember, { data: deleteData }] = useMutation(DELETE_MEMBER, {
-    onCompleted(deleteData) {},
-  });
+  const [deleteFamilyMember, { data: deleteData }] = useMutation(
+    DELETE_MEMBER,
+    {
+      onCompleted(deleteData) {
+        refetch();
+      },
+    }
+  );
 
   function submitForm(e) {
     e.preventDefault();
@@ -217,24 +222,26 @@ export default function SettingsKid({ route, navigation }) {
 
   const deleteMember = (id) => {
     Alert.alert(
-      'Are you sure you want to delete this familymember?',
+      "Are you sure you want to delete this familymember?",
       `If you are sure, press "Confirm"`,
       [
-        {text: "Cancel",
-      onPress: () => console.log("Canceled"),
-      style: 'cancel',
-    },
-    {
-      text: 'Confirm', onPress: () => {
-        deleteFamilyMember({
-          variables: {
-            _id: id
-          }
-        })
-      }    }
+        {
+          text: "Cancel",
+          onPress: () => console.log("Canceled"),
+          style: "cancel",
+        },
+        {
+          text: "Confirm",
+          onPress: () => {
+            deleteFamilyMember({
+              variables: {
+                _id: id,
+              },
+            });
+          },
+        },
       ]
-
-    )
+    );
   };
 
   const onShare = async () => {

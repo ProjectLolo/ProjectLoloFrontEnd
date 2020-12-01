@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableWithoutFeedback, FlatList } from "react-native";
 // import NavButtons from "../../../components/NavButtons";
 import StoryCard from "../../../components/StoryCard";
 import styles from "@styles/styles";
