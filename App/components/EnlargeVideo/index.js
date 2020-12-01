@@ -3,7 +3,7 @@ import { View, Text, TouchableWithoutFeedback, Dimensions, Image,  } from "react
 import { Video } from "expo-av";
 
 export default function EnlargeVideo({ video, hide, type }) {
-
+  console.log("TYPE?????????????????", type)
   return (
     <View
       style={{

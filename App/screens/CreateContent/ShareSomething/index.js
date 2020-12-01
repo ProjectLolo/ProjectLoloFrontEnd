@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import * as FileSystem from 'expo-file-system';
 import {
   View,
   Text,
@@ -37,7 +37,6 @@ export default function ShareSomething({ route, navigation }) {
       quality: 0.5,
     });
 
-    console.log("result0", result);
     
     if (!result.cancelled) {
       console.log("result0", result);
@@ -49,18 +48,7 @@ export default function ShareSomething({ route, navigation }) {
   };
 
   const takeVideo = async () => {
-    let result;
-    if (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 10) {
-      result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-        allowsEditing: true,
-        aspect: [3, 4],
-
-        videoMaxDuration: 120,
-        videoExportPreset: ImagePicker.VideoExportPreset.H264_1280x720,
-      });
-      console.log(result);
-    } else {
+    let result = []
       result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
@@ -68,13 +56,15 @@ export default function ShareSomething({ route, navigation }) {
         quality: 0.5,
         videoMaxDuration: 120,
       });
-      console.log(result);
-    }
 
+    
+      await FileSystem.copyAsync({from: result.uri, to: `${result.uri}.mp4`});
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {
-        uri: result.uri,
-        type: "video",
+
+        uri: `${result.uri}.mp4`,
+        type: "video"
+
       });
     }
   };

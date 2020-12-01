@@ -26,7 +26,7 @@ export default function LoveBank({ route, navigation }) {
     },
   });
 
-  console.log("ROUTE PARAMS", route.params);
+
   useEffect(() => {
     refetch();
     setLoveBanks(data);
@@ -47,6 +47,7 @@ export default function LoveBank({ route, navigation }) {
         numColumns={2}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => {
+          console.log("ITEM TYPE????????????", item.type)
           return (
             <TouchableWithoutFeedback
               onPress={() => navigation.navigate("MediaContentDetails")}
@@ -63,6 +64,7 @@ export default function LoveBank({ route, navigation }) {
                 preview={item.preview}
                 video={item.url}
                 firstName={item.userId.firstName}
+          
               />
             </TouchableWithoutFeedback>
           );
