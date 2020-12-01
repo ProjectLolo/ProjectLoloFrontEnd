@@ -101,11 +101,11 @@ export default function MediaContentCard(props) {
           titleVid,
           loveBankId,
           video,
-          preview,
+          preview: thumbnail,
           person,
           recImage,
           likes,
-          type
+          type,
         })
       }
     >
