@@ -50,18 +50,6 @@ export default function ShareSomething({ route, navigation }) {
 
   const takeVideo = async () => {
     let result = []
-    if (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 10) {
-        result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-        allowsEditing: true,
-        aspect: [3, 4],
-
-        videoMaxDuration: 120,
-        videoExportPreset: ImagePicker.VideoExportPreset.H264_1280x720,
-      });
-      result.uri = await FileSystem.moveAsync({from: result.uri, to: `${result.uri}.mp4`})
-      console.log("ADD MPM4 TO RESULT", result)
-    } else {
       result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
@@ -70,7 +58,7 @@ export default function ShareSomething({ route, navigation }) {
         videoMaxDuration: 120,
       });
 
-    }
+    
 
     if (!result.cancelled) {
       navigation.navigate("VideoPreview", {

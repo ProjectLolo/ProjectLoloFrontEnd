@@ -47,6 +47,7 @@ export default function LoveBank({ route, navigation }) {
         numColumns={2}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => {
+          console.log("ITEM TYPE????????????", item.type)
           return (
             <TouchableWithoutFeedback
               onPress={() => navigation.navigate("MediaContentDetails")}
@@ -60,7 +61,7 @@ export default function LoveBank({ route, navigation }) {
                 loveBankId={item._id}
                 likes={item.likes.length}
                 category={item.category}
-                preview={item.url}
+                preview={item.preview}
                 video={item.url}
                 firstName={item.userId.firstName}
           

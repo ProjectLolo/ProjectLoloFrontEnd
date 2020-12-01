@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+import * as VideoThumbnails from 'expo-video-thumbnails';
 import styles from "@styles/styles";
 import adjust from "../../styles/adjust";
 import colors from "@assets/colors";
@@ -23,6 +24,7 @@ export default function MediaContentCard(props) {
     height: 0,
     loading: true,
   });
+  const [thumbnail, setThumbnail] = useState("")
   const navigation = useNavigation();
   const {
     title,
@@ -35,6 +37,7 @@ export default function MediaContentCard(props) {
     category,
     preview,
     firstName,
+    type
   } = props;
   console.log(video);
   console.log("MEDIA CARD PREVIEW", preview)
@@ -63,6 +66,27 @@ export default function MediaContentCard(props) {
     }
   }, [preview]);
 
+  useEffect(()=>{
+    generateThumbnail()
+  },[video])
+
+  const generateThumbnail = async () => {
+    if(type === "video"){
+    try {
+      const { uri } = await VideoThumbnails.getThumbnailAsync(
+        video,
+        {
+          time: 15000,
+        }
+      );
+      setThumbnail(uri);
+    } catch (e) {
+      console.warn(e);
+    }} else {
+      setThumbnail(video)
+    }
+  };
+
   console.log("sizeImage", sizeImage);
 
   const width = sizeImage.width > sizeImage.height ? 180 : 90;
@@ -81,6 +105,7 @@ export default function MediaContentCard(props) {
           person,
           recImage,
           likes,
+          type
         })
       }
     >
@@ -122,7 +147,7 @@ export default function MediaContentCard(props) {
                   height: 192,
                 },
               ]}
-              source={{ uri: preview }}
+              source={{ uri: thumbnail }}
             />
           )}
           <View
