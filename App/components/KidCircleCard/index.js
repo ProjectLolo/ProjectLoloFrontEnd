@@ -110,7 +110,7 @@ export default function KidCircleCard(props) {
             justifyContent: "center",
             alignSelf: "center",
             padding: 5,
-            borderRadius: "50%",
+            borderRadius: 50,
             shadowColor: "black",
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.1,
