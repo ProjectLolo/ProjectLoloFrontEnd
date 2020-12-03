@@ -1,5 +1,5 @@
 import React from "react";
-
+import * as Analytics from 'expo-firebase-analytics';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CreateFamilyMember from "../screens/CreateFamilyMember";
@@ -32,7 +32,13 @@ import Share from "../screens/CreateContent/Share";
 export default function authNavigator({ route, state }) {
   const Stack = createStackNavigator();
 
-  console.log("STATE IN STACKNAV", state);
+  function getActiveRouteName(navigationState) {
+    if (!navigationState) return null;
+    const route = navigationState.routes[navigationState.index];
+    // Parse the nested navigators
+    if (route.routes) return getActiveRouteName(route);
+    return route.routeName;
+  }
 
   return (
     <NavigationContainer>
@@ -41,6 +47,15 @@ export default function authNavigator({ route, state }) {
           state.screen === "SignUp" ? "UploadUserProfile" : "KidCircles"
         }
         screenOptions={{ headerShown: false }}
+        onNavigationStateChange={(prevState, currentState) => {
+          console.log("ANALYTICS")
+          const currentScreen = getActiveRouteName(currentState);
+          const prevScreen = getActiveRouteName(prevState);
+          if (prevScreen !== currentScreen) {
+            // Update Firebase with the name of your screen
+            Analytics.setCurrentScreen(currentScreen);
+          }
+        }}
       >
         <Stack.Screen
           name="KidCircles"

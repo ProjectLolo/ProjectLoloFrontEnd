@@ -26,7 +26,7 @@ export default function TakeProfilePicture({ route, navigation }) {
 
   //Take picture using camera
   const takePhoto = async () => {
-    let result = await cameraRef.takePictureAsync();
+    let result = await cameraRef.takePictureAsync({ quality: 0.2 });
     if (result) {
 
       hide();

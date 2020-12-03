@@ -85,6 +85,11 @@ export default function StoryPage(props) {
           alignSelf: "center",
         }}
       >
+        <View>
+        <Text style={{color: "red", justifyContent: "space-between"}}>
+          This feature is still under construction.
+        </Text>
+        </View>
         <Text
           style={[
             { paddingLeft: 40, paddingRight: 40, lineHeight: 40 },
@@ -93,8 +98,9 @@ export default function StoryPage(props) {
         >
           {pages[i].content}
         </Text>
+        
       </ScrollView>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ flexDirection: "row", textAlign: 'center' }}>
         {i > 0 ? (
           <MaterialIcons
             name="navigate-before"

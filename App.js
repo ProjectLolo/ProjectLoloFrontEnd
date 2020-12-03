@@ -22,6 +22,7 @@ import {
   projectId,
   storageBucket,
   messagingSenderId,
+  measurementId
 } from "@env";
 
 const firebaseConfig = {
@@ -31,6 +32,7 @@ const firebaseConfig = {
   projectId: projectId,
   storageBucket: storageBucket,
   messagingSenderId: messagingSenderId,
+  measurementId: measurementId
 };
 
 
