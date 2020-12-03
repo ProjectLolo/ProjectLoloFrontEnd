@@ -54,7 +54,7 @@ export default function StoryPage(props) {
     <View style={{ height: (screenHeight * 1) / 3 }}>
       
       {pages[i].image && fileExtension === "svg" ? (
-        <View style={{flexDirection:"row", flexWrap:"wrap", backgroundColor:"red"}}>
+        <View style={{flexDirection:"row", flexWrap:"wrap"}}>
         <SvgUri
           width="200"
           height="200"
@@ -64,13 +64,13 @@ export default function StoryPage(props) {
           style={{
             marginTop: (screenHeight * -1) / 4 - 40,
             marginBottom: 60,
-            backgroundColor:"red"
+        
             // zIndex: 999,
           }}
         />
         </View>
       ) : pages[i].image && fileExtension === "png?raw=true" ? (
-        <View style={{flexDirection:"row", flexWrap:"wrap", backgroundColor:"red"}}>
+        <View style={{flexDirection:"row", flexWrap:"wrap"}}>
         <Image
           source={{ uri: pages[i].image,}}
           style={{
