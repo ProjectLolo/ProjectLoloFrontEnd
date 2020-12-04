@@ -20,26 +20,7 @@ export const tempStories = [
       },
     ],
   },
-  {
-    id: 2,
-    title: "Stroller walk",
-    createdAt: "2020-11-19T12:40:38.534Z",
-    updatedAt: "2020-11-19T12:40:38.534Z",
-    categoryId: 1,
-    pages: [
-      {
-        id: 1,
-        content:
-          "If you could go for a walk in the stroller, where would you go? To which park? Or to which zoo?",
-        image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.028stroller.svg",
-        storyId: 1,
-        createdAt: "2020-11-19T12:40:38.569Z",
-        updatedAt: "2020-11-19T12:40:38.569Z",
-      },
-    ],
-  },
-  {
+    {
     id: 3,
     title: "Drink",
     createdAt: "2020-11-19T12:40:38.534Z",
@@ -447,24 +428,6 @@ export const tempStories = [
     ],
   },
   {
-    id: 25,
-    title: "Rainbows",
-    createdAt: "2020-11-19T12:40:38.534Z",
-    updatedAt: "2020-11-19T12:40:38.534Z",
-    categoryId: 3,
-    pages: [
-      {
-        id: 1,
-        content: "Explain how rainbows work.",
-        image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.047rainbow.svg",
-        storyId: 1,
-        createdAt: "2020-11-19T12:40:38.569Z",
-        updatedAt: "2020-11-19T12:40:38.569Z",
-      },
-    ],
-  },
-  {
     id: 26,
     title: "Human anatomy",
     createdAt: "2020-11-19T12:40:38.534Z",
@@ -645,24 +608,6 @@ export const tempStories = [
           "About instruments - What's your favourite instrument? Pretend to play it (or play it real live)",
         image:
           "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.018Instrumentsguitar.svg",
-        storyId: 1,
-        createdAt: "2020-11-19T12:40:38.569Z",
-        updatedAt: "2020-11-19T12:40:38.569Z",
-      },
-    ],
-  },
-  {
-    id: 36,
-    title: "Sports",
-    createdAt: "2020-11-19T12:40:38.534Z",
-    updatedAt: "2020-11-19T12:40:38.534Z",
-    categoryId: 5,
-    pages: [
-      {
-        id: 1,
-        content: "About sports: Yoga, Tennis, hockey, volleyball, soccer",
-        image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.019_sports_yoga.svg",
         storyId: 1,
         createdAt: "2020-11-19T12:40:38.569Z",
         updatedAt: "2020-11-19T12:40:38.569Z",
@@ -859,25 +804,6 @@ export const tempStories = [
     ],
   },
   {
-    id: 47,
-    title: "Game",
-    createdAt: "2020-11-19T12:40:38.534Z",
-    updatedAt: "2020-11-19T12:40:38.534Z",
-    categoryId: 6,
-    pages: [
-      {
-        id: 1,
-        content:
-          "What game would you share if you were together? What's your favourite game?",
-        image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.049game.svg",
-        storyId: 1,
-        createdAt: "2020-11-19T12:40:38.569Z",
-        updatedAt: "2020-11-19T12:40:38.569Z",
-      },
-    ],
-  },
-  {
     id: 48,
     title: "Scary Animals",
     createdAt: "2020-11-19T12:40:38.534Z",
@@ -1018,24 +944,6 @@ export const tempStories = [
         content: "What is your favourite Easter memory?",
         image:
           "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.054Easter_bunny2.svg",
-        storyId: 1,
-        createdAt: "2020-11-19T12:40:38.569Z",
-        updatedAt: "2020-11-19T12:40:38.569Z",
-      },
-    ],
-  },
-  {
-    id: 56,
-    title: "Lucky memory",
-    createdAt: "2020-11-19T12:40:38.534Z",
-    updatedAt: "2020-11-19T12:40:38.534Z",
-    categoryId: 7,
-    pages: [
-      {
-        id: 1,
-        content: "Tell about a time you got very lucky",
-        image:
-          "https://raw.githubusercontent.com/ProjectLolo/ProjectLoLoStories/a366207126da4a92dff47e75d971fbafa187b7cb/App/assets/images/0.003emotionsHappy.svg",
         storyId: 1,
         createdAt: "2020-11-19T12:40:38.569Z",
         updatedAt: "2020-11-19T12:40:38.569Z",
