@@ -112,7 +112,8 @@ export default function VideoRecording({ route }) {
               onPress={async () => {
                 if (!recording) {
                   setRecording(true);
-                  let video = await cameraRef.recordAsync({ maxDuration: 120, quality: 0.5 });
+                  let video = await cameraRef.recordAsync({ maxDuration: 120, quality: Platform.OS === "android" ? "480p" : Camera.Constants.VideoQuality["480p"],
+                  });
                   console.log("video", video);
                   setVideo(video.uri);
                 } else {
