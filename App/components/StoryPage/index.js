@@ -91,21 +91,23 @@ export default function StoryPage(props) {
         }}
       >
         <View>
-        <Text style={{color: "red", justifyContent: "space-between"}}>
+        <Text style={{color: "red", textAlign: "center", marginTop: 10, marginBottom: 10, fontSize: 20}}>
           This feature is still under construction.
         </Text>
         </View>
         <Text
           style={[
-            { paddingLeft: 40, paddingRight: 40, lineHeight: 40 },
+            { paddingLeft: 40, paddingRight: 40, lineHeight: 40, textAlign: "center" },
             styles.bold,
           ]}
         >
           {pages[i].content}
         </Text>
-        
+        <Text style={{ textAlign: "center", marginTop: 20}}>
+          (max duration: 2 minutes)
+        </Text>
       </ScrollView>
-      <View style={{ flexDirection: "row", textAlign: 'center' }}>
+      {/* <View style={{ flexDirection: "row", textAlign: 'center' }}>
         {i > 0 ? (
           <MaterialIcons
             name="navigate-before"
@@ -122,7 +124,7 @@ export default function StoryPage(props) {
           style={styles.purpleText}
           onPress={next}
         />
-      </View>
+      </View> */}
     </View>
   );
 }
